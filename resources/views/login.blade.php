@@ -43,7 +43,7 @@
 
 
 <main class="form-signin">
-  <form action="/login" method="post">
+  <form action="/" method="post">
     @csrf
     @if(session()->has('loginError'))
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
