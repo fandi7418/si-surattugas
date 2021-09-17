@@ -8,7 +8,7 @@ class DatapetugasController extends Controller
 {
     public function index()
     {
-        return view('datapetugas', [
+        return view('admin.datapetugas', [
             "title" => "Data Petugas Penomoran"
         ]); 
     }

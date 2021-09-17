@@ -13,7 +13,7 @@ class DataadminController extends Controller
      */
     public function index()
     {
-        return view('dataadmin', [
+        return view('admin.dataadmin', [
             "title" => "Data Admin"
         ]); 
     }

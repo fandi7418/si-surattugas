@@ -8,7 +8,7 @@ class EditdosenController extends Controller
 {
     public function index()
     {
-        return view('editdosen', [
+        return view('admin.editdosen', [
             "title" => "Edit Dosen"
         ]); 
     }

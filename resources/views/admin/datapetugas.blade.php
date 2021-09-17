@@ -1,4 +1,4 @@
-@extends('admin.layouts.main')
+@extends('admin.main')
 
 @section('container')
                     <h2 class="mt-4">Data Petugas Penomoran</h2>

@@ -8,7 +8,7 @@ class DatadosenController extends Controller
 {
     public function index()
     {
-        return view('datadosen', [
+        return view('admin.datadosen', [
             "title" => "Data Dosen"
         ]); 
     }

@@ -8,7 +8,7 @@ class DatasuratController extends Controller
 {
     public function index()
     {
-        return view('datasurat', [
+        return view('admin.datasurat', [
             "title" => "Data Surat"
         ]); 
     }

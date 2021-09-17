@@ -1,8 +1,8 @@
-@extends('admin.layouts.main')
+@extends('admin.main')
 
 @section('container')
 
-                    <h1 class="">Tambah Kepala Departemen</h1>
+                    <h1 class="">Tambah Dosen</h1>
                     <form style="margin-right: 10px">
                     <div class="form-group row mt-4">
                     <label for="colFormLabel" class="col-sm-2 col-form-label">Nama</label>

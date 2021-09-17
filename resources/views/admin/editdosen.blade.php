@@ -1,31 +1,37 @@
-@extends('admin.layouts.main')
+@extends('admin.main')
 
 @section('container')
 
-                    <h1 class="">Tambah Petugas Penomoran</h1>
+                    <h1 class="">Edit Dosen</h1>
                     <form style="margin-right: 10px">
                     <div class="form-group row mt-4">
                     <label for="colFormLabel" class="col-sm-2 col-form-label">Nama</label>
                     <div class="col-sm-8">
-                    <input type="text" class="form-control" id="colFormLabel" placeholder="Silahkan Masukkan Nama Anda">
+                    <input type="text" class="form-control" id="colFormLabel" >
                         </div>
                         </div>
                     <div class="form-group row mt-4">
                     <label for="colFormLabel" class="col-sm-2 col-form-label">NIP</label>
                     <div class="col-sm-8">
-                    <input type="text" class="form-control" id="colFormLabel" placeholder="Silahkan Masukkan NIP Anda">
+                    <input type="text" class="form-control" id="colFormLabel" >
+                        </div>
+                        </div>
+                        <div class="form-group row mt-4">
+                    <label for="colFormLabel" class="col-sm-2 col-form-label">Program Studi</label>
+                    <div class="col-sm-8">
+                    <input type="text" class="form-control" id="colFormLabel" >
                         </div>
                         </div>
                     <div class="form-group row mt-4">
                     <label for="colFormLabel" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-8">
-                    <input type="email" class="form-control" id="colFormLabel" placeholder="Silahkan Masukkan E-mail Anda">
+                    <input type="email" class="form-control" id="colFormLabel" >
                         </div>
                         </div>
                     <div class="form-group row mt-4">
                     <label for="colFormLabel" class="col-sm-2 col-form-label">Password</label>
                     <div class="col-sm-5">
-                    <input type="password" class="form-control" id="inputPassword" placeholder="Silahkan Masukkan Password Anda">
+                    <input type="password" class="form-control" id="inputPassword" >
                     <input type="checkbox" onclick="myFunction()"> Tampilkan Password
                         </div>
                         </div>

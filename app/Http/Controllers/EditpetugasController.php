@@ -8,7 +8,7 @@ class EditpetugasController extends Controller
 {
     public function index()
     {
-        return view('editpetugas', [
+        return view('admin.editpetugas', [
             "title" => "Edit Petugas Penomoran"
         ]); 
     }

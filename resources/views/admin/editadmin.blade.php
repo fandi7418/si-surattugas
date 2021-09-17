@@ -1,7 +1,7 @@
-@extends('admin.layouts.main')
+@extends('admin.main')
 
 @section('container')
-                    <h1 class="">Edit Ketua Departemen</h1>
+                    <h1 class="">Edit Admin</h1>
                     <form style="margin-right: 10px">
                     <div class="form-group row mt-4">
                     <label for="colFormLabel" class="col-sm-2 col-form-label">Nama</label>
@@ -9,14 +9,8 @@
                     <input type="text" class="form-control" id="colFormLabel" >
                         </div>
                         </div>
-                    <div class="form-group row mt-4">
-                    <label for="colFormLabel" class="col-sm-2 col-form-label">NIP</label>
-                    <div class="col-sm-8">
-                    <input type="text" class="form-control" id="colFormLabel" >
-                        </div>
-                        </div>
                         <div class="form-group row mt-4">
-                    <label for="colFormLabel" class="col-sm-2 col-form-label">Program Studi</label>
+                    <label for="colFormLabel" class="col-sm-2 col-form-label">NIP</label>
                     <div class="col-sm-8">
                     <input type="text" class="form-control" id="colFormLabel" >
                         </div>
@@ -42,7 +36,9 @@
                         </div>
             </div>
             </form> 
-            <script>
+                                    
+                                
+                <script>
                             function myFunction() {
                                 var x = document.getElementById("inputPassword");
                                 if (x.type === "password") {

@@ -1,8 +1,7 @@
-@extends('admin.layouts.main')
+@extends('admin.main')
 
 @section('container')
-
-                    <h1 class="">Edit Dosen</h1>
+                    <h2 class="">Edit Petugas Penomoran</h2>
                     <form style="margin-right: 10px">
                     <div class="form-group row mt-4">
                     <label for="colFormLabel" class="col-sm-2 col-form-label">Nama</label>
@@ -12,12 +11,6 @@
                         </div>
                     <div class="form-group row mt-4">
                     <label for="colFormLabel" class="col-sm-2 col-form-label">NIP</label>
-                    <div class="col-sm-8">
-                    <input type="text" class="form-control" id="colFormLabel" >
-                        </div>
-                        </div>
-                        <div class="form-group row mt-4">
-                    <label for="colFormLabel" class="col-sm-2 col-form-label">Program Studi</label>
                     <div class="col-sm-8">
                     <input type="text" class="form-control" id="colFormLabel" >
                         </div>

@@ -8,7 +8,7 @@ class DatakadepController extends Controller
 {
     public function index()
     {
-        return view('datakadep', [
+        return view('admin.datakadep', [
             "title" => "Data Ketua Departemen"
         ]); 
     }

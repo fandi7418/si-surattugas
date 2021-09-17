@@ -8,7 +8,7 @@ class TambahdosenController extends Controller
 {
     public function index()
     {
-        return view('tambahdosen', [
+        return view('admin.tambahdosen', [
             "title" => "Tambah Dosen"
         ]); 
     }

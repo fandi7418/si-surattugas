@@ -8,7 +8,7 @@ class TambahpetugasController extends Controller
 {
     public function index()
     {
-        return view('tambahpetugas', [
+        return view('admin.tambahpetugas', [
             "title" => "Tambah Petugas Penomoran"
         ]); 
     }

@@ -8,7 +8,7 @@ class EditkadepController extends Controller
 {
     public function index()
     {
-        return view('editkadep', [
+        return view('admin.editkadep', [
             "title" => "Edit Ketua Departemen"
         ]); 
     }
