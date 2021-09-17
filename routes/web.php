@@ -39,7 +39,7 @@ use App\Http\Controllers\DashboardadminController;
 
 //cara singkat
 // Route::view('/','v_login'); 
-Route::get('/', [LoginController::class, 'index']);
+//Route::get('/', [LoginController::class, 'index']);
 
 Route::get('/dashboard_admin', [DashboardadminController::class, 'index']);
 
@@ -68,7 +68,36 @@ Route::get('/tambah_kadep', [TambahkadepController::class, 'index']);
 Route::get('/tambah_petugas', [TambahpetugasController::class, 'index']);
 
 
+Route::get('/', [LoginController::class, 'index']);
+Route::post('/', [LoginController::class, 'authenticate']);
 
+Route::get('dashboarddosen', function () {
+    return view('/dosen/dashboarddosen');
+});
+Route::get('/dashboardkadep', function () {
+    return view('/kadep/dashboardkadep');
+});
+Route::get('/dashboardpetugas', function () {
+    return view('/petugas/dashboardpetugas');
+});
+Route::get('/daftarsuratdosen', function () {
+    return view('/dosen/daftarsuratdosen');
+});
+Route::get('/daftarsuratkadep', function () {
+    return view('/kadep/daftarsuratkadep');
+});
+Route::get('/daftarsuratpetugas', function () {
+    return view('/petugas/daftarsuratpetugas');
+});
+Route::get('/profildosen', function () {
+    return view('/dosen/profildosen');
+});
+Route::get('/profilkadep', function () {
+    return view('/kadep/profilkadep');
+});
+Route::get('/profilpetugas', function () {
+    return view('/petugas/profilpetugas');
+});
 
 // Route::view('/template',function(){
 //     return view('template.v_app'[
