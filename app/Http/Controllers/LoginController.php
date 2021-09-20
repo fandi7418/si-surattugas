@@ -10,23 +10,24 @@ class LoginController extends Controller
 {
     public function index()
     {
-        $request = DB::table('users')->get();
+        //$request = DB::table('users')->get();
         return view('login');
     }
 
     public function authenticate(Request $request)
     {
         
-        $credentials = $request->validate([
+        $request->validate([
             'email' => 'required|email:dns',
             'password' => 'required',
         ]);
 
-        if(Auth::attempt($credentials)){
+        if(Auth::attempt()){
             $request->session()->regenerate();
             return redirect()->intended('/dashboarddosen');
         }
-
-        return back()->with('loginError', 'Login Gagal!');
+        else{
+            return back()->with('loginError', 'Login Gagal!');
+        }
     }
 }
