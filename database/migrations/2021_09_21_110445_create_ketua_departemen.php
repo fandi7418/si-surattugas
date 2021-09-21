@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAdmin extends Migration
+class CreateKetuaDepartemen extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateAdmin extends Migration
      */
     public function up()
     {
-        Schema::create('admin', function (Blueprint $table) {
+        Schema::create('ketua_departemen', function (Blueprint $table) {
             $table->id();
-            $table->string('email_admin');
+            $table->string('email_kadep');
             $table->string('password');
-            $table->string('nama_admin');
+            $table->string('nama_kadep');
             $table->bigInteger('NIP');
+            $table->string('prodi_kadep');
         });
     }
 
@@ -29,6 +30,6 @@ class CreateAdmin extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admin');
+        Schema::dropIfExists('ketua_departemen');
     }
 }

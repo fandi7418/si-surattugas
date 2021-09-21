@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAdmin extends Migration
+class CreateSurat extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateAdmin extends Migration
      */
     public function up()
     {
-        Schema::create('admin', function (Blueprint $table) {
+        Schema::create('surat', function (Blueprint $table) {
             $table->id();
-            $table->string('email_admin');
-            $table->string('password');
-            $table->string('nama_admin');
-            $table->bigInteger('NIP');
+            $table->string('nomor_surat');
+            $table->string('nama_surat');
+            $table->string('prodi_surat');
+            $table->date('tanggal');
+            $table->integer('id_dosen');
+            $table->string('status');
         });
     }
 
@@ -29,6 +31,6 @@ class CreateAdmin extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admin');
+        Schema::dropIfExists('surat');
     }
 }
