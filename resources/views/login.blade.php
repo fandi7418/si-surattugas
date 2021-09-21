@@ -43,8 +43,8 @@
 
 
 <main class="form-signin">
-  <form action="/" method="post">
-    @csrf
+  <form action="{{ route('postlogin') }}" method="post">
+    {{ csrf_field() }}
     @if(session()->has('loginError'))
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
       {{ session('loginError') }}

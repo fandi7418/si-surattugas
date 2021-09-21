@@ -68,8 +68,9 @@ Route::get('/tambah_kadep', [TambahkadepController::class, 'index']);
 Route::get('/tambah_petugas', [TambahpetugasController::class, 'index']);
 
 
-Route::get('/', [LoginController::class, 'index']);
-Route::post('/', [LoginController::class, 'authenticate']);
+Route::get('/', [LoginController::class, 'index'])->name('login');
+Route::post('/postlogin', [LoginController::class, 'postlogin'])->name('postlogin');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('dashboarddosen', function () {
     return view('/dosen/dashboarddosen');
