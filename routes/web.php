@@ -35,31 +35,36 @@ Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 /* Route Admin */
-Route::get('/data_admin', [DataadminController::class, 'index']);
 
-Route::get('/data_dosen', [DatadosenController::class, 'index']);
-
-Route::get('/data_kadep', [DatakadepController::class, 'index']);
-
-Route::get('/data_petugas', [DatapetugasController::class, 'index']);
-
-Route::get('/data_surat', [DatasuratController::class, 'index']);
-
-Route::get('/edit_admin', [EditadminController::class, 'index']);
-
-Route::get('/edit_dosen', [EditdosenController::class, 'index']);
-
-Route::get('/edit_kadep', [EditkadepController::class, 'index']);
-
-Route::get('/edit_petugas', [EditpetugasController::class, 'index']);
-
-Route::get('/tambah_dosen', [TambahdosenController::class, 'index']);
-
-Route::get('/tambah_kadep', [TambahkadepController::class, 'index']);
-
-Route::get('/tambah_petugas', [TambahpetugasController::class, 'index']);
-
-Route::get('/dashboard_admin', [DashboardadminController::class, 'index']);
+Route::group(['middleware' => ['auth:admin']], function()
+{
+    Route::get('/data_admin', [DataadminController::class, 'index']);
+    
+    Route::get('/data_dosen', [DatadosenController::class, 'index']);
+    
+    Route::get('/data_kadep', [DatakadepController::class, 'index']);
+    
+    Route::get('/data_petugas', [DatapetugasController::class, 'index']);
+    
+    Route::get('/data_surat', [DatasuratController::class, 'index']);
+    
+    Route::get('/edit_admin', [EditadminController::class, 'index']);
+    
+    Route::get('/edit_dosen', [EditdosenController::class, 'index']);
+    
+    Route::get('/edit_kadep', [EditkadepController::class, 'index']);
+    
+    Route::get('/edit_petugas', [EditpetugasController::class, 'index']);
+    
+    Route::get('/tambah_dosen', [TambahdosenController::class, 'index']);
+    
+    Route::get('/tambah_kadep', [TambahkadepController::class, 'index']);
+    
+    Route::get('/tambah_petugas', [TambahpetugasController::class, 'index']);
+    
+    Route::get('/dashboard_admin', [DashboardadminController::class, 'index']);
+    
+});
 
 /* Route dosen */
 Route::group(['middleware' => ['auth:dosen']], function()
