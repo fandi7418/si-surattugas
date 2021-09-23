@@ -11,38 +11,37 @@ class LoginController extends Controller
 {
     public function index()
     {
-        //$request = DB::table('users')->get();
         return view('login');
 
     }
 
     public function postlogin(Request $request){
-        if(Auth::attempt($request->only('email','password'))){
-            return redirect('/dashboard_admin');
-        }
-        else{
+
+        if(Auth::guard('dosen')->attempt(['email_dosen' => $request->email, 'password' => $request->password])) {
+            return redirect('/dashboarddosen');
+        } else if (Auth::guard('ketua_departemen')->attempt(['email_kadep' => $request->email, 'password' => $request->password])) {
+            return redirect('/dashboardkadep');
+        } else if (Auth::guard('petugas_penomoran')->attempt(['email_petugas' => $request->email, 'password' => $request->password])) {
+            return redirect('/dashboardpetugas');
+        } else {
             return back()->with('loginError', 'Login Gagal!');
         }
-        // return redirect('/');
     }
     
     public function logout(){
-        Auth::logout();
-        return redirect ('/');
+        if (Auth::guard('dosen')->check())
+        {
+            Auth::guard('dosen')->logout();
+        }
+        else if (Auth::guard('ketua_departemen')->check())
+        {
+            Auth::guard('ketua_departemen')->logout();
+        }
+        else if (Auth::guard('petugas_penomoran')->check())
+        {
+            Auth::guard('petugas_penomoran')->logout();
+        }
+        return redirect('/');
         }
 
-
-    // public function authenticate(Request $request)
-    // {
-        
-    //     $credentials = $request->validate([
-    //         'email' => 'required|email:dns',
-    //         'password' => 'required',
-    //     ]);
-
-    //     if(Auth::attempt($credentials)){
-    //         $request->session()->regenerate();
-    //         return redirect()->intended('/dashboarddosen');
-    //     }
-    // }
 }

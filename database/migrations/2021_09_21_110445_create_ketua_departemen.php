@@ -20,6 +20,8 @@ class CreateKetuaDepartemen extends Migration
             $table->string('nama_kadep');
             $table->bigInteger('NIP');
             $table->string('prodi_kadep');
+            $table->rememberToken();
+            $table->timestamps();
         });
     }
 

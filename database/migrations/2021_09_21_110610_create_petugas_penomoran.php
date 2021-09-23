@@ -19,6 +19,8 @@ class CreatePetugasPenomoran extends Migration
             $table->string('password');
             $table->string('nama_petugas');
             $table->bigInteger('NIP');
+            $table->rememberToken();
+            $table->timestamps();
         });
     }
 

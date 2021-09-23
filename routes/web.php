@@ -27,22 +27,14 @@ use App\Http\Controllers\DashboardadminController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('login', [
-//         "title" => "Halaman Login"
-//     ]);
-// });
+/* Route login */
+Route::post('/postlogin', [LoginController::class, 'postlogin'])->name('postlogin');
 
-// Route::get('/', function () {
-//     return view('login');
-// });
+Route::get('/', [LoginController::class, 'index'])->name('login');
 
-//cara singkat
-// Route::view('/','v_login'); 
-//Route::get('/', [LoginController::class, 'index']);
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/dashboard_admin', [DashboardadminController::class, 'index']);
-
+/* Route Admin */
 Route::get('/data_admin', [DataadminController::class, 'index']);
 
 Route::get('/data_dosen', [DatadosenController::class, 'index']);
@@ -67,38 +59,62 @@ Route::get('/tambah_kadep', [TambahkadepController::class, 'index']);
 
 Route::get('/tambah_petugas', [TambahpetugasController::class, 'index']);
 
+Route::get('/dashboard_admin', [DashboardadminController::class, 'index']);
 
-Route::get('/', [LoginController::class, 'index'])->name('login');
-Route::post('/postlogin', [LoginController::class, 'postlogin'])->name('postlogin');
-Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+/* Route dosen */
+Route::group(['middleware' => ['auth:dosen']], function()
+{
+    Route::get('dashboarddosen', function () {
+        return view('/dosen/dashboarddosen');
+    });
 
-Route::get('dashboarddosen', function () {
-    return view('/dosen/dashboarddosen');
+    Route::get('/daftarsuratdosen', function () {
+        return view('/dosen/daftarsuratdosen');
+    });
+
+    Route::get('/profildosen', function () {
+        return view('/dosen/profildosen');
+    });
 });
-Route::get('/dashboardkadep', function () {
-    return view('/kadep/dashboardkadep');
+
+
+/* Route kadep */
+Route::group(['middleware' => ['auth:ketua_departemen']], function()
+{
+    Route::get('/dashboardkadep', function () {
+        return view('/kadep/dashboardkadep');
+    });
+
+    Route::get('/daftarsuratkadep', function () {
+        return view('/kadep/daftarsuratkadep');
+    });
+
+    Route::get('/profilkadep', function () {
+        return view('/kadep/profilkadep');
+    });
 });
-Route::get('/dashboardpetugas', function () {
-    return view('/petugas/dashboardpetugas');
+
+
+/* Route petugas */
+Route::group(['middleware' => ['auth:petugas_penomoran']], function()
+{
+    Route::get('/dashboardpetugas', function () {
+        return view('/petugas/dashboardpetugas');
+    });
+
+    Route::get('/daftarsuratpetugas', function () {
+        return view('/petugas/daftarsuratpetugas');
+    });
+        
+    Route::get('/profilpetugas', function () {
+        return view('/petugas/profilpetugas');
+    });
 });
-Route::get('/daftarsuratdosen', function () {
-    return view('/dosen/daftarsuratdosen');
-});
-Route::get('/daftarsuratkadep', function () {
-    return view('/kadep/daftarsuratkadep');
-});
-Route::get('/daftarsuratpetugas', function () {
-    return view('/petugas/daftarsuratpetugas');
-});
-Route::get('/profildosen', function () {
-    return view('/dosen/profildosen');
-});
-Route::get('/profilkadep', function () {
-    return view('/kadep/profilkadep');
-});
-Route::get('/profilpetugas', function () {
-    return view('/petugas/profilpetugas');
-});
+
+
+
+
+
 
 // Route::view('/template',function(){
 //     return view('template.v_app'[

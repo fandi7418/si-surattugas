@@ -40,6 +40,21 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'dosen' => [
+            'driver' => 'session',
+            'provider' => 'dosens',
+        ],
+
+        'ketua_departemen' => [
+            'driver' => 'session',
+            'provider' => 'kadeps',
+        ],
+
+        'petugas_penomoran' => [
+            'driver' => 'session',
+            'provider' => 'petugass',
+        ],
     ],
 
     /*
@@ -65,10 +80,20 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'dosens' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Dosen::class,
+        ],
+
+        'kadeps' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Kadep::class,
+        ],
+
+        'petugass' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Petugas::class,
+        ],
     ],
 
     /*

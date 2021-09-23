@@ -20,6 +20,8 @@ class CreateDosen extends Migration
             $table->string('nama_dosen');
             $table->bigInteger('NIP');
             $table->string('prodi_dosen');
+            $table->rememberToken();
+            $table->timestamps();
         });
     }
 
