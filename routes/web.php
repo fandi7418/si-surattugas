@@ -121,6 +121,34 @@ Route::group(['middleware' => ['auth:petugas_penomoran']], function()
 });
 
 
+/* Route wakl dekan */
+Route::group(['middleware' => ['auth:wakildekan']], function()
+{
+
+    Route::get('/dashboardwd', function () {
+        return view('/wd/dashboardwd');
+    });
+    
+    Route::get('/daftarsuratwd', function () {
+        return view('/wd/daftarsuratwd');
+    });
+    
+    Route::get('/profilwd', function () {
+        return view('/wd/profilwd');
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
