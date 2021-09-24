@@ -75,6 +75,10 @@ Route::group(['middleware' => ['auth:dosen']], function()
     Route::get('/profildosen', function () {
         return view('/dosen/profildosen');
     });
+
+    Route::get('/buatsurat', function () {
+        return view('/dosen/buatsurat');
+    });
 });
 
 
