@@ -60,6 +60,11 @@ return [
             'driver' => 'session',
             'provider' => 'petugass',
         ],
+
+        'wakildekan' => [
+            'driver' => 'session',
+            'provider' => 'wakildekans',
+        ],
     ],
 
     /*
@@ -103,6 +108,11 @@ return [
         'petugass' => [
             'driver' => 'eloquent',
             'model' => App\Models\Petugas::class,
+        ],
+
+        'wakildekans' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\WakilDekan::class,
         ],
     ],
 

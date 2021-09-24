@@ -82,6 +82,10 @@ Route::group(['middleware' => ['auth:dosen']], function()
     Route::get('/profildosen', function () {
         return view('/dosen/profildosen');
     });
+
+    Route::get('/buatsurat', function () {
+        return view('/dosen/buatsurat');
+    });
 });
 
 
@@ -117,6 +121,34 @@ Route::group(['middleware' => ['auth:petugas_penomoran']], function()
         return view('/petugas/profilpetugas');
     });
 });
+
+
+/* Route wakl dekan */
+Route::group(['middleware' => ['auth:wakildekan']], function()
+{
+
+    Route::get('/dashboardwd', function () {
+        return view('/wd/dashboardwd');
+    });
+    
+    Route::get('/daftarsuratwd', function () {
+        return view('/wd/daftarsuratwd');
+    });
+    
+    Route::get('/profilwd', function () {
+        return view('/wd/profilwd');
+    });
+});
+
+
+
+
+
+
+
+
+
+
 
 
 

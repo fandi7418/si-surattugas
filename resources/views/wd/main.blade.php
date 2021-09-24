@@ -38,7 +38,7 @@
 
    <nav class="navbar navbar-expand navbar-dark bg-dark" aria-label="Second navbar example">
 
-      <a class="navbar-brand" href="/dashboardpetugas">
+      <a class="navbar-brand" href="/dashboardkadep">
       <img src="/undip.png" alt="" width="auto" height="32">
       Universitas Diponegoro</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,13 +55,13 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/profilpetugas">
+            <a class="nav-link" href="/profilwd">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
               <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
               <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
             </svg>  
-            @if ( Str::length(Auth::guard('petugas_penomoran')->user()) >0 )
-              {{ Auth::guard('petugas_penomoran')->user()->nama_petugas }}
+            @if ( Str::length(Auth::guard('wakildekan')->user()) >0 )
+              {{ Auth::guard('wakildekan')->user()->nama_wd }}
             @endif   
             </a>
           </li>
@@ -79,7 +79,7 @@
     </a>
     <ul class="nav nav-pills flex-column mb-auto">
       <li>
-        <a href="/dashboardpetugas" class="nav-link text-white">
+        <a href="/dashboardwd" class="nav-link text-white">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16" style="margin-right: 10px">
           <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
         </svg>
@@ -87,7 +87,7 @@
         </a>
       </li>
       <li>
-        <a href="/daftarsuratpetugas" class="nav-link text-white">
+        <a href="/daftarsuratwd" class="nav-link text-white">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16" style="margin-right: 10px">
           <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
           <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
@@ -108,13 +108,14 @@
       </a>
     </div>
   </div>
+
+        <!-- Isi -->
   <div class="col-lg-10" style="margin-left: 20px; margin-top: 20px">
-        @yield('petugas')
+        @yield('wd')
   </div>
 </main>
 
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 
     <script src="/js/sidebars.js"></script>
   </body>
