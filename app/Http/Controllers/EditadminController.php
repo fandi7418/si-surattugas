@@ -12,4 +12,10 @@ class EditadminController extends Controller
             "title" => "Edit Admin"
         ]); 
     }
+    public function edit(request $request)
+    {
+        return view('admin.editadmin',[
+            'admin' => $request->admin()
+        ]);
+    }
 }

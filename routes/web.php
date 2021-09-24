@@ -49,6 +49,8 @@ Route::group(['middleware' => ['auth:admin']], function()
     Route::get('/data_surat', [DatasuratController::class, 'index']);
     
     Route::get('/edit_admin', [EditadminController::class, 'index']);
+
+    // Route::get('/edit_admin', [EditadminController::class, 'edit'])->name('admin.editadmin');
     
     Route::get('/edit_dosen', [EditdosenController::class, 'index']);
     
