@@ -23,6 +23,8 @@ class LoginController extends Controller
             return redirect('/dashboardkadep');
         } else if (Auth::guard('petugas_penomoran')->attempt(['email_petugas' => $request->email, 'password' => $request->password])) {
             return redirect('/dashboardpetugas');
+        } else if (Auth::guard('admin')->attempt(['email_admin' => $request->email, 'password' => $request->password])) {
+            return redirect('/dashboard_admin');
         } else {
             return back()->with('loginError', 'Login Gagal!');
         }
@@ -40,6 +42,10 @@ class LoginController extends Controller
         else if (Auth::guard('petugas_penomoran')->check())
         {
             Auth::guard('petugas_penomoran')->logout();
+        }
+        else if (Auth::guard('admin')->check())
+        {
+            Auth::guard('admin')->logout();
         }
         return redirect('/');
         }
