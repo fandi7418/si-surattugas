@@ -15,6 +15,8 @@ use App\Http\Controllers\TambahdosenController;
 use App\Http\Controllers\TambahkadepController;
 use App\Http\Controllers\TambahpetugasController;
 use App\Http\Controllers\DashboardadminController;
+use App\Http\Controllers\SuratController;
+use App\Http\Controllers\DosenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,18 +77,27 @@ Route::group(['middleware' => ['auth:dosen']], function()
         return view('/dosen/dashboarddosen');
     });
 
-    Route::get('/daftarsuratdosen', function () {
-        return view('/dosen/daftarsuratdosen');
-    });
+    Route::get('/daftarsuratdosen', [DosenController::class, 'daftarsurat']);
 
     Route::get('/profildosen', function () {
         return view('/dosen/profildosen');
     });
 
-    Route::get('/buatsurat', function () {
-        return view('/dosen/buatsurat');
-    });
+
+    // Route::get('/buatsurat', function () {
+    //     return view('/dosen/buatsurat');
+    // });
+    
+    Route::get('/buatsurat', [SuratController::class, 'index']);
+    Route::post('/tambahsurat', [SuratController::class, 'tambahsurat']);
+    Route::get('/hapussurat/{id}', [SuratController::class, 'hapussurat']);
+    Route::get('/editsurat/{id}', [SuratController::class, 'editsurat']);
+    Route::post('/updatesurat/{id}', [SuratController::class, 'updatesurat']);
+
+    Route::get('/surat/{surat}', [SuratController::class, 'show']);
+
 });
+// Route::get('/suratpdf', [SuratController::class, 'tampilpdf']);
 
 
 /* Route kadep */
@@ -123,10 +134,10 @@ Route::group(['middleware' => ['auth:petugas_penomoran']], function()
 });
 
 
-/* Route wakl dekan */
+/* Route wakil dekan */
 Route::group(['middleware' => ['auth:wakildekan']], function()
 {
-
+    
     Route::get('/dashboardwd', function () {
         return view('/wd/dashboardwd');
     });
@@ -139,7 +150,6 @@ Route::group(['middleware' => ['auth:wakildekan']], function()
         return view('/wd/profilwd');
     });
 });
-
 
 
 
