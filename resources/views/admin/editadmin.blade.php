@@ -2,23 +2,25 @@
 
 @section('container')
                 <h1 class="">Edit Profile</h1>
-                    <form style="margin-right: 10px">
+                @foreach ($admin as $adm)
+                    <form style="margin-right: 10px" method="post" action="/update_admin/{{ $adm->id }}">
+                        @csrf
                         <div class="form-group row mt-4">
                             <label for="colFormLabel" class="col-sm-2 col-form-label">Nama</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="colFormLabel" value='{{ Auth::guard('admin')->user()->nama_admin }}' >
+                                    <input type="text" class="form-control" id="colFormLabel" name="nama" value="{{ $adm->nama_admin }}" >
                         </div>
                                 </div>
                         <div class="form-group row mt-4">
                             <label for="colFormLabel" class="col-sm-2 col-form-label">NIP</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="colFormLabel" value='{{ Auth::guard('admin')->user()->NIP }}' >
+                                    <input type="text" class="form-control" id="colFormLabel" name="NIP" value="{{ $adm->NIP }}" >
                         </div>
                                 </div>
                         <div class="form-group row mt-4">
                             <label for="colFormLabel" class="col-sm-2 col-form-label">Email</label>
                                 <div class="col-sm-8">
-                                    <input type="email" class="form-control" id="colFormLabel" value='{{ Auth::guard('admin')->user()->email_admin }}'>
+                                    <input type="email" class="form-control" id="colFormLabel" name="email" value="{{ $adm->email_admin }}">
                         </div>
                                 </div>
                         {{-- <div class="form-group row mt-4">
@@ -31,13 +33,12 @@
                         <div class="form-group row mt-4">
                             <label for="colFormLabel" class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-5">
-                                    <button type="button" class="btn btn-primary">Simpan</button>
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>
                                 </div>
             
                     </form> 
-                                    
-                                
+                    @endforeach
                 <script>
                             function myFunction() {
                                 var x = document.getElementById("inputPassword");
@@ -48,5 +49,6 @@
                                 }
                             }
                 </script>
+
 
 @endsection

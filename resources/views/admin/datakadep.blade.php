@@ -20,9 +20,10 @@
                             <li><option value="1" class="dropdown-item-dark" href="#">Teknik Komputer</option></li>
                           </ul>
                     </select>
-                    
+                    <a href="/tambah_kadep" class="">
                     <button type="button" class="btn btn-success btn-sm" style="float: right; margin-right: 5px">Tambah Kadep</button>
-        <table class="table table-striped table-sm">
+                  </a>
+                    <table class="table table-striped table-sm">
           <thead>
             <tr>
               <th scope="col">Nama Kadep</th>
@@ -32,23 +33,16 @@
             </tr>
           </thead>
           <tbody>
+            @foreach($kadep as $kdp)
             <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td><button type="button" class="btn btn-primary btn-sm">Edit</button>
-              <button type="button" class="btn btn-danger btn-sm">Hapus</button>
-            </td>
+              <td>{{ $kdp->nama_kadep }}</td>
+              <td>{{ $kdp->NIP }}</td>
+              <td>{{ $kdp->prodi_kadep }}</td>
+              <td>  <a href="/edit_kadep/{{ $kdp->id }}" class="btn btn-primary btn-sm">Edit</a>
+                    <a href="/hapus_kadep/{{ $kdp->id }}" class="btn btn-danger btn-sm">Hapus</a>
+              </td>
             </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td><button type="button" class="btn btn-primary btn-sm">Edit</button>
-              <button type="button" class="btn btn-danger btn-sm">Hapus</button>
-            </td>
-            </tr>
-            
+            @endforeach
           </tbody>
         </table>
       </div>

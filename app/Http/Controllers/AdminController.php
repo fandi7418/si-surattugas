@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -14,9 +17,34 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.dashboardadmin', [
+            "title" => "Dashboard Admin"
+        ]); 
     }
 
+    public function dataadmin()
+    {
+        
+        $admin = DB::table('admin') -> get();
+        return view('admin.dataadmin', ['admin' => $admin, "title" => "Data Admin"]);
+    }
+
+    public function editadmin($id )
+    {
+        $admin = DB::table('admin')->where('id', $id)->get();
+        return view('admin.editadmin', ['admin' => $admin]);
+    }
+
+    public function updateadmin(Request $request)
+    {
+        DB::table('admin')->where('id', $request->id)->update([
+            'nama_admin' => $request->nama,
+            'NIP' => $request->NIP,
+            'email_admin' => $request->email,
+
+        ]);
+        return redirect('/data_admin');
+    }
     /**
      * Show the form for creating a new resource.
      *

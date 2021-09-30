@@ -13,21 +13,15 @@
             </tr>
           </thead>
             <tbody>
+              @foreach($admin as $adm)
+                
               <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><button href="/edit_admin" type="button" class="btn btn-primary btn-sm">Edit</button>
-              </td>
+                <td>{{ $adm->nama_admin }}</td>
+                <td>{{ $adm->NIP }}</td>
+                <td>{{ $adm->email_admin }}</td>
+                <td><a href="/edit_admin/{{ $adm->id }}" class="btn btn-primary btn-sm">Edit</a></td>
               </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><button type="button" class="btn btn-primary btn-sm">Edit</button>
-              </td>
-              </tr>
-              
+              @endforeach
             </tbody>
         </table>
       </div>
