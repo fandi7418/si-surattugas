@@ -14,7 +14,7 @@
                     <div class="form-group row mt-4">
                     <label for="colFormLabel" class="col-sm-2 col-form-label">NIP</label>
                     <div class="col-sm-8">
-                    <input type="text" name="NIP" class="form-control" id="colFormLabel" placeholder="Silahkan Masukkan NIP Anda">
+                    <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <=57" name="NIP" class="form-control" id="colFormLabel" placeholder="Silahkan Masukkan NIP Anda">
                         </div>
                         </div>
                         <div class="form-group row mt-4">

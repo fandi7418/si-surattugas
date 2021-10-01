@@ -5,6 +5,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\KadepController;
+use App\Http\Controllers\WakilDekanController;
+use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\DataadminController;
 use App\Http\Controllers\DatadosenController;
 use App\Http\Controllers\DatakadepController;
@@ -43,29 +45,33 @@ Route::group(['middleware' => ['auth:admin']], function()
 {
 
     // route untuk data admin //
-    Route::get('/dashboard_admin', [AdminController::class, 'index']);
+    Route::get('/dashboard_admin', [AdminController::class, 'index'])->name('dashboard admin');
 
-    Route::get('/data_admin', [AdminController::class, 'dataadmin']);
+    Route::get('/data_admin', [AdminController::class, 'dataadmin'])->name('data admin');
     
-    Route::get('/edit_admin/{$id}', [AdminController::class, 'editadmin']);
+    Route::get('/edit_admin/{id}', [AdminController::class, 'editadmin'])->name('edit data admin');
 
-    Route::post('/update_admin/{$id}', [AdminController::class, 'updateadmin']); 
+    Route::post('/update_admin/{id}', [AdminController::class, 'updateadmin'])->name('update data admin'); 
 
     // route untuk data dosen //
     Route::get('/data_dosen', [DosenController::class, 'datadosen']);
     
-    Route::get('/edit_dosen', [DosenController::class, 'editdosen']);
+    Route::get('/edit_dosen/{id}', [DosenController::class, 'editdosen']);
+
+    Route::post('/update_dosen/{id}', [DosenController::class, 'updatedosen']);
 
     Route::get('/tambah_dosen', [DosenController::class, 'index']);
 
     Route::post('/tambah_dosen', [DosenController::class, 'tambahdosen']);
 
-    Route::get('/hapus_dosen/{$id}', [DosenController::class, 'hapusdosen']);
+    Route::get('/hapus_dosen/{id}', [DosenController::class, 'hapusdosen']);
 
     // route untuk data kadep //
     Route::get('/data_kadep', [KadepController::class, 'datakadep']);
 
-    Route::get('/edit_kadep', [EditkadepController::class, 'index']);
+    Route::get('/edit_kadep/{id}', [KadepController::class, 'editkadep']);
+
+    Route::post('/update_kadep/{id}', [KadepController::class, 'updatekadep']);
 
     Route::get('/tambah_kadep', [KadepController::class, 'index']);
 
@@ -73,17 +79,36 @@ Route::group(['middleware' => ['auth:admin']], function()
 
     Route::post('/tambah_kadep', [KadepController::class, 'tambahkadep']);
 
+
     // route untuk data wakil dekan
 
+    Route::get('/data_wakildekan', [WakilDekanController::class, 'datawd1']);
 
+    Route::get('/tambah_wakildekan', [WakilDekanController::class, 'index']);
+
+    Route::post('/tambah_wakildekan', [WakilDekanController::class, 'tambahwd1']);
+
+    Route::get('/edit_wakildekan/{id}', [WakilDekanController::class, 'editwd1']);
+
+    Route::post('/update_wakildekan/{id}', [WakilDekanController::class, 'updatewd1']);
+
+    Route::get('/hapus_wakildekan/{id}', [WakilDekanController::class, 'hapuswd1']);
 
     // route untuk data petugas //
 
-    Route::get('/data_petugas', [DatapetugasController::class, 'index']);
+    Route::get('/data_petugas', [PetugasController::class, 'datapetugas']);
 
-    Route::get('/edit_petugas', [EditpetugasController::class, 'index']);
+    Route::get('/tambah_petugas', [PetugasController::class, 'index']);
 
-    Route::get('/tambah_petugas', [TambahpetugasController::class, 'index']);
+    Route::post('/tambah_petugas', [PetugasController::class, 'tambahpetugas']);
+
+    Route::get('/edit_petugas/{id}', [PetugasController::class, 'editpetugas']);
+
+    Route::post('/update_petugas/{id}', [petugasController::class, 'updatepetugas']);
+
+    Route::get('/hapus_petugas/{id}', [petugasController::class, 'hapuspetugas']);
+
+
 
     // route untuk data surat
     
