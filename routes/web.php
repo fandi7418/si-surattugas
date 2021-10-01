@@ -149,11 +149,6 @@ Route::group(['middleware' => ['auth:dosen']], function()
     Route::get('/profildosen', function () {
         return view('/dosen/profildosen');
     });
-
-
-    // Route::get('/buatsurat', function () {
-    //     return view('/dosen/buatsurat');
-    // });
     
     Route::get('/buatsurat', [SuratController::class, 'index']);
     Route::post('/tambahsurat', [SuratController::class, 'tambahsurat']);
