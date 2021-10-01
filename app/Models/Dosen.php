@@ -28,4 +28,10 @@ class Dosen extends Authenticatable
     // protected $casts = [
     //     'email_verified_at' => 'datetime',
     // ];
+
+    public function surat()
+    {
+    //Setiap user akan memiliki banyak data
+    return $this->hasMany('App\Models\Surat', 'NIP');
+    }
 }

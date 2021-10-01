@@ -29,7 +29,7 @@ class AdminController extends Controller
         return view('admin.dataadmin', ['admin' => $admin, "title" => "Data Admin"]);
     }
 
-    public function editadmin($id )
+    public function editadmin($id)
     {
         $admin = DB::table('admin')->where('id', $id)->get();
         return view('admin.editadmin', ['admin' => $admin]);

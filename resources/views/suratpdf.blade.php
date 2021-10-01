@@ -11,9 +11,6 @@
         <h1>Jenis Kegiatan = {{ $surat->jenis }}</h1>
         <h1>Tempat = {{ $surat->tempat }}</h1>
         <script>
-        // $(document).ready(function() {
-        // window.print();
-        // })
         document.addEventListener("DOMContentLoaded", function(event) {
         //do work
         window.print();

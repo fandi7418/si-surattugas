@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\Dosen;
+use App\Models\Surat;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -19,14 +20,15 @@ class DosenController extends Controller
     public function datadosen()
     {
         
-        $dosen = DB::table('dosen') -> get();
+        $dosen = DB::table('dosen')-> get();
         return view('admin.datadosen', ['dosen' => $dosen, "title" => "Data Dosen"]);
     }
-    public function daftarsurat()
+    public function daftarsurat(Request $request)
     {
-
-    $surat = DB::table('surat') -> get();
-    return view('dosen.daftarsuratdosen', ['surat' => $surat]);
+        $surat = DB::table('surat')
+        ->where(['surat.NIP' => Auth::user()->NIP])
+        ->get();
+        return view('dosen.daftarsuratdosen', ['surat' => $surat]);
     }
 
     public function tambahdosen(Request $request)
@@ -61,7 +63,8 @@ class DosenController extends Controller
     }
     public function hapusdosen($id)
     {
-        DB::table('dosen')->where('id', $id)->delete();
+        dd('hehe');
+        Dosen::where('id', $id)->delete();
         return redirect('/data_dosen');
     }
 }

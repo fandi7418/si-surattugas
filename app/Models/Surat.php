@@ -35,4 +35,11 @@ class Surat extends Authenticatable
     // protected $casts = [
     //     'email_verified_at' => 'datetime',
     // ];
+
+    public function dosen()
+    {
+     //Setiap data hanya dimiliki oleh satu user
+     return $this->belongsTo('App\Models\Dosen', 'NIP');
+    }
 }
+

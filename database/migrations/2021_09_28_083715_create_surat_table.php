@@ -30,6 +30,13 @@ class CreateSuratTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+        // Schema::table('dosen', function ($table) {
+        //     $table->foreign('NIP')
+        //     ->references('NIP')
+        //     ->on('surat')
+        //     ->onUpdate('cascade')
+        //     ->onDelete('cascade');
+        // });
     }
 
     /**

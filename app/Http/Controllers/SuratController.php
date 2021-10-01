@@ -19,6 +19,8 @@ class SuratController extends Controller
     public function show(Surat $surat)
     {
         return view('suratpdf', compact('surat'));
+        // $pdf = PDF::loadView('suratpdf', compact('surat'));
+        // return $pdf->stream();
     }
 
     public function tambahsurat(Request $request)

@@ -9,13 +9,13 @@
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Nama Dosen</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder=" " name="nama">
+                <input type="text" readonly class="form-control" placeholder=" " name="nama" value="{{ Auth::guard('dosen')->user()->nama_dosen }}">
             </div>
         </div>
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">NIP</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder=" " name="nip">
+                <input type="text" readonly class="form-control" placeholder=" " name="nip" value="{{ Auth::guard('dosen')->user()->NIP }}">
             </div>
         </div>
         <div class="form-group row mb-2">

@@ -23,13 +23,6 @@
                                     <input type="email" class="form-control" id="colFormLabel" name="email" value="{{ $adm->email_admin }}">
                         </div>
                                 </div>
-                        {{-- <div class="form-group row mt-4">
-                            <label for="colFormLabel" class="col-sm-2 col-form-label">Password</label>
-                                <div class="col-sm-5">
-                                    <input type="password" class="form-control" id="inputPassword" value='{{ Auth::guard('admin')->user()->password }}'>
-                                    <input type="checkbox" onclick="myFunction()"> Tampilkan Password
-                        </div>
-                                </div> --}}
                         <div class="form-group row mt-4">
                             <label for="colFormLabel" class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-5">
