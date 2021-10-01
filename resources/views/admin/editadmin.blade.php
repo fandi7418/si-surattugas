@@ -2,6 +2,7 @@
 
 @section('container')
                 <h1 class="">Edit Profile</h1>
+                
                 @foreach ($admin as $adm)
                     <form style="margin-right: 10px" method="post" action="/update_admin/{{ $adm->id }}">
                         @csrf
@@ -14,7 +15,7 @@
                         <div class="form-group row mt-4">
                             <label for="colFormLabel" class="col-sm-2 col-form-label">NIP</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="colFormLabel" name="NIP" value="{{ $adm->NIP }}" >
+                                    <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" id="colFormLabel" name="NIP" value="{{ $adm->NIP }}" >
                         </div>
                                 </div>
                         <div class="form-group row mt-4">

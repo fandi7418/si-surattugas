@@ -10,20 +10,20 @@
             <div class="form-group row mt-4">
                 <label for="colFormLabel" class="col-sm-2 col-form-label">Nama</label>
                     <div class="col-sm-8">
-                        <input type="text" name="nama" class="form-control" id="colFormLabel" >{{ $dsn->nama_dosen }}
+                        <input type="text" name="nama" class="form-control" id="colFormLabel" value="{{ $dsn->nama_dosen }}" >
                     </div>
             </div>
                     <div class="form-group row mt-4">
                     <label for="colFormLabel" class="col-sm-2 col-form-label">NIP</label>
                     <div class="col-sm-8">
-                    <input type="text" name="NIP" class="form-control" id="colFormLabel" >{{ $dsn->NIP }}
+                    <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <=57" name="NIP" class="form-control" id="colFormLabel" value="{{ $dsn->NIP }}">
                         </div>
                         </div>
                         <div class="form-group row mt-4">
                             <label for="colFormLabel" class="col-sm-2 col-form-label">Program Studi</label>
                             <div class="col-sm-8">
-                                        <select class="form-select" name="prodi" aria-label="Default select example">
-                                            <option selected>{{ $dsn->prodi }}</option>
+                                        <select  class="form-select" name="prodi" aria-label="Default select example">
+                                            <option selected>{{ $dsn->prodi_dosen }}</option>
                                             <option value="Teknik Sipil">Teknik Sipil</option>
                                             <option value="Teknik Arsitektur">Teknik Arsitektur</option>
                                             <option value="Teknik Kimia">Teknik Kimia</option>
@@ -42,7 +42,7 @@
                     <div class="form-group row mt-4">
                     <label for="colFormLabel" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-8">
-                    <input type="email" name="email" class="form-control" id="colFormLabel" >{{ $dsn->email_dosen }}
+                    <input type="email" name="email" class="form-control" id="colFormLabel" value="{{ $dsn->email_dosen }}" >
                         </div>
                         </div>
                     {{-- <div class="form-group row mt-4">

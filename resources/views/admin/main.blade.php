@@ -5,12 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>{{$title}}</title>
+        <title>{{$title}} | Sistem Informasi Surat Tugas</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/adminstyles.css" rel="stylesheet" />
-        <link href="css/adminsidebars.css" rel="stylesheet" />
+        <link href="{{ asset('css/adminstyles.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/adminsidebars.css') }}" rel="stylesheet" />
     </head>
     <body>
         <div class="d-flex" id="wrapper">
@@ -28,6 +28,7 @@
                                 <li><a href="/data_admin" class="link-dark rounded">Admin</a></li>
                                 <li><a href="/data_dosen" class="link-dark rounded">Dosen</a></li>
                                 <li><a href="/data_kadep" class="link-dark rounded">Ketua Departemen</a></li>
+                                <li><a href="/data_wakildekan" class="link-dark rounded">Wakil Dekan</a></li>
                                 <li><a href="/data_petugas" class="link-dark rounded">Petugas Penomoran</a></li>
                             </ul>
                         </div>
@@ -65,8 +66,8 @@
             </div>
         </div>
         <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js') }}"></script>
         <!-- Core theme JS-->
-        <script src="js/adminscripts.js"></script>
+        <script src="{{ asset('js/adminscripts.js') }}"></script>
     </body>
 </html>

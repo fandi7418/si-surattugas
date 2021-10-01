@@ -22,6 +22,13 @@ class AdminController extends Controller
         ]); 
     }
 
+    public function index2()
+    {
+        return view('admin.editadmin', [
+            "title" => "Edit Profil"
+        ]); 
+    }
+
     public function dataadmin()
     {
         
@@ -32,7 +39,7 @@ class AdminController extends Controller
     public function editadmin($id)
     {
         $admin = DB::table('admin')->where('id', $id)->get();
-        return view('admin.editadmin', ['admin' => $admin]);
+        return view('admin.editadmin', ['admin' => $admin, "title" => "Edit Profil Admin"]);
     }
 
     public function updateadmin(Request $request)

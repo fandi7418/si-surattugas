@@ -36,6 +36,23 @@ class KadepController extends Controller
         return redirect('data_kadep');
     }
 
+    public function editkadep($id)
+    {
+        $kadep = DB::table('ketua_departemen')->where('id', $id)->get();
+        return view('admin.editkadep', ['kadep' => $kadep, "title" => "Edit Profil Ketua Departemen"]);
+    }
+
+    public function updatekadep(Request $request)
+    {
+        DB::table('ketua_departemen')->where('id', $request->id)->update([
+            'nama_kadep' => $request->nama,
+            'NIP' => $request->NIP,
+            'email_kadep' => $request->email,
+            'prodi_kadep' => $request->prodi,
+        ]);
+        return redirect('data_kadep');
+    }
+
     public function hapuskadep($id)
     {
         DB::table('ketua_departemen')->where('id', $id)->delete();

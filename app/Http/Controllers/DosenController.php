@@ -35,7 +35,7 @@ class DosenController extends Controller
     {
         DB::table('dosen')->insert([
             'nama_dosen' => $request->nama,
-            'NIP' => $request->nip,
+            'NIP' => $request->NIP,
             'prodi_dosen' => $request->prodi,
             'email_dosen' => $request->email,
             'password' => Hash::make($request->password),
