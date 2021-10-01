@@ -53,7 +53,7 @@ Route::group(['middleware' => ['auth:admin']], function()
 
     Route::post('/update_admin/{id}', [AdminController::class, 'updateadmin'])->name('update data admin'); 
 
-    // route untuk data dosen //
+    // route untuk data dosen // ///
     Route::get('/data_dosen', [DosenController::class, 'datadosen']);
     
     Route::get('/edit_dosen/{id}', [DosenController::class, 'editdosen']);
