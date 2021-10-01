@@ -117,7 +117,7 @@ Route::group(['middleware' => ['auth:admin']], function()
     
     
 
-    // Route::get('/edit_admin', [EditadminController::class, 'edit'])->name('admin.editadmin');
+
     
 
     
