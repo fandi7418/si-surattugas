@@ -26,35 +26,30 @@
                                 <thead>
                                     <tr>
                             <th scope="col">No. Surat</th>
-                            <th scope="col">Subjek</th>
+                            <th scope="col">Judul</th>
                             <th scope="col">Nama Dosen</th>
                             <th scope="col">Program Studi</th>
-                            <th scope="col">Tanggal</th>
+                            <th scope="col">Tanggal Awal</th>
+                            <th scope="col">Tanggal Akhir</th>
                             <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($surat as $srt )
+                                    
                                 <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            <td><button type="button" class="btn btn-primary btn-sm">Lihat</button>
-                            <button type="button" class="btn btn-danger btn-sm">Hapus</button>
+                                <td>{{ $srt->no_surat }}</td>
+                                <td>{{ $srt->judul }}</td>
+                                <td>{{ $srt->nama_dosen }}</td>
+                                <td>{{ $srt->prodi }}</td>
+                                <td>{{ $srt->tanggalawal }}</td>
+                                <td>{{ $srt->tanggalakhir }}</td>
+                            <td>
+                                <a href="/surat/{{ $srt->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
+                                <a href="/hapus_surat/{{ $srt->id }}" class="btn btn-danger btn-sm">Hapus</a>
                             </td>
                             </tr>
-                            <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><button type="button" class="btn btn-primary btn-sm">Lihat</button>
-                            <button type="button" class="btn btn-danger btn-sm">Hapus</button>
-                            </td>
-                            </tr>
-                            
+                            @endforeach
                         </tbody>
                         </table>
                     </div>

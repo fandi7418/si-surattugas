@@ -112,7 +112,8 @@ Route::group(['middleware' => ['auth:admin']], function()
 
     // route untuk data surat
     
-    Route::get('/data_surat', [DatasuratController::class, 'index']);
+    Route::get('/data_surat', [SuratController::class, 'datasurat']);
+    Route::get('/hapus_surat/{id}', [SuratController::class, 'hapussuratadmin']);
     
     
     
@@ -156,9 +157,9 @@ Route::group(['middleware' => ['auth:dosen']], function()
     Route::get('/editsurat/{id}', [SuratController::class, 'editsurat']);
     Route::post('/updatesurat/{id}', [SuratController::class, 'updatesurat']);
 
-    Route::get('/surat/{surat}', [SuratController::class, 'show']);
-
+    
 });
+Route::get('/surat/{surat}', [SuratController::class, 'show']);
 // Route::get('/suratpdf', [SuratController::class, 'tampilpdf']);
 
 

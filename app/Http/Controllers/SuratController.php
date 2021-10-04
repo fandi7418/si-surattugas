@@ -68,4 +68,16 @@ class SuratController extends Controller
         ]);
         return redirect('/daftarsuratdosen');
     }
+
+    public function datasurat()
+    {
+        $surat = DB::table('surat') -> get();
+        return view('admin.datasurat', ['surat' => $surat, "title" => "Data Surat Tugas"]);
+    }
+
+    public function hapussuratadmin($id)
+    {
+        DB::table('surat')->where('id', $id)->delete();
+        return redirect('/data_surat');
+    }
 }

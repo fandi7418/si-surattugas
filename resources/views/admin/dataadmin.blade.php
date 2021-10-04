@@ -1,17 +1,17 @@
 @extends('admin.main')
 
 @section('container')
-                    <h2 class="mt-4">Data Admin</h2>
-      <div class="table-responsive">
-        <table class="table table-striped table-sm">
-          <thead>
-            <tr>
-              <th scope="col">Nama Admin</th>
-              <th scope="col">NIP</th>
-              <th scope="col">E-mail Admin</th>
-              <th scope="col">Aksi</th>
-            </tr>
-          </thead>
+<h2 class="mt-4">Data Admin</h2>
+  <div class="table-responsive">
+      <table class="table table-striped table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Nama Admin</th>
+            <th scope="col">NIP</th>
+            <th scope="col">E-mail Admin</th>
+            <th scope="col">Aksi</th>
+          </tr>
+        </thead>
             <tbody>
               @foreach($admin as $adm)
                 
@@ -24,7 +24,7 @@
               @endforeach
             </tbody>
         </table>
-      </div>
+  </div>
 
       
       @endsection
