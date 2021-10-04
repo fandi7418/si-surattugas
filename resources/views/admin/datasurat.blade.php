@@ -31,6 +31,7 @@
                             <th scope="col">Program Studi</th>
                             <th scope="col">Tanggal Awal</th>
                             <th scope="col">Tanggal Akhir</th>
+                            <th scope="col">Status</th>
                             <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
@@ -44,6 +45,7 @@
                                 <td>{{ $srt->prodi }}</td>
                                 <td>{{ $srt->tanggalawal }}</td>
                                 <td>{{ $srt->tanggalakhir }}</td>
+                                <td>{{ $srt->status }}</td>
                             <td>
                                 <a href="/surat/{{ $srt->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
                                 <a href="/hapus_surat/{{ $srt->id }}" class="btn btn-danger btn-sm">Hapus</a>
