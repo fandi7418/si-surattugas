@@ -21,8 +21,14 @@
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Departemen/Prodi</label>
             <div class="col-sm-5">
-                <select class="form-select" aria-label="Default select example" name="prodi">
-                    <option selected> </option>
+                <input type="text" readonly class="form-control" placeholder=" " name="prodi" value="{{ Auth::guard('dosen')->user()->prodi_dosen }}">
+            </div>
+        </div>
+        <!-- <div class="form-group row mb-2">
+            <label class="col-sm-2 col-form-label">Departemen/Prodi</label>
+            <div class="col-sm-5">
+                <select class="form-select" aria-label="Default select example" name="prodi" disabled="true">
+                    <option selected>{{ Auth::guard('dosen')->user()->prodi_dosen }}</option>
                     <option value="Teknik Sipil">Teknik Sipil</option>
                     <option value="Teknik Arsitektur">Teknik Arsitektur</option>
                     <option value="Teknik Kimia">Teknik Kimia</option>
@@ -37,7 +43,7 @@
                     <option value="Teknik Komputer">Teknik Komputer</option>
                 </select>
             </div>
-        </div>
+        </div> -->
 
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Pangkat/Gol</label>
@@ -76,13 +82,13 @@
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Tanggal Awal Perjalanan Dinas</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder=" " name="tanggalawal">
+                <input type="date" class="form-control" placeholder=" " name="tanggalawal">
             </div>
         </div>
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Tanggal Akhir Perjalanan Dinas</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder=" " name="tanggalakhir">
+                <input type="date" class="form-control" placeholder=" " name="tanggalakhir">
             </div>
         </div>
         <div class="col-sm-7">

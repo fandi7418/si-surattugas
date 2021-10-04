@@ -63,7 +63,6 @@ class DosenController extends Controller
     }
     public function hapusdosen($id)
     {
-        dd('hehe');
         Dosen::where('id', $id)->delete();
         return redirect('/data_dosen');
     }

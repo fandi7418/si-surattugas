@@ -10,16 +10,22 @@
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Nama Dosen</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder=" " name="nama" value="{{ $isi->nama_dosen }}">
+                <input type="text" readonly class="form-control" placeholder=" " name="nama" value="{{ $isi->nama_dosen }}">
             </div>
         </div>
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">NIP</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder=" " name="nip" value="{{ $isi->NIP }}">
+                <input type="text" readonly class="form-control" placeholder=" " name="nip" value="{{ $isi->NIP }}">
             </div>
         </div>
         <div class="form-group row mb-2">
+            <label class="col-sm-2 col-form-label">Departemen/Prodi</label>
+            <div class="col-sm-5">
+                <input type="text" readonly class="form-control" placeholder=" " name="prodi" value="{{ $isi->prodi }}">
+            </div>
+        </div>
+        <!-- <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Departemen/Prodi</label>
             <div class="col-sm-5" value="{{ $isi->prodi }}">
                 <select class="form-select" aria-label="Default select example" name="prodi">
@@ -38,7 +44,7 @@
                     <option value="Teknik Komputer">Teknik Komputer</option>
                 </select>
             </div>
-        </div>
+        </div> -->
 
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Pangkat/Gol</label>
@@ -77,13 +83,13 @@
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Tanggal Awal Perjalanan Dinas</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder=" " name="tanggalawal" value="{{ $isi->tanggalawal }}">
+                <input type="date" class="form-control" placeholder=" " name="tanggalawal" value="{{ $isi->tanggalawal }}">
             </div>
         </div>
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Tanggal Akhir Perjalanan Dinas</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder=" " name="tanggalakhir" value="{{ $isi->tanggalakhir }}">
+                <input type="date" class="form-control" placeholder=" " name="tanggalakhir" value="{{ $isi->tanggalakhir }}">
             </div>
         </div>
         <div class="col-sm-7">
