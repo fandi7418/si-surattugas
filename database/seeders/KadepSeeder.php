@@ -21,7 +21,7 @@ class KadepSeeder extends Seeder
             'password' => bcrypt('123456'),
             'nama_kadep' => 'Kadep1',
             'NIP' => '123123',
-            'prodi_kadep' => 'teknik',
+            'prodi_kadep' => 'Teknik Komputer',
             'remember_token' => Str::random(60),
         ]);
     }

@@ -21,7 +21,7 @@ class DosenSeeder extends Seeder
             'password' => bcrypt('123456'),
             'nama_dosen' => 'Dosen1',
             'NIP' => '123123',
-            'prodi_dosen' => 'teknik',
+            'prodi_dosen' => 'Teknik Komputer',
             'remember_token' => Str::random(60),
         ]);
     }
