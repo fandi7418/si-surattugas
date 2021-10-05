@@ -7,18 +7,6 @@ use App\Http\Controllers\DosenController;
 use App\Http\Controllers\KadepController;
 use App\Http\Controllers\WakilDekanController;
 use App\Http\Controllers\PetugasController;
-use App\Http\Controllers\DataadminController;
-use App\Http\Controllers\DatadosenController;
-use App\Http\Controllers\DatakadepController;
-use App\Http\Controllers\DatasuratController;
-use App\Http\Controllers\EditadminController;
-use App\Http\Controllers\EditdosenController;
-use App\Http\Controllers\EditkadepController;
-use App\Http\Controllers\DatapetugasController;
-use App\Http\Controllers\EditpetugasController;
-use App\Http\Controllers\TambahdosenController;
-use App\Http\Controllers\TambahkadepController;
-use App\Http\Controllers\TambahpetugasController;
 use App\Http\Controllers\SuratController;
 
 /*
@@ -64,7 +52,9 @@ Route::group(['middleware' => ['auth:admin']], function()
 
     Route::post('/tambah_dosen', [DosenController::class, 'tambahdosen']);
 
-    Route::get('/hapus_dosen/{id}', [DosenController::class, 'hapusdosen']);
+    Route::get('/hapus_dosen/{id}/hapusdosen', [DosenController::class, 'hapusdosen']);
+
+    Route::get('/hapus_dosen/{id}/konfirmasi', [DosenController::class, 'konfirmasi']);
 
     // route untuk data kadep //
     Route::get('/data_kadep', [KadepController::class, 'datakadep']);

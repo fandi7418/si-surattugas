@@ -11,13 +11,14 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{{ asset('css/adminstyles.css') }}" rel="stylesheet" />
         <link href="{{ asset('css/adminsidebars.css') }}" rel="stylesheet" />
+        <link href="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@9.17.2/dist/sweetalert2.min.css') }}" rel="stylesheet" />
     </head>
     <body>
         <div class="d-flex" id="wrapper">
             <!-- Sidebar-->
             <div class="border-end bg-white" id="sidebar-wrapper">
                 <div class="sidebar-heading border-bottom bg-light">Universitas Diponegoro</div>
-                <div class="list-group list-group-flush">
+                <div  class="list-group list-group-flush">
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/dashboard_admin">Dashboard</a>
                     <!-- <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Pengguna</a> -->
                     <button class="nav-link dropdown-toggle list-group-item list-group-item-action list-group-item-light p-3" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
@@ -25,7 +26,7 @@
                         </button>
                         <div class="collapse show" id="home-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="/data_admin" class="link-dark rounded">Admin</a></li>
+                                <li ><a href="/data_admin" class="link-dark rounded">Admin</a></li>
                                 <li><a href="/data_dosen" class="link-dark rounded">Dosen</a></li>
                                 <li><a href="/data_kadep" class="link-dark rounded">Ketua Departemen</a></li>
                                 <li><a href="/data_wakildekan" class="link-dark rounded">Wakil Dekan</a></li>
@@ -69,5 +70,13 @@
         <script src="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js') }}"></script>
         <!-- Core theme JS-->
         <script src="{{ asset('js/adminscripts.js') }}"></script>
+        {{-- alert peringatan --}}
+        {{-- <script src="{{ asset('https://code.jquery.com/jquery-3.6.0.slim.js') }}" type="text/javascript" defer integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script> --}}
+        {{-- <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script> --}}
+
+        {{-- <script src="{{ asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js') }}"></script>
+        <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.all.min.js') }}"></script> --}}
+        @include('sweetalert::alert')
+
     </body>
 </html>

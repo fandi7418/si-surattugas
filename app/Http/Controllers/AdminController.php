@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class AdminController extends Controller
 {
@@ -39,6 +41,7 @@ class AdminController extends Controller
     public function editadmin($id)
     {
         $admin = DB::table('admin')->where('id', $id)->get();
+        
         return view('admin.editadmin', ['admin' => $admin, "title" => "Edit Profil Admin"]);
     }
 
@@ -46,10 +49,13 @@ class AdminController extends Controller
     {
         DB::table('admin')->where('id', $request->id)->update([
             'nama_admin' => $request->nama,
+            'password' => Hash::make($request->password),
             'NIP' => $request->NIP,
             'email_admin' => $request->email,
 
         ]);
+        Alert::question('Question Title', 'Question Message');
+
         return redirect('/data_admin');
     }
     /**
