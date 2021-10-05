@@ -8,6 +8,7 @@ use App\Models\Dosen;
 use App\Models\Surat;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DosenController extends Controller
 {
@@ -42,6 +43,7 @@ class DosenController extends Controller
 
             
         ]);
+        Alert::success('Sukses', 'Data Berhasil Ditambahkan');
         return redirect('data_dosen');
     }
 
@@ -59,11 +61,28 @@ class DosenController extends Controller
             'email_dosen' => $request->email,
             'prodi_dosen' => $request->prodi,
         ]);
+        Alert::success('Sukses', 'Data Berhasil Diubah');
         return redirect('data_dosen');
     }
+
+
+    public function konfirmasi($id)
+    {
+        alert()->question('Peringatan','Anda yakin akan menghapus? ')
+        ->showConfirmButton('<a href="/hapus_dosen/'.$id.'/hapusdosen" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
+        ->showCancelButton('Batal', '#aaa')->reverseButtons();
+
+        return redirect('/data_dosen');
+    }
+
     public function hapusdosen($id)
     {
         Dosen::where('id', $id)->delete();
+        Alert::success('Sukses', 'Data Berhasil Dihapus');
         return redirect('/data_dosen');
+
+        // $dosen = dosen::select('sampul', 'id')->whereId($id)->firstOrfail();
+        // file::delete()
     }
+
 }
