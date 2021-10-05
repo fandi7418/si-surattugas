@@ -58,4 +58,24 @@ class KadepController extends Controller
         DB::table('ketua_departemen')->where('id', $id)->delete();
         return redirect('/data_kadep');
     }
+
+    public function daftarsurat(Request $request)
+    {
+        $surat = DB::table('surat')
+        ->where([
+            'surat.prodi' => Auth::user()->prodi_kadep,
+            'surat.status' => 'Menunggu persetujuan Kadep',
+            ])
+        ->get();
+        return view('kadep.daftarsuratkadep', ['surat' => $surat]);
+    }
+
+    public function izinkan($id)
+    {
+        $surat = DB::table('surat')->where('id', $id)->update([
+            'status' => 'Menunggu persetujuan Wakil Dekan'
+        ]);
+        return redirect('/daftarsuratkadep');
+        
+    }
 }

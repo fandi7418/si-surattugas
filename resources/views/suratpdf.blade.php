@@ -10,12 +10,12 @@
         <h1>Judul Surat = {{ $surat->judul }}</h1>
         <h1>Jenis Kegiatan = {{ $surat->jenis }}</h1>
         <h1>Tempat = {{ $surat->tempat }}</h1>
-        <script>
+        <!-- <script>
         document.addEventListener("DOMContentLoaded", function(event) {
         //do work
         window.print();
         });
-        </script>
+        </script> -->
     </body>
 </html>
 

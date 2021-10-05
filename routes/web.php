@@ -145,21 +145,28 @@ Route::group(['middleware' => ['auth:dosen']], function()
         return view('/dosen/dashboarddosen');
     });
 
-    Route::get('/daftarsuratdosen', [DosenController::class, 'daftarsurat']);
-
     Route::get('/profildosen', function () {
         return view('/dosen/profildosen');
     });
     
+    Route::get('/daftarsuratdosen', [DosenController::class, 'daftarsurat']);
+
     Route::get('/buatsurat', [SuratController::class, 'index']);
+
     Route::post('/tambahsurat', [SuratController::class, 'tambahsurat']);
+
     Route::get('/hapussurat/{id}', [SuratController::class, 'hapussurat']);
+
     Route::get('/editsurat/{id}', [SuratController::class, 'editsurat']);
+
     Route::post('/updatesurat/{id}', [SuratController::class, 'updatesurat']);
 
     
 });
-Route::get('/surat/{surat}', [SuratController::class, 'show']);
+Route::get('/surat/{id}', [SuratController::class, 'show']);
+// Route::get('/suratpdf', [SuratController::class, 'show']);
+
+
 // Route::get('/suratpdf', [SuratController::class, 'tampilpdf']);
 
 
@@ -177,6 +184,11 @@ Route::group(['middleware' => ['auth:ketua_departemen']], function()
     Route::get('/profilkadep', function () {
         return view('/kadep/profilkadep');
     });
+
+    Route::get('/daftarsuratkadep', [KadepController::class, 'daftarsurat']);
+
+    Route::get('/izinkan/{id}', [KadepController::class, 'izinkan']);
+
 });
 
 
@@ -212,6 +224,9 @@ Route::group(['middleware' => ['auth:wakildekan']], function()
     Route::get('/profilwd', function () {
         return view('/wd/profilwd');
     });
+
+    Route::get('/daftarsuratwd', [WakilDekanController::class, 'daftarsurat']);
+
 });
 
 

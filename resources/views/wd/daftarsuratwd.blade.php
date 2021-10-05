@@ -15,26 +15,18 @@
             </tr>
           </thead>
           <tbody>
+          @foreach($surat as $isi)
             <tr>
-              <td> </td>
-              <td> </td>
-              <td> </td>
+            <td>{{$isi->judul}}</td>
+              <td>{{$isi->nama_dosen}}</td>
+              <td>{{$isi->tanggalawal}}</td>
               <td>
-              <button type="button" class="btn btn-secondary btn-sm">Lihat</button>
+              <a href="/surat/{{ $isi->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
               <button type="button" class="btn btn-danger btn-sm">Tolak</button>
               <button type="button" class="btn btn-success btn-sm">Izinkan</button>
               </td>
             </tr>
-            <tr>
-              <td> </td>
-              <td> </td>
-              <td> </td>
-              <td>
-              <button type="button" class="btn btn-secondary btn-sm">Lihat</button>
-              <button type="button" class="btn btn-danger btn-sm">Tolak</button>
-              <button type="button" class="btn btn-success btn-sm">Izinkan</button>
-              </td>
-            </tr>
+          @endforeach
           </tbody>
         </table>
       </div>

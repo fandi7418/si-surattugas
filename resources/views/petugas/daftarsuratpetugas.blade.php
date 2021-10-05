@@ -41,8 +41,8 @@
               <td> </td>
               <td> </td>
               <td>
-              <button type="button" class="btn btn-secondary btn-sm">Edit</button>
-              <button type="button" class="btn btn-primary btn-sm">Tambah</button>
+              <button type="button" class="btn btn-secondary btn-sm">Lihat</button>
+              <button type="button" class="btn btn-primary btn-sm">Edit No. Surat</button>
               </td>
             </tr>
             <tr>
@@ -52,8 +52,8 @@
               <td> </td>
               <td> </td>
               <td>
-              <button type="button" class="btn btn-secondary btn-sm">Edit</button>
-              <button type="button" class="btn btn-primary btn-sm">Tambah</button>
+              <button type="button" class="btn btn-secondary btn-sm">Lihat</button>
+              <button type="button" class="btn btn-primary btn-sm">Edit No. Surat</button>
               </td>
             </tr>
           </tbody>

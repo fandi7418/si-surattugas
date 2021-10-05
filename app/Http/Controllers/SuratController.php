@@ -18,9 +18,11 @@ class SuratController extends Controller
 
     public function show(Surat $surat)
     {
-        return view('suratpdf', compact('surat'));
-        // $pdf = PDF::loadView('suratpdf', compact('surat'));
-        // return $pdf->stream();
+        $surat = Surat::all();
+        // return view('suratpdf', compact('surat'));
+        // $pdf = PDF::loadView('suratpdf', ['surat'=>$surat]);
+        $pdf = PDF::loadView('suratpdf', compact(['surat'=>$surat]));
+        return $pdf->stream();
     }
 
     public function tambahsurat(Request $request)
@@ -36,6 +38,7 @@ class SuratController extends Controller
             'kota' => $request->kota,
             'tanggalawal' => $request->tanggalawal,
             'tanggalakhir' => $request->tanggalakhir,
+            'status' => 'Menunggu persetujuan Kadep',
         ]);
         return redirect('buatsurat');
     }
@@ -80,4 +83,5 @@ class SuratController extends Controller
         DB::table('surat')->where('id', $id)->delete();
         return redirect('/data_surat');
     }
+
 }

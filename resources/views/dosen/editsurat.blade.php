@@ -3,7 +3,7 @@
 @section('dosen')
 <title>Edit Surat</title>
 
-<h1 class="h2">Buat Surat</h1>
+<h1 class="h2">Edit Surat</h1>
     @foreach($surat as $isi)
         <form class="mb-8" method="post" action="/updatesurat/{{ $isi->id }}">
         @csrf

@@ -60,4 +60,14 @@ class WakilDekanController extends Controller
         DB::table('wakildekan')->where('id', $id)->delete();
         return redirect('/data_wakildekan');
     }
+
+    public function daftarsurat(Request $request)
+    {
+        $surat = DB::table('surat')
+        ->where([
+            'surat.status' => 'Menunggu persetujuan Wakil Dekan',
+            ])
+        ->get();
+        return view('wd.daftarsuratwd', ['surat' => $surat]);
+    }
 }
