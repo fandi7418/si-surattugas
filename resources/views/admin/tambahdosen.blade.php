@@ -24,7 +24,6 @@
                             <label for="colFormLabel" class="col-sm-2 col-form-label">Program Studi</label>
                             <div class="col-sm-8">
                                 <select class="form-select" name="prodi" aria-label="Default select example">
-                                    <option selected>Pilih Program Studi</option>
                                     <option value="Teknik Sipil">Teknik Sipil</option>
                                     <option value="Teknik Arsitektur">Teknik Arsitektur</option>
                                     <option value="Teknik Kimia">Teknik Kimia</option>
@@ -51,7 +50,7 @@
                         <div class="form-group row mt-4">
                             <label for="colFormLabel" class="col-sm-2 col-form-label">Password</label>
                             <div class="col-sm-5">
-                                <input type="password" required name="password" class="form-control" id="inputPassword"
+                                <input type="password" minlength="6" required name="password" class="form-control" id="inputPassword"
                                     placeholder="Silahkan Masukkan Password Anda">
                                 <input type="checkbox" onclick="myFunction()"> Tampilkan Password
                             </div>

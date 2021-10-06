@@ -44,19 +44,34 @@ class AdminController extends Controller
         
         return view('admin.editadmin', ['admin' => $admin, "title" => "Edit Profil Admin"]);
     }
-
+    
     public function updateadmin(Request $request)
     {
         DB::table('admin')->where('id', $request->id)->update([
             'nama_admin' => $request->nama,
-            'password' => Hash::make($request->password),
             'NIP' => $request->NIP,
             'email_admin' => $request->email,
-
+            
         ]);
         toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect('/data_admin');
     }
+
+    public function updatepassword(Request $request)
+    {
+        DB::table('admin')->where('id', $request->id)->update([
+            'password' => Hash::make($request->password),
+            
+        ]);
+        toast('Data Berhasil Diubah','success')->autoClose(5000);
+        return redirect('/data_admin');
+    }
+    // public function resetadmin($id)
+    // {
+    //     $admin = DB::table('admin')->where('id', $id)->get();
+        
+    //     return view('admin.ubahpassword', ['admin' => $admin, "title" => "Ubah Password Admin"]);
+    // }
     /**
      * Show the form for creating a new resource.
      *

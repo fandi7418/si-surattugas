@@ -9,9 +9,10 @@
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
+        <!-- CSS only -->
+        <link href="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
         <link href="{{ asset('css/adminstyles.css') }}" rel="stylesheet" />
         <link href="{{ asset('css/adminsidebars.css') }}" rel="stylesheet" />
-        <link href="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@9.17.2/dist/sweetalert2.min.css') }}" rel="stylesheet" />
     </head>
     <body>
         <div class="d-flex" id="wrapper">
@@ -67,7 +68,9 @@
             </div>
         </div>
         <!-- Bootstrap core JS-->
-        <script src="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js') }}"></script>
+        {{-- <script src="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js') }}"></script> --}}
+        <script src="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js') }}" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
+
         <!-- Core theme JS-->
         <script src="{{ asset('js/adminscripts.js') }}"></script>
         {{-- alert peringatan --}}

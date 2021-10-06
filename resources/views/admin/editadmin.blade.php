@@ -28,7 +28,7 @@
                 <div class="form-group row mt-4">
                     <label for="colFormLabel" class="col-sm-2 col-form-label">Password</label>
                     <div class="col-sm-5">
-                        <input type="password" name="password" class="form-control" value="{{ $adm->password }}" id="inputPassword">
+                        <input type="password" name="password" required minlength="6" class="form-control" id="inputPassword">
                         <input type="checkbox" onclick="myFunction()"> Tampilkan Password
                     </div>
                 </div>

@@ -8,25 +8,25 @@
                     <div class="form-group row mt-4">
                     <label for="colFormLabel" class="col-sm-2 col-form-label">Nama</label>
                     <div class="col-sm-8">
-                    <input type="text" name="nama" class="form-control" id="colFormLabel" placeholder="Silahkan Masukkan Nama Anda">
+                    <input type="text" required name="nama" class="form-control" id="colFormLabel" placeholder="Silahkan Masukkan Nama Anda">
                         </div>
                         </div>
                     <div class="form-group row mt-4">
                     <label for="colFormLabel" class="col-sm-2 col-form-label">NIP</label>
                     <div class="col-sm-8">
-                    <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <=57" name="NIP" class="form-control" id="colFormLabel" placeholder="Silahkan Masukkan NIP Anda">
+                    <input type="text" required onkeypress="return event.charCode >= 48 && event.charCode <=57" name="NIP" class="form-control" id="colFormLabel" placeholder="Silahkan Masukkan NIP Anda">
                         </div>
                         </div>
                     <div class="form-group row mt-4">
                     <label for="colFormLabel" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-8">
-                    <input type="email" name="email" class="form-control" id="colFormLabel" placeholder="Silahkan Masukkan E-mail Anda">
+                    <input type="email" required name="email" class="form-control" id="colFormLabel" placeholder="Silahkan Masukkan E-mail Anda">
                         </div>
                         </div>
                     <div class="form-group row mt-4">
                     <label for="colFormLabel" class="col-sm-2 col-form-label">Password</label>
                     <div class="col-sm-5">
-                    <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Silahkan Masukkan Password Anda">
+                    <input type="password" required name="password" class="form-control" minlength="6" id="inputPassword" placeholder="Silahkan Masukkan Password Anda">
                     <input type="checkbox" onclick="myFunction()"> Tampilkan Password
                         </div>
                         </div>

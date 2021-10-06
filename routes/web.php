@@ -38,8 +38,11 @@ Route::group(['middleware' => ['auth:admin']], function()
     Route::get('/data_admin', [AdminController::class, 'dataadmin'])->name('data admin');
     
     Route::get('/edit_admin/{id}', [AdminController::class, 'editadmin'])->name('edit data admin');
-
+    
     Route::post('/update_admin/{id}', [AdminController::class, 'updateadmin'])->name('update data admin'); 
+    
+    Route::post('/update_password/{id}', [AdminController::class, 'updatepassword'])->name('aksi ubah password admin'); 
+    
 
     // route untuk data dosen // ///
     Route::get('/data_dosen', [DosenController::class, 'datadosen']);
