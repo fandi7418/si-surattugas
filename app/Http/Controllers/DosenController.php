@@ -61,7 +61,7 @@ class DosenController extends Controller
             'email_dosen' => $request->email,
             'prodi_dosen' => $request->prodi,
         ]);
-        Alert::success('Sukses', 'Data Berhasil Diubah');
+        toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect('data_dosen');
     }
 

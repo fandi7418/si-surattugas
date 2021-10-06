@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Auth;
 use App\Models\Kadep;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class KadepController extends Controller
 {
@@ -33,6 +34,7 @@ class KadepController extends Controller
 
             
         ]);
+        Alert::success('Sukses', 'Data Berhasil Ditambah');
         return redirect('data_kadep');
     }
 
@@ -50,12 +52,23 @@ class KadepController extends Controller
             'email_kadep' => $request->email,
             'prodi_kadep' => $request->prodi,
         ]);
+        toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect('data_kadep');
+    }
+
+    public function konfirmasi($id)
+    {
+        alert()->question('Peringatan','Anda yakin akan menghapus? ')
+        ->showConfirmButton('<a href="/hapus_kadep/'.$id.'/hapuskadep" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
+        ->showCancelButton('Batal', '#aaa')->reverseButtons();
+
+        return redirect('/data_kadep');
     }
 
     public function hapuskadep($id)
     {
         DB::table('ketua_departemen')->where('id', $id)->delete();
+        Alert::success('Sukses', 'Data Berhasil Dihapus');
         return redirect('/data_kadep');
     }
 

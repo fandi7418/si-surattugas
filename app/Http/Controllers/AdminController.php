@@ -54,8 +54,7 @@ class AdminController extends Controller
             'email_admin' => $request->email,
 
         ]);
-        Alert::question('Question Title', 'Question Message');
-
+        toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect('/data_admin');
     }
     /**

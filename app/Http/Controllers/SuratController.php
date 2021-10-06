@@ -7,6 +7,7 @@ use PDF;
 use Illuminate\Http\Request;
 use App\Models\Surat;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 
 class SuratController extends Controller
@@ -40,12 +41,23 @@ class SuratController extends Controller
             'tanggalakhir' => $request->tanggalakhir,
             'status' => 'Menunggu persetujuan Kadep',
         ]);
+        Alert::success('Sukses', 'Data Berhasil Ditambah');
         return redirect('buatsurat');
+    }
+
+    public function konfirmasi($id)
+    {
+        alert()->question('Peringatan','Anda yakin akan menghapus? ')
+        ->showConfirmButton('<a href="/hapussurat/'.$id.'/hapussurat" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
+        ->showCancelButton('Batal', '#aaa')->reverseButtons();
+
+        return redirect('/daftarsuratdosen');
     }
 
     public function hapussurat($id)
     {
         DB::table('surat')->where('id', $id)->delete();
+        Alert::success('Sukses', 'Data Berhasil Dihapus');
         return redirect('/daftarsuratdosen');
     }
 
@@ -69,6 +81,7 @@ class SuratController extends Controller
             'tanggalawal' => $request->tanggalawal,
             'tanggalakhir' => $request->tanggalakhir,
         ]);
+        toast('Data Berhasil Diubah', 'success')->autoClose(5000);
         return redirect('/daftarsuratdosen');
     }
 
@@ -78,9 +91,19 @@ class SuratController extends Controller
         return view('admin.datasurat', ['surat' => $surat, "title" => "Data Surat Tugas"]);
     }
 
+    public function konfirmasiadmin($id)
+    {
+        alert()->question('Peringatan','Anda yakin akan menghapus? ')
+        ->showConfirmButton('<a href="/hapus_surat/'.$id.'/hapussuratadmin" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
+        ->showCancelButton('Batal', '#aaa')->reverseButtons();
+
+        return redirect('/data_wakildekan');
+    }
+
     public function hapussuratadmin($id)
     {
         DB::table('surat')->where('id', $id)->delete();
+        Alert::success('Sukses', 'Data Berhasil Dihapus');
         return redirect('/data_surat');
     }
 

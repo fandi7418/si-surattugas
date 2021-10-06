@@ -48,7 +48,7 @@
                                 <td>{{ $srt->status }}</td>
                             <td>
                                 <a href="/surat/{{ $srt->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
-                                <a href="/hapus_surat/{{ $srt->id }}" class="btn btn-danger btn-sm">Hapus</a>
+                                <a href="/hapus_surat/{{ $srt->id }}/konfirmasiadmin" class="btn btn-danger btn-sm">Hapus</a>
                             </td>
                             </tr>
                             @endforeach

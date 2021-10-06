@@ -52,9 +52,9 @@ Route::group(['middleware' => ['auth:admin']], function()
 
     Route::post('/tambah_dosen', [DosenController::class, 'tambahdosen']);
 
-    Route::get('/hapus_dosen/{id}/hapusdosen', [DosenController::class, 'hapusdosen']);
-
     Route::get('/hapus_dosen/{id}/konfirmasi', [DosenController::class, 'konfirmasi']);
+    
+    Route::get('/hapus_dosen/{id}/hapusdosen', [DosenController::class, 'hapusdosen']);
 
     // route untuk data kadep //
     Route::get('/data_kadep', [KadepController::class, 'datakadep']);
@@ -65,10 +65,11 @@ Route::group(['middleware' => ['auth:admin']], function()
 
     Route::get('/tambah_kadep', [KadepController::class, 'index']);
 
-    Route::get('/hapus_kadep/{$id}', [KadepController::class, 'hapuskadep']);
-
+    Route::get('/hapus_kadep/{id}/konfirmasi', [KadepController::class, 'konfirmasi']);
+    
+    Route::get('/hapus_kadep/{id}/hapuskadep', [KadepController::class, 'hapuskadep']);
+    
     Route::post('/tambah_kadep', [KadepController::class, 'tambahkadep']);
-
 
     // route untuk data wakil dekan
 
@@ -81,11 +82,13 @@ Route::group(['middleware' => ['auth:admin']], function()
     Route::get('/edit_wakildekan/{id}', [WakilDekanController::class, 'editwd1']);
 
     Route::post('/update_wakildekan/{id}', [WakilDekanController::class, 'updatewd1']);
-
-    Route::get('/hapus_wakildekan/{id}', [WakilDekanController::class, 'hapuswd1']);
-
+    
+    Route::get('/hapus_wakildekan/{id}/konfirmasi', [WakilDekanController::class, 'konfirmasi']);
+    
+    Route::get('/hapus_wakildekan/{id}/hapuswd1', [WakilDekanController::class, 'hapuswd1']);
+    
     // route untuk data petugas //
-
+    
     Route::get('/data_petugas', [PetugasController::class, 'datapetugas']);
 
     Route::get('/tambah_petugas', [PetugasController::class, 'index']);
@@ -96,15 +99,18 @@ Route::group(['middleware' => ['auth:admin']], function()
 
     Route::post('/update_petugas/{id}', [petugasController::class, 'updatepetugas']);
 
-    Route::get('/hapus_petugas/{id}', [petugasController::class, 'hapuspetugas']);
-
+    Route::get('/hapus_petugas/{id}/konfirmasi', [petugasController::class, 'konfirmasi']);
+    
+    Route::get('/hapus_petugas/{id}/hapuspetugas', [petugasController::class, 'hapuspetugas']);
 
 
     // route untuk data surat
     
     Route::get('/data_surat', [SuratController::class, 'datasurat']);
-    Route::get('/hapus_surat/{id}', [SuratController::class, 'hapussuratadmin']);
+
+    Route::get('/hapus_surat/{id}/konfirmasiadmin', [SuratController::class, 'konfirmasiadmin']);
     
+    Route::get('/hapus_surat/{id}/hapussuratadmin', [SuratController::class, 'hapussuratadmin']);
     
     
 
@@ -145,12 +151,13 @@ Route::group(['middleware' => ['auth:dosen']], function()
 
     Route::post('/tambahsurat', [SuratController::class, 'tambahsurat']);
 
-    Route::get('/hapussurat/{id}', [SuratController::class, 'hapussurat']);
-
+    Route::get('/hapussurat/{id}/konfirmasi', [SuratController::class, 'konfirmasi']);
+    
+    Route::get('/hapussurat/{id}/hapussurat', [SuratController::class, 'hapussurat']);
+    
     Route::get('/editsurat/{id}', [SuratController::class, 'editsurat']);
-
+    
     Route::post('/updatesurat/{id}', [SuratController::class, 'updatesurat']);
-
     
 });
 Route::get('/surat/{id}', [SuratController::class, 'show']);

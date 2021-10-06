@@ -26,7 +26,7 @@
               <td>{{ $wd1->email_wd }}</td>
               <td>
                 <a href="/edit_wakildekan/{{ $wd1->id }}" class="btn btn-primary btn-sm">Edit</a>
-                <a href="/hapus_wakildekan/{{ $wd1->id }}" class="btn btn-danger btn-sm">Hapus</a>
+                <a href="/hapus_wakildekan/{{ $wd1->id }}/konfirmasi" class="btn btn-danger btn-sm">Hapus</a>
               
             </td>
             </tr>

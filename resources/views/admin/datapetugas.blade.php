@@ -24,7 +24,7 @@
               <td>{{ $ptgs->email_petugas }}</td>
               <td>
                 <a href="/edit_petugas/{{ $ptgs->id }}" class="btn btn-primary btn-sm">Edit</a>
-                <a href="/hapus_petugas/{{ $ptgs->id }}" class="btn btn-danger btn-sm">Hapus</a>
+                <a href="/hapus_petugas/{{ $ptgs->id }}/konfirmasi" class="btn btn-danger btn-sm">Hapus</a>
               </td>
             </tr>
             

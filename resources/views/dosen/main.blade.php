@@ -127,5 +127,6 @@
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="/js/sidebars.js"></script>
+    @include('sweetalert::alert')
   </body>
 </html>

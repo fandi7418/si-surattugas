@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Auth;
 use App\Models\Petugas;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PetugasController extends Controller
 {
@@ -33,6 +34,7 @@ class PetugasController extends Controller
 
             
         ]);
+        Alert::success('Sukses', 'Data Berhasil Ditambah');
         return redirect('data_petugas');
     }
 
@@ -49,12 +51,23 @@ class PetugasController extends Controller
             'NIP' => $request->NIP,
             'email_petugas' => $request->email,
         ]);
+        toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect('data_petugas');
+    }
+
+    public function konfirmasi($id)
+    {
+        alert()->question('Peringatan','Anda yakin akan menghapus? ')
+        ->showConfirmButton('<a href="/hapus_petugas/'.$id.'/hapuspetugas" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
+        ->showCancelButton('Batal', '#aaa')->reverseButtons();
+
+        return redirect('/data_petugas');
     }
 
     public function hapuspetugas($id)
     {
         DB::table('petugas_penomoran')->where('id', $id)->delete();
+        Alert::success('Sukses', 'Data Berhasil Dihapus');
         return redirect('/data_petugas');
     }
 }

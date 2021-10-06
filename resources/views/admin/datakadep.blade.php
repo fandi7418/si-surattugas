@@ -39,7 +39,7 @@
               <td>{{ $kdp->NIP }}</td>
               <td>{{ $kdp->prodi_kadep }}</td>
               <td>  <a href="/edit_kadep/{{ $kdp->id }}" class="btn btn-primary btn-sm">Edit</a>
-                    <a href="/hapus_kadep/{{ $kdp->id }}" class="btn btn-danger btn-sm">Hapus</a>
+                    <a href="/hapus_kadep/{{ $kdp->id }}/konfirmasi" class="btn btn-danger btn-sm">Hapus</a>
               </td>
             </tr>
             @endforeach
