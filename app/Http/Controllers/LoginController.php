@@ -29,7 +29,9 @@ class LoginController extends Controller
         } else if (Auth::guard('wakildekan')->attempt(['email_wd' => $request->email, 'password' => $request->password])) {
             return redirect('/dashboardwd');
         } else {
-            return back()->with('loginError', 'Login Gagal!');
+            // return back()->with('loginError', 'Login Gagal!');
+            Alert::error('Login Gagal', 'Email atau Password Salah');
+            return redirect('/');
         }
     }
     

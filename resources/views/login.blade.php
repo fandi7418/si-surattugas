@@ -44,13 +44,13 @@
 
 <main class="form-signin">
   <form action="{{ route('postlogin') }}" method="post">
-    {{ csrf_field() }}
-    @if(session()->has('loginError'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-      {{ session('loginError') }}
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
-    </div>
-    @endif
+    @csrf
+    {{-- @if(session()->has('loginError')) --}}
+    {{-- <div class="alert alert-danger alert-dismissible fade show" role="alert"> --}}
+      {{-- {{ session('loginError') }} --}}
+      {{-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
+    </div> --}}
+    {{-- @endif --}}
     <img class="mb-4" src="/undip.png" alt="" width="auto" height="150">
     <h1 class="h3 mb-3 fw-normal">Silahkan Login</h1>
 
