@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-
+        <title>Surat Izin Tugas</title>
     </head>
     <body>
         <h1>Nama dosen = {{ $surat->nama_dosen }}</h1>
