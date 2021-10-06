@@ -87,8 +87,24 @@ class KadepController extends Controller
     {
         $surat = DB::table('surat')->where('id', $id)->update([
             'status' => 'Menunggu persetujuan Wakil Dekan'
+            // 'ttd_kadep' => '{{ asset('/ttdkadep.png') }}',
         ]);
         return redirect('/daftarsuratkadep');
         
+    }
+
+    public function tandatangan(Request $request)
+    {
+        $request->validate([
+            'ttd'=>'mimes:jpg,png,jpeg,svg',
+        ]);
+
+        $imgName = $request->ttd->getClientOriginalName() . '-' . time() . '.' . $request->ttd->extension();
+        $request->ttd->move(public_path('image'), $imgName);
+
+        DB::table('ketua_departemen')->where(['ketua_departemen.id' => Auth::user()->id])->update([
+            'ttd_kadep' => $imgName,
+        ]);
+        return redirect('/daftarsuratkadep');
     }
 }

@@ -18,6 +18,7 @@ class Kadep extends Authenticatable
         'nama_kadep',
         'NIP',
         'prodi_kadep',
+        'ttd_kadep',
     ];
 
     protected $hidden = [

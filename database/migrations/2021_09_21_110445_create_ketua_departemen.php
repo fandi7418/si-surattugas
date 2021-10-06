@@ -15,11 +15,12 @@ class CreateKetuaDepartemen extends Migration
     {
         Schema::create('ketua_departemen', function (Blueprint $table) {
             $table->id();
-            $table->string('email_kadep');
-            $table->string('password');
-            $table->string('nama_kadep');
-            $table->bigInteger('NIP');
-            $table->string('prodi_kadep');
+            $table->string('email_kadep')->nullable();
+            $table->string('password')->nullable();
+            $table->string('nama_kadep')->nullable();
+            $table->bigInteger('NIP')->nullable();
+            $table->string('prodi_kadep')->nullable();
+            $table->string('ttd_kadep')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -10,6 +10,8 @@
         <h1>Judul Surat = {{ $surat->judul }}</h1>
         <h1>Jenis Kegiatan = {{ $surat->jenis }}</h1>
         <h1>Tempat = {{ $surat->tempat }}</h1>
+        <h1>TTD Kadep = </h1>
+        <h1>TTD Wakil Dekan = </h1>
         <!-- <script>
         document.addEventListener("DOMContentLoaded", function(event) {
         //do work

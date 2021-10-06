@@ -27,6 +27,8 @@ class CreateSuratTable extends Migration
             $table->date('tanggalawal')->nullable();
             $table->date('tanggalakhir')->nullable();
             $table->string('status')->nullable();
+            $table->string('ttd_kadep')->nullable();
+            $table->string('ttd_wd')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

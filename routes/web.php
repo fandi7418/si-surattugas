@@ -190,6 +190,8 @@ Route::group(['middleware' => ['auth:ketua_departemen']], function()
 
     Route::get('/izinkan/{id}', [KadepController::class, 'izinkan']);
 
+    Route::post('/uploadttd', [KadepController::class, 'tandatangan']);
+
 });
 
 
