@@ -19,10 +19,8 @@ class SuratController extends Controller
 
     public function show(Surat $surat)
     {
-        $surat = Surat::all();
         // return view('suratpdf', compact('surat'));
-        // $pdf = PDF::loadView('suratpdf', ['surat'=>$surat]);
-        $pdf = PDF::loadView('suratpdf', compact(['surat'=>$surat]));
+        $pdf = PDF::loadView('suratpdf', compact('surat'));
         return $pdf->stream();
     }
 
