@@ -18,13 +18,21 @@ class Surat extends Authenticatable
         'NIP',
         'prodi',
         'pangkat',
+        'jabatan',
         'judul',
         'jenis',
         'tempat',
         'kota',
         'tanggalawal',
         'tanggalakhir',
+        'tanggalsurat',
         'status',
+        'ttd_kadep',
+        'ttd_wd',
+        'nama_kadep',
+        'NIP_kadep',
+        'nama_wd',
+        'NIP_wd',
     ];
 
     protected $hidden = [

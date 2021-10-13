@@ -17,6 +17,7 @@ class WakilDekan extends Authenticatable
         'password',
         'nama_wd',
         'NIP',
+        'ttd_wd',
     ];
 
     protected $hidden = [

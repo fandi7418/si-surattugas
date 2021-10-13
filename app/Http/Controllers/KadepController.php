@@ -86,8 +86,18 @@ class KadepController extends Controller
     public function izinkan($id)
     {
         $surat = DB::table('surat')->where('id', $id)->update([
-            'status' => 'Menunggu persetujuan Wakil Dekan'
-            // 'ttd_kadep' => '{{ asset('/ttdkadep.png') }}',
+            'status' => 'Menunggu persetujuan Wakil Dekan',
+            'surat.ttd_kadep' => Auth::user()->ttd_kadep,
+            // 'surat.nama_kadep' => Auth::user()->nama_kadep,
+            // 'surat.NIP_kadep' => Auth::user()->NIP_kadep,
+        ]);
+        return redirect('/daftarsuratkadep');
+        
+    }
+    public function tolak($id)
+    {
+        $surat = DB::table('surat')->where('id', $id)->update([
+            'status' => 'Surat ditolak Kadep',
         ]);
         return redirect('/daftarsuratkadep');
         

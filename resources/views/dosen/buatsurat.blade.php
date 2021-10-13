@@ -53,6 +53,13 @@
         </div>
 
         <div class="form-group row mb-2">
+            <label class="col-sm-2 col-form-label">Jabatan</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" placeholder=" " name="jabatan">
+            </div>
+        </div>
+
+        <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Judul</label>
             <div class="col-sm-5">
                 <input type="text" class="form-control" placeholder=" " name="judul">

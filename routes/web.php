@@ -188,9 +188,11 @@ Route::group(['middleware' => ['auth:ketua_departemen']], function()
 
     Route::get('/daftarsuratkadep', [KadepController::class, 'daftarsurat']);
 
-    Route::get('/izinkan/{id}', [KadepController::class, 'izinkan']);
+    Route::get('/izinkankadep/{id}', [KadepController::class, 'izinkan']);
 
-    Route::post('/uploadttd', [KadepController::class, 'tandatangan']);
+    Route::get('/tolak/{id}', [KadepController::class, 'tolak']);
+
+    Route::post('/uploadttdkadep', [KadepController::class, 'tandatangan']);
 
 });
 
@@ -201,14 +203,16 @@ Route::group(['middleware' => ['auth:petugas_penomoran']], function()
     Route::get('/dashboardpetugas', function () {
         return view('/petugas/dashboardpetugas');
     });
-
-    Route::get('/daftarsuratpetugas', function () {
-        return view('/petugas/daftarsuratpetugas');
-    });
         
     Route::get('/profilpetugas', function () {
         return view('/petugas/profilpetugas');
     });
+
+    Route::get('/daftarsuratpetugas', [PetugasController::class, 'daftarsurat']);
+
+    Route::post('/updatenomorsurat/{id}', [PetugasController::class, 'updatenomorsurat']);
+
+    Route::get('/editnomorsurat/{id}', [PetugasController::class, 'editnomorsurat']);
 });
 
 
@@ -229,6 +233,12 @@ Route::group(['middleware' => ['auth:wakildekan']], function()
     });
 
     Route::get('/daftarsuratwd', [WakilDekanController::class, 'daftarsurat']);
+
+    Route::post('/uploadttdwd', [WakilDekanController::class, 'tandatangan']);
+
+    Route::get('/izinkan/{id}', [WakilDekanController::class, 'izinkan']);
+
+    Route::get('/tolak/{id}', [WakilDekanController::class, 'tolak']);
 
 });
 
