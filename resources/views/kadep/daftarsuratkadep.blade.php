@@ -23,8 +23,8 @@
               <td>{{$isi->tanggalawal}}</td>
               <td>
               <a href="/surat/{{ $isi->id }}" target="_blank" class="btn btn-secondary btn-sm">Lihat</a>
-              <a href=" " class="btn btn-danger btn-sm">Tolak</a>
-              <a href="/izinkan/{{ $isi->id }}" class="btn btn-success btn-sm">Izinkan</a>
+              <a href="/tolak/{{ $isi->id }}" class="btn btn-danger btn-sm">Tolak</a>
+              <a href="/izinkankadep/{{ $isi->id }}" class="btn btn-success btn-sm">Izinkan</a>
               </td>
             </tr>
           @endforeach
@@ -41,7 +41,7 @@
               </button>
             </div>
             <div class="modal-body">
-              <form enctype="multipart/form-data" method="post" action="/uploadttd">
+              <form enctype="multipart/form-data" method="post" action="/uploadttdkadep">
               @csrf
                 <div class="form-group">
                   <label for="recipient-name" class="col-form-label"></label>

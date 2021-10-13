@@ -19,9 +19,9 @@ class SuratController extends Controller
 
     public function show(Surat $surat)
     {
-        // return view('suratpdf', compact('surat'));
-        $pdf = PDF::loadView('suratpdf', compact('surat'));
-        return $pdf->stream();
+        return view('suratpdf', compact('surat'));
+        // $pdf = PDF::loadView('suratpdf', compact('surat'));
+        // return $pdf->stream();
     }
 
     public function tambahsurat(Request $request)
@@ -31,6 +31,7 @@ class SuratController extends Controller
             'NIP' => $request->nip,
             'prodi' => $request->prodi,
             'pangkat' => $request->pangkat,
+            'jabatan' => $request->jabatan,
             'judul' => $request->judul,
             'jenis' => $request->jeniskegiatan,
             'tempat' => $request->tempat,
@@ -38,9 +39,19 @@ class SuratController extends Controller
             'tanggalawal' => $request->tanggalawal,
             'tanggalakhir' => $request->tanggalakhir,
             'status' => 'Menunggu persetujuan Kadep',
+            'nama_kadep' => DB::table('ketua_departemen')
+            ->where('ketua_departemen.prodi_kadep', '=', Auth::user()->prodi_dosen)
+            ->first()->nama_kadep,
+            'NIP_kadep' => DB::table('ketua_departemen')
+            ->where('ketua_departemen.prodi_kadep', '=', Auth::user()->prodi_dosen)
+            ->first()->NIP,
+            'nama_wd' => DB::table('wakildekan')
+            ->first()->nama_wd,
+            'NIP_wd' => DB::table('wakildekan')
+            ->first()->NIP,
         ]);
         Alert::success('Sukses', 'Data Berhasil Ditambah');
-        return redirect('buatsurat');
+        return redirect('/daftarsuratdosen');
     }
 
     public function konfirmasi($id)

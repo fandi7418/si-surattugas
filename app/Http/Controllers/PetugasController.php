@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 use App\Models\Petugas;
+use App\Models\Surat;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -84,6 +85,7 @@ class PetugasController extends Controller
         return redirect('/data_petugas');
     }
 
+<<<<<<< HEAD
     public function updatepassword(Request $request)
     {
         DB::table('petugas_penomoran')->where('id', $request->id)->update([
@@ -92,5 +94,40 @@ class PetugasController extends Controller
         ]);
         toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect('/data_petugas');
+=======
+    public function daftarsurat(Surat $surat)
+    {
+        $surat = DB::table('surat')
+        ->whereNotNull(['surat.ttd_wd'])
+        ->get();
+        return view('petugas.daftarsuratpetugas', ['surat' => $surat]);
+        // $surat = Surat::find([
+        //     'status' => 'Belum diberi nomor',
+        //     'status' => 'Sudah diberi nomor',
+        //     ]);
+        // return view('petugas.daftarsuratpetugas', ['surat' => $surat]);
+    }
+
+    public function editnomorsurat($id)
+    {
+        $surat = DB::table('surat')->where('id', $id)->get();
+        return view('petugas.editnomor', ['surat' => $surat]);
+    }
+
+    public function updatenomorsurat(Request $request, $id)
+    {
+        // $request->validate([
+        //     'no_surat' => 'unique:surat',
+        // ],[
+        //     'no_surat.unique' => 'Nomor tidak boleh sama'
+        // ]);
+
+        DB::table('surat')->where('id', $request->id)->update([
+            'no_surat' => $request->no_surat,
+            'status' => 'Sudah diberi nomor',
+        ]);
+        toast('Data Berhasil Diubah', 'success')->autoClose(5000);
+        return redirect('/daftarsuratpetugas');
+>>>>>>> 86a3f2f368ed11ed20db0e7ffac27d8a9598bf71
     }
 }

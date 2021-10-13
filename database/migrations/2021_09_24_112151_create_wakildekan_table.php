@@ -19,6 +19,7 @@ class CreateWakildekanTable extends Migration
             $table->string('password');
             $table->string('nama_wd');
             $table->bigInteger('NIP');
+            $table->string('ttd_wd')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
