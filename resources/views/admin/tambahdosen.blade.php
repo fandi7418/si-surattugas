@@ -8,22 +8,32 @@
                         <div class="form-group row mt-4">
                             <label for="colFormLabel" class="col-sm-2 col-form-label">Nama</label>
                             <div class="col-sm-8">
-                                <input type="text" required name="nama" class="form-control" id="colFormLabel"
+                                <input type="text" name="nama_dosen" value="{{ old('nama_dosen') }}" class="form-control @error('nama_dosen') is-invalid @enderror" id="colFormLabel"
                                     placeholder="Silahkan Masukkan Nama Anda">
+                                        @error('nama_dosen')
+                                            <div class="invalid-feedback">
+                                            {{ $message }}
+                                            </div>
+                                        @enderror
                             </div>
                         </div>
                         <div class="form-group row mt-4">
                             <label for="colFormLabel" class="col-sm-2 col-form-label">NIP</label>
                             <div class="col-sm-8">
-                                <input type="text" required
-                                    onkeypress="return event.charCode >= 48 && event.charCode <=57" name="NIP"
-                                    class="form-control" id="colFormLabel" placeholder="Silahkan Masukkan NIP Anda">
+                                <input type="text"
+                                    onkeypress="return event.charCode >= 48 && event.charCode <=57" value="{{ old('NIP') }}" name="NIP"
+                                    class="form-control @error('NIP') is-invalid @enderror" id="colFormLabel" placeholder="Silahkan Masukkan NIP Anda">
+                                        @error('NIP')
+                                            <div class="invalid-feedback">
+                                            {{ $message }}
+                                            </div>
+                                        @enderror
                             </div>
                         </div>
                         <div class="form-group row mt-4">
                             <label for="colFormLabel" class="col-sm-2 col-form-label">Program Studi</label>
                             <div class="col-sm-8">
-                                <select class="form-select" name="prodi" aria-label="Default select example">
+                                <select class="form-select" name="prodi_dosen" aria-label="Default select example">
                                     <option value="Teknik Sipil">Teknik Sipil</option>
                                     <option value="Teknik Arsitektur">Teknik Arsitektur</option>
                                     <option value="Teknik Kimia">Teknik Kimia</option>
@@ -43,15 +53,25 @@
                         <div class="form-group row mt-4">
                             <label for="colFormLabel" class="col-sm-2 col-form-label">Email</label>
                             <div class="col-sm-8">
-                                <input type="email" required name="email" class="form-control" id="colFormLabel"
+                                <input type="email" name="email_dosen" value="{{ old('email_dosen') }}" class="form-control @error('email_dosen') is-invalid @enderror" id="colFormLabel"
                                     placeholder="Silahkan Masukkan E-mail Anda">
+                                        @error('email_dosen')
+                                            <div class="invalid-feedback">
+                                            {{ $message }}
+                                            </div>
+                                        @enderror
                             </div>
                         </div>
                         <div class="form-group row mt-4">
                             <label for="colFormLabel" class="col-sm-2 col-form-label">Password</label>
                             <div class="col-sm-5">
-                                <input type="password" minlength="6" required name="password" class="form-control" id="inputPassword"
+                                <input type="password" name="password" value="{{ old('password') }}" class="form-control @error('password') is-invalid @enderror" id="inputPassword"
                                     placeholder="Silahkan Masukkan Password Anda">
+                                        @error('password')
+                                            <div class="invalid-feedback">
+                                            {{ $message }}
+                                            </div>
+                                        @enderror
                                 <input type="checkbox" onclick="myFunction()"> Tampilkan Password
                             </div>
                         </div>

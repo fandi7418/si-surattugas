@@ -41,7 +41,7 @@ Route::group(['middleware' => ['auth:admin']], function()
     
     Route::post('/update_admin/{id}', [AdminController::class, 'updateadmin'])->name('update data admin'); 
     
-    Route::post('/update_password/{id}', [AdminController::class, 'updatepassword'])->name('aksi ubah password admin'); 
+    Route::post('/update_passwordadmin/{id}', [AdminController::class, 'updatepassword'])->name('aksi ubah password admin'); 
     
 
     // route untuk data dosen // ///
@@ -59,6 +59,8 @@ Route::group(['middleware' => ['auth:admin']], function()
     
     Route::get('/hapus_dosen/{id}/hapusdosen', [DosenController::class, 'hapusdosen']);
 
+    Route::post('/update_passworddosen/{id}', [DosenController::class, 'updatepassword'])->name('aksi ubah password dosen'); 
+
     // route untuk data kadep //
     Route::get('/data_kadep', [KadepController::class, 'datakadep']);
 
@@ -73,6 +75,8 @@ Route::group(['middleware' => ['auth:admin']], function()
     Route::get('/hapus_kadep/{id}/hapuskadep', [KadepController::class, 'hapuskadep']);
     
     Route::post('/tambah_kadep', [KadepController::class, 'tambahkadep']);
+
+    Route::post('/update_passwordkadep/{id}', [KadepController::class, 'updatepassword'])->name('aksi ubah password kadep'); 
 
     // route untuk data wakil dekan
 
@@ -89,6 +93,8 @@ Route::group(['middleware' => ['auth:admin']], function()
     Route::get('/hapus_wakildekan/{id}/konfirmasi', [WakilDekanController::class, 'konfirmasi']);
     
     Route::get('/hapus_wakildekan/{id}/hapuswd1', [WakilDekanController::class, 'hapuswd1']);
+
+    Route::post('/update_passwordwd/{id}', [WakilDekanController::class, 'updatepassword'])->name('aksi ubah password wakil dekan'); 
     
     // route untuk data petugas //
     
@@ -105,6 +111,8 @@ Route::group(['middleware' => ['auth:admin']], function()
     Route::get('/hapus_petugas/{id}/konfirmasi', [petugasController::class, 'konfirmasi']);
     
     Route::get('/hapus_petugas/{id}/hapuspetugas', [petugasController::class, 'hapuspetugas']);
+
+    Route::post('/update_passwordpetugas/{id}', [PetugasController::class, 'updatepassword'])->name('aksi ubah password petugas'); 
 
 
     // route untuk data surat

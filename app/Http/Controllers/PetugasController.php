@@ -26,10 +26,23 @@ class PetugasController extends Controller
 
     public function tambahpetugas(Request $request)
     {
+        $request->validate([
+            'nama_petugas' => 'required|max:255|string',
+            'NIP' => 'required|numeric|min:6',
+            'email_petugas' => 'email|required|unique:petugas_penomoran',
+            'password' => 'required|min:6',
+        ], [
+            'email_petugas.unique' => 'Email sudah ada yang menggunakan',
+            'email_petugas.email' => 'Email tidak boleh kosong',
+            'nama_petugas.required' => 'Nama tidak boleh kosong',
+            'NIP.required' => 'NIP tidak boleh kosong',
+            'password.min' => 'Password harus lebih dari 6 karakter',
+            'password.required' => 'Password tidak boleh kosong'
+        ]);
         DB::table('petugas_penomoran')->insert([
-            'nama_petugas' => $request->nama,
+            'nama_petugas' => $request->nama_petugas,
             'NIP' => $request->NIP,
-            'email_petugas' => $request->email,
+            'email_petugas' => $request->email_petugas,
             'password' => Hash::make($request->password),
 
             
@@ -68,6 +81,16 @@ class PetugasController extends Controller
     {
         DB::table('petugas_penomoran')->where('id', $id)->delete();
         Alert::success('Sukses', 'Data Berhasil Dihapus');
+        return redirect('/data_petugas');
+    }
+
+    public function updatepassword(Request $request)
+    {
+        DB::table('petugas_penomoran')->where('id', $request->id)->update([
+            'password' => Hash::make($request->password),
+            
+        ]);
+        toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect('/data_petugas');
     }
 }

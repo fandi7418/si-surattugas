@@ -21,10 +21,23 @@ class WakilDekanController extends Controller
 
     public function tambahwd1(Request $request)
     {
+        $request->validate([
+            'nama_wd' => 'required|max:255|string',
+            'NIP' => 'required|numeric|min:6',
+            'email_wd' => 'email|required|unique:wakildekan',
+            'password' => 'required|min:6',
+        ], [
+            'email_wd.unique' => 'Email sudah ada yang menggunakan',
+            'email_wd.email' => 'Email tidak boleh kosong',
+            'nama_wd.required' => 'Nama tidak boleh kosong',
+            'NIP.required' => 'NIP tidak boleh kosong',
+            'password.min' => 'Password harus lebih dari 6 karakter',
+            'password.required' => 'Password tidak boleh kosong'
+        ]);
         DB::table('wakildekan')->insert([
-            'nama_wd' => $request->nama,
+            'nama_wd' => $request->nama_wd,
             'NIP' => $request->NIP,
-            'email_wd' => $request->email,
+            'email_wd' => $request->email_wd,
             'password' => Hash::make($request->password),
 
             
@@ -71,6 +84,16 @@ class WakilDekanController extends Controller
     {
         DB::table('wakildekan')->where('id', $id)->delete();
         Alert::success('Sukses', 'Data Berhasil Dihapus');
+        return redirect('/data_wakildekan');
+    }
+
+    public function updatepassword(Request $request)
+    {
+        DB::table('wakildekan')->where('id', $request->id)->update([
+            'password' => Hash::make($request->password),
+            
+        ]);
+        toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect('/data_wakildekan');
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\Dosen;
+use App\Models\Admin;
 use App\Models\Surat;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -34,13 +35,26 @@ class DosenController extends Controller
 
     public function tambahdosen(Request $request)
     {
+        $request->validate([
+            'nama_dosen' => 'required|max:255|string',
+            'NIP' => 'required|numeric|min:6',
+            'prodi_dosen' => 'required|string',
+            'email_dosen' => 'email|required|unique:dosen',
+            'password' => 'required|min:6',
+        ], [
+            'email_dosen.unique' => 'Email sudah ada yang menggunakan',
+            'email_dosen.email' => 'Email tidak boleh kosong',
+            'nama_dosen.required' => 'Nama tidak boleh kosong',
+            'NIP.required' => 'NIP tidak boleh kosong',
+            'password.min' => 'Password harus lebih dari 6 karakter',
+            'password.required' => 'Password tidak boleh kosong'
+        ]);
         DB::table('dosen')->insert([
-            'nama_dosen' => $request->nama,
+            'nama_dosen' => $request->nama_dosen,
             'NIP' => $request->NIP,
-            'prodi_dosen' => $request->prodi,
-            'email_dosen' => $request->email,
+            'prodi_dosen' => $request->prodi_dosen,
+            'email_dosen' => $request->email_dosen,
             'password' => Hash::make($request->password),
-
             
         ]);
         Alert::success('Sukses', 'Data Berhasil Ditambahkan');
@@ -65,6 +79,15 @@ class DosenController extends Controller
         return redirect('data_dosen');
     }
 
+    public function updatepassword(Request $request)
+    {
+        DB::table('dosen')->where('id', $request->id)->update([
+            'password' => Hash::make($request->password),
+            
+        ]);
+        toast('Password Berhasil Diubah','success')->autoClose(5000);
+        return redirect('/data_dosen');
+    }
 
     public function konfirmasi($id)
     {

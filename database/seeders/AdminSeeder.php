@@ -23,5 +23,12 @@ class AdminSeeder extends Seeder
             'NIP' => '21120111989',
             'remember_token' => Str::random(60),
         ]);
+        Admin::create([
+            'email_admin' => 'admin2@admin.com',
+            'password' => bcrypt('123456'),
+            'nama_admin' => 'admin 2',
+            'NIP' => '21120111999',
+            'remember_token' => Str::random(60),
+        ]);
     }
 }

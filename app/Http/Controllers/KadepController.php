@@ -25,11 +25,26 @@ class KadepController extends Controller
 
     public function tambahkadep(Request $request)
     {
+        $request->validate([
+            'nama_kadep' => 'required|max:255|string',
+            'NIP' => 'required|numeric|min:6',
+            'prodi_kadep' => 'required|string',
+            'email_kadep' => 'email|required|unique:ketua_departemen',
+            'password' => 'required|min:6',
+        ], [
+            'email_kadep.unique' => 'Email sudah ada yang menggunakan',
+            'email_kadep.email' => 'Email tidak boleh kosong',
+            'nama_kadep.required' => 'Nama tidak boleh kosong',
+            'NIP.required' => 'NIP tidak boleh kosong',
+            'password.min' => 'Password harus lebih dari 6 karakter',
+            'password.required' => 'Password tidak boleh kosong'
+        ]);
+
         DB::table('ketua_departemen')->insert([
-            'nama_kadep' => $request->nama,
+            'nama_kadep' => $request->nama_kadep,
             'NIP' => $request->NIP,
-            'prodi_kadep' => $request->prodi,
-            'email_kadep' => $request->email,
+            'prodi_kadep' => $request->prodi_kadep,
+            'email_kadep' => $request->email_kadep,
             'password' => Hash::make($request->password),
 
             
@@ -69,6 +84,16 @@ class KadepController extends Controller
     {
         DB::table('ketua_departemen')->where('id', $id)->delete();
         Alert::success('Sukses', 'Data Berhasil Dihapus');
+        return redirect('/data_kadep');
+    }
+
+    public function updatepassword(Request $request)
+    {
+        DB::table('ketua_departemen')->where('id', $request->id)->update([
+            'password' => Hash::make($request->password),
+            
+        ]);
+        toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect('/data_kadep');
     }
 

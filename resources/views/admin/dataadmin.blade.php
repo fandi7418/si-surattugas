@@ -22,9 +22,8 @@
                 <td>
                     
                     <a href="/edit_admin/{{ $adm->id }}" class="btn btn-primary btn-sm">Edit</a>
-                    <a href="" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">Reset</a>
-                    {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> --}}
-                </td>
+                    {{-- <a href="" class="btn btn-secondary btn-sm btn-editps" data-bs-toggle="modal" data-id="{{ $adm->id }}" data-bs-target="#editps">Reset Password</a> --}}
+                    </td>
                 </tr>
             @endforeach
         </tbody>
@@ -35,8 +34,8 @@
     Launch demo modal
   </button> --}}
   
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- Form Pop Up Reset Password -->
+  {{-- <div class="modal fade" id="editps" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -45,21 +44,66 @@
         </div>
         <div class="modal-body">
         @foreach ($admin as $adm)
-          <form action="/update_password/{{ $adm->id }}" method="post">
+          <form action="/update_passwordadmin/{{ $adm->id }}" method="post">
+            @endforeach
               @csrf
-            <div class="mb-3">
-              <label for="recipient-name" class="col-form-label">Masukkan Password Baru :</label>
-              <input type="password" required minlength="6" name="password" class="form-control" id="recipient-name">
-            </div>
-          
-        </div>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Masukkan Password Baru :</label>
+                <input type="password" required minlength="6" name="password" class="form-control" id="recipient-name">
+                <input type="checkbox" onclick="myFunction()"> Tampilkan Password
+              </div>
+            </form>
+            
+          </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-primary">Simpan</button>
         </div>
       </div>
     </div>
-  </div>
-</form>
-  @endforeach
+  </div> --}}
+
+  {{-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Recipient:</label>
+              <input type="text" class="form-control" id="recipient-name">
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Message:</label>
+              <textarea class="form-control" id="message-text"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Send message</button>
+        </div>
+      </div>
+    </div>
+  </div> --}}
+    <!-- Form End Pop Up Reset Password -->
+
+
+  <script>
+    function myFunction() {
+        var x = document.getElementById("recipient-name");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
+
+<script>
+
+</script>
       @endsection
