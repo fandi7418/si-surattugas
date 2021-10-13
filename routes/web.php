@@ -6,7 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\KadepController;
 use App\Http\Controllers\WakilDekanController;
-use App\Http\Controllers\PetugasController;
+use App\Http\Controllers\PetugasPenomoranController;
 use App\Http\Controllers\SuratController;
 
 /*
@@ -33,7 +33,7 @@ Route::group(['middleware' => ['auth:admin']], function()
 {
 
     // route untuk data admin //
-    Route::get('/dashboard_admin', [AdminController::class, 'index'])->name('dashboard admin');
+    Route::get('/dashboard_admin', [AdminController::class, 'indexadmin'])->name('dashboard admin');
 
     Route::get('/data_admin', [AdminController::class, 'dataadmin'])->name('data admin');
     
@@ -41,78 +41,78 @@ Route::group(['middleware' => ['auth:admin']], function()
     
     Route::post('/update_admin/{id}', [AdminController::class, 'updateadmin'])->name('update data admin'); 
     
-    Route::post('/update_passwordadmin/{id}', [AdminController::class, 'updatepassword'])->name('aksi ubah password admin'); 
+    Route::post('/update_passwordadmin/{id}', [AdminController::class, 'updatepasswordadmin'])->name('aksi ubah password admin'); 
     
 
     // route untuk data dosen // ///
-    Route::get('/data_dosen', [DosenController::class, 'datadosen']);
+    Route::get('/data_dosen', [AdminController::class, 'datadosen']);
     
-    Route::get('/edit_dosen/{id}', [DosenController::class, 'editdosen']);
+    Route::get('/edit_dosen/{id}', [AdminController::class, 'editdosen']);
 
-    Route::post('/update_dosen/{id}', [DosenController::class, 'updatedosen']);
+    Route::post('/update_dosen/{id}', [AdminController::class, 'updatedosen']);
 
-    Route::get('/tambah_dosen', [DosenController::class, 'index']);
+    Route::get('/tambah_dosen', [AdminController::class, 'indexdosen']);
 
-    Route::post('/tambah_dosen', [DosenController::class, 'tambahdosen']);
+    Route::post('/tambah_dosen', [AdminController::class, 'tambahdosen']);
 
-    Route::get('/hapus_dosen/{id}/konfirmasi', [DosenController::class, 'konfirmasi']);
+    Route::get('/hapus_dosen/{id}/konfirmasi', [AdminController::class, 'konfirmasidosen']);
     
-    Route::get('/hapus_dosen/{id}/hapusdosen', [DosenController::class, 'hapusdosen']);
+    Route::get('/hapus_dosen/{id}/hapusdosen', [AdminController::class, 'hapusdosen']);
 
-    Route::post('/update_passworddosen/{id}', [DosenController::class, 'updatepassword'])->name('aksi ubah password dosen'); 
+    Route::post('/update_passworddosen/{id}', [AdminController::class, 'updatepassworddosen'])->name('aksi ubah password dosen'); 
 
     // route untuk data kadep //
-    Route::get('/data_kadep', [KadepController::class, 'datakadep']);
+    Route::get('/data_kadep', [AdminController::class, 'datakadep']);
 
-    Route::get('/edit_kadep/{id}', [KadepController::class, 'editkadep']);
+    Route::get('/edit_kadep/{id}', [AdminController::class, 'editkadep']);
 
-    Route::post('/update_kadep/{id}', [KadepController::class, 'updatekadep']);
+    Route::post('/update_kadep/{id}', [AdminController::class, 'updatekadep']);
 
-    Route::get('/tambah_kadep', [KadepController::class, 'index']);
+    Route::get('/tambah_kadep', [AdminController::class, 'indexkadep']);
 
-    Route::get('/hapus_kadep/{id}/konfirmasi', [KadepController::class, 'konfirmasi']);
+    Route::get('/hapus_kadep/{id}/konfirmasi', [AdminController::class, 'konfirmasikadep']);
     
-    Route::get('/hapus_kadep/{id}/hapuskadep', [KadepController::class, 'hapuskadep']);
+    Route::get('/hapus_kadep/{id}/hapuskadep', [AdminController::class, 'hapuskadep']);
     
-    Route::post('/tambah_kadep', [KadepController::class, 'tambahkadep']);
+    Route::post('/tambah_kadep', [AdminController::class, 'tambahkadep']);
 
-    Route::post('/update_passwordkadep/{id}', [KadepController::class, 'updatepassword'])->name('aksi ubah password kadep'); 
+    Route::post('/update_passwordkadep/{id}', [AdminController::class, 'updatepasswordkadep'])->name('aksi ubah password kadep'); 
 
     // route untuk data wakil dekan
 
-    Route::get('/data_wakildekan', [WakilDekanController::class, 'datawd1']);
+    Route::get('/data_wakildekan', [AdminController::class, 'datawd1']);
 
-    Route::get('/tambah_wakildekan', [WakilDekanController::class, 'index']);
+    Route::get('/tambah_wakildekan', [AdminController::class, 'indexwd1']);
 
-    Route::post('/tambah_wakildekan', [WakilDekanController::class, 'tambahwd1']);
+    Route::post('/tambah_wakildekan', [AdminController::class, 'tambahwd1']);
 
-    Route::get('/edit_wakildekan/{id}', [WakilDekanController::class, 'editwd1']);
+    Route::get('/edit_wakildekan/{id}', [AdminController::class, 'editwd1']);
 
-    Route::post('/update_wakildekan/{id}', [WakilDekanController::class, 'updatewd1']);
+    Route::post('/update_wakildekan/{id}', [AdminController::class, 'updatewd1']);
     
-    Route::get('/hapus_wakildekan/{id}/konfirmasi', [WakilDekanController::class, 'konfirmasi']);
+    Route::get('/hapus_wakildekan/{id}/konfirmasi', [AdminController::class, 'konfirmasiwd1']);
     
-    Route::get('/hapus_wakildekan/{id}/hapuswd1', [WakilDekanController::class, 'hapuswd1']);
+    Route::get('/hapus_wakildekan/{id}/hapuswd1', [AdminController::class, 'hapuswd1']);
 
-    Route::post('/update_passwordwd/{id}', [WakilDekanController::class, 'updatepassword'])->name('aksi ubah password wakil dekan'); 
+    Route::post('/update_passwordwd/{id}', [AdminController::class, 'updatepasswordwd1'])->name('aksi ubah password wakil dekan'); 
     
     // route untuk data petugas //
     
-    Route::get('/data_petugas', [PetugasController::class, 'datapetugas']);
+    Route::get('/data_petugas', [AdminController::class, 'datapetugas']);
 
-    Route::get('/tambah_petugas', [PetugasController::class, 'index']);
+    Route::get('/tambah_petugas', [AdminController::class, 'indexpetugas']);
 
-    Route::post('/tambah_petugas', [PetugasController::class, 'tambahpetugas']);
+    Route::post('/tambah_petugas', [AdminController::class, 'tambahpetugas']);
 
-    Route::get('/edit_petugas/{id}', [PetugasController::class, 'editpetugas']);
+    Route::get('/edit_petugas/{id}', [AdminController::class, 'editpetugas']);
 
-    Route::post('/update_petugas/{id}', [petugasController::class, 'updatepetugas']);
+    Route::post('/update_petugas/{id}', [AdminController::class, 'updatepetugas']);
 
-    Route::get('/hapus_petugas/{id}/konfirmasi', [petugasController::class, 'konfirmasi']);
+    Route::get('/hapus_petugas/{id}/konfirmasi', [AdminController::class, 'konfirmasipetugas']);
     
-    Route::get('/hapus_petugas/{id}/hapuspetugas', [petugasController::class, 'hapuspetugas']);
+    Route::get('/hapus_petugas/{id}/hapuspetugas', [AdminController::class, 'hapuspetugas']);
 
-    Route::post('/update_passwordpetugas/{id}', [PetugasController::class, 'updatepassword'])->name('aksi ubah password petugas'); 
+    Route::post('/update_passwordpetugas/{id}', [AdminController::class, 'updatepasswordpetugas'])->name('aksi ubah password petugas'); 
 
 
     // route untuk data surat
@@ -216,11 +216,11 @@ Route::group(['middleware' => ['auth:petugas_penomoran']], function()
         return view('/petugas/profilpetugas');
     });
 
-    Route::get('/daftarsuratpetugas', [PetugasController::class, 'daftarsurat']);
+    Route::get('/daftarsuratpetugas', [PetugasPenomoranController::class, 'daftarsurat']);
 
-    Route::post('/updatenomorsurat/{id}', [PetugasController::class, 'updatenomorsurat']);
+    Route::post('/updatenomorsurat/{id}', [PetugasPenomoranController::class, 'updatenomorsurat']);
 
-    Route::get('/editnomorsurat/{id}', [PetugasController::class, 'editnomorsurat']);
+    Route::get('/editnomorsurat/{id}', [PetugasPenomoranController::class, 'editnomorsurat']);
 });
 
 
