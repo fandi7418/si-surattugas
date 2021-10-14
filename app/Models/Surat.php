@@ -41,19 +41,6 @@ class Surat extends Authenticatable
         'remember_token',
     ];
 
-    // protected $dates = ['tanggalawal', 'tanggalakhir'];
-
-    // public function getCreatedAtAttribute()
-    // {
-    //     return Carbon::parse($this->attributes['tanggalawal'])
-    //     ->translatedFormat('1, d F Y');
-    // }
-
-
-    // protected $casts = [
-    //     'email_verified_at' => 'datetime',
-    // ];
-
     public function dosen()
     {
      //Setiap data hanya dimiliki oleh satu user
