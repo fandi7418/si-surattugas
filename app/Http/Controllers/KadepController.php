@@ -12,6 +12,26 @@ use RealRashid\SweetAlert\Facades\Alert;
 class KadepController extends Controller
 {
 
+    public function dashboardKadep(Request $request)
+    {
+        $surat = DB::table('surat')
+        ->where([
+            'surat.prodi' => Auth::user()->prodi_kadep,
+            'surat.status' => 'Menunggu persetujuan Kadep',
+            ])
+        ->get();
+        return view('kadep.dashboardkadep', ['surat' => $surat]);
+    }
+    public function profilKadep(Request $request)
+    {
+        $surat = DB::table('surat')
+        ->where([
+            'surat.prodi' => Auth::user()->prodi_kadep,
+            'surat.status' => 'Menunggu persetujuan Kadep',
+            ])
+        ->get();
+        return view('kadep.profilkadep', ['surat' => $surat]);
+    }
     public function daftarsurat(Request $request)
     {
         $surat = DB::table('surat')
