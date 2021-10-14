@@ -20,7 +20,7 @@ class DosenSeeder extends Seeder
             'email_dosen' => 'dosen1@gmail.com',
             'password' => bcrypt('123456'),
             'nama_dosen' => 'Dosen1',
-            'NIP' => '123123',
+            'NIP' => '1223123',
             'prodi_dosen' => 'Teknik Komputer',
             'remember_token' => Str::random(60),
         ]);

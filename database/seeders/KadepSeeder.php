@@ -20,7 +20,7 @@ class KadepSeeder extends Seeder
             'email_kadep' => 'kadep1@gmail.com',
             'password' => bcrypt('123456'),
             'nama_kadep' => 'Kadep1',
-            'NIP' => '123123',
+            'NIP' => '1233123',
             'prodi_kadep' => 'Teknik Komputer',
             'remember_token' => Str::random(60),
         ]);

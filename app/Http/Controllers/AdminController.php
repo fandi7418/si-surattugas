@@ -8,8 +8,8 @@ use App\Models\Kadep;
 use App\Models\Petugas;
 use App\Models\WakilDekan;
 use Illuminate\Http\Request;
-use Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 

@@ -182,17 +182,21 @@ Route::get('/surat/{surat}', [SuratController::class, 'show']);
 /* Route kadep */
 Route::group(['middleware' => ['auth:ketua_departemen']], function()
 {
-    Route::get('/dashboardkadep', function () {
-        return view('/kadep/dashboardkadep');
-    });
+    
 
-    Route::get('/daftarsuratkadep', function () {
+    // Route::get('/dashboardkadep', [KadepController::class, 'notifkadep']);
+
+    /* Route::get('/daftarsuratkadep', function () {
         return view('/kadep/daftarsuratkadep');
-    });
+    }); */
 
-    Route::get('/profilkadep', function () {
+    /* Route::get('/profilkadep', function () {
         return view('/kadep/profilkadep');
-    });
+    }); */
+
+    Route::get('/profilkadep', [KadepController::class, 'profilKadep']);
+
+    Route::get('/dashboardkadep', [KadepController::class, 'dashboardKadep']);
 
     Route::get('/daftarsuratkadep', [KadepController::class, 'daftarsurat']);
 
