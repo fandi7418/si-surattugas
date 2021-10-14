@@ -20,7 +20,7 @@ class PetugasSeeder extends Seeder
             'email_petugas' => 'petugas1@gmail.com',
             'password' => bcrypt('123456'),
             'nama_petugas' => 'Petugas1',
-            'NIP' => '123123',
+            'NIP' => '1231233',
             'remember_token' => Str::random(60),
         ]);
     }

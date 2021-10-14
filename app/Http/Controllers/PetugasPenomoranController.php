@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\Auth;
 // use Auth;
+=======
+>>>>>>> a07771b7cfde9d3b265b1c29f6cd4d4706b51b8f
 use App\Models\Petugas;
 use App\Models\Surat;
 use Illuminate\Http\Request;

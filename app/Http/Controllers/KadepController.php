@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-// use Auth;
 use App\Models\Kadep;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
