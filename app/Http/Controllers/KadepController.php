@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Auth;
+use Illuminate\Support\Facades\Auth;
+// use Auth;
 use App\Models\Kadep;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -56,5 +57,27 @@ class KadepController extends Controller
             'ttd_kadep' => $imgName,
         ]);
         return redirect('/daftarsuratkadep');
+    }
+
+    public function updateprofilkadep(Request $request)
+    {
+        DB::table('ketua_departemen')->where('id', '=', Auth::user()->id)->update([
+            'nama_kadep' => $request->nama,
+            'NIP' => $request->NIP,
+            'prodi_kadep' => $request->prodi,
+            'email_kadep' => $request->email,
+        ]);
+        toast('Data Berhasil Diubah', 'success')->autoClose(3000);
+        return redirect('/profilkadep');
+    }
+
+    public function editpasswordkadep(Request $request)
+    {
+        DB::table('ketua_departemen')->where('id', '=', Auth::user()->id)->update([
+            'password' => Hash::make($request->password),
+            
+        ]);
+        toast('Password Berhasil Diubah','success')->autoClose(2000);
+        return redirect('/profilkadep');
     }
 }

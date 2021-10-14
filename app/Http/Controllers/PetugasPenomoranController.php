@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Auth;
+use Illuminate\Support\Facades\Auth;
+// use Auth;
 use App\Models\Petugas;
 use App\Models\Surat;
 use Illuminate\Http\Request;
@@ -12,17 +13,13 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class PetugasPenomoranController extends Controller
 {
-    public function daftarsurat(Surat $surat)
+    public function daftarsuratpetugas(Surat $surat)
     {
         $surat = DB::table('surat')
-        ->whereNotNull(['surat.ttd_wd'])
-        ->get();
+            ->whereNotNull(['surat.ttd_wd'])
+            ->get();
         return view('petugas.daftarsuratpetugas', ['surat' => $surat]);
-        // $surat = Surat::find([
-        //     'status' => 'Belum diberi nomor',
-        //     'status' => 'Sudah diberi nomor',
-        //     ]);
-        // return view('petugas.daftarsuratpetugas', ['surat' => $surat]);
+
     }
 
     public function editnomorsurat($id)
@@ -33,17 +30,34 @@ class PetugasPenomoranController extends Controller
 
     public function updatenomorsurat(Request $request, $id)
     {
-        // $request->validate([
-        //     'no_surat' => 'unique:surat',
-        // ],[
-        //     'no_surat.unique' => 'Nomor tidak boleh sama'
-        // ]);
+
 
         DB::table('surat')->where('id', $request->id)->update([
             'no_surat' => $request->no_surat,
             'status' => 'Sudah diberi nomor',
         ]);
-        toast('Data Berhasil Diubah', 'success')->autoClose(5000);
+        toast('Data Berhasil Diubah', 'success')->autoClose(2000);
         return redirect('/daftarsuratpetugas');
+    }
+
+    public function updateprofilpetugas(Request $request)
+    {
+        DB::table('petugas_penomoran')->where('id', '=', Auth::user()->id)->update([
+            'nama_petugas' => $request->nama,
+            'NIP' => $request->NIP,
+            'email_petugas' => $request->email,
+        ]);
+        toast('Data Berhasil Diubah', 'success')->autoClose(2000);
+        return redirect('/profilpetugas');
+    }
+
+    public function editpasswordpetugas(Request $request)
+    {
+        DB::table('petugas_penomoran')->where('id', '=', Auth::user()->id)->update([
+            'password' => Hash::make($request->password),
+
+        ]);
+        toast('Password Berhasil Diubah', 'success')->autoClose(2000);
+        return redirect('/profilpetugas');
     }
 }

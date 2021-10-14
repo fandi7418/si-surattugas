@@ -158,6 +158,10 @@ Route::group(['middleware' => ['auth:dosen']], function()
     
     Route::get('/daftarsuratdosen', [DosenController::class, 'daftarsurat']);
 
+    Route::post('/updateprofildosen', [DosenController::class, 'updateprofildosen']);
+
+    Route::post('/editpassworddosen', [DosenController::class, 'editpassworddosen']);
+
     Route::get('/buatsurat', [SuratController::class, 'index']);
 
     Route::post('/tambahsurat', [SuratController::class, 'tambahsurat']);
@@ -196,6 +200,10 @@ Route::group(['middleware' => ['auth:ketua_departemen']], function()
 
     Route::get('/daftarsuratkadep', [KadepController::class, 'daftarsurat']);
 
+    Route::post('/updateprofilkadep', [KadepController::class, 'updateprofilkadep']);
+
+    Route::post('/editpasswordkadep', [KadepController::class, 'editpasswordkadep']);
+
     Route::get('/izinkankadep/{id}', [KadepController::class, 'izinkan']);
 
     Route::get('/tolak/{id}', [KadepController::class, 'tolak']);
@@ -216,7 +224,11 @@ Route::group(['middleware' => ['auth:petugas_penomoran']], function()
         return view('/petugas/profilpetugas');
     });
 
-    Route::get('/daftarsuratpetugas', [PetugasPenomoranController::class, 'daftarsurat']);
+    Route::get('/daftarsuratpetugas', [PetugasPenomoranController::class, 'daftarsuratpetugas']);
+
+    Route::post('/updateprofilpetugas', [PetugasPenomoranController::class, 'updateprofilpetugas']);
+
+    Route::post('/editpasswordpetugas', [PetugasPenomoranController::class, 'editpasswordpetugas']);
 
     Route::post('/updatenomorsurat/{id}', [PetugasPenomoranController::class, 'updatenomorsurat']);
 
@@ -241,6 +253,10 @@ Route::group(['middleware' => ['auth:wakildekan']], function()
     });
 
     Route::get('/daftarsuratwd', [WakilDekanController::class, 'daftarsurat']);
+
+    Route::post('/updateprofilwd', [WakilDekanController::class, 'updateprofilwd']);
+
+    Route::post('/editpasswordwd', [WakilDekanController::class, 'editpasswordwd']);
 
     Route::post('/uploadttdwd', [WakilDekanController::class, 'tandatangan']);
 

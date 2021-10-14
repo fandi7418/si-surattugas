@@ -46,13 +46,6 @@
                     <input type="email" name="email" class="form-control" id="colFormLabel" value="{{ $dsn->email_dosen }}">
                 </div>
             </div>
-            {{-- <div class="form-group row mt-4">
-                <label for="colFormLabel" class="col-sm-2 col-form-label">Password</label>
-                <div class="col-sm-5">
-                    <input type="password" name="password" class="form-control" value="{{ $dsn->password }}" id="inputPassword">
-                    <input type="checkbox" onclick="myFunction()"> Tampilkan Password
-                </div>
-            </div> --}}
             <div class="form-group row mt-4">
                 <label for="colFormLabel" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-5">

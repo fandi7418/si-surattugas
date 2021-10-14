@@ -17,6 +17,8 @@ class Dosen extends Authenticatable
         'password',
         'nama_dosen',
         'NIP',
+        'pangkat',
+        'jabatan',
         'prodi_dosen',
     ];
 

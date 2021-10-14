@@ -56,4 +56,25 @@ class WakilDekanController extends Controller
         ]);
         return redirect('/daftarsuratwd');
     }
+
+    public function updateprofilwd(Request $request)
+    {
+        DB::table('wakildekan')->where('id', '=', Auth::user()->id)->update([
+            'nama_wd' => $request->nama,
+            'NIP' => $request->NIP,
+            'email_wd' => $request->email,
+        ]);
+        toast('Data Berhasil Diubah', 'success')->autoClose(2000);
+        return redirect('/profilwd');
+    }
+
+    public function editpasswordwd(Request $request)
+    {
+        DB::table('wakildekan')->where('id', '=', Auth::user()->id)->update([
+            'password' => Hash::make($request->password),
+            
+        ]);
+        toast('Password Berhasil Diubah','success')->autoClose(2000);
+        return redirect('/profilwd');
+    }
 }

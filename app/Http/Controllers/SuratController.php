@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
+// use Auth;
 use PDF;
 use Illuminate\Http\Request;
 use App\Models\Surat;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Carbon;
 
 
 class SuratController extends Controller

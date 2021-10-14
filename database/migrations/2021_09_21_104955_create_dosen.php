@@ -19,6 +19,8 @@ class CreateDosen extends Migration
             $table->string('password');
             $table->string('nama_dosen');
             $table->bigInteger('NIP');
+            $table->string('pangkat');
+            $table->string('jabatan');
             $table->string('prodi_dosen');
             $table->rememberToken();
             $table->timestamps();

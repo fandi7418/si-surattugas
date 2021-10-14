@@ -118,7 +118,7 @@
 			</tr>
 			<tr>
 				<td>Tanggal</td>
-				<td width="525">: {{ $surat->tanggalawal }} s/d {{ $surat->tanggalakhir }}</td>
+				<td width="525">: {{ \Carbon\Carbon::parse($surat->tanggalawal)->isoFormat('dddd, D MMMM Y')}} s/d {{ \Carbon\Carbon::parse($surat->tanggalakhir)->isoFormat('dddd, D MMMM Y')}}</td>
 			</tr>
 		</table>
         <br>
