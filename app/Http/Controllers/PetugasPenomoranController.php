@@ -31,7 +31,7 @@ class PetugasPenomoranController extends Controller
     {
 
 
-        DB::table('surat')->where('id', $request->id)->update([
+        Surat::where('id', $request->id)->update([
             'no_surat' => $request->no_surat,
             'status' => 'Sudah diberi nomor',
         ]);
@@ -41,7 +41,7 @@ class PetugasPenomoranController extends Controller
 
     public function updateprofilpetugas(Request $request)
     {
-        DB::table('petugas_penomoran')->where('id', '=', Auth::user()->id)->update([
+        Petugas::where('id', '=', Auth::user()->id)->update([
             'nama_petugas' => $request->nama,
             'NIP' => $request->NIP,
             'email_petugas' => $request->email,
@@ -52,7 +52,7 @@ class PetugasPenomoranController extends Controller
 
     public function editpasswordpetugas(Request $request)
     {
-        DB::table('petugas_penomoran')->where('id', '=', Auth::user()->id)->update([
+        Petugas::where('id', '=', Auth::user()->id)->update([
             'password' => Hash::make($request->password),
 
         ]);

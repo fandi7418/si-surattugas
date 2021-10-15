@@ -45,7 +45,7 @@ class KadepController extends Controller
 
     public function izinkan($id)
     {
-        $surat = DB::table('surat')->where('id', $id)->update([
+        Surat::where('id', $id)->update([
             'status' => 'Menunggu persetujuan Wakil Dekan',
             'surat.ttd_kadep' => Auth::user()->ttd_kadep,
             // 'surat.nama_kadep' => Auth::user()->nama_kadep,
@@ -56,7 +56,7 @@ class KadepController extends Controller
     }
     public function tolak($id)
     {
-        $surat = DB::table('surat')->where('id', $id)->update([
+        Surat::where('id', $id)->update([
             'status' => 'Surat ditolak Kadep',
         ]);
         return redirect('/daftarsuratkadep');
@@ -72,7 +72,7 @@ class KadepController extends Controller
         $imgName = $request->ttd->getClientOriginalName() . '-' . time() . '.' . $request->ttd->extension();
         $request->ttd->move(public_path('image'), $imgName);
 
-        DB::table('ketua_departemen')->where(['ketua_departemen.id' => Auth::user()->id])->update([
+        Kadep::where(['ketua_departemen.id' => Auth::user()->id])->update([
             'ttd_kadep' => $imgName,
         ]);
         return redirect('/daftarsuratkadep');
@@ -80,7 +80,7 @@ class KadepController extends Controller
 
     public function updateprofilkadep(Request $request)
     {
-        DB::table('ketua_departemen')->where('id', '=', Auth::user()->id)->update([
+        Kadep::where('id', '=', Auth::user()->id)->update([
             'nama_kadep' => $request->nama,
             'NIP' => $request->NIP,
             'prodi_kadep' => $request->prodi,
@@ -92,7 +92,7 @@ class KadepController extends Controller
 
     public function editpasswordkadep(Request $request)
     {
-        DB::table('ketua_departemen')->where('id', '=', Auth::user()->id)->update([
+        Kadep::where('id', '=', Auth::user()->id)->update([
             'password' => Hash::make($request->password),
             
         ]);

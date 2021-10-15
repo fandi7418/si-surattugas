@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use PDF;
 use App\Models\WakilDekan;
+use App\Models\Surat;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -25,7 +26,7 @@ class WakilDekanController extends Controller
 
     public function izinkan($id)
     {
-        $surat = DB::table('surat')->where('id', $id)->update([
+        Surat::where('id', $id)->update([
             'status' => 'Belum diberi nomor',
             'surat.ttd_wd' => Auth::user()->ttd_wd,
         ]);
@@ -35,7 +36,7 @@ class WakilDekanController extends Controller
 
     public function tolak($id)
     {
-        $surat = DB::table('surat')->where('id', $id)->update([
+        Surat::where('id', $id)->update([
             'status' => 'Surat ditolak Wakil Dekan',
         ]);
         return redirect('/daftarsuratwd');
@@ -51,7 +52,7 @@ class WakilDekanController extends Controller
         $imgName = $request->ttd->getClientOriginalName() . '-' . time() . '.' . $request->ttd->extension();
         $request->ttd->move(public_path('image'), $imgName);
 
-        DB::table('wakildekan')->where(['wakildekan.id' => Auth::user()->id])->update([
+        WakilDekan::where(['wakildekan.id' => Auth::user()->id])->update([
             'ttd_wd' => $imgName,
         ]);
         return redirect('/daftarsuratwd');
@@ -59,7 +60,7 @@ class WakilDekanController extends Controller
 
     public function updateprofilwd(Request $request)
     {
-        DB::table('wakildekan')->where('id', '=', Auth::user()->id)->update([
+        WakilDekan::where('id', '=', Auth::user()->id)->update([
             'nama_wd' => $request->nama,
             'NIP' => $request->NIP,
             'email_wd' => $request->email,
@@ -70,7 +71,7 @@ class WakilDekanController extends Controller
 
     public function editpasswordwd(Request $request)
     {
-        DB::table('wakildekan')->where('id', '=', Auth::user()->id)->update([
+        WakilDekan::where('id', '=', Auth::user()->id)->update([
             'password' => Hash::make($request->password),
             
         ]);

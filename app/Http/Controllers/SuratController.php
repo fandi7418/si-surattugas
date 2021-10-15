@@ -9,6 +9,7 @@ use App\Models\Surat;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 
 
@@ -28,7 +29,7 @@ class SuratController extends Controller
 
     public function tambahsurat(Request $request)
     {
-        DB::table('surat')->insert([
+        Surat::create([
             'nama_dosen' => $request->nama,
             'NIP' => $request->nip,
             'prodi' => $request->prodi,
@@ -51,6 +52,7 @@ class SuratController extends Controller
             ->first()->nama_wd,
             'NIP_wd' => DB::table('wakildekan')
             ->first()->NIP,
+            'remember_token' => Str::random(60),
         ]);
         Alert::success('Sukses', 'Data Berhasil Ditambah');
         return redirect('/daftarsuratdosen');
@@ -80,7 +82,7 @@ class SuratController extends Controller
 
     public function updatesurat(Request $request)
     {
-        DB::table('surat')->where('id', $request->id)->update([
+        Surat::where('id', $request->id)->update([
             'nama_dosen' => $request->nama,
             'NIP' => $request->nip,
             'prodi' => $request->prodi,

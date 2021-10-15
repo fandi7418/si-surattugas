@@ -137,7 +137,7 @@
 		<table width="625">
 			<tr>
 				<td width="350"></td>
-				<td class="text" >Semarang, </td>
+				<td class="text" >Semarang, {{ \Carbon\Carbon::parse($surat->created_at)->isoFormat('D MMMM Y')}}</td>
 			</tr>
 	     </table>
 		<table width="625">

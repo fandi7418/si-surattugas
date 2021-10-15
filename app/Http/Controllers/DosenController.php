@@ -13,17 +13,17 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class DosenController extends Controller
 {
-    public function daftarsurat(Request $request)
+    public function daftarsuratDosen(Request $request)
     {
         $surat = DB::table('surat')
-        ->where(['surat.NIP' => Auth::user()->NIP])
-        ->get();
+        ->where(['surat.NIP' => Auth::user()->NIP])->orderBy('created_at', 'DESC')
+        ->paginate(5);
         return view('dosen.daftarsuratdosen', ['surat' => $surat]);
     }
 
     public function updateprofildosen(Request $request)
     {
-        DB::table('dosen')->where('id', '=', Auth::user()->id)->update([
+        Dosen::where('id', '=', Auth::user()->id)->update([
             'nama_dosen' => $request->nama,
             'NIP' => $request->NIP,
             'prodi_dosen' => $request->prodi,
@@ -37,7 +37,7 @@ class DosenController extends Controller
 
     public function editpassworddosen(Request $request)
     {
-        DB::table('dosen')->where('id', '=', Auth::user()->id)->update([
+        Dosen::where('id', '=', Auth::user()->id)->update([
             'password' => Hash::make($request->password),
             
         ]);

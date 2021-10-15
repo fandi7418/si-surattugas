@@ -156,7 +156,7 @@ Route::group(['middleware' => ['auth:dosen']], function()
         return view('/dosen/profildosen');
     });
     
-    Route::get('/daftarsuratdosen', [DosenController::class, 'daftarsurat']);
+    Route::get('/daftarsuratdosen', [DosenController::class, 'daftarsuratDosen']);
 
     Route::post('/updateprofildosen', [DosenController::class, 'updateprofildosen']);
 
