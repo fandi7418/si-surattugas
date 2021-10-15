@@ -307,7 +307,7 @@ class AdminController extends Controller
 
     public function updatewd1(Request $request)
     {
-        DB::table('wakildekan')->where('id', $request->id)->update([
+        WakilDekan::where('id', $request->id)->update([
             'nama_wd' => $request->nama,
             'NIP' => $request->NIP,
             'email_wd' => $request->email,

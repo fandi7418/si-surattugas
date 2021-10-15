@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Kadep;
+use App\Models\Surat;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
