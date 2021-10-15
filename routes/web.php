@@ -200,7 +200,9 @@ Route::group(['middleware' => ['auth:ketua_departemen']], function()
 
     Route::get('/profilkadep', [KadepController::class, 'profilKadep']);
 
-    Route::get('/dashboardkadep', [KadepController::class, 'dashboardKadep']);
+    Route::get('/dashboardkadep', [KadepController::class, 'dashboardkadep']);
+
+    // Route::get('/dashboardkadep', [KadepController::class, 'jumlahnotifkadep']);
 
     Route::get('/daftarsuratkadep', [KadepController::class, 'daftarsurat']);
 
