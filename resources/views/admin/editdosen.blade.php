@@ -21,6 +21,18 @@
                 </div>
             </div>
             <div class="form-group row mt-4">
+                <label for="colFormLabel" class="col-sm-2 col-form-label">Pangkat</label>
+                <div class="col-sm-8">
+                    <input type="text" name="pangkat" class="form-control" id="colFormLabel" value="{{ $dsn->pangkat }}">
+                </div>
+            </div>
+            <div class="form-group row mt-4">
+                <label for="colFormLabel" class="col-sm-2 col-form-label">Jabatan</label>
+                <div class="col-sm-8">
+                    <input type="text" name="jabatan" class="form-control" id="colFormLabel" value="{{ $dsn->jabatan }}">
+                </div>
+            </div>
+            <div class="form-group row mt-4">
                 <label for="colFormLabel" class="col-sm-2 col-form-label">Program Studi</label>
                 <div class="col-sm-8">
                     <select class="form-select" name="prodi" aria-label="Default select example">

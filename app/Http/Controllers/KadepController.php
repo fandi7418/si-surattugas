@@ -12,7 +12,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class KadepController extends Controller
 {
 
-    public function dashboardKadep(Request $request)
+    public function dashboardkadep(Request $request)
     {
         $surat = DB::table('surat')
         ->where([
@@ -20,7 +20,13 @@ class KadepController extends Controller
             'surat.status' => 'Menunggu persetujuan Kadep',
             ])
         ->get();
-        return view('kadep.dashboardkadep', ['surat' => $surat]);
+        $count = DB::table('surat')
+        ->where([
+            'surat.prodi' => Auth::user()->prodi_kadep,
+            'surat.status' => 'Menunggu persetujuan Kadep',
+            ])
+        ->count();
+        return view('kadep.dashboardkadep', ['count' => $count], ['surat' => $surat]);
     }
     public function profilKadep(Request $request)
     {
@@ -30,7 +36,13 @@ class KadepController extends Controller
             'surat.status' => 'Menunggu persetujuan Kadep',
             ])
         ->get();
-        return view('kadep.profilkadep', ['surat' => $surat]);
+        $count = DB::table('surat')
+        ->where([
+            'surat.prodi' => Auth::user()->prodi_kadep,
+            'surat.status' => 'Menunggu persetujuan Kadep',
+            ])
+        ->count();
+        return view('kadep.profilkadep', ['surat' => $surat], ['count' => $count]);
     }
     public function daftarsurat(Request $request)
     {
@@ -40,7 +52,13 @@ class KadepController extends Controller
             'surat.status' => 'Menunggu persetujuan Kadep',
             ])
         ->get();
-        return view('kadep.daftarsuratkadep', ['surat' => $surat]);
+        $count = DB::table('surat')
+        ->where([
+            'surat.prodi' => Auth::user()->prodi_kadep,
+            'surat.status' => 'Menunggu persetujuan Kadep',
+            ])
+        ->count();
+        return view('kadep.daftarsuratkadep', ['surat' => $surat], ['count' => $count]);
     }
 
     public function izinkan($id)

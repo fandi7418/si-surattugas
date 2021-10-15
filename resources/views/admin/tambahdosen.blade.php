@@ -31,6 +31,32 @@
                             </div>
                         </div>
                         <div class="form-group row mt-4">
+                            <label for="colFormLabel" class="col-sm-2 col-form-label">Pangkat</label>
+                            <div class="col-sm-8">
+                                <input type="text"
+                                    value="{{ old('pangkat') }}" name="pangkat"
+                                    class="form-control @error('pangkat') is-invalid @enderror" id="colFormLabel" placeholder="Silahkan Masukkan Pangkat Anda">
+                                        @error('pangkat')
+                                            <div class="invalid-feedback">
+                                            {{ $message }}
+                                            </div>
+                                        @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row mt-4">
+                            <label for="colFormLabel" class="col-sm-2 col-form-label">Jabatan</label>
+                            <div class="col-sm-8">
+                                <input type="text"
+                                value="{{ old('jabatan') }}" name="jabatan"
+                                    class="form-control @error('jabatan') is-invalid @enderror" id="colFormLabel" placeholder="Silahkan Masukkan Jabatan Anda">
+                                        @error('jabatan')
+                                            <div class="invalid-feedback">
+                                            {{ $message }}
+                                            </div>
+                                        @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row mt-4">
                             <label for="colFormLabel" class="col-sm-2 col-form-label">Program Studi</label>
                             <div class="col-sm-8">
                                 <select class="form-select" name="prodi_dosen" aria-label="Default select example">

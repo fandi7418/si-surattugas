@@ -92,6 +92,8 @@ class AdminController extends Controller
             'nama_dosen' => 'required|max:255|string',
             'NIP' => 'required|numeric|min:6',
             'prodi_dosen' => 'required|string',
+            'pangkat' => 'required|string',
+            'jabatan' => 'required|string',
             'email_dosen' => 'email|required|unique:dosen',
             'password' => 'required|min:6',
         ], [
@@ -99,12 +101,16 @@ class AdminController extends Controller
             'email_dosen.email' => 'Email tidak boleh kosong',
             'nama_dosen.required' => 'Nama tidak boleh kosong',
             'NIP.required' => 'NIP tidak boleh kosong',
+            'pangkat.required' => 'Pangkat tidak boleh kosong',
+            'jabatan.required' => 'Jabatan tidak boleh kosong',
             'password.min' => 'Password harus lebih dari 6 karakter',
             'password.required' => 'Password tidak boleh kosong'
         ]);
-        DB::table('dosen')->insert([
+        Dosen::create([
             'nama_dosen' => $request->nama_dosen,
             'NIP' => $request->NIP,
+            'pangkat' => $request->pangkat,
+            'jabatan' => $request->jabatan,
             'prodi_dosen' => $request->prodi_dosen,
             'email_dosen' => $request->email_dosen,
             'password' => Hash::make($request->password),
@@ -122,9 +128,11 @@ class AdminController extends Controller
 
     public function updatedosen(Request $request)
     {
-        DB::table('dosen')->where('id', $request->id)->update([
+        Dosen::where('id', $request->id)->update([
             'nama_dosen' => $request->nama,
             'NIP' => $request->NIP,
+            'jabatan' => $request->jabatan,
+            'prodi_dosen' => $request->prodi_dosen,
             'email_dosen' => $request->email,
             'prodi_dosen' => $request->prodi,
         ]);
@@ -134,7 +142,7 @@ class AdminController extends Controller
 
     public function updatepassworddosen(Request $request)
     {
-        DB::table('dosen')->where('id', $request->id)->update([
+        Dosen::where('id', $request->id)->update([
             'password' => Hash::make($request->password),
             
         ]);
@@ -192,7 +200,7 @@ class AdminController extends Controller
             'password.required' => 'Password tidak boleh kosong'
         ]);
 
-        DB::table('ketua_departemen')->insert([
+        Kadep::create([
             'nama_kadep' => $request->nama_kadep,
             'NIP' => $request->NIP,
             'prodi_kadep' => $request->prodi_kadep,
@@ -213,7 +221,7 @@ class AdminController extends Controller
 
     public function updatekadep(Request $request)
     {
-        DB::table('ketua_departemen')->where('id', $request->id)->update([
+        Kadep::where('id', $request->id)->update([
             'nama_kadep' => $request->nama,
             'NIP' => $request->NIP,
             'email_kadep' => $request->email,
@@ -241,7 +249,7 @@ class AdminController extends Controller
 
     public function updatepasswordkadep(Request $request)
     {
-        DB::table('ketua_departemen')->where('id', $request->id)->update([
+        Kadep::where('id', $request->id)->update([
             'password' => Hash::make($request->password),
             
         ]);
@@ -272,7 +280,7 @@ class AdminController extends Controller
             'password.min' => 'Password harus lebih dari 6 karakter',
             'password.required' => 'Password tidak boleh kosong'
         ]);
-        DB::table('wakildekan')->insert([
+        WakilDekan::create([
             'nama_wd' => $request->nama_wd,
             'NIP' => $request->NIP,
             'email_wd' => $request->email_wd,
@@ -327,7 +335,7 @@ class AdminController extends Controller
 
     public function updatepasswordwd1(Request $request)
     {
-        DB::table('wakildekan')->where('id', $request->id)->update([
+        WakilDekan::where('id', $request->id)->update([
             'password' => Hash::make($request->password),
             
         ]);
@@ -366,7 +374,7 @@ class AdminController extends Controller
             'password.min' => 'Password harus lebih dari 6 karakter',
             'password.required' => 'Password tidak boleh kosong'
         ]);
-        DB::table('petugas_penomoran')->insert([
+        Petugas::create([
             'nama_petugas' => $request->nama_petugas,
             'NIP' => $request->NIP,
             'email_petugas' => $request->email_petugas,
@@ -386,7 +394,7 @@ class AdminController extends Controller
 
     public function updatepetugas(Request $request)
     {
-        DB::table('petugas_penomoran')->where('id', $request->id)->update([
+        Petugas::where('id', $request->id)->update([
             'nama_petugas' => $request->nama,
             'NIP' => $request->NIP,
             'email_petugas' => $request->email,
@@ -413,7 +421,7 @@ class AdminController extends Controller
 
     public function updatepasswordpetugas(Request $request)
     {
-        DB::table('petugas_penomoran')->where('id', $request->id)->update([
+        Petugas::where('id', $request->id)->update([
             'password' => Hash::make($request->password),
             
         ]);
