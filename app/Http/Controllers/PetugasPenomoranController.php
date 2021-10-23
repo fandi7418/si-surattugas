@@ -48,28 +48,41 @@ class PetugasPenomoranController extends Controller
 
     }
 
-    public function editnomorsurat($id)
+    public function editnomorsurat(Request $request, $id)
     {
-        $surat = DB::table('surat')->where('id', $id)->get();
-        $count = DB::table('surat')
-        ->where(['surat.status' => 'Belum diberi nomor',])
-        ->count();
-        $notif = DB::table('surat')
-        ->where(['surat.status' => 'Belum diberi nomor',])
-        ->get();
-        return view('petugas.editnomor', ['surat' => $surat, 'count' => $count, 'notif' => $notif]);
+        // $surat = DB::table('surat')->where('id', $id)->get();
+        // $count = DB::table('surat')
+        // ->where(['surat.status' => 'Belum diberi nomor',])
+        // ->count();
+        // $notif = DB::table('surat')
+        // ->where(['surat.status' => 'Belum diberi nomor',])
+        // ->get();
+        // return view('petugas.editnomor', ['surat' => $surat, 'count' => $count, 'notif' => $notif]);
+
+        $surat = Surat::findOrFail($id);
+        return response()->json([
+            'surat' => $surat
+        ]);
     }
 
     public function updatenomorsurat(Request $request, $id)
     {
-
-
-        Surat::where('id', $request->id)->update([
+        $surat = Surat::findOrFail($id)->update([
             'no_surat' => $request->no_surat,
-            'status' => 'Sudah diberi nomor',
+
         ]);
-        toast('Data Berhasil Diubah', 'success')->autoClose(2000);
-        return redirect('/daftarsuratpetugas');
+        return response()->json([ 'success' => true, "request" => $request, "id" => $id ]);
+
+
+        // $surat->no_surat = $request->nomor;
+        // $data->save();
+
+        // Surat::where('id', $request->id)->update([
+        //     'no_surat' => $request->no_surat,
+        //     'status' => 'Sudah diberi nomor',
+        // ]);
+        // toast('Data Berhasil Diubah', 'success')->autoClose(2000);
+        // return redirect('/daftarsuratpetugas');
     }
 
     public function updateprofilpetugas(Request $request)
