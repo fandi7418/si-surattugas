@@ -236,9 +236,9 @@ Route::group(['middleware' => ['auth:petugas_penomoran']], function()
 
     Route::post('/editpasswordpetugas', [PetugasPenomoranController::class, 'editpasswordpetugas']);
 
-    Route::post('/updatenomorsurat/{id}', [PetugasPenomoranController::class, 'updatenomorsurat']);
+    Route::post('/updatenomorsurat/{id}', [PetugasPenomoranController::class, 'updatenomorsurat'])->name('updatenomorsurat');
 
-    Route::get('/editnomorsurat/{id}', [PetugasPenomoranController::class, 'editnomorsurat']);
+    Route::get('/editnomorsurat/{id}', [PetugasPenomoranController::class, 'editnomorsurat'])->name('editnomorsurat');
 });
 
 

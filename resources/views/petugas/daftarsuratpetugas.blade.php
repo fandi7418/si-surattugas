@@ -2,7 +2,7 @@
 
 @section('petugas')
 <title>Daftar Surat</title>
-
+<meta name="csrf-token" content="{{ csrf_token() }}">
         <h2>Daftar Surat</h2>
         <div class="table-responsive" style="margin-right: 25px">
             <select class="btn btn-secondary dropdown-toggle btn-sm" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false" style="float: right">Pilih Program Studi
@@ -45,11 +45,101 @@
               <td>{{$isi->status}}</td>
               <td>
               <a href="/surat/{{ $isi->id }}" target="_blank" class="btn btn-secondary btn-sm">Lihat</a>
-              <a href="/editnomorsurat/{{ $isi->id }}" class="btn btn-primary btn-sm">Edit No. Surat</a>
+              <button onClick="editNomor({{ $isi->id }})" class="btn btn-primary btn-sm">
+                Edit No. Surat
+              </button>
               </td>
             </tr>
           @endforeach
           </tbody>
         </table>
       </div>
+
+
+      @endsection
+      <!-- Modal Edit Nomor-->
+      
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeBtn">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+            <form>
+                @csrf
+                <div class="form-group">
+                  <label for="formGroupExampleInput">Masukkan nomor surat</label>
+                  <input type="text" class="form-control" id="nomorSurat" name="nomorSurat">
+                  <input type="text" class="form-control" id="idSurat" name="nomorSurat" style="display:none">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" id="closeBtn" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" onClick="updateNomor({{ $isi->id }})">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+@section('inline_js')
+<script>
+
+function editNomor(id)
+{
+  
+  let seturl = "{{ route("editnomorsurat", ":id") }}";
+  seturl = seturl.replace(':id', id);
+
+
+  console.log(seturl);
+  $.get(seturl, function(data){
+    console.log(data);
+    $("#nomorSurat").val(data.surat.no_surat);
+    $("#idSurat").val(data.surat.id);
+    $("#exampleModal").modal('show');
+  });
+  $('#closeBtn').click(function(){
+    $("#exampleModal").modal('hide');
+	});
+}
+
+function updateNomor(id)
+{
+  event.preventDefault()
+    var no_surat = $("#nomorSurat").val();
+    var id = $("#idSurat").val();
+
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+
+    $.ajax({
+      url: "{{ url('updatenomorsurat') }}"+'/'+id,
+      type: "POST",
+      data: {
+        no_surat: no_surat,
+      },
+      dataType: 'json',
+      success: function (data) {
+          $('#exampleModal').modal('hide');
+          window.location.reload(true);
+      }
+    });
+
+  // var no_surat = $("#nomorSurat").val();
+  //   $.ajax({
+  //       type: "get",
+  //       url: "{{ url('updatenomorsurat') }}/" + id,
+  //       data: "name=" + no_surat,
+  //       read()     
+  // });
+}
+</script>
 @endsection
