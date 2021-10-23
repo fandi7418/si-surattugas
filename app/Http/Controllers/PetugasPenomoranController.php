@@ -12,19 +12,52 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class PetugasPenomoranController extends Controller
 {
+    public function dashboardpetugas(Surat $surat)
+    {
+    $notif = DB::table('surat')
+    ->where(['surat.status' => 'Belum diberi nomor',])
+    ->get();
+    $count = DB::table('surat')
+    ->where(['surat.status' => 'Belum diberi nomor',])
+    ->count();
+        return view('petugas.dashboardpetugas', ['notif' => $notif, 'count' => $count]);
+    }
     public function daftarsuratpetugas(Surat $surat)
     {
         $surat = DB::table('surat')
-            ->whereNotNull(['surat.ttd_wd'])
-            ->get();
-        return view('petugas.daftarsuratpetugas', ['surat' => $surat]);
+        ->whereNotNull(['surat.ttd_wd'])
+        ->get();
+        $notif = DB::table('surat')
+        ->where(['surat.status' => 'Belum diberi nomor',])
+        ->get();
+        $count = DB::table('surat')
+        ->where(['surat.status' => 'Belum diberi nomor',])
+        ->count();
+        return view('petugas.daftarsuratpetugas', ['surat' => $surat, 'count' => $count, 'notif' => $notif]);
+
+    }
+    public function profilpetugas(Surat $surat)
+    {
+        $notif = DB::table('surat')
+        ->where(['surat.status' => 'Belum diberi nomor',])
+        ->get();
+        $count = DB::table('surat')
+        ->where(['surat.status' => 'Belum diberi nomor',])
+        ->count();
+        return view('petugas.profilpetugas', ['count' => $count, 'notif' => $notif]);
 
     }
 
     public function editnomorsurat($id)
     {
         $surat = DB::table('surat')->where('id', $id)->get();
-        return view('petugas.editnomor', ['surat' => $surat]);
+        $count = DB::table('surat')
+        ->where(['surat.status' => 'Belum diberi nomor',])
+        ->count();
+        $notif = DB::table('surat')
+        ->where(['surat.status' => 'Belum diberi nomor',])
+        ->get();
+        return view('petugas.editnomor', ['surat' => $surat, 'count' => $count, 'notif' => $notif]);
     }
 
     public function updatenomorsurat(Request $request, $id)

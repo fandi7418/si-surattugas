@@ -34,19 +34,11 @@
     <div class="form-group row mt-4">
         <label for="colFormLabel" class="col-sm-2 col-form-label">Program Studi</label>
         <div class="col-sm-8">
-            <select class="form-select" name="prodi_kadep" aria-label="Default select example">
-                <option value="Teknik Sipil">Teknik Sipil</option>
-                <option value="Teknik Arsitektur">Teknik Arsitektur</option>
-                <option value="Teknik Kimia">Teknik Kimia</option>
-                <option value="Teknik Perencanaan Wilayah dan Kota">Teknik Perencanaan Wilayah dan Kota</option>
-                <option value="Teknik Mesin">Teknik Mesin</option>
-                <option value="Teknik Elektro">Teknik Elektro</option>
-                <option value="Teknik Perkapalan">Teknik Perkapalan</option>
-                <option value="Teknik Industri">Teknik Industri</option>
-                <option value="Teknik Lingkungan">Teknik Lingkungan</option>
-                <option value="Teknik Geologi">Teknik Geologi</option>
-                <option value="Teknik Geodesi">Teknik Geodesi</option>
-                <option value="Teknik Komputer">Teknik Komputer</option>
+            <select class="form-select" name="prodi_id" id="prodi_id" aria-label="Default select example">
+                <option disabled value>Pilih Program Studi</option>
+                @foreach ($prd as $prodis )
+                <option value="{{ $prodis->id }}">{{ $prodis->prodi }}</option>
+                @endforeach
             </select>
         </div>
     </div>

@@ -100,7 +100,8 @@ class SuratController extends Controller
 
     public function datasurat()
     {
-        $surat = DB::table('surat') -> get();
+        $surat = DB::table('surat')->orderBy('created_at', 'DESC')
+        ->paginate(10);
         return view('admin.datasurat', ['surat' => $surat, "title" => "Data Surat Tugas"]);
     }
 

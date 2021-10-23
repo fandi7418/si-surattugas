@@ -14,6 +14,21 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class WakilDekanController extends Controller
 {
+    public function dashboardwd(Request $request)
+    {
+        $surat = DB::table('surat')
+        ->where([
+            'surat.status' => 'Menunggu persetujuan Wakil Dekan',
+            ])
+        ->get();
+        $count = DB::table('surat')
+        ->where([
+            'surat.status' => 'Menunggu persetujuan Wakil Dekan',
+            ])
+        ->count();
+        return view('wd.dashboardwd', ['surat' => $surat], ['count' => $count]);
+    }
+
     public function daftarsurat(Request $request)
     {
         $surat = DB::table('surat')
@@ -21,7 +36,27 @@ class WakilDekanController extends Controller
             'surat.status' => 'Menunggu persetujuan Wakil Dekan',
             ])
         ->get();
-        return view('wd.daftarsuratwd', ['surat' => $surat]);
+        $count = DB::table('surat')
+        ->where([
+            'surat.status' => 'Menunggu persetujuan Wakil Dekan',
+            ])
+        ->count();
+        return view('wd.daftarsuratwd', ['surat' => $surat], ['count' => $count]);
+    }
+
+    public function profilwd(Request $request)
+    {
+        $surat = DB::table('surat')
+        ->where([
+            'surat.status' => 'Menunggu persetujuan Wakil Dekan',
+            ])
+        ->get();
+        $count = DB::table('surat')
+        ->where([
+            'surat.status' => 'Menunggu persetujuan Wakil Dekan',
+            ])
+        ->count();
+        return view('wd.profilwd', ['surat' => $surat], ['count' => $count]);
     }
 
     public function izinkan($id)

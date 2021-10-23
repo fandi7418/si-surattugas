@@ -19,7 +19,7 @@ class CreateKetuaDepartemen extends Migration
             $table->string('password')->nullable();
             $table->string('nama_kadep')->nullable();
             $table->bigInteger('NIP')->nullable();
-            $table->string('prodi_kadep')->nullable();
+            $table->bigInteger('prodi_id');
             $table->string('ttd_kadep')->nullable();
             $table->rememberToken();
             $table->timestamps();

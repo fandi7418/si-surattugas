@@ -19,7 +19,7 @@ class Dosen extends Authenticatable
         'NIP',
         'pangkat',
         'jabatan',
-        'prodi_dosen',
+        'prodi_id',
     ];
 
     protected $hidden = [
@@ -35,5 +35,10 @@ class Dosen extends Authenticatable
     {
     //Setiap user akan memiliki banyak data
     return $this->hasMany('App\Models\Surat', 'NIP');
+    }
+    public function prodi()
+    {
+    //Setiap dosen hanya memiliki satu prodi
+    return $this->belongsTo(Prodi::class);
     }
 }

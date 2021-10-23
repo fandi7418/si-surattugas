@@ -17,7 +17,7 @@ class Kadep extends Authenticatable
         'password',
         'nama_kadep',
         'NIP',
-        'prodi_kadep',
+        'prodi_id',
         'ttd_kadep',
     ];
 
@@ -29,4 +29,9 @@ class Kadep extends Authenticatable
     // protected $casts = [
     //     'email_verified_at' => 'datetime',
     // ];
+    public function prodi()
+    {
+        //Setiap kadep hanya memiliki satu prodi
+        return $this->belongsTo(Prodi::class);
+    }
 }

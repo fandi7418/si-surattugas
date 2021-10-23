@@ -222,17 +222,21 @@ Route::group(['middleware' => ['auth:ketua_departemen']], function()
 /* Route petugas */
 Route::group(['middleware' => ['auth:petugas_penomoran']], function()
 {
-    Route::get('/dashboardpetugas', function () {
-        return view('/petugas/dashboardpetugas');
-    });
+    // Route::get('/dashboardpetugas', function () {
+    //     return view('/petugas/dashboardpetugas');
+    // });
         
-    Route::get('/profilpetugas', function () {
-        return view('/petugas/profilpetugas');
-    });
+    // Route::get('/profilpetugas', function () {
+    //     return view('/petugas/profilpetugas');
+    // });
 
+    Route::get('/dashboardpetugas', [PetugasPenomoranController::class, 'dashboardpetugas']);
+    
     Route::get('/daftarsuratpetugas', [PetugasPenomoranController::class, 'daftarsuratpetugas']);
-
+    
     Route::post('/updateprofilpetugas', [PetugasPenomoranController::class, 'updateprofilpetugas']);
+    
+    Route::get('/profilpetugas', [PetugasPenomoranController::class, 'profilpetugas']);
 
     Route::post('/editpasswordpetugas', [PetugasPenomoranController::class, 'editpasswordpetugas']);
 
@@ -246,17 +250,21 @@ Route::group(['middleware' => ['auth:petugas_penomoran']], function()
 Route::group(['middleware' => ['auth:wakildekan']], function()
 {
     
-    Route::get('/dashboardwd', function () {
-        return view('/wd/dashboardwd');
-    });
+    // Route::get('/dashboardwd', function () {
+    //     return view('/wd/dashboardwd');
+    // });
     
     Route::get('/daftarsuratwd', function () {
         return view('/wd/daftarsuratwd');
     });
     
-    Route::get('/profilwd', function () {
-        return view('/wd/profilwd');
-    });
+    // Route::get('/profilwd', function () {
+    //     return view('/wd/profilwd');
+    // });
+
+    Route::get('/dashboardwd', [WakilDekanController::class, 'dashboardwd']);
+
+    Route::get('/profilwd', [WakilDekanController::class, 'profilwd']);
 
     Route::get('/daftarsuratwd', [WakilDekanController::class, 'daftarsurat']);
 

@@ -37,7 +37,7 @@
             <tr>
               <td>{{ $kdp->nama_kadep }}</td>
               <td>{{ $kdp->NIP }}</td>
-              <td>{{ $kdp->prodi_kadep }}</td>
+              <td>{{ $kdp->prodi->prodi }}</td>
               <td>  <a href="/edit_kadep/{{ $kdp->id }}" class="btn btn-primary btn-sm">Edit</a>
                     <a href="/hapus_kadep/{{ $kdp->id }}/konfirmasi" class="btn btn-danger btn-sm">Hapus</a>
               </td>

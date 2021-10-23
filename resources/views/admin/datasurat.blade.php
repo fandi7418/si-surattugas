@@ -29,8 +29,7 @@
                             <th scope="col">Judul</th>
                             <th scope="col">Nama Dosen</th>
                             <th scope="col">Program Studi</th>
-                            <th scope="col">Tanggal Awal</th>
-                            <th scope="col">Tanggal Akhir</th>
+                            <th scope="col">Tanggal</th>
                             <th scope="col">Status</th>
                             <th scope="col">Aksi</th>
                                 </tr>
@@ -43,8 +42,7 @@
                                 <td>{{ $srt->judul }}</td>
                                 <td>{{ $srt->nama_dosen }}</td>
                                 <td>{{ $srt->prodi }}</td>
-                                <td>{{ $srt->tanggalawal }}</td>
-                                <td>{{ $srt->tanggalakhir }}</td>
+                                <td>{{ \Carbon\Carbon::parse($srt->created_at)->isoFormat('D MMMM Y')}}</td>
                                 <td>{{ $srt->status }}</td>
                             <td>
                                 <a href="/surat/{{ $srt->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
@@ -55,5 +53,11 @@
                         </tbody>
                         </table>
                     </div>
+
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                        {{ $surat->links() }}
+                        </ul>
+                    </nav>
 
 @endsection

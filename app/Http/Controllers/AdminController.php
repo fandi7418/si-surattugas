@@ -6,6 +6,7 @@ use App\Models\Admin;
 use App\Models\Dosen;
 use App\Models\Kadep;
 use App\Models\Petugas;
+use App\Models\Prodi;
 use App\Models\WakilDekan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -75,14 +76,16 @@ class AdminController extends Controller
 
     public function indexdosen()
     {
-        return view('admin.tambahdosen', [
-            "title" => "Tambah Dosen"
-        ]); 
+        // return view('admin.tambahdosen', [
+        //     "title" => "Tambah Dosen"
+        // ]); 
+        $prd = Prodi::all();
+        return view('admin.tambahdosen', ['prd' => $prd, "title" => "Tambah Dosen"]);
     }   
     public function datadosen()
     {
         
-        $dosen = DB::table('dosen')-> get();
+        $dosen = Dosen::with('Prodi')-> get();
         return view('admin.datadosen', ['dosen' => $dosen, "title" => "Data Dosen"]);
     }
 
@@ -91,7 +94,7 @@ class AdminController extends Controller
         $request->validate([
             'nama_dosen' => 'required|max:255|string',
             'NIP' => 'required|numeric|min:6',
-            'prodi_dosen' => 'required|string',
+            'prodi_id' => 'required',
             'pangkat' => 'required|string',
             'jabatan' => 'required|string',
             'email_dosen' => 'email|required|unique:dosen',
@@ -111,7 +114,7 @@ class AdminController extends Controller
             'NIP' => $request->NIP,
             'pangkat' => $request->pangkat,
             'jabatan' => $request->jabatan,
-            'prodi_dosen' => $request->prodi_dosen,
+            'prodi_id' => $request->prodi_id,
             'email_dosen' => $request->email_dosen,
             'password' => Hash::make($request->password),
             
@@ -122,8 +125,9 @@ class AdminController extends Controller
 
     public function editdosen($id)
     {
-        $dosen = DB::table('dosen')->where('id', $id)->get();
-        return view('admin.editdosen', ['dosen' => $dosen, "title" => "Edit Profil"]);
+        $prd = Prodi::all();
+        $dosen = Dosen::with('Prodi')->where('id', $id)->get();
+        return view('admin.editdosen', ['dosen' => $dosen, 'prd' => $prd, "title" => "Edit Profil"]);
     }
 
     public function updatedosen(Request $request)
@@ -132,9 +136,8 @@ class AdminController extends Controller
             'nama_dosen' => $request->nama,
             'NIP' => $request->NIP,
             'jabatan' => $request->jabatan,
-            'prodi_dosen' => $request->prodi_dosen,
+            'prodi_id' => $request->prodi_id,
             'email_dosen' => $request->email,
-            'prodi_dosen' => $request->prodi,
         ]);
         toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect('data_dosen');
@@ -173,14 +176,16 @@ class AdminController extends Controller
 
     public function datakadep()
     {
-        $kadep = DB::table('ketua_departemen') -> get();
+        $kadep = Kadep::with('Prodi') -> get();
         return view('admin.datakadep', ['kadep' => $kadep, "title" => "Data Ketua Departemen"]);
     }
     public function indexkadep()
     {
-        return view('admin.tambahkadep', [
-            "title" => "Tambah Ketua Departemen"
-        ]); 
+        // return view('admin.tambahkadep', [
+        //     "title" => "Tambah Ketua Departemen"
+        // ]);
+        $prd = Prodi::all();
+        return view('admin.tambahkadep', ['prd' => $prd, "title" => "Tambah Ketua Departemen"]);
     }
 
     public function tambahkadep(Request $request)
@@ -188,7 +193,7 @@ class AdminController extends Controller
         $request->validate([
             'nama_kadep' => 'required|max:255|string',
             'NIP' => 'required|numeric|min:6',
-            'prodi_kadep' => 'required|string',
+            'prodi_id' => 'required',
             'email_kadep' => 'email|required|unique:ketua_departemen',
             'password' => 'required|min:6',
         ], [
@@ -203,7 +208,7 @@ class AdminController extends Controller
         Kadep::create([
             'nama_kadep' => $request->nama_kadep,
             'NIP' => $request->NIP,
-            'prodi_kadep' => $request->prodi_kadep,
+            'prodi_id' => $request->prodi_id,
             'email_kadep' => $request->email_kadep,
             'password' => Hash::make($request->password),
 
@@ -215,17 +220,18 @@ class AdminController extends Controller
 
     public function editkadep($id)
     {
-        $kadep = DB::table('ketua_departemen')->where('id', $id)->get();
-        return view('admin.editkadep', ['kadep' => $kadep, "title" => "Edit Profil Ketua Departemen"]);
+        $prd = Prodi::all();
+        $kadep = Kadep::with('Prodi')->where('id', $id)->get();
+        return view('admin.editkadep', ['kadep' => $kadep, 'prd' => $prd, "title" => "Edit Profil Ketua Departemen"]);
     }
 
     public function updatekadep(Request $request)
     {
         Kadep::where('id', $request->id)->update([
-            'nama_kadep' => $request->nama,
+            'nama_kadep' => $request->nama_kadep,
             'NIP' => $request->NIP,
-            'email_kadep' => $request->email,
-            'prodi_kadep' => $request->prodi,
+            'email_kadep' => $request->email_kadep,
+            'prodi_id' => $request->prodi_id,
         ]);
         toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect('data_kadep');

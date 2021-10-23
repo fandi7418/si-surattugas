@@ -23,7 +23,7 @@ class DosenSeeder extends Seeder
             'NIP' => '123123',
             'pangkat' => 'III/C',
             'jabatan' => 'Lektor',
-            'prodi_dosen' => 'Teknik Komputer',
+            'prodi_id' => '1',
             'remember_token' => Str::random(60),
         ]);
     }

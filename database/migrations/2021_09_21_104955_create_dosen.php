@@ -21,7 +21,7 @@ class CreateDosen extends Migration
             $table->bigInteger('NIP');
             $table->string('pangkat');
             $table->string('jabatan');
-            $table->string('prodi_dosen');
+            $table->bigInteger('prodi_id');
             $table->rememberToken();
             $table->timestamps();
         });

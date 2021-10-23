@@ -38,7 +38,7 @@
             <tr>
               <td>{{ $dsn->nama_dosen }}</td>
               <td>{{ $dsn->NIP }}</td>
-              <td>{{ $dsn->prodi_dosen }}</td>
+              <td>{{ $dsn->prodi->prodi }}</td>
               <td>
                   <a href="/edit_dosen/{{ $dsn->id }}" class="btn btn-primary btn-sm">Edit</a>
                   <a href="/hapus_dosen/{{ $dsn->id }}/konfirmasi" class="btn btn-danger btn-sm">Hapus</a>
