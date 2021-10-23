@@ -44,7 +44,12 @@ class Surat extends Authenticatable
     public function dosen()
     {
      //Setiap data hanya dimiliki oleh satu user
-     return $this->belongsTo('App\Models\Dosen', 'NIP');
+    return $this->belongsTo('App\Models\Dosen', 'NIP');
+    }
+    public function prodi()
+    {
+    //Setiap dosen hanya memiliki satu prodi
+    return $this->belongsTo(Prodi::class);
     }
 }
 

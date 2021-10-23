@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use PDF;
 use Illuminate\Http\Request;
 use App\Models\Surat;
+use App\Models\Prodi;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -32,7 +33,7 @@ class SuratController extends Controller
         Surat::create([
             'nama_dosen' => $request->nama,
             'NIP' => $request->nip,
-            'prodi' => $request->prodi,
+            'prodi_id' => $request->prodi,
             'pangkat' => $request->pangkat,
             'jabatan' => $request->jabatan,
             'judul' => $request->judul,
@@ -42,11 +43,13 @@ class SuratController extends Controller
             'tanggalawal' => $request->tanggalawal,
             'tanggalakhir' => $request->tanggalakhir,
             'status' => 'Menunggu persetujuan Kadep',
+            // 'prodi_id' => Prodi::where('id', '=', Auth::user()->prodi_id)
+            // ->first()->id,
             'nama_kadep' => DB::table('ketua_departemen')
-            ->where('ketua_departemen.prodi_kadep', '=', Auth::user()->prodi_dosen)
+            ->where('ketua_departemen.prodi_id', '=', Auth::user()->prodi_id)
             ->first()->nama_kadep,
             'NIP_kadep' => DB::table('ketua_departemen')
-            ->where('ketua_departemen.prodi_kadep', '=', Auth::user()->prodi_dosen)
+            ->where('ketua_departemen.prodi_id', '=', Auth::user()->prodi_id)
             ->first()->NIP,
             'nama_wd' => DB::table('wakildekan')
             ->first()->nama_wd,

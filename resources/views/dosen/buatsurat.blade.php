@@ -21,7 +21,7 @@
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Departemen/Prodi</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="prodi" value="{{ Auth::guard('dosen')->user()->prodi_dosen }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="prodi" value="{{ Auth::guard('dosen')->user()->prodi->prodi }}">
         </div>
     </div>
     <div class="form-group row mb-2">

@@ -18,7 +18,7 @@ class CreateSuratTable extends Migration
             $table->string('no_surat')->nullable();
             $table->string('nama_dosen');
             $table->bigInteger('NIP');
-            $table->string('prodi');
+            $table->bigInteger('prodi_id');
             $table->string('pangkat');
             $table->string('jabatan')->nullable();
             $table->string('judul');

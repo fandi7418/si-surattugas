@@ -23,7 +23,7 @@ class DosenSeeder extends Seeder
             'NIP' => '123123',
             'pangkat' => 'III/C',
             'jabatan' => 'Lektor',
-            'prodi_id' => '1',
+            'prodi_id' => '12',
             'remember_token' => Str::random(60),
         ]);
     }

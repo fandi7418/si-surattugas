@@ -25,4 +25,9 @@ class Prodi extends Model
     //Setiap Prodi memiliki banyak id dosen
     return $this->hashMany(Kadep::class);
     }
+    public function surat()
+    {
+    //Setiap Prodi memiliki banyak id surat
+    return $this->hashMany(Surat::class);
+    }
 }
