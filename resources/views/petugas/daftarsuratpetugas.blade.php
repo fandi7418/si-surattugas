@@ -74,6 +74,7 @@
                 <div class="form-group">
                   <label for="formGroupExampleInput">Masukkan nomor surat</label>
                   <input type="text" class="form-control" id="nomorSurat" name="nomorSurat">
+                  <input type="text" class="form-control" id="idSurat" name="nomorSurat" style="display:none">
                 </div>
               </form>
             </div>
@@ -99,6 +100,7 @@ function editNomor(id)
   $.get(seturl, function(data){
     console.log(data);
     $("#nomorSurat").val(data.surat.no_surat);
+    $("#idSurat").val(data.surat.id);
     $("#exampleModal").modal('show');
   });
   $('#closeBtn').click(function(){
@@ -109,27 +111,27 @@ function editNomor(id)
 function updateNomor(id)
 {
   event.preventDefault()
-  var no_surat = $("#nomorSurat").val();
+    var no_surat = $("#nomorSurat").val();
+    var id = $("#idSurat").val();
 
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-  });
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
 
-  $.ajax({
-    url: "{{ url('updatenomorsurat') }}"+'/'+id,
-    type: "POST",
-    data: {
-      no_surat: no_surat,
-    },
-    dataType: 'json',
-    success: function (data) {
-        $('#exampleModal').modal('hide');
-        window.location.reload(true);
-    }
-  });
-  $("#idSurat").attr("onclick","updateNomor()");
+    $.ajax({
+      url: "{{ url('updatenomorsurat') }}"+'/'+id,
+      type: "POST",
+      data: {
+        no_surat: no_surat,
+      },
+      dataType: 'json',
+      success: function (data) {
+          $('#exampleModal').modal('hide');
+          window.location.reload(true);
+      }
+    });
 }
 </script>
 @endsection
