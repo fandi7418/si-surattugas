@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Petugas;
 use App\Models\Surat;
+use App\Models\Prodi;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -24,14 +25,11 @@ class PetugasPenomoranController extends Controller
     }
     public function daftarsuratpetugas(Surat $surat)
     {
-        $surat = DB::table('surat')
-        ->whereNotNull(['surat.ttd_wd'])
+        $surat = Surat::whereNotNull(['surat.ttd_wd'])->orderBy('created_at', 'DESC')
         ->get();
-        $notif = DB::table('surat')
-        ->where(['surat.status' => 'Belum diberi nomor',])
+        $notif = Surat::where(['surat.status' => 'Belum diberi nomor',])
         ->get();
-        $count = DB::table('surat')
-        ->where(['surat.status' => 'Belum diberi nomor',])
+        $count = Surat::where(['surat.status' => 'Belum diberi nomor',])
         ->count();
         return view('petugas.daftarsuratpetugas', ['surat' => $surat, 'count' => $count, 'notif' => $notif]);
 
@@ -69,6 +67,7 @@ class PetugasPenomoranController extends Controller
     {
         $surat = Surat::findOrFail($id)->update([
             'no_surat' => $request->no_surat,
+            'status' => 'Sudah diberi nomor',
 
         ]);
         return response()->json([ 'success' => true, "request" => $request, "id" => $id ]);

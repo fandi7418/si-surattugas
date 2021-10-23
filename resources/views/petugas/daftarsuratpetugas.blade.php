@@ -40,7 +40,7 @@
               <td>{{$isi->no_surat}}</td>
               <td>{{$isi->judul}}</td>
               <td>{{$isi->nama_dosen}}</td>
-              <td>{{$isi->prodi}}</td>
+              <td>{{$isi->prodi->prodi}}</td>
               <td>{{ \Carbon\Carbon::parse($isi->tanggalawal)->isoFormat('D MMMM Y')}}</td>
               <td>{{$isi->status}}</td>
               <td>

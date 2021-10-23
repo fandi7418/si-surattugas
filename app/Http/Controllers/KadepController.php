@@ -15,15 +15,14 @@ class KadepController extends Controller
 
     public function dashboardkadep(Request $request)
     {
-        $surat = DB::table('surat')
-        ->where([
-            'surat.prodi' => Auth::user()->prodi_kadep,
+        $surat = Surat::where([
+            'surat.prodi_id' => Auth::user()->prodi_id,
             'surat.status' => 'Menunggu persetujuan Kadep',
             ])
         ->get();
         $count = DB::table('surat')
         ->where([
-            'surat.prodi' => Auth::user()->prodi_kadep,
+            'surat.prodi_id' => Auth::user()->prodi_id,
             'surat.status' => 'Menunggu persetujuan Kadep',
             ])
         ->count();
@@ -47,15 +46,13 @@ class KadepController extends Controller
     }
     public function daftarsurat(Request $request)
     {
-        $surat = DB::table('surat')
-        ->where([
-            'surat.prodi' => Auth::user()->prodi_kadep,
+        $surat = Surat::where([
+            'surat.prodi_id' => Auth::user()->prodi_id,
             'surat.status' => 'Menunggu persetujuan Kadep',
             ])
         ->get();
-        $count = DB::table('surat')
-        ->where([
-            'surat.prodi' => Auth::user()->prodi_kadep,
+        $count = Surat::where([
+            'surat.prodi_id' => Auth::user()->prodi_id,
             'surat.status' => 'Menunggu persetujuan Kadep',
             ])
         ->count();

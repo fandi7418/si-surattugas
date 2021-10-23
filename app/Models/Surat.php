@@ -17,7 +17,7 @@ class Surat extends Authenticatable
         'no_surat',
         'nama_dosen',
         'NIP',
-        'prodi',
+        'prodi_id',
         'pangkat',
         'jabatan',
         'judul',

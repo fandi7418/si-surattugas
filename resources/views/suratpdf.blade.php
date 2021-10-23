@@ -79,7 +79,7 @@
 			</tr>
 			<tr>
 				<td>Departemen/Prodi</td>
-				<td width="525">: {{ $surat->prodi }}</td>
+				<td width="525">: {{ $surat->prodi->prodi }}</td>
 			</tr>
 			<tr>
 				<td>Pangkat/Golongan</td>

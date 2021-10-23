@@ -33,7 +33,7 @@ class SuratController extends Controller
         Surat::create([
             'nama_dosen' => $request->nama,
             'NIP' => $request->nip,
-            'prodi_id' => $request->prodi,
+            'prodi_id' => Auth::guard('dosen')->user()->prodi->id,
             'pangkat' => $request->pangkat,
             'jabatan' => $request->jabatan,
             'judul' => $request->judul,
@@ -43,8 +43,6 @@ class SuratController extends Controller
             'tanggalawal' => $request->tanggalawal,
             'tanggalakhir' => $request->tanggalakhir,
             'status' => 'Menunggu persetujuan Kadep',
-            // 'prodi_id' => Prodi::where('id', '=', Auth::user()->prodi_id)
-            // ->first()->id,
             'nama_kadep' => DB::table('ketua_departemen')
             ->where('ketua_departemen.prodi_id', '=', Auth::user()->prodi_id)
             ->first()->nama_kadep,
