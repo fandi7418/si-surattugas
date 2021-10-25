@@ -48,15 +48,6 @@ class PetugasPenomoranController extends Controller
 
     public function editnomorsurat(Request $request, $id)
     {
-        // $surat = DB::table('surat')->where('id', $id)->get();
-        // $count = DB::table('surat')
-        // ->where(['surat.status' => 'Belum diberi nomor',])
-        // ->count();
-        // $notif = DB::table('surat')
-        // ->where(['surat.status' => 'Belum diberi nomor',])
-        // ->get();
-        // return view('petugas.editnomor', ['surat' => $surat, 'count' => $count, 'notif' => $notif]);
-
         $surat = Surat::findOrFail($id);
         return response()->json([
             'surat' => $surat
@@ -65,12 +56,14 @@ class PetugasPenomoranController extends Controller
 
     public function updatenomorsurat(Request $request, $id)
     {
-        $surat = Surat::findOrFail($id)->update([
+        $surat = Surat::find($id)->update([
             'no_surat' => $request->no_surat,
             'status' => 'Sudah diberi nomor',
-
         ]);
-        return response()->json([ 'success' => true, "request" => $request, "id" => $id ]);
+        return response()->json([ 
+            'success' => true,
+            'surat' => $surat
+        ]);
 
 
         // $surat->no_surat = $request->nomor;

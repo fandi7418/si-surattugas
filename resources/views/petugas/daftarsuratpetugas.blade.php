@@ -74,13 +74,12 @@
                 <div class="form-group">
                   <label for="formGroupExampleInput">Masukkan nomor surat</label>
                   <input type="text" class="form-control" id="nomorSurat" name="nomorSurat">
-                  <input type="text" class="form-control" id="idSurat" name="nomorSurat" style="display:none">
                 </div>
               </form>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" id="closeBtn" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" onClick="updateNomor({{ $isi->id }})">Save changes</button>
+              <button type="submit" class="btn btn-primary" id="saveBtn" onclick="updateSubmit(0)">Save changes</button>
             </div>
           </div>
         </div>
@@ -100,38 +99,32 @@ function editNomor(id)
   $.get(seturl, function(data){
     console.log(data);
     $("#nomorSurat").val(data.surat.no_surat);
-    $("#idSurat").val(data.surat.id);
+    $('#saveBtn').attr('onclick', `updateSubmit(${data.surat.id})`);
     $("#exampleModal").modal('show');
   });
   $('#closeBtn').click(function(){
     $("#exampleModal").modal('hide');
 	});
 }
-
-function updateNomor(id)
-{
-  event.preventDefault()
-    var no_surat = $("#nomorSurat").val();
-    var id = $("#idSurat").val();
-
-    $.ajaxSetup({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      }
-    });
-
-    $.ajax({
-      url: "{{ url('updatenomorsurat') }}"+'/'+id,
-      type: "POST",
-      data: {
-        no_surat: no_surat,
-      },
-      dataType: 'json',
-      success: function (data) {
-          $('#exampleModal').modal('hide');
-          window.location.reload(true);
-      }
-    });
+function updateSubmit(id) {
+  var no_surat = $("#nomorSurat").val();
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+  $.ajax({
+    url: "{{ url('updatenomorsurat') }}"+'/'+id,
+    type: "POST",
+    data: {
+      no_surat: no_surat,
+    },
+    dataType: 'json',
+    success: function (data) {
+        $('#exampleModal').modal('hide');
+        window.location.reload(true);
+    }
+  });
 }
 </script>
 @endsection
