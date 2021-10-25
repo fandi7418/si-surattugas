@@ -104,6 +104,7 @@ class AdminController extends Controller
             'email_dosen.email' => 'Email tidak boleh kosong',
             'nama_dosen.required' => 'Nama tidak boleh kosong',
             'NIP.required' => 'NIP tidak boleh kosong',
+            'prodi_id.required' => 'Program Studi tidak boleh kosong',
             'pangkat.required' => 'Pangkat tidak boleh kosong',
             'jabatan.required' => 'Jabatan tidak boleh kosong',
             'password.min' => 'Password harus lebih dari 6 karakter',
@@ -132,12 +133,30 @@ class AdminController extends Controller
 
     public function updatedosen(Request $request)
     {
+        $request->validate([
+            'nama_dosen' => 'required|max:255|string',
+            'NIP' => 'required|numeric|min:6',
+            'prodi_id' => 'required',
+            'pangkat' => 'required|string',
+            'jabatan' => 'required|string',
+            'email_dosen' => 'email|required',
+        ], 
+            [
+            'email_dosen.email' => 'Email tidak boleh kosong',
+            'nama_dosen.required' => 'Nama tidak boleh kosong',
+            'NIP.required' => 'NIP tidak boleh kosong',
+            'prodi_id.required' => 'Program Studi tidak boleh kosong',
+            'pangkat.required' => 'Pangkat tidak boleh kosong',
+            'jabatan.required' => 'Jabatan tidak boleh kosong',
+
+        ]);
         Dosen::where('id', $request->id)->update([
-            'nama_dosen' => $request->nama,
+            'nama_dosen' => $request->nama_dosen,
             'NIP' => $request->NIP,
             'jabatan' => $request->jabatan,
+            'pangkat' => $request->pangkat,
             'prodi_id' => $request->prodi_id,
-            'email_dosen' => $request->email,
+            'email_dosen' => $request->email_dosen,
         ]);
         toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect('data_dosen');
