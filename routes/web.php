@@ -170,9 +170,9 @@ Route::group(['middleware' => ['auth:dosen']], function()
     
     Route::get('/hapussurat/{id}/hapussurat', [SuratController::class, 'hapussurat']);
     
-    Route::get('/editsurat/{id}', [SuratController::class, 'editsurat']);
+    Route::get('/editsurat/{id}', [SuratController::class, 'editsurat'])->name('editsurat');
     
-    Route::post('/updatesurat/{id}', [SuratController::class, 'updatesurat']);
+    Route::post('/updatesurat/{id}', [SuratController::class, 'updatesurat'])->name('updatesurat');
     
 });
 Route::get('/surat/{surat}', [SuratController::class, 'show']);

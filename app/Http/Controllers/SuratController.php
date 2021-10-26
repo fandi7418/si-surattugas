@@ -77,26 +77,41 @@ class SuratController extends Controller
 
     public function editsurat($id)
     {
-        $surat = DB::table('surat')->where('id', $id)->get();
-        return view('dosen.editsurat', ['surat' => $surat]);
+        $surat = Surat::findOrFail($id);
+        return response()->json([
+            'surat' => $surat
+        ]);
     }
 
-    public function updatesurat(Request $request)
+    public function updatesurat(Request $request, $id)
     {
-        Surat::where('id', $request->id)->update([
-            'nama_dosen' => $request->nama,
-            'NIP' => $request->nip,
-            'prodi' => $request->prodi,
-            'pangkat' => $request->pangkat,
+        $surat = Surat::find($id)->update([
             'judul' => $request->judul,
-            'jenis' => $request->jeniskegiatan,
+            'jenis' => $request->jenis,
             'tempat' => $request->tempat,
             'kota' => $request->kota,
             'tanggalawal' => $request->tanggalawal,
             'tanggalakhir' => $request->tanggalakhir,
         ]);
-        toast('Data Berhasil Diubah', 'success')->autoClose(5000);
-        return redirect('/daftarsuratdosen');
+        return response()->json([ 
+            'success' => true,
+            'surat' => $surat
+        ]);
+        
+        // Surat::where('id', $request->id)->update([
+        //     'nama_dosen' => $request->nama,
+        //     'NIP' => $request->nip,
+        //     'prodi' => $request->prodi,
+        //     'pangkat' => $request->pangkat,
+        //     'judul' => $request->judul,
+        //     'jenis' => $request->jeniskegiatan,
+        //     'tempat' => $request->tempat,
+        //     'kota' => $request->kota,
+        //     'tanggalawal' => $request->tanggalawal,
+        //     'tanggalakhir' => $request->tanggalakhir,
+        // ]);
+        // toast('Data Berhasil Diubah', 'success')->autoClose(5000);
+        // return redirect('/daftarsuratdosen');
     }
 
     public function datasurat()
