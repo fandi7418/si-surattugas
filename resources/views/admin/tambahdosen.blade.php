@@ -59,12 +59,17 @@
                         <div class="form-group row mt-4">
                             <label for="colFormLabel" class="col-sm-2 col-form-label">Program Studi</label>
                             <div class="col-sm-8">
-                                <select class="form-select" name="prodi_id" id="prodi_id" aria-label="Default select example">
-                                    <option disabled value>Pilih Program Studi</option>
+                                <select class="form-select @error('prodi_id') is-invalid @enderror" name="prodi_id" id="prodi_id" aria-label="Default select example">
+                                    <option value="">Pilih Program Studi</option>
                                     @foreach ($prd as $prodis )
-                                    <option value="{{ $prodis->id }}">{{ $prodis->prodi }}</option>
+                                    <option value="{{ $prodis->id }}" {{ old('prodi_id') == $prodis->id ? 'selected' : null }}>{{ $prodis->prodi }}</option>
                                     @endforeach
                                 </select>
+                                @error('prodi_id')
+                                <div class="invalid-feedback">
+                                {{ $message }}
+                                </div>
+                            @enderror
                             </div>
                         </div>
                         <div class="form-group row mt-4">
