@@ -246,6 +246,16 @@ class AdminController extends Controller
 
     public function updatekadep(Request $request)
     {
+        $request->validate([
+            'nama_kadep' => 'required|max:255|string',
+            'NIP' => 'required|numeric|min:6',
+            'prodi_id' => 'required',
+            'email_kadep' => 'email|required',
+        ], [
+            'email_kadep.email' => 'Email tidak boleh kosong',
+            'nama_kadep.required' => 'Nama tidak boleh kosong',
+            'NIP.required' => 'NIP tidak boleh kosong',
+        ]);
         Kadep::where('id', $request->id)->update([
             'nama_kadep' => $request->nama_kadep,
             'NIP' => $request->NIP,

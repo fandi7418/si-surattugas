@@ -8,45 +8,62 @@
     <div class="form-group row mt-4">
         <label for="colFormLabel" class="col-sm-2 col-form-label">Nama</label>
         <div class="col-sm-8">
-            <input type="text" name="nama_kadep" class="form-control" id="colFormLabel" value="{{ $kdp->nama_kadep }}">
+            <input type="text" name="nama_kadep" value="{{ old('nama_kadep', $kdp->nama_kadep) }}" class="form-control @error('nama_kadep') is-invalid @enderror" id="colFormLabel"
+                >
+                    @error('nama_kadep')
+                        <div class="invalid-feedback">
+                        {{ $message }}
+                        </div>
+                    @enderror
         </div>
-    </div>
-    <div class="form-group row mt-4">
-        <label for="colFormLabel" class="col-sm-2 col-form-label">NIP</label>
-        <div class="col-sm-8">
-            <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <=57" name="NIP"
-                class="form-control" id="colFormLabel" value="{{ $kdp->NIP }}">
+        <div class="form-group row mt-4">
+            <label for="colFormLabel" class="col-sm-2 col-form-label">NIP</label>
+            <div class="col-sm-8">
+                <input type="text"
+                    onkeypress="return event.charCode >= 48 && event.charCode <=57" value="{{ old('NIP', $kdp->NIP) }}" name="NIP"
+                    class="form-control @error('NIP') is-invalid @enderror" id="colFormLabel" placeholder="Silahkan Masukkan NIP Anda">
+                        @error('NIP')
+                            <div class="invalid-feedback">
+                            {{ $message }}
+                            </div>
+                        @enderror
+            </div>
         </div>
-    </div>
-    <div class="form-group row mt-4">
-        <label for="colFormLabel" class="col-sm-2 col-form-label">Program Studi</label>
-        <div class="col-sm-8">
-            <select class="form-select" name="prodi_id" id="prodi_id" aria-label="Default select example">
-                <option disabled value>Pilih Program Studi</option>
-                <option value="{{ $kdp->prodi_id }}">{{ $kdp->prodi->prodi }}</option>
-                @foreach ($prd as $prodis )
-                <option value="{{ $prodis->id }}">{{ $prodis->prodi }}</option>
-                @endforeach
-            </select>
+        <div class="form-group row mt-4">
+            <label for="colFormLabel" class="col-sm-2 col-form-label">Program Studi</label>
+            <div class="col-sm-8">
+                <select class="form-select @error('prodi_id') is-invalid @enderror" name="prodi_id" id="prodi_id" aria-label="Default select example">
+                    <option disabled value="">Pilih Program Studi</option>
+                    @foreach ($prd as $prodis )
+                    <option value="{{ $prodis->id }}" {{ old('prodi_id', $kdp->prodi_id) == $prodis->id ? 'selected' : null }}>{{ $prodis->prodi }}</option>
+                    @endforeach
+                </select>
+                @error('prodi_id')
+                <div class="invalid-feedback">
+                {{ $message }}
+                </div>
+            @enderror
+            </div>
         </div>
-    </div>
-    <div class="form-group row mt-4">
-        <label for="colFormLabel" class="col-sm-2 col-form-label">Email</label>
-        <div class="col-sm-8">
-            <input type="email" name="email_kadep" class="form-control" id="colFormLabel" value="{{ $kdp->email_kadep }}">
+        <div class="form-group row mt-4">
+            <label for="colFormLabel" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-8">
+                <input type="email" name="email_kadep" value="{{ old('email_kadep', $kdp->email_kadep) }}" class="form-control @error('email_kadep') is-invalid @enderror" id="colFormLabel"
+                    placeholder="Silahkan Masukkan E-mail Anda">
+                        @error('email_kadep')
+                            <div class="invalid-feedback">
+                            {{ $message }}
+                            </div>
+                        @enderror
+            </div>
         </div>
-    </div>
-    {{-- <div class="form-group row mt-4">
-                                <label for="colFormLabel" class="col-sm-2 col-form-label">Password</label>
-                                <div class="col-sm-5">
-                                <input type="password" class="form-control" id="inputPassword" >
-                                <input type="checkbox" onclick="myFunction()"> Tampilkan Password
-                                    </div>
-                                    </div> --}}
-    <div class="form-group row mt-4">
-        <label for="colFormLabel" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-5">
-            <button type="submit" class="btn btn-primary">Simpan</button>
+        
+        <div class="form-group row mt-4">
+            <label for="colFormLabel" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-5">
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            
+       
 </form>
 <a href="" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Reset Password</a>
 </div>
