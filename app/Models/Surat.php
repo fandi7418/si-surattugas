@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Model;
 
 class Surat extends Authenticatable
 {
@@ -27,7 +28,7 @@ class Surat extends Authenticatable
         'tanggalawal',
         'tanggalakhir',
         'tanggalsurat',
-        'status',
+        'status_id',
         'ttd_kadep',
         'ttd_wd',
         'nama_kadep',
@@ -50,6 +51,11 @@ class Surat extends Authenticatable
     {
     //Setiap dosen hanya memiliki satu prodi
     return $this->belongsTo(Prodi::class);
+    }
+    public function status()
+    {
+    //Setiap dosen hanya memiliki satu prodi
+    return $this->belongsTo(StatusSurat::class);
     }
 }
 

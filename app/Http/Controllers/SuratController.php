@@ -7,6 +7,9 @@ use PDF;
 use Illuminate\Http\Request;
 use App\Models\Surat;
 use App\Models\Prodi;
+use App\Models\Kadep;
+use App\Models\WakilDekan;
+use App\Models\StatusSurat;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -18,7 +21,18 @@ class SuratController extends Controller
 {
     public function index()
     {
-        return view('/dosen/buatsurat');
+        $surat = Surat::with('status')
+        ->where([
+            'surat.prodi_id' => Auth::user()->prodi_id,
+            ])
+        ->orderBy('updated_at', 'DESC')
+        ->get();
+        $count = Surat::with('status')
+        ->where([
+            'surat.prodi_id' => Auth::user()->prodi_id,
+            ])
+        ->count();
+        return view('/dosen/buatsurat', ['surat' => $surat, 'count' => $count]);
     }
 
     public function show(Surat $surat)
@@ -42,17 +56,13 @@ class SuratController extends Controller
             'kota' => $request->kota,
             'tanggalawal' => $request->tanggalawal,
             'tanggalakhir' => $request->tanggalakhir,
-            'status' => 'Menunggu persetujuan Kadep',
-            'nama_kadep' => DB::table('ketua_departemen')
-            ->where('ketua_departemen.prodi_id', '=', Auth::user()->prodi_id)
+            'status_id' => '1',
+            'nama_kadep' => Kadep::where('prodi_id', '=', Auth::user()->prodi_id)
             ->first()->nama_kadep,
-            'NIP_kadep' => DB::table('ketua_departemen')
-            ->where('ketua_departemen.prodi_id', '=', Auth::user()->prodi_id)
+            'NIP_kadep' => Kadep::where('prodi_id', '=', Auth::user()->prodi_id)
             ->first()->NIP,
-            'nama_wd' => DB::table('wakildekan')
-            ->first()->nama_wd,
-            'NIP_wd' => DB::table('wakildekan')
-            ->first()->NIP,
+            'nama_wd' => WakilDekan::first()->nama_wd,
+            'NIP_wd' => WakilDekan::first()->NIP,
             'remember_token' => Str::random(60),
         ]);
         Alert::success('Sukses', 'Data Berhasil Ditambah');
@@ -116,7 +126,7 @@ class SuratController extends Controller
 
     public function datasurat()
     {
-        $surat = DB::table('surat')->orderBy('created_at', 'DESC')
+        $surat = Surat::with('status','prodi')->orderBy('created_at', 'DESC')
         ->paginate(10);
         return view('admin.datasurat', ['surat' => $surat, "title" => "Data Surat Tugas"]);
     }

@@ -28,7 +28,7 @@ class CreateSuratTable extends Migration
             $table->date('tanggalawal')->nullable();
             $table->date('tanggalakhir')->nullable();
             $table->date('tanggalsurat')->nullable();
-            $table->string('status')->nullable();
+            $table->bigInteger('status_id');
             $table->string('ttd_kadep')->nullable();
             $table->string('ttd_wd')->nullable();
             $table->string('nama_kadep')->nullable();

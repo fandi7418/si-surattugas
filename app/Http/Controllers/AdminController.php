@@ -85,7 +85,7 @@ class AdminController extends Controller
     public function datadosen()
     {
         
-        $dosen = Dosen::with('Prodi')-> get();
+        $dosen = Dosen::with('prodi')-> get();
         return view('admin.datadosen', ['dosen' => $dosen, "title" => "Data Dosen"]);
     }
 

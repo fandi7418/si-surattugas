@@ -21,7 +21,7 @@
               <td>{{$isi->no_surat}}</td>
               <td>{{$isi->judul}}</td>
               <td>{{ \Carbon\Carbon::parse($isi->created_at)->isoFormat('D MMMM Y')}}</td>
-              <td>{{$isi->status}}</td>
+              <td>{{$isi->status->status}}</td>
               <td>
                 <a href="/surat/{{ $isi->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
                 <button class="btn btn-primary btn-sm" onClick="editSurat({{ $isi->id }})">Edit</button>

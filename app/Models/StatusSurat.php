@@ -5,26 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Prodi extends Model
+class StatusSurat extends Model
 {
     use HasFactory;
-    protected $table = "prodi";
+    protected $table = "status";
     protected $primarykey = "id";
     protected $fillable = [
         'id',
-        'prodi',
+        'status',
     ];
 
-    public function dosen()
-    {
-    //Setiap Prodi memiliki banyak id dosen
-    return $this->hasMany(Dosen::class);
-    }
-    public function kadep()
-    {
-    //Setiap Prodi memiliki banyak id dosen
-    return $this->hasMany(Kadep::class);
-    }
     public function surat()
     {
     //Setiap Prodi memiliki banyak id surat

@@ -22,13 +22,12 @@ class SuratSeeder extends Seeder
             'NIP' => '123123',
             'prodi_id' => '12',
             'pangkat' => 'III',
+            'jabatan' => 'Lektor',
             'judul' => 'pelatihan',
             'jenis' => 'seminar',
             'tempat' => 'ITB',
             'kota' => 'Bandung',
-            // 'tanggalawal' => '',
-            // 'tanggalakhir' => '',
-            // 'status' => '',
+            'status_id' => '1',
             'remember_token' => Str::random(60),
         ]);
         Surat::create([
@@ -37,13 +36,12 @@ class SuratSeeder extends Seeder
             'NIP' => '123123',
             'prodi_id' => '12',
             'pangkat' => 'III',
+            'jabatan' => 'Lektor',
             'judul' => 'pelatihan2',
             'jenis' => 'seminar',
             'tempat' => 'ITB',
             'kota' => 'Bandung',
-            // 'tanggalawal' => '',
-            // 'tanggalakhir' => '',
-            // 'status' => '',
+            'status_id' => '1',
             'remember_token' => Str::random(60),
         ]);
     }

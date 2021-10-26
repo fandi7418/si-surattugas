@@ -148,15 +148,19 @@ Route::group(['middleware' => ['auth:admin']], function()
 /* Route dosen */
 Route::group(['middleware' => ['auth:dosen']], function()
 {
-    Route::get('dashboarddosen', function () {
-        return view('/dosen/dashboarddosen');
-    });
-
-    Route::get('/profildosen', function () {
-        return view('/dosen/profildosen');
-    });
+    // Route::get('dashboarddosen', function () {
+    //     return view('/dosen/dashboarddosen');
+    // });
+    
+    // Route::get('/profildosen', function () {
+    //     return view('/dosen/profildosen');
+    // });
     
     Route::get('/daftarsuratdosen', [DosenController::class, 'daftarsuratDosen']);
+
+    Route::get('/profildosen', [DosenController::class, 'profildosen']);
+
+    Route::get('/dashboarddosen', [DosenController::class, 'dashboarddosen']);
 
     Route::post('/updateprofildosen', [DosenController::class, 'updateprofildosen']);
 

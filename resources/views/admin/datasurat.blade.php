@@ -41,9 +41,9 @@
                                 <td>{{ $srt->no_surat }}</td>
                                 <td>{{ $srt->judul }}</td>
                                 <td>{{ $srt->nama_dosen }}</td>
-                                <td>{{ $srt->prodi }}</td>
+                                <td>{{ $srt->prodi->prodi }}</td>
                                 <td>{{ \Carbon\Carbon::parse($srt->created_at)->isoFormat('D MMMM Y')}}</td>
-                                <td>{{ $srt->status }}</td>
+                                <td>{{ $srt->status->status }}</td>
                             <td>
                                 <a href="/surat/{{ $srt->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
                                 <a href="/hapus_surat/{{ $srt->id }}/konfirmasiadmin" class="btn btn-danger btn-sm">Hapus</a>
