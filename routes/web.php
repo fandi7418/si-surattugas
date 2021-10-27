@@ -216,7 +216,7 @@ Route::group(['middleware' => ['auth:ketua_departemen']], function()
 
     Route::get('/izinkankadep/{id}', [KadepController::class, 'izinkan']);
 
-    Route::get('/tolak/{id}', [KadepController::class, 'tolak']);
+    Route::get('/kadeptolak/{id}', [KadepController::class, 'tolak']);
 
     Route::post('/uploadttdkadep', [KadepController::class, 'tandatangan']);
 

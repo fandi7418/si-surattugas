@@ -23,7 +23,7 @@
               <td>{{ \Carbon\Carbon::parse($isi->tanggalawal)->isoFormat('D MMMM Y')}}</td>
               <td>
               <a href="/surat/{{ $isi->id }}" target="_blank" class="btn btn-secondary btn-sm">Lihat</a>
-              <a href="/tolak/{{ $isi->id }}" class="btn btn-danger btn-sm">Tolak</a>
+              <a href="/kadeptolak/{{ $isi->id }}" class="btn btn-danger btn-sm">Tolak</a>
               <a href="/izinkankadep/{{ $isi->id }}" class="btn btn-success btn-sm">Izinkan</a>
               </td>
             </tr>

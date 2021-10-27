@@ -42,7 +42,7 @@
               <td>{{$isi->nama_dosen}}</td>
               <td>{{$isi->prodi->prodi}}</td>
               <td>{{ \Carbon\Carbon::parse($isi->tanggalawal)->isoFormat('D MMMM Y')}}</td>
-              <td>{{$isi->status}}</td>
+              <td>{{$isi->status->status}}</td>
               <td>
               <a href="/surat/{{ $isi->id }}" target="_blank" class="btn btn-secondary btn-sm">Lihat</a>
               <button onClick="editNomor({{ $isi->id }})" class="btn btn-primary btn-sm">
@@ -73,7 +73,7 @@
                 @csrf
                 <div class="form-group">
                   <label for="formGroupExampleInput">Masukkan nomor surat</label>
-                  <input type="text" class="form-control" id="nomorSurat" name="nomorSurat">
+                  <input class="form-control" type="text" id="nomorSurat" name="nomorSurat">
                 </div>
               </form>
             </div>
@@ -123,8 +123,40 @@ function updateSubmit(id) {
     success: function (data) {
         $('#exampleModal').modal('hide');
         window.location.reload(true);
+    },
+    error: function(err) {
+      console.log(err.responseJSON);
+      let err_log = err.responseJSON.errors;
+      if (err.status == 422){
+        $('#exampleModal').find('[name="nomorSurat"]').prev()
+        .html('<span style="color:red">'+err_log.no_surat[0]+'</span>')
+      }
     }
   });
 }
+//     success: function (data) {
+//       $('#exampleModal').modal('hide');
+//       window.location.reload(true);
+//     // success:function(response) {
+//     //   console.log(response);
+//     },
+//     error:function (err) {
+//       console.log(err.responseJSON);
+//     }
+//     // success: function (data) {
+//     //   $('#exampleModal').modal('hide');
+//     //   window.location.reload(true);
+
+
+//       // if($validate==1){
+//       //   $('#exampleModal').modal('hide');
+//       //   window.location.reload(true);
+//       // }
+//       // else{
+//       //   alert("Nomor sudah digunakan");
+//       // }
+//     }
+//   });
+// }
 </script>
 @endsection

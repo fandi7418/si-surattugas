@@ -16,14 +16,15 @@ class WakilDekanController extends Controller
 {
     public function dashboardwd(Request $request)
     {
-        $surat = DB::table('surat')
+        $surat = Surat::with('status')
         ->where([
-            'surat.status' => 'Menunggu persetujuan Wakil Dekan',
+            'surat.status_id' => '2',
             ])
+        ->orderBy('updated_at', 'DESC')
         ->get();
-        $count = DB::table('surat')
+        $count = Surat::with('status')
         ->where([
-            'surat.status' => 'Menunggu persetujuan Wakil Dekan',
+            'surat.status_id' => '2',
             ])
         ->count();
         return view('wd.dashboardwd', ['surat' => $surat], ['count' => $count]);
@@ -31,14 +32,15 @@ class WakilDekanController extends Controller
 
     public function daftarsurat(Request $request)
     {
-        $surat = DB::table('surat')
+        $surat = Surat::with('status')
         ->where([
-            'surat.status' => 'Menunggu persetujuan Wakil Dekan',
+            'surat.status_id' => '2',
             ])
+        ->orderBy('updated_at', 'DESC')
         ->get();
-        $count = DB::table('surat')
+        $count = Surat::with('status')
         ->where([
-            'surat.status' => 'Menunggu persetujuan Wakil Dekan',
+            'surat.status_id' => '2',
             ])
         ->count();
         return view('wd.daftarsuratwd', ['surat' => $surat], ['count' => $count]);
@@ -46,14 +48,15 @@ class WakilDekanController extends Controller
 
     public function profilwd(Request $request)
     {
-        $surat = DB::table('surat')
+        $surat = Surat::with('status')
         ->where([
-            'surat.status' => 'Menunggu persetujuan Wakil Dekan',
+            'surat.status_id' => '2',
             ])
+        ->orderBy('updated_at', 'DESC')
         ->get();
-        $count = DB::table('surat')
+        $count = Surat::with('status')
         ->where([
-            'surat.status' => 'Menunggu persetujuan Wakil Dekan',
+            'surat.status_id' => '2',
             ])
         ->count();
         return view('wd.profilwd', ['surat' => $surat], ['count' => $count]);
@@ -62,7 +65,7 @@ class WakilDekanController extends Controller
     public function izinkan($id)
     {
         Surat::where('id', $id)->update([
-            'status' => 'Belum diberi nomor',
+            'status_id' => '3',
             'surat.ttd_wd' => Auth::user()->ttd_wd,
         ]);
         return redirect('/daftarsuratwd');
@@ -72,7 +75,7 @@ class WakilDekanController extends Controller
     public function tolak($id)
     {
         Surat::where('id', $id)->update([
-            'status' => 'Surat ditolak Wakil Dekan',
+            'status_id' => '6',
         ]);
         return redirect('/daftarsuratwd');
         

@@ -15,32 +15,63 @@ class PetugasPenomoranController extends Controller
 {
     public function dashboardpetugas(Surat $surat)
     {
-    $notif = DB::table('surat')
-    ->where(['surat.status' => 'Belum diberi nomor',])
-    ->get();
-    $count = DB::table('surat')
-    ->where(['surat.status' => 'Belum diberi nomor',])
-    ->count();
-        return view('petugas.dashboardpetugas', ['notif' => $notif, 'count' => $count]);
+        $notif = Surat::with('status')
+        ->where([
+            'surat.status_id' => '3',
+            ])
+        ->orderBy('updated_at', 'DESC')
+        ->get();
+        $surat = Surat::with('status')
+        ->whereNotNull('surat.ttd_wd')
+        ->orderBy('updated_at', 'DESC')
+        ->get();
+        $count = Surat::with('status')
+        ->where([
+            'surat.status_id' => '3',
+            ])
+        ->count();
+        return view('petugas.dashboardpetugas', [
+            'surat' => $surat, 
+            'count' => $count, 
+            'notif' => $notif]
+        );
     }
     public function daftarsuratpetugas(Surat $surat)
     {
-        $surat = Surat::whereNotNull(['surat.ttd_wd'])->orderBy('created_at', 'DESC')
+        $notif = Surat::with('status')
+        ->where([
+            'surat.status_id' => '3',
+            ])
+        ->orderBy('updated_at', 'DESC')
         ->get();
-        $notif = Surat::where(['surat.status' => 'Belum diberi nomor',])
+        $surat = Surat::with('status')
+        ->whereNotNull('surat.ttd_wd')
+        ->orderBy('updated_at', 'DESC')
         ->get();
-        $count = Surat::where(['surat.status' => 'Belum diberi nomor',])
+        $count = Surat::with('status')
+        ->where([
+            'surat.status_id' => '3',
+            ])
         ->count();
-        return view('petugas.daftarsuratpetugas', ['surat' => $surat, 'count' => $count, 'notif' => $notif]);
+        return view('petugas.daftarsuratpetugas', [
+            'surat' => $surat, 
+            'count' => $count, 
+            'notif' => $notif]
+        );
 
     }
     public function profilpetugas(Surat $surat)
     {
-        $notif = DB::table('surat')
-        ->where(['surat.status' => 'Belum diberi nomor',])
+        $notif = Surat::with('status')
+        ->where([
+            'surat.status_id' => '3',
+            ])
+        ->orderBy('updated_at', 'DESC')
         ->get();
-        $count = DB::table('surat')
-        ->where(['surat.status' => 'Belum diberi nomor',])
+        $count = Surat::with('status')
+        ->where([
+            'surat.status_id' => '3',
+            ])
         ->count();
         return view('petugas.profilpetugas', ['count' => $count, 'notif' => $notif]);
 
@@ -54,15 +85,29 @@ class PetugasPenomoranController extends Controller
         ]);
     }
 
+    public function validasi(Request $request)
+    {
+        $validation = $request->validate([
+            'no_surat' => 'required|unique:surat',
+        ], 
+        [
+            'no_surat.unique' => 'Nomor sudah digunakan',
+            'no_surat.required' => 'Nomor harus diisi',
+        ]
+        );
+    }
+    
     public function updatenomorsurat(Request $request, $id)
     {
+        $this->validasi($request);
         $surat = Surat::find($id)->update([
             'no_surat' => $request->no_surat,
-            'status' => 'Sudah diberi nomor',
+            'status_id' => '4',
         ]);
         return response()->json([ 
-            'success' => true,
-            'surat' => $surat
+            // 'success' => true,
+            'success' => 'Nomor submitted successfully',
+            'surat' => $surat,
         ]);
 
 

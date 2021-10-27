@@ -16,45 +16,51 @@ class KadepController extends Controller
 
     public function dashboardkadep(Request $request)
     {
-        $surat = Surat::where([
-            'surat.prodi_id' => Auth::user()->prodi_id,
-            'surat.status' => 'Menunggu persetujuan Kadep',
-            ])
-        ->get();
-        $count = DB::table('surat')
+        $surat = Surat::with('status')
         ->where([
             'surat.prodi_id' => Auth::user()->prodi_id,
-            'surat.status' => 'Menunggu persetujuan Kadep',
+            'surat.status_id' => '1',
+            ])
+        ->orderBy('updated_at', 'DESC')
+        ->get();
+        $count = Surat::with('status')
+        ->where([
+            'surat.prodi_id' => Auth::user()->prodi_id,
+            'surat.status_id' => '1',
             ])
         ->count();
         return view('kadep.dashboardkadep', ['count' => $count], ['surat' => $surat]);
     }
     public function profilKadep(Request $request)
     {
-        $surat = DB::table('surat')
+        $surat = Surat::with('status')
         ->where([
-            'surat.prodi' => Auth::user()->prodi_kadep,
-            'surat.status' => 'Menunggu persetujuan Kadep',
+            'surat.prodi_id' => Auth::user()->prodi_id,
+            'surat.status_id' => '1',
             ])
+        ->orderBy('updated_at', 'DESC')
         ->get();
-        $count = DB::table('surat')
+        $count = Surat::with('status')
         ->where([
-            'surat.prodi' => Auth::user()->prodi_kadep,
-            'surat.status' => 'Menunggu persetujuan Kadep',
+            'surat.prodi_id' => Auth::user()->prodi_id,
+            'surat.status_id' => '1',
             ])
         ->count();
         return view('kadep.profilkadep', ['surat' => $surat], ['count' => $count]);
     }
     public function daftarsurat(Request $request)
     {
-        $surat = Surat::where([
+        $surat = Surat::with('status')
+        ->where([
             'surat.prodi_id' => Auth::user()->prodi_id,
-            'surat.status' => 'Menunggu persetujuan Kadep',
+            'surat.status_id' => '1',
             ])
+        ->orderBy('updated_at', 'DESC')
         ->get();
-        $count = Surat::where([
+        $count = Surat::with('status')
+        ->where([
             'surat.prodi_id' => Auth::user()->prodi_id,
-            'surat.status' => 'Menunggu persetujuan Kadep',
+            'surat.status_id' => '1',
             ])
         ->count();
         return view('kadep.daftarsuratkadep', ['surat' => $surat], ['count' => $count]);
@@ -63,7 +69,7 @@ class KadepController extends Controller
     public function izinkan($id)
     {
         Surat::where('id', $id)->update([
-            'status' => 'Menunggu persetujuan Wakil Dekan',
+            'status_id' => '2',
             'surat.ttd_kadep' => Auth::user()->ttd_kadep,
             // 'surat.nama_kadep' => Auth::user()->nama_kadep,
             // 'surat.NIP_kadep' => Auth::user()->NIP_kadep,
@@ -74,7 +80,7 @@ class KadepController extends Controller
     public function tolak($id)
     {
         Surat::where('id', $id)->update([
-            'status' => 'Surat ditolak Kadep',
+            'status_id' => '5',
         ]);
         return redirect('/daftarsuratkadep');
         

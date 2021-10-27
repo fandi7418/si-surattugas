@@ -47,40 +47,40 @@
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Judul</label>
         <div class="col-sm-5">
-            <input type="text" class="form-control" placeholder=" " name="judul">
+            <input type="text" required class="form-control" placeholder=" " name="judul">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Jenis Kegiatan</label>
         <div class="col-sm-5">
-            <input type="text" class="form-control" placeholder=" " name="jeniskegiatan">
+            <input type="text" required class="form-control" placeholder=" " name="jeniskegiatan">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Tempat Kegiatan</label>
         <div class="col-sm-5">
-            <input type="text" class="form-control" placeholder=" " name="tempat">
+            <input type="text" required class="form-control" placeholder=" " name="tempat">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Kota/Kabupaten</label>
         <div class="col-sm-5">
-            <input type="text" class="form-control" placeholder=" " name="kota">
+            <input type="text" required class="form-control" placeholder=" " name="kota">
         </div>
     </div>
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Tanggal Awal Perjalanan Dinas</label>
         <div class="col-sm-5">
-            <input type="date" class="form-control" placeholder=" " name="tanggalawal">
+            <input type="date" required class="form-control" placeholder=" " name="tanggalawal">
         </div>
     </div>
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Tanggal Akhir Perjalanan Dinas</label>
         <div class="col-sm-5">
-            <input type="date" class="form-control" placeholder=" " name="tanggalakhir">
+            <input type="date" required class="form-control" placeholder=" " name="tanggalakhir">
         </div>
     </div>
     <div class="col-sm-7">
