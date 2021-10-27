@@ -21,10 +21,6 @@ class PetugasPenomoranController extends Controller
             ])
         ->orderBy('updated_at', 'DESC')
         ->get();
-        $surat = Surat::with('status')
-        ->whereNotNull('surat.ttd_wd')
-        ->orderBy('updated_at', 'DESC')
-        ->get();
         $count = Surat::with('status')
         ->where([
             'surat.status_id' => '3',
@@ -46,7 +42,7 @@ class PetugasPenomoranController extends Controller
         ->get();
         $surat = Surat::with('status')
         ->whereNotNull('surat.ttd_wd')
-        ->orderBy('updated_at', 'DESC')
+        ->orderBy('created_at', 'DESC')
         ->get();
         $count = Surat::with('status')
         ->where([

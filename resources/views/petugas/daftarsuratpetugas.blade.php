@@ -78,7 +78,6 @@
               </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" id="closeBtn" data-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary" id="saveBtn" onclick="updateSubmit(0)">Simpan</button>
             </div>
           </div>
@@ -100,6 +99,8 @@ function editNomor(id)
     console.log(data);
     $("#nomorSurat").val(data.surat.no_surat);
     $('#saveBtn').attr('onclick', `updateSubmit(${data.surat.id})`);
+    $('#exampleModal').find('[name="nomorSurat"]').prev()
+      .html('<span>Masukkan nomor surat</span>')
     $("#exampleModal").modal('show');
   });
   $('#closeBtn').click(function(){
@@ -134,29 +135,5 @@ function updateSubmit(id) {
     }
   });
 }
-//     success: function (data) {
-//       $('#exampleModal').modal('hide');
-//       window.location.reload(true);
-//     // success:function(response) {
-//     //   console.log(response);
-//     },
-//     error:function (err) {
-//       console.log(err.responseJSON);
-//     }
-//     // success: function (data) {
-//     //   $('#exampleModal').modal('hide');
-//     //   window.location.reload(true);
-
-
-//       // if($validate==1){
-//       //   $('#exampleModal').modal('hide');
-//       //   window.location.reload(true);
-//       // }
-//       // else{
-//       //   alert("Nomor sudah digunakan");
-//       // }
-//     }
-//   });
-// }
 </script>
 @endsection
