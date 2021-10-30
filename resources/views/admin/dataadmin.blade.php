@@ -29,6 +29,11 @@
         </tbody>
     </table>
 </div>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+      {{ $adm->links() }}
+      </ul>
+    </nav>
 
 {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Launch demo modal
@@ -103,7 +108,4 @@
     }
 </script>
 
-<script>
-
-</script>
       @endsection

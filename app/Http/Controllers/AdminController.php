@@ -82,11 +82,29 @@ class AdminController extends Controller
         $prd = Prodi::all();
         return view('admin.tambahdosen', ['prd' => $prd, "title" => "Tambah Dosen"]);
     }   
-    public function datadosen()
+    public function datadosen(Request $request)
     {
-        
-        $dosen = Dosen::with('prodi')-> get();
-        return view('admin.datadosen', ['dosen' => $dosen, "title" => "Data Dosen"]);
+        // $prodi = Prodi::all();
+        // $dosen = Dosen::with('prodi')->orderBy('created_at', 'DESC')
+        // ->paginate(10);
+        // return view('admin.datadosen', ['dosen' => $dosen, 'prodi' => $prodi, "title" => "Data Dosen"]);
+        $prodi = Prodi::all();
+        $dosen = Dosen::with('prodi')
+        ->get(); 
+        if ($request->ajax()){
+            return datatables()->of($dosen)->addColumn('action', function($data){
+                $url_edit = url('edit_dosen/'.$data->id);
+                $url_hapus = url('hapus_dosen/'.$data->id.'/konfirmasi');
+                $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';
+                $button .= '&nbsp;&nbsp;';
+                $button .= '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Delete</a>';     
+                return $button;
+            })
+            ->rawColumns(['action'])
+                        ->addIndexColumn()
+                        ->make(true);
+        }
+        return view('admin.datadosen', ['prodi' => $prodi, "title" => "Data Dosen"]);
     }
 
     public function tambahdosen(Request $request)
@@ -128,7 +146,7 @@ class AdminController extends Controller
     {
         $prd = Prodi::all();
         $dosen = Dosen::with('Prodi')->where('id', $id)->get();
-        return view('admin.editdosen', ['dosen' => $dosen, 'prd' => $prd, "title" => "Edit Profil"]);
+        return view('admin.editdosen', ['dosen' => $dosen, 'prd' => $prd, "title" => "Edit Profil Dosen"]);
     }
 
     public function updatedosen(Request $request)
