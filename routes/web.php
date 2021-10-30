@@ -158,6 +158,8 @@ Route::group(['middleware' => ['auth:dosen']], function()
     
     Route::get('/daftarsuratdosen', [DosenController::class, 'daftarsuratDosen']);
 
+    Route::get('/cari', [DosenController::class, 'cari']);
+
     Route::get('/profildosen', [DosenController::class, 'profildosen']);
 
     Route::get('/dashboarddosen', [DosenController::class, 'dashboarddosen']);
@@ -214,11 +216,13 @@ Route::group(['middleware' => ['auth:ketua_departemen']], function()
 
     Route::post('/editpasswordkadep', [KadepController::class, 'editpasswordkadep']);
 
-    Route::get('/izinkankadep/{id}', [KadepController::class, 'izinkan']);
+    Route::post('/izinkankadep/{id}', [KadepController::class, 'izinkan'])->name('izinkankadep');
+
+    Route::get('/confirmIzin/{id}', [KadepController::class, 'confirmIzin'])->name('confirmIzin');
 
     Route::get('/kadeptolak/{id}', [KadepController::class, 'tolak']);
 
-    Route::post('/uploadttdkadep', [KadepController::class, 'tandatangan']);
+    // Route::post('/uploadttdkadep', [KadepController::class, 'tandatangan']);
 
 });
 
@@ -278,9 +282,11 @@ Route::group(['middleware' => ['auth:wakildekan']], function()
 
     Route::post('/uploadttdwd', [WakilDekanController::class, 'tandatangan']);
 
-    Route::get('/izinkan/{id}', [WakilDekanController::class, 'izinkan']);
+    Route::post('/izinkan/{id}', [WakilDekanController::class, 'izinkan']);
 
     Route::get('/tolak/{id}', [WakilDekanController::class, 'tolak']);
+
+    Route::get('/confirmIzinWD/{id}', [KadepController::class, 'confirmIzin'])->name('confirmIzinWD');
 
 });
 

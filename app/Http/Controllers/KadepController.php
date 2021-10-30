@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Kadep;
 use App\Models\Surat;
+use App\Models\Prodi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -46,7 +47,17 @@ class KadepController extends Controller
             'surat.status_id' => '1',
             ])
         ->count();
-        return view('kadep.profilkadep', ['surat' => $surat], ['count' => $count]);
+        $prodi = Prodi::all();
+        $kadep = Kadep::where([
+            'ketua_departemen.id' => Auth::user()->id,
+            ])
+        ->get();
+        return view('kadep.profilkadep', [
+            'surat' => $surat, 
+            'count' => $count,
+            'prodi' => $prodi,
+            'kadep' => $kadep
+        ]);
     }
     public function daftarsurat(Request $request)
     {
@@ -66,15 +77,36 @@ class KadepController extends Controller
         return view('kadep.daftarsuratkadep', ['surat' => $surat], ['count' => $count]);
     }
 
-    public function izinkan($id)
+    public function confirmIzin(Request $request, $id)
     {
-        Surat::where('id', $id)->update([
-            'status_id' => '2',
-            'surat.ttd_kadep' => Auth::user()->ttd_kadep,
-            // 'surat.nama_kadep' => Auth::user()->nama_kadep,
-            // 'surat.NIP_kadep' => Auth::user()->NIP_kadep,
+        $surat = Surat::findOrFail($id);
+        return response()->json([
+            'surat' => $surat
         ]);
-        return redirect('/daftarsuratkadep');
+    }
+    
+    public function validasi(Request $request)
+    {
+        $validation = $request->validate([
+            'ttd_kadep' => 'required',
+        ], [
+            'ttd_kadep.required' => 'Anda tidak bisa menyetujui surat. Tanda tangan belum ditambahkan',
+        ]);
+    }
+
+    public function izinkan(Request $request, $id)
+    {
+        
+
+        $surat = Surat::find($id)->update([
+            'ttd_kadep' => $request->ttd_kadep,
+            $this->validasi($request),
+            'status_id' => '2',
+        ]);
+        return response()->json([
+            'success' => 'Sukses diizinkan',
+            'surat' => $surat,
+        ]);
         
     }
     public function tolak($id)
@@ -103,11 +135,19 @@ class KadepController extends Controller
 
     public function updateprofilkadep(Request $request)
     {
-        Kadep::where('id', '=', Auth::user()->id)->update([
+        $request->validate([
+            'ttd'=>'mimes:jpg,png,jpeg,svg',
+        ]);
+
+        $imgName = $request->ttd->getClientOriginalName() . '-' . time() . '.' . $request->ttd->extension();
+        $request->ttd->move(public_path('image'), $imgName);
+
+        Kadep::with('prodi')->where('id', '=', Auth::user()->id)->update([
             'nama_kadep' => $request->nama,
             'NIP' => $request->NIP,
-            'prodi_kadep' => $request->prodi,
+            'prodi_id' => $request->prodi,
             'email_kadep' => $request->email,
+            'ttd_kadep' => $imgName,
         ]);
         toast('Data Berhasil Diubah', 'success')->autoClose(3000);
         return redirect('/profilkadep');

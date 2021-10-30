@@ -100,9 +100,8 @@ class PetugasPenomoranController extends Controller
             'no_surat' => $request->no_surat,
             'status_id' => '4',
         ]);
-        return response()->json([ 
-            // 'success' => true,
-            'success' => 'Nomor submitted successfully',
+        return response()->json([
+            'success' => 'sukses',
             'surat' => $surat,
         ]);
 

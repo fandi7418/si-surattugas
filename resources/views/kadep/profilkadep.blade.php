@@ -4,7 +4,7 @@
 <title>Profil</title>
 
     <h1 class="h2">Edit Profil</h1>
-    <form method="post" action="/updateprofilkadep">
+    <form enctype="multipart/form-data" method="post" action="/updateprofilkadep">
     @csrf
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Nama</label>
@@ -22,20 +22,11 @@
             <label class="col-sm-2 col-form-label">Program Studi</label>
             <div class="col-sm-5">
                 <select class="form-select" aria-label="Default select example" name="prodi">
-                        <option selected>{{ Auth::user()->prodi_kadep }}</option>
-                        <option value="1">Teknik Sipil</option>
-                        <option value="2">Teknik Arsitektur</option>
-                        <option value="3">Teknik Kimia</option>
-                        <option value="3">Teknik Perencanaan Wilayah dan Kota</option>
-                        <option value="3">Teknik Mesin</option>
-                        <option value="3">Teknik Elektro</option>
-                        <option value="3">Teknik Perkapalan</option>
-                        <option value="3">Teknik Industri</option>
-                        <option value="3">Teknik Lingkungan</option>
-                        <option value="3">Teknik Geologi</option>
-                        <option value="3">Teknik Geodesi</option>
-                        <option value="3">Teknik Komputer</option>
-                    </select>
+                    <option disabled value="">Pilih Program Studi</option>
+                    @foreach ($prodi as $prodis )
+                    <option value="{{ $prodis->id }}" {{ old('prodi_id', Auth::user()->prodi_id) == $prodis->id ? 'selected' : null }}>{{ $prodis->prodi }}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
         <div class="form-group row mb-2">
@@ -44,6 +35,18 @@
                 <input type="text" class="form-control" placeholder=" " name="email" value="{{ Auth::user()->email_kadep }}">
             </div>
         </div>
+        <div class="form-group row mb-2">
+            <label class="col-sm-2 col-form-label">Update Tanda Tangan</label>
+            <div class="col-sm-5">
+                <input class="form-control" type="file" id="formFile" name="ttd">
+                @if(is_null(Auth::user()->ttd_kadep))
+                <small><a href="" data-toggle="modal" data-target="#ttdModal" style="display:none">Lihat Preview Tanda Tangan</a></small>
+                @else
+                <small><a href="" data-toggle="modal" data-target="#ttdModal">Lihat Tanda Tangan</a></small>
+                @endif
+            </div>
+        </div>
+        <br>
         <div class="col-sm-7">
         <button type="submit" class="btn btn-primary" style="float: right; margin-right: 10px">
             Simpan
@@ -78,6 +81,25 @@
        </div>
        </div>
    </div>
+
+    <!-- Modal lihat tanda tangan -->
+   <div class="modal fade" id="ttdModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tanda Tangan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @foreach($kadep as $isi)
+                <img src="/image/{{ $isi->ttd_kadep }}" alt="" width="auto" height="200px" style="align:center">
+                @endforeach
+            </div>
+            </div>
+        </div>
+    </div>
     <script>
         function myFunction() {
         var x = document.getElementById("myInput");

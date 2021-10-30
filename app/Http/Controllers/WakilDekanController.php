@@ -62,13 +62,35 @@ class WakilDekanController extends Controller
         return view('wd.profilwd', ['surat' => $surat], ['count' => $count]);
     }
 
-    public function izinkan($id)
+    public function confirmIzin(Request $request, $id)
     {
-        Surat::where('id', $id)->update([
-            'status_id' => '3',
-            'surat.ttd_wd' => Auth::user()->ttd_wd,
+        $surat = Surat::findOrFail($id);
+        return response()->json([
+            'surat' => $surat
         ]);
-        return redirect('/daftarsuratwd');
+    }
+    
+    public function validasi(Request $request)
+    {
+        $validation = $request->validate([
+            'ttd_wd' => 'required',
+        ], [
+            'ttd_wd.required' => 'Anda tidak bisa menyetujui surat. Tanda tangan belum ditambahkan',
+        ]);
+    }
+
+    public function izinkan(Request $request, $id)
+    {
+        $surat = Surat::find($id)->update([
+            'ttd_wd' => $request->ttd_wd,
+            $this->validasi($request),
+            'status_id' => '3',
+            // 'surat.ttd_wd' => Auth::user()->ttd_wd,
+        ]);
+        return response()->json([
+            'success' => 'Sukses diizinkan',
+            'surat' => $surat,
+        ]);
         
     }
 
@@ -98,10 +120,18 @@ class WakilDekanController extends Controller
 
     public function updateprofilwd(Request $request)
     {
+        $request->validate([
+            'ttd'=>'mimes:jpg,png,jpeg,svg',
+        ]);
+
+        $imgName = $request->ttd->getClientOriginalName() . '-' . time() . '.' . $request->ttd->extension();
+        $request->ttd->move(public_path('image'), $imgName);
+
         WakilDekan::where('id', '=', Auth::user()->id)->update([
             'nama_wd' => $request->nama,
             'NIP' => $request->NIP,
             'email_wd' => $request->email,
+            'ttd_wd' => $imgName,
         ]);
         toast('Data Berhasil Diubah', 'success')->autoClose(2000);
         return redirect('/profilwd');
