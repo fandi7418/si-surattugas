@@ -13,6 +13,9 @@
         <link href="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
         <link href="{{ asset('css/adminstyles.css') }}" rel="stylesheet" />
         <link href="{{ asset('css/adminsidebars.css') }}" rel="stylesheet" />
+        {{-- <link rel="stylesheet" type="text/css" href="{{ asset('https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css') }}"> --}}
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
     </head>
     <body>
         <div class="d-flex" id="wrapper">
@@ -77,6 +80,12 @@
 
         <!-- Core theme JS-->
         <script src="{{ asset('js/adminscripts.js') }}"></script>
+        <!-- Core datatable-->
+        {{-- <script type="text/javascript" charset="utf8" src="{{ asset('https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js') }}"></script> --}}
+        <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+
         {{-- Jquery --}}
 
             
@@ -86,6 +95,7 @@
         {{-- <script src="{{ asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js') }}"></script>
         <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.all.min.js') }}"></script> --}}
         @include('sweetalert::alert')
+        @stack('scripts')
 
     </body>
 </html>
