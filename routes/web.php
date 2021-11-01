@@ -62,7 +62,7 @@ Route::group(['middleware' => ['auth:admin']], function()
     Route::post('/update_passworddosen/{id}', [AdminController::class, 'updatepassworddosen'])->name('aksi ubah password dosen'); 
 
     // route untuk data kadep //
-    Route::get('/data_kadep', [AdminController::class, 'datakadep']);
+    Route::get('/data_kadep', [AdminController::class, 'datakadep'])->name('data kadep'); 
 
     Route::get('/edit_kadep/{id}', [AdminController::class, 'editkadep']);
 
@@ -80,7 +80,7 @@ Route::group(['middleware' => ['auth:admin']], function()
 
     // route untuk data wakil dekan
 
-    Route::get('/data_wakildekan', [AdminController::class, 'datawd1']);
+    Route::get('/data_wakildekan', [AdminController::class, 'datawd1'])->name('data wakil dekan');
 
     Route::get('/tambah_wakildekan', [AdminController::class, 'indexwd1']);
 
@@ -98,7 +98,7 @@ Route::group(['middleware' => ['auth:admin']], function()
     
     // route untuk data petugas //
     
-    Route::get('/data_petugas', [AdminController::class, 'datapetugas']);
+    Route::get('/data_petugas', [AdminController::class, 'datapetugas'])->name('data petugas');
 
     Route::get('/tambah_petugas', [AdminController::class, 'indexpetugas']);
 
@@ -117,7 +117,7 @@ Route::group(['middleware' => ['auth:admin']], function()
 
     // route untuk data surat
     
-    Route::get('/data_surat', [SuratController::class, 'datasurat']);
+    Route::get('/data_surat', [SuratController::class, 'datasurat'])->name('data surat');
 
     Route::get('/hapus_surat/{id}/konfirmasiadmin', [SuratController::class, 'konfirmasiadmin']);
     
