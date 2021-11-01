@@ -15,13 +15,13 @@ class PetugasPenomoranController extends Controller
 {
     public function dashboardpetugas(Surat $surat)
     {
-        $notif = Surat::with('status')
+        $notif = Surat::with('status')->whereNotNull('surat.ttd_wd')
         ->where([
             'surat.status_id' => '3',
             ])
         ->orderBy('updated_at', 'DESC')
         ->get();
-        $count = Surat::with('status')
+        $count = Surat::with('status')->whereNotNull('surat.ttd_wd')
         ->where([
             'surat.status_id' => '3',
             ])
@@ -34,37 +34,38 @@ class PetugasPenomoranController extends Controller
     }
     public function daftarsuratpetugas(Surat $surat)
     {
-        $notif = Surat::with('status')
+        $notif = Surat::with('status')->whereNotNull('surat.ttd_wd')
         ->where([
             'surat.status_id' => '3',
             ])
         ->orderBy('updated_at', 'DESC')
         ->get();
-        $surat = Surat::with('status')
-        ->whereNotNull('surat.ttd_wd')
-        ->orderBy('created_at', 'DESC')
-        ->get();
-        $count = Surat::with('status')
+        $count = Surat::with('status')->whereNotNull('surat.ttd_wd')
         ->where([
             'surat.status_id' => '3',
             ])
         ->count();
-        return view('petugas.daftarsuratpetugas', [
+        $prodi = Prodi::all();
+        $surat = Surat::with('status')->whereNotNull('surat.ttd_wd')
+        ->orderBy('updated_at', 'DESC')
+        ->get(); 
+        return view('petugas.daftarsuratpetugas', 
+        [
             'surat' => $surat, 
+            'prodi' => $prodi, 
             'count' => $count, 
-            'notif' => $notif]
-        );
-
+            'notif' => $notif
+        ]);
     }
     public function profilpetugas(Surat $surat)
     {
-        $notif = Surat::with('status')
+        $notif = Surat::with('status')->whereNotNull('surat.ttd_wd')
         ->where([
             'surat.status_id' => '3',
             ])
         ->orderBy('updated_at', 'DESC')
         ->get();
-        $count = Surat::with('status')
+        $count = Surat::with('status')->whereNotNull('surat.ttd_wd')
         ->where([
             'surat.status_id' => '3',
             ])

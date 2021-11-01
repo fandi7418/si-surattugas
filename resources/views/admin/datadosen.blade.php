@@ -12,7 +12,7 @@
               @endforeach
             </ul>
           </select>
-          {{-- <form action=""></form> --}}
+          <!-- {{-- <form action=""></form> --}} -->
         <a href="/tambah_dosen" class="">
         <button type="submit"  class="btn btn-success btn-sm" style="float: right; margin-right: 5px">Tambah Dosen</button>
       </a>
@@ -27,7 +27,7 @@
               <th scope="col" style="width: 100px">Aksi</th>
             </tr>
           </thead>
-          {{-- <tbody>
+          <!-- {{-- <tbody>
             @foreach($dosen as $dsn)
             <tr>
               <td>{{ $dsn->nama_dosen }}</td>
@@ -39,14 +39,14 @@
             </td>
             </tr>
             @endforeach
-          </tbody> --}}
+          </tbody> --}} -->
         </table>
       </div>
-      {{-- <nav aria-label="Page navigation example">
+      <!-- {{-- <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
         {{ $dosen->links() }}
         </ul>
-    </nav> --}}
+    </nav> --}} -->
     
     @endsection
     @push('scripts')

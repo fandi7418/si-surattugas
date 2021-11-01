@@ -240,7 +240,7 @@ Route::group(['middleware' => ['auth:petugas_penomoran']], function()
 
     Route::get('/dashboardpetugas', [PetugasPenomoranController::class, 'dashboardpetugas']);
     
-    Route::get('/daftarsuratpetugas', [PetugasPenomoranController::class, 'daftarsuratpetugas']);
+    Route::get('/daftarsuratpetugas', [PetugasPenomoranController::class, 'daftarsuratpetugas'])->name('daftarsuratpetugas');
     
     Route::post('/updateprofilpetugas', [PetugasPenomoranController::class, 'updateprofilpetugas']);
     

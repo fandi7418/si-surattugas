@@ -4,9 +4,10 @@
 <title>Daftar Surat</title>
 <meta name="csrf-token" content="{{ csrf_token() }}">
         <h2>Daftar Surat</h2>
+        <br>
         <div class="table-responsive" name="daftarSurat">
           </a>
-          <table class="table table-striped table-sm">
+          <table class="table table-striped table-bordered" style="width:100%" id="daftarSurat">
             <thead>
               <tr>
                 <th scope="col">Nama Surat</th>
@@ -20,7 +21,7 @@
               <tr>
                 <td>{{$isi->judul}}</td>
                 <td>{{$isi->nama_dosen}}</td>
-                <td>{{ \Carbon\Carbon::parse($isi->tanggalawal)->isoFormat('D MMMM Y')}}</td>
+                <td>{{ \Carbon\Carbon::parse($isi->created_at)->isoFormat('D MMMM Y')}}</td>
                 <td>
                 <a href="/surat/{{ $isi->id }}" target="_blank" class="btn btn-secondary btn-sm">Lihat</a>
                 <a href="/kadeptolak/{{ $isi->id }}" class="btn btn-danger btn-sm">Tolak</a>
@@ -56,6 +57,10 @@
 
 @section('kadep_js')
 <script>
+$(document).ready(function() {
+  $('#daftarSurat').DataTable({order: [[2,'asc']]});
+});
+
 function konfirmasi(id)
 {
   let seturl = "{{ route("confirmIzin", ":id") }}";

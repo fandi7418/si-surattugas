@@ -6,7 +6,7 @@
 <h2>Daftar Surat</h2>
 <br>
 <div class="table-responsive">
-  <table class="table table-striped table-sm">
+  <table class="table table-striped table-bordered" style="width:100%" id="daftarSurat">
     <thead>
       <tr>
         <th scope="col">Nama Surat</th>
@@ -20,7 +20,7 @@
       <tr>
       <td>{{$isi->judul}}</td>
         <td>{{$isi->nama_dosen}}</td>
-        <td>{{$isi->tanggalawal}}</td>
+        <td>{{ \Carbon\Carbon::parse($isi->created_at)->isoFormat('D MMMM Y')}}</td>
         <td>
         <a href="/surat/{{ $isi->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
         <a href="/tolak/{{ $isi->id }}" class="btn btn-danger btn-sm">Tolak</a>
@@ -56,6 +56,10 @@
 
 @section('WakilDekan_js')
 <script>
+$(document).ready(function() {
+  $('#daftarSurat').DataTable({order: [[2,'asc']]});
+});
+
 function konfirmasi(id)
 {
   let seturl = "{{ route("confirmIzinWD", ":id") }}";
