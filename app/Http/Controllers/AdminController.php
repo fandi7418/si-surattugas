@@ -36,10 +36,20 @@ class AdminController extends Controller
         ]); 
     }
 
-    public function dataadmin()
+    public function dataadmin(Request $request)
     {
         
         $admin = DB::table('admin') -> get();
+        if ($request->ajax()){
+            return datatables()->of($admin)->addColumn('action', function($data){
+                $url_edit = url('edit_dosen/'.$data->id);
+                $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';  
+                return $button;
+            })
+            ->rawColumns(['action'])
+                        ->addIndexColumn()
+                        ->make(true);
+        }
         return view('admin.dataadmin', ['admin' => $admin, "title" => "Data Admin"]);
     }
 
@@ -211,10 +221,23 @@ class AdminController extends Controller
 
     // controller Kadep di Admin //
 
-    public function datakadep()
+    public function datakadep(Request $request)
     {
         $kadep = Kadep::with('Prodi') -> get();
-        return view('admin.datakadep', ['kadep' => $kadep, "title" => "Data Ketua Departemen"]);
+        if ($request->ajax()){
+            return datatables()->of($kadep)->addColumn('action', function($data){
+                $url_edit = url('edit_kadep/'.$data->id);
+                $url_hapus = url('hapus_kadep/'.$data->id.'/konfirmasi');
+                $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';
+                $button .= '&nbsp;&nbsp;';
+                $button .= '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Delete</a>';     
+                return $button;
+            })
+            ->rawColumns(['action'])
+                        ->addIndexColumn()
+                        ->make(true);
+        }
+        return view('admin.datakadep', [ "title" => "Data Ketua Departemen"]);
     }
     public function indexkadep()
     {
@@ -312,10 +335,23 @@ class AdminController extends Controller
 
         // controller WakilDekan di Admin //
 
-        public function datawd1()
+        public function datawd1(Request $request)
     {
         $wakildekan = DB::table('wakildekan') -> get();
-        return view('admin.datawd1', ['wakildekan' => $wakildekan, "title" => "Data Wakil Dekan"]);
+        if ($request->ajax()){
+            return datatables()->of($wakildekan)->addColumn('action', function($data){
+                $url_edit = url('edit_wakildekan/'.$data->id);
+                $url_hapus = url('hapus_wakildekan/'.$data->id.'/konfirmasi');
+                $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';
+                $button .= '&nbsp;&nbsp;';
+                $button .= '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Delete</a>';     
+                return $button;
+            })
+            ->rawColumns(['action'])
+                        ->addIndexColumn()
+                        ->make(true);
+        }
+        return view('admin.datawd1', ["title" => "Data Wakil Dekan"]);
     }
 
     public function tambahwd1(Request $request)
@@ -406,10 +442,23 @@ class AdminController extends Controller
         ]); 
     } 
 
-    public function datapetugas()
+    public function datapetugas(Request $request)
     {
-        $petugas = DB::table('petugas_penomoran') -> get();
-        return view('admin.datapetugas', ['petugas' => $petugas, "title" => "Data Petugas Penomoran"]);
+        $petugas = Petugas::get();
+        if ($request->ajax()){
+            return datatables()->of($petugas)->addColumn('action', function($data){
+                $url_edit = url('edit_petugas/'.$data->id);
+                $url_hapus = url('hapus_petugas/'.$data->id.'/konfirmasi');
+                $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';
+                $button .= '&nbsp;&nbsp;';
+                $button .= '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Delete</a>';     
+                return $button;
+            })
+            ->rawColumns(['action'])
+                        ->addIndexColumn()
+                        ->make(true);
+        }
+        return view('admin.datapetugas', ["title" => "Data Petugas Penomoran"]);
     }
 
     public function tambahpetugas(Request $request)

@@ -23,7 +23,9 @@
                     <a href="/tambah_kadep" class="">
                     <button type="button" class="btn btn-success btn-sm" style="float: right; margin-right: 5px">Tambah Kadep</button>
                   </a>
-                    <table class="table table-striped table-sm">
+                  <br>
+                  <br>
+                    <table class="table table-striped table-bordered table-sm" id="datakadep" style="width: 100%">
           <thead>
             <tr>
               <th scope="col">Nama Kadep</th>
@@ -32,7 +34,7 @@
               <th scope="col">Aksi</th>
             </tr>
           </thead>
-          <tbody>
+          {{-- <tbody>
             @foreach($kadep as $kdp)
             <tr>
               <td>{{ $kdp->nama_kadep }}</td>
@@ -43,13 +45,35 @@
               </td>
             </tr>
             @endforeach
-          </tbody>
+          </tbody> --}}
         </table>
       </div>
-      <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-        {{ $ptgs->links() }}
-        </ul>
-    </nav>
         
 @endsection
+
+@push('scripts')
+        <script>
+              $(document).ready(function() {
+                  $('#datakadep').DataTable({
+                      processing : true,
+                      serverside : true,
+                      ajax : {
+                        url: "{{ route('data kadep') }}",
+                        type: 'GET'
+                      },
+                      columns:[
+                        {data:'nama_kadep', name:'nama_kadep'},
+                        {data:'NIP', name:'NIP'},
+                        {data:'prodi.prodi', name:'prodi.prodi'},
+                        {
+                            data: 'action', 
+                            name: 'action', 
+                            orderable: true, 
+                            searchable: true
+                        },
+                      ],
+                      order: [[0,'asc']]
+                  });
+              } );
+          </script>
+      @endpush
