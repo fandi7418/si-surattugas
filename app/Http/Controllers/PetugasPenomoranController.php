@@ -32,6 +32,26 @@ class PetugasPenomoranController extends Controller
             'notif' => $notif]
         );
     }
+
+    // public function dropdown($id)
+    // {
+    //     if($id==0)
+    //     {
+    //         $surat = Surat::with('status')
+    //         ->whereNotNull('surat.ttd_wd')
+    //         ->get();
+    //     }else{
+    //         $surat = Surat::with('status')
+    //         ->where('prodi_id', '=', $id)
+    //         ->get();
+    //     }
+    //     // return response()->json($surat);
+    //     return view('petugas.daftarsuratpetugas', 
+    //     [
+    //         'surat' => $surat,
+    //     ]);
+    // }
+
     public function daftarsuratpetugas(Surat $surat)
     {
         $notif = Surat::with('status')->whereNotNull('surat.ttd_wd')
@@ -46,6 +66,17 @@ class PetugasPenomoranController extends Controller
             ])
         ->count();
         $prodi = Prodi::all();
+        // if($id==0)
+        // {
+        //     $surat = Surat::with('status')
+        //     ->whereNotNull('surat.ttd_wd')
+        //     ->get();
+        // }else{
+        //     $surat = Surat::with('status')
+        //     ->where('prodi_id', '=', $id)
+        //     ->get();
+        // }
+        // return response()->json($surat);
         $surat = Surat::with('status')->whereNotNull('surat.ttd_wd')
         ->orderBy('updated_at', 'DESC')
         ->get(); 

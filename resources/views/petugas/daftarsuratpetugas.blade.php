@@ -6,22 +6,13 @@
 <h2>Daftar Surat</h2>
 <br>
 <div class="table-responsive" style="margin-right: 25px">
-  <select class="btn btn-secondary dropdown-toggle btn-sm" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false" style="float: right; margin-left:8px">
+  <select class="btn btn-secondary dropdown-toggle btn-sm" href="#" id="dropdown1" data-bs-toggle="dropdown" aria-expanded="false" style="float: right; margin-left:8px">
       Pilih Program Studi
       <ul class="dropdown-menu-dark" aria-labelledby="dropdown01">
-          <li><option selected class="dropdown-item-dark" href="#">Semua</option></li>
-          <li><option value="2" class="dropdown-item-dark" href="#">Teknik Sipil</option></li>
-          <li><option value="2" class="dropdown-item-dark" href="#">Teknik Arsitektur</option></li>
-          <li><option value="2" class="dropdown-item-dark" href="#">Teknik Kimia</option></li>
-          <li><option value="2" class="dropdown-item-dark" href="#">Teknik Perencanaan Wilayah dan Kota</option></li>
-          <li><option value="2" class="dropdown-item-dark" href="#">Teknik Mesin</option></li>
-          <li><option value="2" class="dropdown-item-dark" href="#">Teknik Elektro</option></li>
-          <li><option value="2" class="dropdown-item-dark" href="#">Teknik Perkapalan</option></li>
-          <li><option value="2" class="dropdown-item-dark" href="#">Teknik Industri</option></li>
-          <li><option value="2" class="dropdown-item-dark" href="#">Teknik Lingkungan</option></li>
-          <li><option value="2" class="dropdown-item-dark" href="#">Teknik Geologi</option></li>
-          <li><option value="2" class="dropdown-item-dark" href="#">Teknik Geodesi</option></li>
-          <li><option value="2" class="dropdown-item-dark" href="#">Teknik Komputer</option></li>
+      <li><option selected class="dropdown-item-dark" href="">Semua</option></li>
+              @foreach ($prodi as $prodis )
+              <option value="{{ $prodis->id }}" {{ old('prodi_id') == $prodis->id ? 'selected' : null }}>{{ $prodis->prodi }}</option>
+              @endforeach
       </ul>
   </select>
   <table class="table table-striped table-bordered" style="width:100%" id="daftarSurat">
@@ -31,12 +22,13 @@
         <th scope="col">Nama Surat</th>
         <th scope="col">Nama Dosen</th>
         <th scope="col">Prodi</th>
+        <th scope="col">Prodi id</th>
         <th scope="col">Tanggal</th>
         <th scope="col">Status</th>
         <th scope="col"> </th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="tabelsurat">
     @foreach($surat as $isi)
       <tr>
         @if(is_null($isi->no_surat))
@@ -51,6 +43,7 @@
         <td>{{$isi->judul}}</td>
         <td>{{$isi->nama_dosen}}</td>
         <td>{{$isi->prodi->prodi}}</td>
+        <td>{{$isi->prodi_id}}</td>
         <td>{{ \Carbon\Carbon::parse($isi->created_at)->isoFormat('D MMMM Y')}}</td>
         @if(is_null($isi->no_surat))
         <td style="color:red">{{$isi->status->status}}</td>
@@ -102,6 +95,25 @@
 <script>
 $(document).ready(function() {
   $('#daftarSurat').DataTable({order: [[4,'asc']]});
+  // $('#dropdown1').on('change', function () {
+  //       $.ajaxSetup({
+  //         headers: {
+  //           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  //         }
+  //       });
+  //       $.ajax({
+  //           url: '{{ route('daftarsuratpetugas') }}',
+  //           // method: 'POST',
+  //           data: {id: $(this).val()},
+  //           success: function (response) {
+  //               $('#tabelsurat').empty();
+
+  //               $.each(response, function (id) {
+  //                   $('#tabelsurat').append(new Option(id))
+  //               })
+  //           }
+  //       })
+  //   });
 });
 
 function editNomor(id)

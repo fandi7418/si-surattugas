@@ -242,6 +242,8 @@ Route::group(['middleware' => ['auth:petugas_penomoran']], function()
     
     Route::get('/daftarsuratpetugas', [PetugasPenomoranController::class, 'daftarsuratpetugas'])->name('daftarsuratpetugas');
     
+    // Route::get('/dropdown/{id}', [PetugasPenomoranController::class, 'dropdown'])->name('dropdown');
+    
     Route::post('/updateprofilpetugas', [PetugasPenomoranController::class, 'updateprofilpetugas']);
     
     Route::get('/profilpetugas', [PetugasPenomoranController::class, 'profilpetugas']);
