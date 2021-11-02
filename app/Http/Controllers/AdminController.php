@@ -97,11 +97,11 @@ class AdminController extends Controller
         // $prodi = Prodi::all();
         // $dosen = Dosen::with('prodi')->orderBy('created_at', 'DESC')
         // ->paginate(10);
-        // return view('admin.datadosen', ['dosen' => $dosen, 'prodi' => $prodi, "title" => "Data Dosen"]);
+        // return view('admin.datadosen', ['dosen' => $dosen, 'prodi' => $prodi, "title" => "Data Dosen"]); 
         $prodi = Prodi::all();
-        $dosen = Dosen::with('prodi')
-        ->get(); 
         if ($request->ajax()){
+            $dosen = Dosen::with('prodi')
+            ->get();
             return datatables()->of($dosen)->addColumn('action', function($data){
                 $url_edit = url('edit_dosen/'.$data->id);
                 $url_hapus = url('hapus_dosen/'.$data->id.'/konfirmasi');
@@ -113,10 +113,29 @@ class AdminController extends Controller
             ->rawColumns(['action'])
                         ->addIndexColumn()
                         ->make(true);
-        }
-        return view('admin.datadosen', ['prodi' => $prodi, "title" => "Data Dosen"]);
     }
-
+    return view('admin.datadosen', ['prodi' => $prodi, "title" => "Data Dosen"]);
+}
+    // if(request()->ajax())
+    // {
+    //     if($request->prodi)
+    //     {
+    //         $data = DB::table('dosen')
+    //                 ->join('prodi', 'prodi.prodi.id', '=', 'dosen.prodi')
+    //                 ->select('dosen.id', 'dosen.nama_dosen', 'dosen.NIP', 'prodi.prodi')
+    //                 -where('dosen.prodi', $request->prodi);
+    //     }
+    //     else
+    //     {
+    //         $data = DB::table('dosen')
+    //                 ->join('prodi', 'prodi.id', '=', 'dosen.prodi')
+    //                 ->select('dosen.id', 'dosen.nama_dosen', 'dosen.NIP', 'prodi.prodi');
+    //     }
+    //     return datatables()->of($data)->make(true);
+    // }    
+    //     $prodi = DB::table('prodi')
+    //                 ->select("*")
+    //                 ->get();
     public function tambahdosen(Request $request)
     {
         $request->validate([

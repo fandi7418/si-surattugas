@@ -1,36 +1,43 @@
 @extends('admin.main')
 
 @section('container')
-<h2 class="mt-4">Data Admin</h2>
-<div class="table-responsive">
-  <br>
-  <table class="table table-striped table-bordered table-sm" style="width:100%" id="dataadmin">
-        <thead>
-            <tr>
-                <th scope="col">Nama Admin</th>
-                <th scope="col">NIP</th>
-                <th scope="col">E-mail Admin</th>
-                <th scope="col">Aksi</th>
-            </tr>
-        </thead>
-        {{-- <tbody>
+<br>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Data Admin</h3>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped table-bordered table-sm" style="width:100%" id="dataadmin">
+            <thead>
+                <tr>
+                    <th scope="col">Nama Admin</th>
+                    <th scope="col">NIP</th>
+                    <th scope="col">E-mail Admin</th>
+                    <th scope="col">Aksi</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+{{-- <tbody>
             @foreach($admin as $adm)
 
             <tr>
                 <td>{{ $adm->nama_admin }}</td>
-        <td>{{ $adm->NIP }}</td>
-        <td>{{ $adm->email_admin }}</td>
-        <td>
+<td>{{ $adm->NIP }}</td>
+<td>{{ $adm->email_admin }}</td>
+<td>
 
-            <a href="/edit_admin/{{ $adm->id }}" class="btn btn-primary btn-sm">Edit</a>
-            <a href="" class="btn btn-secondary btn-sm btn-editps" data-bs-toggle="modal" data-id="{{ $adm->id }}"
-                data-bs-target="#editps">Reset Password</a>
-        </td>
-        </tr>
-        @endforeach
-        </tbody> --}}
-    </table>
-</div>
+    <a href="/edit_admin/{{ $adm->id }}" class="btn btn-primary btn-sm">Edit</a>
+    <a href="" class="btn btn-secondary btn-sm btn-editps" data-bs-toggle="modal" data-id="{{ $adm->id }}"
+        data-bs-target="#editps">Reset Password</a>
+</td>
+</tr>
+@endforeach
+</tbody> --}}
+{{-- </table> --}}
+
 
 
 {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -128,5 +135,6 @@
             ]
         });
     });
+
 </script>
 @endpush

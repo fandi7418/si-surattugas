@@ -1,39 +1,28 @@
 @extends('admin.main')
 
 @section('container')
-                    <h2 class="mt-4">Data Ketua Departemen</h2>
-      <div class="table-responsive">
-                    <select class="btn btn-secondary dropdown-toggle btn-sm" href="#" id="dropdown03" data-bs-toggle="dropdown" aria-expanded="false" style="float: right">Pilih Program Studi
-                          <ul class="dropdown-menu" aria-labelledby="dropdown03">
-                            <li><option selected class="dropdown-item-dark" href="#">Semua</option></li>
-                            <li><option value="1" class="dropdown-item-dark" href="#">Teknik Sipil</option></li>
-                            <li><option value="1" class="dropdown-item-dark" href="#">Teknik Arsitektur</option></li>
-                            <li><option value="1" class="dropdown-item-dark" href="#">Teknik Kimia</option></li>
-                            <li><option value="1" class="dropdown-item-dark" href="#">Teknik Perencanaan Wilayah dan Kota</option></li>
-                            <li><option value="1" class="dropdown-item-dark" href="#">Teknik Mesin</option></li>
-                            <li><option value="1" class="dropdown-item-dark" href="#">Teknik Elektro</option></li> 
-                            <li><option value="1" class="dropdown-item-dark" href="#">Teknik Perkapalan</option></li>
-                            <li><option value="1" class="dropdown-item-dark" href="#">Teknik Industri</option></li>
-                            <li><option value="1" class="dropdown-item-dark" href="#">Teknik Lingkungan</option></li>
-                            <li><option value="1" class="dropdown-item-dark" href="#">Teknik Geologi</option></li>
-                            <li><option value="1" class="dropdown-item-dark" href="#">Teknik Geodesi</option></li>
-                            <li><option value="1" class="dropdown-item-dark" href="#">Teknik Komputer</option></li>
-                          </ul>
-                    </select>
-                    <a href="/tambah_kadep" class="">
-                    <button type="button" class="btn btn-success btn-sm" style="float: right; margin-right: 5px">Tambah Kadep</button>
-                  </a>
-                  <br>
-                  <br>
-                    <table class="table table-striped table-bordered table-sm" id="datakadep" style="width: 100%">
-          <thead>
-            <tr>
-              <th scope="col">Nama Kadep</th>
-              <th scope="col">NIP</th>
-              <th scope="col">Program Studi</th>
-              <th scope="col">Aksi</th>
-            </tr>
-          </thead>
+<br>
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">Data Ketua Departemen</h2>
+  </div>
+  <div class="card-body">
+    <a href="/tambah_kadep" class="">
+      <button type="button" class="btn btn-success btn-sm" style="">Tambah Kadep</button>
+    </a>
+    <br><br>
+    <table class="table table-striped table-bordered table-sm" id="datakadep" style="width: 100%">
+      <thead>
+        <tr>
+          <th scope="col">Nama Kadep</th>
+          <th scope="col">NIP</th>
+          <th scope="col">Program Studi</th>
+          <th scope="col">Aksi</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</div>
           {{-- <tbody>
             @foreach($kadep as $kdp)
             <tr>
@@ -46,8 +35,7 @@
             </tr>
             @endforeach
           </tbody> --}}
-        </table>
-      </div>
+        
         
 @endsection
 
@@ -68,8 +56,8 @@
                         {
                             data: 'action', 
                             name: 'action', 
-                            orderable: true, 
-                            searchable: true
+                            orderable: false, 
+                            searchable: false
                         },
                       ],
                       order: [[0,'asc']]
