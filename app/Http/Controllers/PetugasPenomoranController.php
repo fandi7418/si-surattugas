@@ -15,22 +15,7 @@ class PetugasPenomoranController extends Controller
 {
     public function dashboardpetugas(Surat $surat)
     {
-        $notif = Surat::with('status')->whereNotNull('surat.ttd_wd')
-        ->where([
-            'surat.status_id' => '3',
-            ])
-        ->orderBy('updated_at', 'DESC')
-        ->get();
-        $count = Surat::with('status')->whereNotNull('surat.ttd_wd')
-        ->where([
-            'surat.status_id' => '3',
-            ])
-        ->count();
-        return view('petugas.dashboardpetugas', [
-            'surat' => $surat, 
-            'count' => $count, 
-            'notif' => $notif]
-        );
+        return view('petugas.dashboardpetugas');
     }
 
     // public function dropdown($id)
@@ -54,17 +39,6 @@ class PetugasPenomoranController extends Controller
 
     public function daftarsuratpetugas(Surat $surat)
     {
-        $notif = Surat::with('status')->whereNotNull('surat.ttd_wd')
-        ->where([
-            'surat.status_id' => '3',
-            ])
-        ->orderBy('updated_at', 'DESC')
-        ->get();
-        $count = Surat::with('status')->whereNotNull('surat.ttd_wd')
-        ->where([
-            'surat.status_id' => '3',
-            ])
-        ->count();
         $prodi = Prodi::all();
         // if($id==0)
         // {
@@ -83,25 +57,12 @@ class PetugasPenomoranController extends Controller
         return view('petugas.daftarsuratpetugas', 
         [
             'surat' => $surat, 
-            'prodi' => $prodi, 
-            'count' => $count, 
-            'notif' => $notif
+            'prodi' => $prodi,
         ]);
     }
     public function profilpetugas(Surat $surat)
     {
-        $notif = Surat::with('status')->whereNotNull('surat.ttd_wd')
-        ->where([
-            'surat.status_id' => '3',
-            ])
-        ->orderBy('updated_at', 'DESC')
-        ->get();
-        $count = Surat::with('status')->whereNotNull('surat.ttd_wd')
-        ->where([
-            'surat.status_id' => '3',
-            ])
-        ->count();
-        return view('petugas.profilpetugas', ['count' => $count, 'notif' => $notif]);
+        return view('petugas.profilpetugas');
 
     }
 

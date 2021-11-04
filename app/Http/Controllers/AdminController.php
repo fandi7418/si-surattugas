@@ -42,7 +42,7 @@ class AdminController extends Controller
         $admin = DB::table('admin') -> get();
         if ($request->ajax()){
             return datatables()->of($admin)->addColumn('action', function($data){
-                $url_edit = url('edit_dosen/'.$data->id);
+                $url_edit = url('edit_admin/'.$data->id);
                 $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';  
                 return $button;
             })

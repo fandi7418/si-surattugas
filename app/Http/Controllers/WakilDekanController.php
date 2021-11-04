@@ -16,18 +16,7 @@ class WakilDekanController extends Controller
 {
     public function dashboardwd(Request $request)
     {
-        $surat = Surat::with('status')
-        ->where([
-            'surat.status_id' => '2',
-            ])
-        ->orderBy('updated_at', 'DESC')
-        ->get();
-        $count = Surat::with('status')
-        ->where([
-            'surat.status_id' => '2',
-            ])
-        ->count();
-        return view('wd.dashboardwd', ['surat' => $surat], ['count' => $count]);
+        return view('wd.dashboardwd');
     }
 
     public function daftarsurat(Request $request)
@@ -38,28 +27,12 @@ class WakilDekanController extends Controller
             ])
         ->orderBy('updated_at', 'DESC')
         ->get();
-        $count = Surat::with('status')
-        ->where([
-            'surat.status_id' => '2',
-            ])
-        ->count();
-        return view('wd.daftarsuratwd', ['surat' => $surat], ['count' => $count]);
+        return view('wd.daftarsuratwd', ['surat' => $surat]);
     }
 
     public function profilwd(Request $request)
     {
-        $surat = Surat::with('status')
-        ->where([
-            'surat.status_id' => '2',
-            ])
-        ->orderBy('updated_at', 'DESC')
-        ->get();
-        $count = Surat::with('status')
-        ->where([
-            'surat.status_id' => '2',
-            ])
-        ->count();
-        return view('wd.profilwd', ['surat' => $surat], ['count' => $count]);
+        return view('wd.profilwd');
     }
 
     public function confirmIzin(Request $request, $id)

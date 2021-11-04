@@ -88,7 +88,6 @@
         <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
 
         {{-- Jquery --}}
-        <script type="text/javascript" src="jquery.idle.js"></script>
             
         {{-- <script src="{{ asset('https://code.jquery.com/jquery-3.6.0.slim.js') }}" type="text/javascript" defer integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script> --}}
         {{-- <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script> --}}
@@ -97,14 +96,5 @@
         <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.all.min.js') }}"></script> --}}
         @include('sweetalert::alert')
         @stack('scripts')
-        <script>
-            $(document).idle({
-                onIdle: function(){
-                    window.location="/logout";                
-                },
-                idle: 10000
-            });
-        </script>
-
     </body>
 </html>

@@ -17,44 +17,16 @@ class KadepController extends Controller
 
     public function dashboardkadep(Request $request)
     {
-        $surat = Surat::with('status')
-        ->where([
-            'surat.prodi_id' => Auth::user()->prodi_id,
-            'surat.status_id' => '1',
-            ])
-        ->orderBy('updated_at', 'DESC')
-        ->get();
-        // $count = Surat::with('status')
-        // ->where([
-        //     'surat.prodi_id' => Auth::user()->prodi_id,
-        //     'surat.status_id' => '1',
-        //     ])
-        // ->count();
-        return view('kadep.dashboardkadep', ['surat' => $surat]);
+        return view('kadep.dashboardkadep');
     }
     public function profilKadep(Request $request)
     {
-        $surat = Surat::with('status')
-        ->where([
-            'surat.prodi_id' => Auth::user()->prodi_id,
-            'surat.status_id' => '1',
-            ])
-        ->orderBy('updated_at', 'DESC')
-        ->get();
-        $count = Surat::with('status')
-        ->where([
-            'surat.prodi_id' => Auth::user()->prodi_id,
-            'surat.status_id' => '1',
-            ])
-        ->count();
         $prodi = Prodi::all();
         $kadep = Kadep::where([
             'ketua_departemen.id' => Auth::user()->id,
             ])
         ->get();
         return view('kadep.profilkadep', [
-            'surat' => $surat, 
-            'count' => $count,
             'prodi' => $prodi,
             'kadep' => $kadep
         ]);
@@ -68,13 +40,7 @@ class KadepController extends Controller
             ])
         ->orderBy('updated_at', 'DESC')
         ->get();
-        $count = Surat::with('status')
-        ->where([
-            'surat.prodi_id' => Auth::user()->prodi_id,
-            'surat.status_id' => '1',
-            ])
-        ->count();
-        return view('kadep.daftarsuratkadep', ['surat' => $surat], ['count' => $count]);
+        return view('kadep.daftarsuratkadep', ['surat' => $surat]);
     }
 
     public function confirmIzin(Request $request, $id)
