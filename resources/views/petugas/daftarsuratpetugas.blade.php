@@ -6,15 +6,6 @@
 <h2>Daftar Surat</h2>
 <br>
 <div class="table-responsive" style="margin-right: 25px">
-  <select class="btn btn-secondary dropdown-toggle btn-sm" href="#" id="dropdown1" data-bs-toggle="dropdown" aria-expanded="false" style="float: right; margin-left:8px">
-      Pilih Program Studi
-      <ul class="dropdown-menu-dark" aria-labelledby="dropdown01">
-      <li><option selected class="dropdown-item-dark" href="">Semua</option></li>
-              @foreach ($prodi as $prodis )
-              <option value="{{ $prodis->id }}" {{ old('prodi_id') == $prodis->id ? 'selected' : null }}>{{ $prodis->prodi }}</option>
-              @endforeach
-      </ul>
-  </select>
   <table class="table table-striped table-bordered" style="width:100%" id="daftarSurat">
     <thead>
       <tr>
@@ -22,7 +13,7 @@
         <th scope="col">Nama Surat</th>
         <th scope="col">Nama Dosen</th>
         <th scope="col">Prodi</th>
-        <th scope="col">Prodi id</th>
+        <th scope="col" style="display:none">id</th>
         <th scope="col">Tanggal</th>
         <th scope="col">Status</th>
         <th scope="col"> </th>
@@ -43,7 +34,7 @@
         <td>{{$isi->judul}}</td>
         <td>{{$isi->nama_dosen}}</td>
         <td>{{$isi->prodi->prodi}}</td>
-        <td>{{$isi->prodi_id}}</td>
+        <td style="display:none">{{$isi->id}}</td>
         <td>{{ \Carbon\Carbon::parse($isi->created_at)->isoFormat('D MMMM Y')}}</td>
         @if(is_null($isi->no_surat))
         <td style="color:red">{{$isi->status->status}}</td>
@@ -94,7 +85,8 @@
 @section('petugas_js')
 <script>
 $(document).ready(function() {
-  $('#daftarSurat').DataTable({order: [[4,'asc']]});
+  $('#daftarSurat').DataTable({order: [[4,'desc']]});
+
   // $('#dropdown1').on('change', function () {
   //       $.ajaxSetup({
   //         headers: {

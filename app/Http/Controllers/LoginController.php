@@ -7,12 +7,26 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+// use \Illuminate\Session\Middleware\AuthenticateSession;
 
 class LoginController extends Controller
 {
     public function index()
     {
-        return view('login');
+        if(Auth::guard('dosen')->check()){
+            return redirect('/dashboarddosen');
+        } else if (Auth::guard('ketua_departemen')->check()){
+            return redirect('/dashboardkadep');
+        } else if (Auth::guard('petugas_penomoran')->check()){
+            return redirect('/dashboardpetugas');
+        } else if (Auth::guard('admin')->check()){
+            return redirect('/dashboard_admin');
+        } else if (Auth::guard('wakildekan')->check()){
+            return redirect('/dashboardwd');
+        } else {
+            return view('login');
+        }
+        // return view('login');
 
     }
 
@@ -58,5 +72,10 @@ class LoginController extends Controller
         }
         return redirect('/');
         }
+
+    // protected function authenticated()
+    // {
+    //     \Auth::logoutOtherDevices(request('password'));
+    // }
 
 }

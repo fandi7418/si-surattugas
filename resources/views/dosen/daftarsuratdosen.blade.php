@@ -13,6 +13,7 @@
         <th scope="col">Nama Surat</th>
         <th scope="col">Tanggal</th>
         <th scope="col">Status</th>
+        <th scope="col" style="display:none">id</th>
         <th scope="col"> </th>
       </tr>
     </thead>
@@ -43,6 +44,7 @@
         @else
         <td>{{$isi->status->status}}</td>
         @endif
+        <td style="display:none">{{$isi->id}}</td>
         <td>
           <a href="/surat/{{ $isi->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
           <button class="btn btn-primary btn-sm" onClick="editSurat({{ $isi->id }})">Edit</button>
@@ -113,7 +115,7 @@
 @section('dosen_js')
 <script>
 $(document).ready(function() {
-  $('#daftarSurat').DataTable({order: [[2,'asc']]});
+  $('#daftarSurat').DataTable({order: [[4,'desc']]});
 });
 
 function editSurat(id)

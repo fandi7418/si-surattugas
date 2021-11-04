@@ -183,6 +183,17 @@
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
     @include('sweetalert::alert')
     @yield('dosen_js')
+    <script>
+      var time = new Date().getTime();
+      $(document.body).bind("mousemove keypress", function () {
+          time = new Date().getTime();
+      });
 
+      setInterval(function() {
+          if (new Date().getTime() - time >= 900000) {
+              window.location.reload(true);
+          }
+      }, 900000);
+    </script>
   </body>
 </html>
