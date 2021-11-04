@@ -24,13 +24,13 @@ class KadepController extends Controller
             ])
         ->orderBy('updated_at', 'DESC')
         ->get();
-        $count = Surat::with('status')
-        ->where([
-            'surat.prodi_id' => Auth::user()->prodi_id,
-            'surat.status_id' => '1',
-            ])
-        ->count();
-        return view('kadep.dashboardkadep', ['count' => $count], ['surat' => $surat]);
+        // $count = Surat::with('status')
+        // ->where([
+        //     'surat.prodi_id' => Auth::user()->prodi_id,
+        //     'surat.status_id' => '1',
+        //     ])
+        // ->count();
+        return view('kadep.dashboardkadep', ['surat' => $surat]);
     }
     public function profilKadep(Request $request)
     {
