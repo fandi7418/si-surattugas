@@ -13,6 +13,7 @@
                 <th scope="col">Nama Surat</th>
                 <th scope="col">Nama Dosen</th>
                 <th scope="col">Tanggal</th>
+                <th scope="col" style="display:none">id</th>
                 <th scope="col"> </th>
               </tr>
             </thead>
@@ -22,6 +23,7 @@
                 <td>{{$isi->judul}}</td>
                 <td>{{$isi->nama_dosen}}</td>
                 <td>{{ \Carbon\Carbon::parse($isi->created_at)->isoFormat('D MMMM Y')}}</td>
+                <td style="display:none">{{$isi->id}}</td>
                 <td>
                 <a href="/surat/{{ $isi->id }}" target="_blank" class="btn btn-secondary btn-sm">Lihat</a>
                 <a href="/kadeptolak/{{ $isi->id }}" class="btn btn-danger btn-sm">Tolak</a>
@@ -58,7 +60,7 @@
 @section('kadep_js')
 <script>
 $(document).ready(function() {
-  $('#daftarSurat').DataTable({order: [[2,'asc']]});
+  $('#daftarSurat').DataTable({order: [[3,'desc']]});
 });
 
 function konfirmasi(id)
