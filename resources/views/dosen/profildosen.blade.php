@@ -57,7 +57,6 @@
                 <input type="text" class="form-control" placeholder=" " name="email" value="{{ Auth::guard('dosen')->user()->email_dosen }}">
             </div>
         </div>
-        </div> -->
         <div class="col-sm-7">
         <button type="submit" class="btn btn-primary" style="float: right; margin-right: 10px">
             Simpan
@@ -76,14 +75,14 @@
            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
            </div>
            <div class="modal-body">
-           <form action="/editpassworddosen" method="post">
-               @csrf
-               <div class="mb-3">
-               <label for="recipient-name" class="col-form-label">Masukkan Password Baru :</label>
-               <input type="password" required minlength="6" name="password" class="form-control" id="myInput">
-               <input type="checkbox" onclick="myFunction()"> Tampilkan Password
-               </div>
-           
+            <form action="/editpassworddosen" method="post">
+                @csrf
+                <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Masukkan Password Baru :</label>
+                <input type="password" required minlength="6" name="password" class="form-control" id="myInput">
+                <input type="checkbox" onclick="myFunction()"> Tampilkan Password
+                </div>
+            </form>
            </div>
            <div class="modal-footer">
            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

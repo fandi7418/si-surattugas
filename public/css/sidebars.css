@@ -11,7 +11,7 @@ main {
   display: flex;
   flex-wrap: nowrap;
   min-height: 100vh;
-  max-height: -webkit-fill-available;
+  max-height: auto;
   overflow-x: auto;
   overflow-y: hidden;
 }

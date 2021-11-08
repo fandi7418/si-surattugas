@@ -5,14 +5,14 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <h2>Daftar Surat</h2>
 <br>
-<div class="table-responsive">
-  <table class="table table-striped table-bordered" style="width:100%" id="daftarSurat">
+<div class="table-responsive" style="margin-bottom: 50px">
+  <table class="table table-striped table-bordered" style="width:100%;" id="daftarSurat">
     <thead>
-      <tr>
+      <tr style="text-align:center">
         <th scope="col">No. Surat</th>
         <th scope="col">Nama Surat</th>
         <th scope="col">Tanggal</th>
-        <th scope="col">Status</th>
+        <th scope="col" style="width:400px;">Tracking</th>
         <th scope="col" style="display:none">id</th>
         <th scope="col"> </th>
       </tr>
@@ -21,35 +21,183 @@
       @foreach($surat as $isi)
       <tr>
         @if($isi->status_id == '5')
-        <td class="align-middle" style="color:red">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
-          <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-        </svg>
+        <td class="align-middle" style="color:red; text-align: center">
+          <i class="bi bi-exclamation-triangle-fill"></i>
         </td>
         @elseif($isi->status_id == '6')
-        <td class="align-middle" style="color:red">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
-          <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-        </svg>
+        <td class="align-middle" style="color:red; text-align: center">
+          <i class="bi bi-exclamation-triangle-fill"></i>
         </td>
         @else
         <td>{{$isi->no_surat}}</td>
         @endif
         <td>{{$isi->judul}}</td>
         <td>{{ \Carbon\Carbon::parse($isi->created_at)->isoFormat('D MMMM Y')}}</td>
-        @if($isi->status_id == '5')
-        <td style="color:red">{{$isi->status->status}}</td>
+        @if($isi->status_id == '1')
+        <td>
+          <div class="container">
+            <div class="row text-center w-10" style="color:grey">
+              <div class="col">
+                <i class="bi bi-check-circle-fill" style="color:green"></i>
+              </div>
+              <div class="col">
+                <i class="bi bi-clock" width="15" height="15"></i>
+              </div>
+              <div class="col">
+                <i class="bi bi-clock" width="15" height="15"></i>
+              </div>
+              <div class="col">
+                <i class="bi bi-clock" width="15" height="15"></i>
+              </div>
+              <div></div>
+              <div class="col"  style="color:green"><small>Pengajuan</small></div>
+              <div class="col"><small>Kadep</small></div>
+              <div class="col"><small>WD 1</small></div>
+              <div class="col"><small>Sukses</small></div>
+            </div>
+          </div>
+        </td>
+        @elseif($isi->status_id == '2')
+        <td>
+          <div class="container">
+            <div class="row text-center w-10" style="color:grey">
+              <div class="col">
+                <i class="bi bi-check-circle-fill" style="color:green"></i>
+              </div>
+              <div class="col">
+                <i class="bi bi-check-circle-fill" style="color:green"></i>
+              </div>
+              <div class="col">
+                <i class="bi bi-clock" width="15" height="15"></i>
+              </div>
+              <div class="col">
+                <i class="bi bi-clock" width="15" height="15"></i>
+              </div>
+              <div></div>
+              <div class="col" style="color:green"><small>Pengajuan</small></div>
+              <div class="col" style="color:green"><small>Kadep</small></div>
+              <div class="col"><small>WD 1</small></div>
+              <div class="col"><small>Sukses</small></div>
+            </div>
+          </div>
+        </td>
+        @elseif($isi->status_id == '3')
+        <td>
+          <div class="container">
+            <div class="row text-center w-10" style="color:grey">
+              <div class="col">
+                <i class="bi bi-check-circle-fill" style="color:green"></i>
+              </div>
+              <div class="col">
+                <i class="bi bi-check-circle-fill" style="color:green"></i>
+              </div>
+              <div class="col">
+                <i class="bi bi-check-circle-fill" style="color:green"></i>
+              </div>
+              <div class="col">
+                <i class="bi bi-clock" width="15" height="15"></i>
+              </div>
+              <div></div>
+              <div class="col" style="color:green"><small>Pengajuan</small></div>
+              <div class="col" style="color:green"><small>Kadep</small></div>
+              <div class="col" style="color:green"><small>WD 1</small></div>
+              <div class="col"><small>Sukses</small></div>
+            </div>
+          </div>
+        </td>
+        @elseif($isi->status_id == '4')
+        <td>
+          <div class="container">
+            <div class="row text-center w-10" style="color:grey">
+              <div class="col">
+                <i class="bi bi-check-circle-fill" style="color:green"></i>
+              </div>
+              <div class="col">
+                <i class="bi bi-check-circle-fill" style="color:green"></i>
+              </div>
+              <div class="col">
+                <i class="bi bi-check-circle-fill" style="color:green"></i>
+              </div>
+              <div class="col">
+                <i class="bi bi-check-circle-fill" style="color:green"></i>
+              </div>
+              <div></div>
+              <div class="col" style="color:green"><small>Pengajuan</small></div>
+              <div class="col" style="color:green"><small>Kadep</small></div>
+              <div class="col" style="color:green"><small>WD 1</small></div>
+              <div class="col" style="color:green"><small>Sukses</small></div>
+            </div>
+          </div>
+        </td>
+        @elseif($isi->status_id == '5')
+        <td>
+          <div class="container">
+            <div class="row text-center w-10" style="color:grey">
+              <div class="col">
+                <i class="bi bi-check-circle-fill" style="color:green"></i>
+              </div>
+              <div class="col">
+                <i class="bi bi-x-circle-fill" style="color:red"></i>
+              </div>
+              <div class="col">
+                <i class="bi bi-clock" width="15" height="15"></i>
+              </div>
+              <div class="col">
+                <i class="bi bi-clock" width="15" height="15"></i>
+              </div>
+              <div></div>
+              <div class="col" style="color:green"><small>Pengajuan</small></div>
+              <div class="col" style="color:red"><small>Kadep</small></div>
+              <div class="col"><small>WD 1</small></div>
+              <div class="col"><small>Sukses</small></div>
+            </div>
+          </div>
+        </td>
         @elseif($isi->status_id == '6')
-        <td style="color:red">{{$isi->status->status}}</td>
-        @else
-        <td>{{$isi->status->status}}</td>
+        <td>
+          <div class="container">
+            <div class="row text-center w-10" style="color:grey">
+              <div class="col">
+                <i class="bi bi-check-circle-fill" style="color:green"></i>
+              </div>
+              <div class="col">
+                <i class="bi bi-check-circle-fill" style="color:green"></i>
+              </div>
+              <div class="col">
+                <i class="bi bi-x-circle-fill" style="color:red"></i>
+              </div>
+              <div class="col">
+                <i class="bi bi-clock" width="15" height="15"></i>
+              </div>
+              <div></div>
+              <div class="col" style="color:green"><small>Pengajuan</small></div>
+              <div class="col" style="color:green"><small>Kadep</small></div>
+              <div class="col" style="color:red"><small>WD 1</small></div>
+              <div class="col"><small>Sukses</small></div>
+            </div>
+          </div>
+        </td>
         @endif
         <td style="display:none">{{$isi->id}}</td>
-        <td>
+        @if($isi->status_id == '4')
+        <td style="text-align: center">
+          <a href="/surat/{{ $isi->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
+        </td>
+        @elseif($isi->status_id == '5')
+        <td style="text-align: center">
+          <a href="/surat/{{ $isi->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
+        </td>
+        @elseif($isi->status_id == '6')
+        <td style="text-align: center">
+          <a href="/surat/{{ $isi->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
+        </td>
+        @else
+        <td style="text-align: center">
           <a href="/surat/{{ $isi->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
           <button class="btn btn-primary btn-sm" onClick="editSurat({{ $isi->id }})">Edit</button>
           <a href="/hapussurat/{{ $isi->id }}/konfirmasi" class="btn btn-danger btn-sm">Hapus</a>
         </td>
+        @endif
       </tr>
       @endforeach
     </tbody>

@@ -24,17 +24,6 @@
             <input type="text" class="form-control" placeholder=" " name="email" value="{{ Auth::user()->email_wd }}">
         </div>
     </div>
-    <div class="form-group row mb-2">
-        <label class="col-sm-2 col-form-label">Update Tanda Tangan</label>
-        <div class="col-sm-5">
-            <input class="form-control" type="file" id="formFile" name="ttd">
-            @if(is_null(Auth::user()->ttd_wd))
-            <small><a href="" data-toggle="modal" data-target="#ttdModal" style="display:none">Lihat Preview Tanda Tangan</a></small>
-            @else
-            <small><a href="" data-toggle="modal" data-target="#ttdModal">Lihat Tanda Tangan</a></small>
-            @endif
-        </div>
-    </div>
     <div class="col-sm-7">
     <button type="submit" class="btn btn-primary" style="float: right; margin-right: 10px">
         Simpan
@@ -44,6 +33,10 @@
 <a class="btn btn-secondary" style="float: right; margin-right: 10px" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Ubah Password?
 </a>
+<a class="btn btn-secondary" style="float: right; margin-right: 10px" data-toggle="modal" data-target="#ttdModal">
+    Tanda Tangan
+</a>
+
 <!-- Form Pop Up Reset Password -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -81,9 +74,22 @@
             </button>
         </div>
         <div class="modal-body">
-            
-            <img src="/image/{{ Auth::user()->ttd_wd }}" alt="" width="auto" height="200px" style="align:center">
-            
+            @if(is_null(Auth::user()->ttd_wd))
+                <p style="color:red; text-align: center">Anda belum upload tanda tangan</p>
+                <br>
+            @else
+                <img src="/image/{{ Auth::user()->ttd_wd }}" alt="" width="auto" height="200px" style="align:center">
+            @endif
+            <form enctype="multipart/form-data" method="post" action="/uploadTTD">
+                @csrf
+                <div class="form-group row">
+                    <label class="col-form-label">Update Tanda Tangan</label>
+                    <div class="col">
+                        <input class="form-control" type="file" id="formFile" name="ttd">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="float:right; margin-top:10px">Simpan</button>
+            </form>
         </div>
         </div>
     </div>

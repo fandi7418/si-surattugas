@@ -93,7 +93,7 @@
                           <table class="table" style="width: 500px">
                             <tbody>
                               <tr>
-                                  @if(is_null($notif))
+                                  @if(isset($notif))
                                     @foreach($notif as $data)
                                     <td class="align-middle" scope="row" style="height: auto">
                                       surat dengan judul {{ $data->judul }} {{ $data->status->status}}
@@ -105,11 +105,11 @@
                                       </td>
                                       @endforeach
                                   @else
-                                    <td class="align-middle" scope="row" style="height: auto">
-                                      Tidak ada notifikasi
-                                      <br>
-                                      <br>
-                                    </td>
+                                      <td class="align-middle" scope="row" style="height: auto">
+                                        Tidak ada notifikasi
+                                        <br>
+                                        <br>
+                                      </td>
                                   @endif
                                 </tr>
                               </tbody>

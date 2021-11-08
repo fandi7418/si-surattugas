@@ -16,20 +16,9 @@ class DosenController extends Controller
 {
     public function notifDosen()
     {
-        $surat = Surat::with('status')
-        ->where([
-            'surat.prodi_id' => Auth::user()->prodi_id,
-            ])
-        ->orderBy('updated_at', 'DESC')
-        ->get();
-        $count = Surat::with('status')
-        ->where([
-            'surat.prodi_id' => Auth::user()->prodi_id,
-            ])
-        ->count();
-        return view('dosen.notifDosen', [
-            'count' => $count, 
-            'surat' => $surat,
+        $surat = Surat::where(['surat.NIP' => Auth::user()->NIP])->get();
+        return response()->json([
+            'surat' => $surat
         ]);
     }
 

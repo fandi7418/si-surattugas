@@ -22,6 +22,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous"> -->
     <!-- <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
 
 
     <style>
@@ -96,6 +97,15 @@
                             <tbody>
                               <tr>   
                               @if(is_null($notif))
+                                <td class="align-middle" scope="row" style="height: auto">
+                                  Surat dengan judul 
+                                      <br>
+                                      <br>
+                                    <small style="float: right">
+                                    aa
+                                    </small>
+                                </td>
+                              @else
                                 @foreach($notif as $data)
                                   <td class="align-middle" scope="row" style="height: auto">
                                       Surat dengan judul {{ $data->judul }} {{ $data->status->status}}
@@ -106,12 +116,6 @@
                                     </small>
                                   </td>
                                 @endforeach
-                              @else
-                                <td class="align-middle" scope="row" style="height: auto">
-                                  Tidak ada notifikasi
-                                  <br>
-                                  <br>
-                                </td>
                               @endif
                               </tr>
                             </tbody>
