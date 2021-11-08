@@ -7,9 +7,7 @@
     <h2 class="card-title">Data Ketua Departemen</h2>
   </div>
   <div class="card-body">
-    <a href="/tambah_kadep" class="">
-      <button type="button" class="btn btn-success btn-sm" style="">Tambah Kadep</button>
-    </a>
+    <a href="/tambah_kadep" class="btn btn-success btn-sm">Tambah Kadep</a>
     <br><br>
     <table class="table table-striped table-bordered table-sm" id="datakadep" style="width: 100%">
       <thead>

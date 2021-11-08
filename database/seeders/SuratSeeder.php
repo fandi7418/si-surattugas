@@ -15,34 +15,6 @@ class SuratSeeder extends Seeder
      */
     public function run()
     {
-        Surat::truncate();
-        Surat::create([
-            'no_surat' => '0001',
-            'nama_dosen' => 'Dosen1',
-            'NIP' => '123123',
-            'prodi_id' => '12',
-            'pangkat' => 'III',
-            'jabatan' => 'Lektor',
-            'judul' => 'pelatihan',
-            'jenis' => 'seminar',
-            'tempat' => 'ITB',
-            'kota' => 'Bandung',
-            'status_id' => '1',
-            'remember_token' => Str::random(60),
-        ]);
-        Surat::create([
-            'no_surat' => '0002',
-            'nama_dosen' => 'Dosen1',
-            'NIP' => '123123',
-            'prodi_id' => '12',
-            'pangkat' => 'III',
-            'jabatan' => 'Lektor',
-            'judul' => 'pelatihan2',
-            'jenis' => 'seminar',
-            'tempat' => 'ITB',
-            'kota' => 'Bandung',
-            'status_id' => '1',
-            'remember_token' => Str::random(60),
-        ]);
+        
     }
 }

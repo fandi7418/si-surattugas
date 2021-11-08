@@ -3,6 +3,8 @@
 @section('container')
 
 <h1 class="">Tambah Ketua Departemen</h1>
+<a href="/data_kadep" class="btn btn-info btn-sm" style="float: right">Kembali</a>
+<br>
 <form method="post" action="/tambah_kadep" style="margin-right: 10px">
     @csrf
     <div class="form-group row mt-4">

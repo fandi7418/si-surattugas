@@ -7,10 +7,12 @@
         <h2 class="card-title">Data Petugas Penomoran</h2>
     </div>
     <div class="card-body">
+        @if (count($petugas)==0)
         <a href="/tambah_petugas" class="">
             <button type="button" class="btn btn-success btn-sm" style="">Tambah
                 Petugas</button>
         </a>
+        @endif
         <br>
         <br>
         <table class="table table-striped table-bordered table-sm" id="datapetugas" style="width: 100%">

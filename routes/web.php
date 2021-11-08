@@ -46,6 +46,8 @@ Route::group(['middleware' => ['auth:admin']], function()
 
     // route untuk data dosen // ///
     Route::get('/data_dosen', [AdminController::class, 'datadosen'])->name('data dosen');
+
+    Route::get('/data_dosen/trash', [AdminController::class, 'datadosensementara'])->name('data dosen sementara');
     
     Route::get('/edit_dosen/{id}', [AdminController::class, 'editdosen'])->name('edit dosen');
 
@@ -57,7 +59,13 @@ Route::group(['middleware' => ['auth:admin']], function()
 
     Route::get('/hapus_dosen/{id}/konfirmasi', [AdminController::class, 'konfirmasidosen']);
     
+    Route::get('/hapus_dosenpermanen/{id}/konfirmasi', [AdminController::class, 'konfirmasidosenpermanen']);
+    
     Route::get('/hapus_dosen/{id}/hapusdosen', [AdminController::class, 'hapusdosen']);
+    
+    Route::get('/hapus_dosen/{id}/hapusdosenpermanen', [AdminController::class, 'hapusdosenpermanen']);
+    
+    Route::get('data_dosen/restore/{id}', [AdminController::class, 'restoredosen']);
 
     Route::post('/update_passworddosen/{id}', [AdminController::class, 'updatepassworddosen'])->name('aksi ubah password dosen'); 
 
@@ -78,6 +86,8 @@ Route::group(['middleware' => ['auth:admin']], function()
 
     Route::post('/update_passwordkadep/{id}', [AdminController::class, 'updatepasswordkadep'])->name('aksi ubah password kadep'); 
 
+    Route::post('/update_ttdkadep/{id}', [AdminController::class, 'updatettdkadep'])->name('aksi update ttd kadep'); 
+
     // route untuk data wakil dekan
 
     Route::get('/data_wakildekan', [AdminController::class, 'datawd1'])->name('data wakil dekan');
@@ -95,6 +105,8 @@ Route::group(['middleware' => ['auth:admin']], function()
     Route::get('/hapus_wakildekan/{id}/hapuswd1', [AdminController::class, 'hapuswd1']);
 
     Route::post('/update_passwordwd/{id}', [AdminController::class, 'updatepasswordwd1'])->name('aksi ubah password wakil dekan'); 
+
+    Route::post('/update_ttdwd/{id}', [AdminController::class, 'updatettdwd1'])->name('aksi ubah ttd wakil dekan'); 
     
     // route untuk data petugas //
     

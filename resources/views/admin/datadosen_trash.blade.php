@@ -4,16 +4,16 @@
 <br>
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Data Dosen</h3>
+        <h3 class="card-title">Data Dosen yang dihapus sementara</h3>
     </div>
     <div class="card-body">
         <a href="/tambah_dosen" class="">
             <button type="button" class="btn btn-success btn-sm">
-                Tambah Dosen</button>
+                Restore Akun Dosen Semua</button>
         </a>
         <a href="/data_dosen/trash" class="">
             <button type="button" class="btn btn-danger btn-sm">
-                Sampah</button>
+                Hapus Permanen Semua</button>
         </a>
         {{-- <select class="btn btn-secondary btn-sm filter" style="float: right" href="#" id="filter-prodis"
             aria-expanded="false" style="">Pilih Program Studi
@@ -53,7 +53,7 @@
             processing: true,
             serverside: true,
             ajax: {
-                url: "{{ route('data dosen') }}",
+                url: "{{ route('data dosen sementara') }}",
                 type: 'GET'
             },
             columns: [{

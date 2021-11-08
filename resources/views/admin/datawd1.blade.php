@@ -7,15 +7,13 @@
         <h3 class="card-title">Data Wakil Dekan</h3>
     </div>
     <div class="card-body">
-        <table class="table table-striped table-sm">
-            <a href="/tambah_wakildekan" class="">
-                <button type="submit" class="btn btn-success btn-sm" style="">Tambah
-                    Wakil
-                    Dekan</button>
-            </a>
+        <table class="table table-striped table-bordered table-sm" style="width:100%" id="datawd">
+            @if (count($wd)==0)
+            <a href="/tambah_wakildekan" class="btn btn-success btn-sm">Tambah Wakil Dekan</a>
+            @endif
             <br>
-            <table class="table table-striped table-bordered table-sm" style="width:100%" id="datawd">
-                <thead>
+            <br>
+            <thead>
                     <tr>
                         <th scope="col">Nama Wakil Dekan</th>
                         <th scope="col">NIP</th>
@@ -23,44 +21,28 @@
                         <th scope="col">Aksi</th>
                     </tr>
                 </thead>
+                <tbody>
+                    @foreach($wd as $wakil)
+                    <tr>
+                        <td>{{$wakil->nama_wd}}</td>
+                        <td>{{$wakil->NIP}}</td>
+                        <td>{{ $wakil->email_wd }}</td>
+                        <td>
+                        <a href="/edit_wakildekan/{{ $wakil->id }}" class="btn btn-info btn-sm">Edit</a>
+                        <a href="/hapus_wakildekan/{{ $wakil->id }}/konfirmasi" class="btn btn-danger btn-sm">Hapus</a>
+
+                        </td>
+                    </tr>
+                    @endforeach
+                    </tbody>
             </table>
     </div>
 </div>
 @endsection
 @push('scripts')
 <script>
-    $(document).ready(function () {
-        $('#datawd').DataTable({
-            processing: true,
-            serverside: true,
-            ajax: {
-                url: "{{ route('data wakil dekan') }}",
-                type: 'GET'
-            },
-            columns: [{
-                    data: 'nama_wd',
-                    name: 'nama_wd'
-                },
-                {
-                    data: 'NIP',
-                    name: 'NIP'
-                },
-                {
-                    data: 'email_wd',
-                    name: 'email_wd'
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: true,
-                    searchable: true
-                },
-            ],
-            order: [
-                [0, 'asc']
-            ]
-        });
+    $(document).ready(function() {
+      $('#datawd').DataTable();
     });
-
 </script>
 @endpush

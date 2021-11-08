@@ -36,6 +36,7 @@
                                     <button type="submit" class="btn btn-primary">Simpan</button>
                                 </form>
                                     <a href="" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Reset Password</a>
+                                    <a href="" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#ttdModal">Tanda Tangan</a>
                                 </div>
                             </div>
                         @endforeach
@@ -66,7 +67,36 @@
                             </div>
                         </div>
                         </form>
+                        
+<!-- Modal lihat tanda tangan -->
+<div class="modal fade" id="ttdModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload Tanda Tangan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form enctype="multipart/form-data" action="/update_ttdwd/{{ $wd1->id }}" method="post">
+                    @csrf
+                    @foreach($wakildekan as $isi)
+                    @if (is_null($isi->ttd_wd))
+                        <p style="color: red;">Anda Belum Menambahkan Tanda Tangan</p>
+                    @else
+                    <img src="/image/{{ $isi->ttd_wd }}"  width="auto" height="200px" style="align:center">
+                    @endif
                         @endforeach
+                            <input class="form-control" type="file" id="formFile" name="ttd_wd">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+        @endforeach
                 <script>
                     function myFunction() {
                         var x = document.getElementById("inputPassword");

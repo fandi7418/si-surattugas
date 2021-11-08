@@ -64,8 +64,8 @@
                 aria-label="Default select example">
                 <option value="">Pilih Program Studi</option>
                 @foreach ($prd as $prodis )
-                <option value="{{ $prodis->id }}" {{ old('prodi_id') == $prodis->id ? 'selected' : null }}>
-                    {{ $prodis->prodi }}</option>
+                <option value="{{ $prodis->prodi_id }}" {{ old('prodi_id') == $prodis->prodi_id ? 'selected' : null }}>
+                    {{ $prodis->prodi->prodi }}</option>
                 @endforeach
             </select>
             @error('prodi_id')
