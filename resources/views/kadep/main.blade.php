@@ -96,6 +96,12 @@
                               <tbody>
                                 <tr>
                                 @if(is_null($notif))
+                                    <td class="align-middle" scope="row" style="height: auto">
+                                      Tidak ada notifikasi
+                                      <br>
+                                      <br>
+                                    </td>
+                                  @else
                                     @foreach($notif as $data)
                                     <td class="align-middle" scope="row" style="height: auto">
                                       surat dengan judul {{ $data->judul }} {{ $data->status->status}}
@@ -106,12 +112,6 @@
                                         </small>
                                       </td>
                                       @endforeach
-                                  @else
-                                    <td class="align-middle" scope="row" style="height: auto">
-                                      Tidak ada notifikasi
-                                      <br>
-                                      <br>
-                                    </td>
                                   @endif
                                 </tr>
                               </tbody>

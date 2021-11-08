@@ -88,7 +88,8 @@ class WakilDekanController extends Controller
         WakilDekan::where(['wakildekan.id' => Auth::user()->id])->update([
             'ttd_wd' => $imgName,
         ]);
-        return redirect('/daftarsuratwd');
+        toast('Berhasil', 'success')->autoClose(2000);
+        return redirect('/profilwd');
     }
 
     public function updateprofilwd(Request $request)

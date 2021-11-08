@@ -35,17 +35,6 @@
                 <input type="text" class="form-control" placeholder=" " name="email" value="{{ Auth::user()->email_kadep }}">
             </div>
         </div>
-        <div class="form-group row mb-2">
-            <label class="col-sm-2 col-form-label">Update Tanda Tangan</label>
-            <div class="col-sm-5">
-                <input class="form-control" type="file" id="formFile" name="ttd">
-                @if(is_null(Auth::user()->ttd_kadep))
-                <small><a href="" data-toggle="modal" data-target="#ttdModal" style="display:none">Lihat Preview Tanda Tangan</a></small>
-                @else
-                <small><a href="" data-toggle="modal" data-target="#ttdModal">Lihat Tanda Tangan</a></small>
-                @endif
-            </div>
-        </div>
         <br>
         <div class="col-sm-7">
         <button type="submit" class="btn btn-primary" style="float: right; margin-right: 10px">
@@ -56,6 +45,9 @@
     <a class="btn btn-secondary" style="float: right; margin-right: 10px" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Ubah Password?
     </a>
+    <a class="btn btn-secondary" style="float: right; margin-right: 10px" data-toggle="modal" data-target="#ttdModal">
+        Tanda Tangan
+    </a>
     <!-- Form Pop Up Reset Password -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
        <div class="modal-dialog">
@@ -65,38 +57,53 @@
            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
            </div>
            <div class="modal-body">
-           <form action="/editpasswordkadep" method="post">
-               @csrf
-               <div class="mb-3">
-               <label for="recipient-name" class="col-form-label">Masukkan Password Baru :</label>
-               <input type="password" required minlength="6" name="password" class="form-control" id="myInput">
-               <input type="checkbox" onclick="myFunction()"> Tampilkan Password
-               </div>
-           
-           </div>
-           <div class="modal-footer">
-           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-           <button type="submit" class="btn btn-primary">Simpan</button>
-           </div>
+            <form action="/editpasswordkadep" method="post">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Masukkan Password Baru :</label>
+                        <input type="password" required minlength="6" name="password" class="form-control" id="myInput">
+                        <input type="checkbox" onclick="myFunction()"> Tampilkan Password
+                    </div>
+                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+            </form>
        </div>
        </div>
    </div>
 
-    <!-- Modal lihat tanda tangan -->
+    <!-- Modal tanda tangan -->
    <div class="modal fade" id="ttdModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tanda Tangan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @foreach($kadep as $isi)
-                <img src="/image/{{ $isi->ttd_kadep }}" alt="" width="auto" height="200px" style="align:center">
-                @endforeach
-            </div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tanda Tangan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @if(is_null(Auth::user()->ttd_kadep))
+                        <p style="color:red; text-align: center">Anda belum upload tanda tangan</p>
+                        <br>
+                    @else
+                        @foreach($kadep as $isi)
+                            <img src="/image/{{ $isi->ttd_kadep }}" alt="" width="auto" height="200px" style="align:center">
+                        @endforeach
+                    @endif
+                    <form enctype="multipart/form-data" method="post" action="/uploadTTDkadep">
+                        @csrf
+                        <div class="form-group row">
+                            <label class="col-form-label">Update Tanda Tangan</label>
+                            <div class="col">
+                                <input class="form-control" type="file" id="formFile" name="ttd">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="float:right; margin-top:10px">Simpan</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

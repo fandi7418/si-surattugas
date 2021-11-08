@@ -96,24 +96,17 @@ class KadepController extends Controller
         Kadep::where(['ketua_departemen.id' => Auth::user()->id])->update([
             'ttd_kadep' => $imgName,
         ]);
-        return redirect('/daftarsuratkadep');
+        toast('Berhasil', 'success')->autoClose(2000);
+        return redirect('/profilkadep');
     }
 
     public function updateprofilkadep(Request $request)
     {
-        $request->validate([
-            'ttd'=>'mimes:jpg,png,jpeg,svg',
-        ]);
-
-        $imgName = $request->ttd->getClientOriginalName() . '-' . time() . '.' . $request->ttd->extension();
-        $request->ttd->move(public_path('image'), $imgName);
-
         Kadep::with('prodi')->where('id', '=', Auth::user()->id)->update([
             'nama_kadep' => $request->nama,
             'NIP' => $request->NIP,
             'prodi_id' => $request->prodi,
             'email_kadep' => $request->email,
-            'ttd_kadep' => $imgName,
         ]);
         toast('Data Berhasil Diubah', 'success')->autoClose(3000);
         return redirect('/profilkadep');
