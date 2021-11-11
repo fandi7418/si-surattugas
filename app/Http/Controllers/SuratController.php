@@ -123,49 +123,4 @@ class SuratController extends Controller
         // toast('Data Berhasil Diubah', 'success')->autoClose(5000);
         // return redirect('/daftarsuratdosen');
     }
-
-    public function datasurat(Request $request)
-    {
-        // $surat = Surat::with('status','prodi')->orderBy('created_at', 'DESC')
-        // ->paginate(10);
-        // return view('admin.datasurat', ['surat' => $surat, "title" => "Data Surat Tugas"]);
-    
-        $surat = Surat::with('status','prodi')->get();
-        if ($request->ajax()){
-            return datatables()->of($surat)
-            ->editColumn('created_at', function ($data) {
-                return $data->created_at ? with(new Carbon($data->created_at))->isoFormat('D MMMM Y') : '';
-            })
-            ->addColumn('action', function($data){
-                $url_lihat = url('surat/'.$data->id);
-                $url_hapus = url('hapus_surat/'.$data->id.'/konfirmasiadmin');
-                $button = '<a href="'.$url_lihat.'" data-toggle="tooltip" target="_blank"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Lihat</a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Delete</a>';     
-                return $button;
-            })
-            ->rawColumns(['action'])
-                        ->addIndexColumn()
-                        ->make(true);
-        }
-        return view('admin.datasurat', ["title" => "Data Surat Tugas"]);
-
-    }
-
-    public function konfirmasiadmin($id)
-    {
-        alert()->question('Peringatan','Anda yakin akan menghapus? ')
-        ->showConfirmButton('<a href="/hapus_surat/'.$id.'/hapussuratadmin" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
-        ->showCancelButton('Batal', '#aaa')->reverseButtons();
-
-        return redirect('/data_surat');
-    }
-
-    public function hapussuratadmin($id)
-    {
-        DB::table('surat')->where('id', $id)->delete();
-        Alert::success('Sukses', 'Data Berhasil Dihapus');
-        return redirect('/data_surat');
-    }
-
 }

@@ -7,13 +7,11 @@
         <h3 class="card-title">Data Dosen yang dihapus sementara</h3>
     </div>
     <div class="card-body">
-        <a href="/tambah_dosen" class="">
-            <button type="button" class="btn btn-success btn-sm">
-                Restore Akun Dosen Semua</button>
+        <a href="/data_dosen/restore_semua" class="btn btn-success btn-sm">
+                Restore Akun Dosen Semua
         </a>
-        <a href="/data_dosen/trash" class="">
-            <button type="button" class="btn btn-danger btn-sm">
-                Hapus Permanen Semua</button>
+        <a href="/hapus_dosenpermanen/konfirmasisemua" class="btn btn-danger btn-sm">
+                Hapus Permanen Semua
         </a>
         {{-- <select class="btn btn-secondary btn-sm filter" style="float: right" href="#" id="filter-prodis"
             aria-expanded="false" style="">Pilih Program Studi

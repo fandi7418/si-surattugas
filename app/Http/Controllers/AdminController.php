@@ -7,6 +7,8 @@ use App\Models\Dosen;
 use App\Models\Kadep;
 use App\Models\Petugas;
 use App\Models\Prodi;
+use App\Models\Surat;
+use App\Models\StatusSurat;
 use App\Models\WakilDekan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -119,6 +121,7 @@ class AdminController extends Controller
 }
     public function datadosensementara (Request $request)
     {
+        $dosen = Dosen::onlyTrashed()->with('prodi');
         if ($request->ajax()){
             $dosen = Dosen::onlyTrashed()->with('prodi')
             ->get();
@@ -134,7 +137,7 @@ class AdminController extends Controller
                         ->addIndexColumn()
                         ->make(true);
     }
-    return view('admin.datadosen_trash', ["title" => "Data Dosen Sementara"]);
+    return view('admin.datadosen_trash', ['dosen' => $dosen, "title" => "Data Dosen Sementara"]);
 }
     // if(request()->ajax())
     // {
@@ -253,6 +256,14 @@ class AdminController extends Controller
         ->showConfirmButton('<a href="/hapus_dosen/'.$id.'/hapusdosenpermanen" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
         ->showCancelButton('Batal', '#aaa')->reverseButtons();
 
+        return redirect()->back();
+    }
+    public function konfirmasidosenpermanensemua()
+    {
+        alert()->question('Peringatan','Anda yakin akan Menghapus Semua Akun? ')
+        ->showConfirmButton('<a href="/hapusdosenpermanensemua" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
+        ->showCancelButton('Batal', '#aaa')->reverseButtons();
+
         return redirect('/data_dosen');
     }
 
@@ -275,6 +286,18 @@ class AdminController extends Controller
         // $dosen = dosen::select('sampul', 'id')->whereId($id)->firstOrfail();
         // file::delete()
     }
+
+    public function hapusdosenpermanensemua()
+    {
+        $dosen = Dosen::onlyTrashed();
+        $dosen->forceDelete();
+        Alert::success('Sukses', 'Data Berhasil Dihapus Permanen');
+        return redirect()->back();
+
+        // $dosen = dosen::select('sampul', 'id')->whereId($id)->firstOrfail();
+        // file::delete()
+    }
+
     public function restoredosen($id)
     {
         // Dosen::where('id', $id)->delete();
@@ -287,6 +310,22 @@ class AdminController extends Controller
         Alert::success('Sukses', 'Data Berhasil Dikembalikkan');
         
         return redirect('/data_dosen/trash');
+
+        // $dosen = dosen::select('sampul', 'id')->whereId($id)->firstOrfail();
+        // file::delete()
+    }
+    public function restoredosensemua()
+    {
+        // Dosen::where('id', $id)->delete();
+        // Alert::success('Sukses', 'Data Berhasil Dihapus');
+        // return redirect('/data_dosen');
+
+        $dosen = Dosen::onlyTrashed();
+        $dosen->restore();
+        
+        Alert::success('Sukses', 'Data Berhasil Dikembalikkan semua');
+        
+        return redirect()->back();
 
         // $dosen = dosen::select('sampul', 'id')->whereId($id)->firstOrfail();
         // file::delete()
@@ -312,6 +351,26 @@ class AdminController extends Controller
         }
         return view('admin.datakadep', [ 'kadep' => $kadep, "title" => "Data Ketua Departemen"]);
     }
+
+    public function datakadepsementara (Request $request)
+    {
+        if ($request->ajax()){
+            $kadep = Kadep::onlyTrashed()->with('prodi')
+            ->get();
+            return datatables()->of($kadep)->addColumn('action', function($data){
+                $url_restore = url('data_kadep/restore/'.$data->id);
+                $url_hapus = url('hapus_kadeppermanen/'.$data->id.'/konfirmasi');
+                $button = '<a href="'.$url_restore.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-success btn-sm edit-post"><i class="far fa-edit"></i> Restore</a>';
+                $button .= '&nbsp;&nbsp;';
+                $button .= '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Hapus Permanen</a>';     
+                return $button;
+            })
+            ->rawColumns(['action'])
+                        ->addIndexColumn()
+                        ->make(true);
+    }
+    return view('admin.datakadep_trash', ["title" => "Data Dosen Sementara"]);
+}
     public function indexkadep()
     {
         // return view('admin.tambahkadep', [
@@ -326,7 +385,7 @@ class AdminController extends Controller
         $request->validate([
             'nama_kadep' => 'required|max:255|string',
             'NIP' => 'required|numeric|min:6',
-            'prodi_id' => 'required',
+            'prodi_id' => 'required|unique:ketua_departemen',
             'email_kadep' => 'email|required|unique:ketua_departemen',
             'password' => 'required|min:6',
         ], [
@@ -334,6 +393,8 @@ class AdminController extends Controller
             'email_kadep.email' => 'Email tidak boleh kosong',
             'nama_kadep.required' => 'Nama tidak boleh kosong',
             'NIP.required' => 'NIP tidak boleh kosong',
+            'prodi_id.required' => 'Pilih salah satu program studi',
+            'prodi_id.unique' => 'Ketua departemen untuk Program Studi ini sudah ada',
             'password.min' => 'Password harus lebih dari 6 karakter',
             'password.required' => 'Password tidak boleh kosong'
         ]);
@@ -369,6 +430,7 @@ class AdminController extends Controller
             'email_kadep.email' => 'Email tidak boleh kosong',
             'nama_kadep.required' => 'Nama tidak boleh kosong',
             'NIP.required' => 'NIP tidak boleh kosong',
+            'prodi_id.required' => 'Pilih salah satu program studi',
         ]);
         Kadep::where('id', $request->id)->update([
             'nama_kadep' => $request->nama_kadep,
@@ -385,13 +447,61 @@ class AdminController extends Controller
         alert()->question('Peringatan','Anda yakin akan menghapus? ')
         ->showConfirmButton('<a href="/hapus_kadep/'.$id.'/hapuskadep" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
         ->showCancelButton('Batal', '#aaa')->reverseButtons();
-
         return redirect('/data_kadep');
+    }
+
+    public function konfirmasikadeppermanen($id)
+    {
+        alert()->question('Peringatan','Anda yakin akan Menghapus Akun? ')
+        ->showConfirmButton('<a href="/hapus_kadep/'.$id.'/hapuskadeppermanen" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
+        ->showCancelButton('Batal', '#aaa')->reverseButtons();
+
+        return redirect()->back();
+    }
+
+    public function konfirmasikadeppermanensemua($id)
+    {
+        alert()->question('Peringatan','Anda yakin akan Menghapus Akun? ')
+        ->showConfirmButton('<a href="/hapus_kadep/'.$id.'/hapuskadeppermanen" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
+        ->showCancelButton('Batal', '#aaa')->reverseButtons();
+
+        return redirect()->back();
+    }
+
+    public function hapuskadeppermanen($id)
+    {
+        $kadep = Kadep::onlyTrashed()->where('id',$id);
+        $kadep->forceDelete();
+        Alert::success('Sukses', 'Data Berhasil Dihapus');
+        return redirect('/data_kadep/trash');
+    }
+
+    public function hapuskadeppermanensemua()
+    {
+        $kadep = Kadep::onlyTrashed();
+        $kadep->forceDelete();
+        Alert::success('Sukses', 'Data Berhasil Dihapus Permanen');
+        return redirect()->back();
+    }
+
+    public function restorekadep($id)
+    {
+        $kadep = Kadep::onlyTrashed()->where('id',$id);
+        $kadep->restore();
+        Alert::success('Sukses', 'Data Berhasil Dikembalikkan');
+        return redirect('/data_kadep/trash');
+    }
+    public function restorekadepsemua()
+    {
+        $kadep = Kadep::onlyTrashed();
+        $kadep->restore();
+        Alert::success('Sukses', 'Data Berhasil Dikembalikkan semua');
+        return redirect()->back();
     }
 
     public function hapuskadep($id)
     {
-        DB::table('ketua_departemen')->where('id', $id)->delete();
+        Kadep::where('id', $id)->delete();
         Alert::success('Sukses', 'Data Berhasil Dihapus');
         return redirect('/data_kadep');
     }
@@ -429,6 +539,11 @@ class AdminController extends Controller
     {
         $wd = WakilDekan::all();
         return view('admin.datawd1', ['wd' => $wd, "title" => "Data Wakil Dekan"]);
+    }
+        public function datawd1sementara(Request $request)
+    {
+        $wd = WakilDekan::onlyTrashed()->get();
+        return view('admin.datawd1_trash', ['wd' => $wd, "title" => "Data Wakil Dekan Sementara"]);
     }
 
     public function tambahwd1(Request $request)
@@ -494,7 +609,7 @@ class AdminController extends Controller
 
     public function hapuswd1($id)
     {
-        DB::table('wakildekan')->where('id', $id)->delete();
+        WakilDekan::where('id', $id)->delete();
         Alert::success('Sukses', 'Data Berhasil Dihapus');
         return redirect('/data_wakildekan');
     }
@@ -526,6 +641,31 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
+    public function restorewd1($id)
+    {
+        $wakildekan = WakilDekan::onlyTrashed()->where('id',$id);
+        $wakildekan->restore();
+        Alert::success('Sukses', 'Data Berhasil Dikembalikkan');
+        return redirect()->back();
+    }
+
+    public function konfirmasiwd1permanen($id)
+    {
+        alert()->question('Peringatan','Anda yakin akan Menghapus Akun? ')
+        ->showConfirmButton('<a href="/hapus_wakildekan/'.$id.'/hapuswakildekanpermanen" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
+        ->showCancelButton('Batal', '#aaa')->reverseButtons();
+
+        return redirect()->back();
+    }
+
+    public function hapuswd1permanen($id)
+    {
+        $wakildekan = WakilDekan::onlyTrashed()->where('id',$id);
+        $wakildekan->forceDelete();
+        Alert::success('Sukses', 'Data Berhasil Dihapus');
+        return redirect()->back();
+    }
+
 
         // controller Petugas di Admin //
 
@@ -553,6 +693,24 @@ class AdminController extends Controller
                         ->make(true);
         }
         return view('admin.datapetugas', ['petugas' => $petugas, "title" => "Data Petugas Penomoran"]);
+    }
+    public function datapetugassementara(Request $request)
+    {
+        if ($request->ajax()){
+            $petugas = Petugas::onlyTrashed()->get();
+            return datatables()->of($petugas)->addColumn('action', function($data){
+                $url_restore = url('data_petugas/restore/'.$data->id);
+                $url_hapuspermanen = url('hapus_petugaspermanen/'.$data->id.'/konfirmasi');
+                $button = '<a href="'.$url_restore.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-success btn-sm edit-post"><i class="far fa-edit"></i>Restore</a>';
+                $button .= '&nbsp;&nbsp;';
+                $button .= '<a href="'.$url_hapuspermanen.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i>Hapus Permanen</a>';     
+                return $button;
+            })
+            ->rawColumns(['action'])
+                        ->addIndexColumn()
+                        ->make(true);
+        }
+        return view('admin.datapetugas_trash', ["title" => "Data Petugas Penomoran"]);
     }
 
     public function tambahpetugas(Request $request)
@@ -610,9 +768,34 @@ class AdminController extends Controller
 
     public function hapuspetugas($id)
     {
-        DB::table('petugas_penomoran')->where('id', $id)->delete();
+        Petugas::where('id', $id)->delete();
         Alert::success('Sukses', 'Data Berhasil Dihapus');
         return redirect('/data_petugas');
+    }
+
+    public function restorepetugas($id)
+    {
+        $petugas = Petugas::onlyTrashed()->where('id',$id);
+        $petugas->restore();
+        Alert::success('Sukses', 'Data Berhasil Dikembalikkan');
+        return redirect()->back();
+    }
+
+    public function konfirmasipetugaspermanen($id)
+    {
+        alert()->question('Peringatan','Anda yakin akan Menghapus Akun? ')
+        ->showConfirmButton('<a href="/hapus_petugas/'.$id.'/hapuspetugaspermanen" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
+        ->showCancelButton('Batal', '#aaa')->reverseButtons();
+
+        return redirect()->back();
+    }
+
+    public function hapuspetugaspermanen($id)
+    {
+        $petugas = Petugas::onlyTrashed()->where('id',$id);
+        $petugas->forceDelete();
+        Alert::success('Sukses', 'Data Berhasil Dihapus');
+        return redirect()->back();
     }
 
     public function updatepasswordpetugas(Request $request)
@@ -624,5 +807,223 @@ class AdminController extends Controller
         toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect('/data_petugas');
     }
+
+// Route Data Surat
+
+
+public function datasurat(Request $request)
+{
+    // $surat = Surat::with('status','prodi')->orderBy('created_at', 'DESC')
+    // ->paginate(10);
+    // return view('admin.datasurat', ['surat' => $surat, "title" => "Data Surat Tugas"]);
+
+    // $surat = Surat::with('status','prodi')->get();
+    // if ($request->ajax()){
+    //     return datatables()->of($surat)
+    //     ->editColumn('created_at', function ($data) {
+    //         return $data->created_at ? with(new Carbon($data->created_at))->isoFormat('D MMMM Y') : '';
+    //     })
+    //     ->addColumn('action', function($data){
+    //         $url_lihat = url('surat/'.$data->id);
+    //         $url_hapus = url('hapus_surat/'.$data->id.'/konfirmasiadmin');
+    //         $button = '<a href="'.$url_lihat.'" data-toggle="tooltip" target="_blank"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Lihat</a>';
+    //         $button .= '&nbsp;&nbsp;';
+    //         $button .= '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Delete</a>';     
+    //         return $button;
+    //     })
+    //     ->rawColumns(['action'])
+    //                 ->addIndexColumn()
+    //                 ->make(true);
+    // }
+    // return view('admin.datasurat', ["title" => "Data Surat Tugas"]);
+    $surat = Surat::with('status','prodi')
+    ->orderBy('updated_at', 'DESC')
+    ->get();
+    return view('admin.datasurat', ['surat' => $surat, "title" => "Data Surat Tugas"]);
+}
+
+public function datasuratsementara(Request $request)
+{
+    $surat = Surat::onlyTrashed()->with('status','prodi')
+    ->orderBy('updated_at', 'DESC')
+    ->get();
+    return view('admin.datasurat_trash', ['surat' => $surat, "title" => "Data Surat Sementara"]);
+}
+
+public function confirmIzinkadep(Request $request, $id)
+{
+    $surat = Surat::findOrFail($id);
+    $kadep = Kadep::where('prodi_id', '=', $surat->prodi_id)->get();
+    return response()->json([
+        'surat' => $surat,
+        'kadep' => $kadep,
+    ]);
+}
+// public function validasiKadep(Request $request)
+// {
+//     $validation = $request->validate([
+//         'ttd_kadep' => 'required',
+//     ], [
+//         'ttd_kadep.required' => 'Anda tidak bisa menyetujui surat. Tanda tangan belum ditambahkan, silahkan tambahkan di bagian edit akun',
+//     ]);
+// }
+
+public function izinkanKadepadmin(Request $request, $id)
+{
+    // $surat = Surat::find($id)->update([
+    //     'ttd_kadep' => $request->ttd_kadep,
+    //     $this->validasikadep($request),
+    //     'status_id' => '2',
+    // ]);
+    // $this->validasikadep($request);
+        $request->validate([
+        'ttd_kadep' => 'required',
+        
+    ], [
+        'ttd_kadep.required' => 'Anda tidak bisa menyetujui surat. Tanda tangan belum ditambahkan, silahkan tambahkan di bagian edit akun',
+        
+    ]);
+    $surat = Surat::where('id', $request->id)->update([
+        'ttd_kadep' => $request->ttd_kadep,
+        'status_id' => '2',
+        'notif' => '1',
+        
+    ]);
+    return response()->json([
+        'success' => 'Sukses diizinkan',
+        'surat' => $surat,
+    ]);
+}
+
+public function confirmIzinwd(Request $request, $id)
+{
+    $surat = Surat::findOrFail($id);
+    $wd = WakilDekan::all();
+    return response()->json([
+        'surat' => $surat,
+        'wd' => $wd,
+    ]);
+}
+public function validasiwd(Request $request)
+{
+    $validation = $request->validate([
+        'ttd_wd' => 'required',
+    ], [
+        'ttd_wd.required' => 'Anda tidak bisa menyetujui surat. Tanda tangan belum ditambahkan, silahkan tambahkan di bagian edit akun',
+    ]);
+}
+
+public function izinkanwdadmin(Request $request, $id)
+{
+    $request->validate([
+        'ttd_wd' => 'required',
+        
+    ], [
+        'ttd_wd.required' => 'Anda tidak bisa menyetujui surat. Tanda tangan belum ditambahkan, silahkan tambahkan di bagian edit akun',
+        
+    ]);
+    $surat = Surat::find($id)->update([
+        'ttd_wd' => $request->ttd_wd,
+        'status_id' => '3',
+        'notif' => '1',
+    ]);
+    return response()->json([
+        'success' => 'Sukses diizinkan',
+        'surat' => $surat,
+    ]);
+}
+
+public function izinkanKadep(Request $request, $id)
+{
+    $prd = Prodi::all();
+    $surat = Surat::with('prodi')->where('id', $id)->get();
+    return view('admin.izinkankadep', ['surat' => $surat, 'prd' => $prd, 'title' => 'Izinkan Surat']);
+}
+
+public function postizinkanKadep(Request $request, $id)
+{
+    // $request->validate([
+    //     'ttd_kadep'=>'mimes:jpg,png,jpeg,svg',
+    // ]);
+
+    // $imgName = $request->ttd_kadep->getClientOriginalName() . '-' . time() . '.' . $request->ttd_kadep->extension();
+    // $request->ttd_kadep->move(public_path('image'), $imgName);
+
+    Surat::where('id', $request->id)->update([
+        'ttd_kadep' => Kadep::where('prodi_id', '=', Surat::first()->prodi_id)
+        ->first()->ttd_kadep,
+        'status_id' => '2',
+        
+    ]);
+    toast('Data Berhasil Diubah','success')->autoClose(5000);
+    return redirect('data_surat');
+}
+public function izinkanwd(Request $request, $id)
+{
+    $prd = Prodi::all();
+    $surat = Surat::with('prodi')->where('id', $id)->get();
+    return view('admin.izinkanwd', ['surat' => $surat, 'prd' => $prd, 'title' => 'Izinkan Surat']);
+}
+
+public function postizinkanwd(Request $request, $id)
+{
+    
+    // $request->validate([
+    //     'ttd_wd'=>'required|mimes:jpg,png,jpeg,svg',
+    // ], [
+    //     'ttd_wd.required' => 'Anda belum menambahkan Tanda tangan Wakil Dekan',
+    // ]);
+
+    // $imgName = $request->ttd_wd->getClientOriginalName() . '-' . time() . '.' . $request->ttd_wd->extension();
+    // $request->ttd_wd->move(public_path('image'), $imgName);
+    Surat::where('id', $request->id)->update([
+        'ttd_wd' => WakilDekan::first()->ttd_wd,
+        'status_id' => '3',
+        
+    ]);
+    toast('Data Berhasil Diubah','success')->autoClose(5000);
+    return redirect('data_surat');
+}
+
+public function konfirmasisuratadmin($id)
+{
+    alert()->question('Peringatan','Anda yakin akan menghapus? ')
+    ->showConfirmButton('<a href="/hapus_surat/'.$id.'/hapussuratadmin" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
+    ->showCancelButton('Batal', '#aaa')->reverseButtons();
+
+    return redirect()->back();
+}
+
+public function hapussuratadmin($id)
+{
+    Surat::where('id', $id)->delete();
+    Alert::success('Sukses', 'Data Berhasil Dihapus');
+    return redirect('/data_surat');
+}
+
+public function konfirmasisuratadminpermanen($id)
+{
+    alert()->question('Peringatan','Anda yakin akan menghapus? ')
+    ->showConfirmButton('<a href="/hapus_suratpermanen/'.$id.'/hapussuratadminpermanen" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
+    ->showCancelButton('Batal', '#aaa')->reverseButtons();
+
+    return redirect()->back();
+}
+
+public function hapussuratpermanen($id)
+{
+    $surat = Surat::onlyTrashed()->where('id',$id);
+    $surat->forceDelete();
+    Alert::success('Sukses', 'Data Berhasil Dihapus');
+    return redirect()->back();
+}
+
+public function restoresurat($id)
+{
+    $surat = Surat::onlyTrashed()->where('id',$id);
+    $surat->restore();
+    Alert::success('Sukses', 'Data Berhasil Dikembalikkan');
+    return redirect()->back();
+}
 
 }

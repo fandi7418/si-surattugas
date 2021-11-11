@@ -60,17 +60,25 @@ Route::group(['middleware' => ['auth:admin']], function()
     Route::get('/hapus_dosen/{id}/konfirmasi', [AdminController::class, 'konfirmasidosen']);
     
     Route::get('/hapus_dosenpermanen/{id}/konfirmasi', [AdminController::class, 'konfirmasidosenpermanen']);
+
+    Route::get('/hapus_dosenpermanen/konfirmasisemua', [AdminController::class, 'konfirmasidosenpermanensemua']);
     
     Route::get('/hapus_dosen/{id}/hapusdosen', [AdminController::class, 'hapusdosen']);
     
     Route::get('/hapus_dosen/{id}/hapusdosenpermanen', [AdminController::class, 'hapusdosenpermanen']);
+
+    Route::get('/hapusdosenpermanensemua', [AdminController::class, 'hapusdosenpermanensemua']);
     
     Route::get('data_dosen/restore/{id}', [AdminController::class, 'restoredosen']);
+
+    Route::get('data_dosen/restore_semua', [AdminController::class, 'restoredosensemua']);
 
     Route::post('/update_passworddosen/{id}', [AdminController::class, 'updatepassworddosen'])->name('aksi ubah password dosen'); 
 
     // route untuk data kadep //
     Route::get('/data_kadep', [AdminController::class, 'datakadep'])->name('data kadep'); 
+
+    Route::get('/data_kadep/trash', [AdminController::class, 'datakadepsementara'])->name('data kadep sementara');
 
     Route::get('/edit_kadep/{id}', [AdminController::class, 'editkadep']);
 
@@ -79,8 +87,20 @@ Route::group(['middleware' => ['auth:admin']], function()
     Route::get('/tambah_kadep', [AdminController::class, 'indexkadep']);
 
     Route::get('/hapus_kadep/{id}/konfirmasi', [AdminController::class, 'konfirmasikadep']);
+
+    Route::get('/hapus_kadeppermanen/{id}/konfirmasi', [AdminController::class, 'konfirmasikadeppermanen']);
+
+    Route::get('/hapus_kadeppermanen/konfirmasisemua', [AdminController::class, 'konfirmasikadeppermanensemua']);
     
     Route::get('/hapus_kadep/{id}/hapuskadep', [AdminController::class, 'hapuskadep']);
+
+    Route::get('/hapus_kadep/{id}/hapuskadeppermanen', [AdminController::class, 'hapuskadeppermanen']);
+
+    Route::get('/hapus_kadep/hapuskadeppermanensemua', [AdminController::class, 'hapuskadeppermanensemua']);
+
+    Route::get('data_kadep/restore/{id}', [AdminController::class, 'restorekadep']);
+
+    Route::get('data_kadep/restore_semua', [AdminController::class, 'restorekadepsemua']);
     
     Route::post('/tambah_kadep', [AdminController::class, 'tambahkadep']);
 
@@ -91,6 +111,8 @@ Route::group(['middleware' => ['auth:admin']], function()
     // route untuk data wakil dekan
 
     Route::get('/data_wakildekan', [AdminController::class, 'datawd1'])->name('data wakil dekan');
+
+    Route::get('/data_wakildekan/trash', [AdminController::class, 'datawd1sementara'])->name('data wd sementara');
 
     Route::get('/tambah_wakildekan', [AdminController::class, 'indexwd1']);
 
@@ -104,6 +126,12 @@ Route::group(['middleware' => ['auth:admin']], function()
     
     Route::get('/hapus_wakildekan/{id}/hapuswd1', [AdminController::class, 'hapuswd1']);
 
+    Route::get('data_wakildekan/restore/{id}', [AdminController::class, 'restorewd1']);
+
+    Route::get('/hapus_wakildekanpermanen/{id}/konfirmasi', [AdminController::class, 'konfirmasiwd1permanen']);
+
+    Route::get('/hapus_wakildekan/{id}/hapuswakildekanpermanen', [AdminController::class, 'hapuswd1permanen']);
+
     Route::post('/update_passwordwd/{id}', [AdminController::class, 'updatepasswordwd1'])->name('aksi ubah password wakil dekan'); 
 
     Route::post('/update_ttdwd/{id}', [AdminController::class, 'updatettdwd1'])->name('aksi ubah ttd wakil dekan'); 
@@ -111,7 +139,9 @@ Route::group(['middleware' => ['auth:admin']], function()
     // route untuk data petugas //
     
     Route::get('/data_petugas', [AdminController::class, 'datapetugas'])->name('data petugas');
-
+    
+    Route::get('/data_petugas/trash', [AdminController::class, 'datapetugassementara'])->name('data petugas sementara');
+    
     Route::get('/tambah_petugas', [AdminController::class, 'indexpetugas']);
 
     Route::post('/tambah_petugas', [AdminController::class, 'tambahpetugas']);
@@ -124,16 +154,50 @@ Route::group(['middleware' => ['auth:admin']], function()
     
     Route::get('/hapus_petugas/{id}/hapuspetugas', [AdminController::class, 'hapuspetugas']);
 
+    Route::get('/hapus_petugaspermanen/{id}/konfirmasi', [AdminController::class, 'konfirmasipetugaspermanen']);
+
+    Route::get('/hapus_petugas/{id}/hapuspetugaspermanen', [AdminController::class, 'hapuspetugaspermanen']);
+
+    Route::get('data_petugas/restore/{id}', [AdminController::class, 'restorepetugas']);
+
     Route::post('/update_passwordpetugas/{id}', [AdminController::class, 'updatepasswordpetugas'])->name('aksi ubah password petugas'); 
 
 
     // route untuk data surat
     
-    Route::get('/data_surat', [SuratController::class, 'datasurat'])->name('data surat');
-
-    Route::get('/hapus_surat/{id}/konfirmasiadmin', [SuratController::class, 'konfirmasiadmin']);
+    Route::get('/data_surat', [AdminController::class, 'datasurat'])->name('data surat');
     
-    Route::get('/hapus_surat/{id}/hapussuratadmin', [SuratController::class, 'hapussuratadmin']);
+    Route::get('/data_surat/trash', [AdminController::class, 'datasuratsementara'])->name('data surat sementara');
+
+    //Route::get('/izinkankadep/{id}', [AdminController::class, 'izinkankadep'])->name('izinkankadep');
+    
+    Route::get('/confirmIzinkadep/{id}', [AdminController::class, 'confirmIzinkadep'])->name('confirmIzinkadep');
+    
+    //Route::post('/postizinkankadep/{id}', [AdminController::class, 'postizinkankadep'])->name('izinkankadepadmin');
+    
+    Route::post('/izinkankadepadmin/{id}', [AdminController::class, 'izinkanKadepadmin'])->name('izinkankadepadmin');
+    
+    Route::get('/confirmIzinwd/{id}', [AdminController::class, 'confirmIzinwd'])->name('confirmIzinwd');
+    
+    //Route::post('/postizinkankadep/{id}', [AdminController::class, 'postizinkankadep'])->name('izinkankadepadmin');
+    
+    Route::post('/izinkanwdadmin/{id}', [AdminController::class, 'izinkanwdadmin'])->name('izinkanwdadmin');
+
+    Route::get('/izinkanwakildekan/{id}', [AdminController::class, 'izinkanwd'])->name('izinkanwd');
+    
+    //Route::post('/postizinkanwakildekan/{id}', [AdminController::class, 'postizinkanwd'])->name('postizinkanwd');
+
+    Route::get('/hapus_surat/{id}/konfirmasiadmin', [AdminController::class, 'konfirmasisuratadmin']);
+    
+    Route::get('/hapus_surat/{id}/hapussuratadmin', [AdminController::class, 'hapussuratadmin']);
+    
+    Route::get('/hapus_suratpermanen/{id}/konfirmasi', [AdminController::class, 'konfirmasisuratadminpermanen']);
+    
+    Route::get('/hapus_suratpermanen/{id}/hapussuratadminpermanen', [AdminController::class, 'hapussuratpermanen']);
+
+    Route::get('data_surat/restore/{id}', [AdminController::class, 'restoresurat']);
+
+
     
     
 

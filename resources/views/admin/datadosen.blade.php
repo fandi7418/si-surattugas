@@ -7,14 +7,8 @@
         <h3 class="card-title">Data Dosen</h3>
     </div>
     <div class="card-body">
-        <a href="/tambah_dosen" class="">
-            <button type="button" class="btn btn-success btn-sm">
-                Tambah Dosen</button>
-        </a>
-        <a href="/data_dosen/trash" class="">
-            <button type="button" class="btn btn-danger btn-sm">
-                Sampah</button>
-        </a>
+        <a href="/tambah_dosen" class="btn btn-success btn-sm">Tambah Dosen</a>
+        <a href="/data_dosen/trash" class="btn btn-danger btn-sm"> Sampah</a>
         {{-- <select class="btn btn-secondary btn-sm filter" style="float: right" href="#" id="filter-prodis"
             aria-expanded="false" style="">Pilih Program Studi
             <ul class="dropdown-menu" aria-labelledby="dropdown03">
