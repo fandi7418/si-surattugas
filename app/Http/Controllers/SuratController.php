@@ -63,6 +63,7 @@ class SuratController extends Controller
             ->first()->NIP,
             'nama_wd' => WakilDekan::first()->nama_wd,
             'NIP_wd' => WakilDekan::first()->NIP,
+            'notif' => '1',
             'remember_token' => Str::random(60),
         ]);
         Alert::success('Sukses', 'Data Berhasil Ditambah');

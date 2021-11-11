@@ -4,6 +4,7 @@
 <title>Profil</title>
 
     <h1 class="h2">Edit Profil</h1>
+    <br>
     <form enctype="multipart/form-data" method="post" action="/updateprofilkadep">
     @csrf
         <div class="form-group row mb-2">
@@ -21,12 +22,7 @@
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Program Studi</label>
             <div class="col-sm-5">
-                <select class="form-select" aria-label="Default select example" name="prodi">
-                    <option disabled value="">Pilih Program Studi</option>
-                    @foreach ($prodi as $prodis )
-                    <option value="{{ $prodis->id }}" {{ old('prodi_id', Auth::user()->prodi_id) == $prodis->id ? 'selected' : null }}>{{ $prodis->prodi }}</option>
-                    @endforeach
-                </select>
+            <input readonly type="text" class="form-control" placeholder=" " value="{{ Auth::user()->prodi->prodi }}">
             </div>
         </div>
         <div class="form-group row mb-2">

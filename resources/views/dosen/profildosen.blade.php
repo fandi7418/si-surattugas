@@ -4,7 +4,7 @@
 <title>Profil</title>
 
     <h1 class="h2">Edit Profil</h1>
-
+    <br>
     <form method="post" action="/updateprofildosen">
         @csrf
         <div class="form-group row mb-2">
@@ -22,21 +22,7 @@
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Program Studi</label>
             <div class="col-sm-5">
-                <select class="form-select" aria-label="Default select example" name="prodi">
-                    <option selected>{{ Auth::guard('dosen')->user()->prodi_dosen }}</option>
-                    <option value="1">Teknik Sipil</option>
-                    <option value="2">Teknik Arsitektur</option>
-                    <option value="3">Teknik Kimia</option>
-                    <option value="3">Teknik Perencanaan Wilayah dan Kota</option>
-                    <option value="3">Teknik Mesin</option>
-                    <option value="3">Teknik Elektro</option>
-                    <option value="3">Teknik Perkapalan</option>
-                    <option value="3">Teknik Industri</option>
-                    <option value="3">Teknik Lingkungan</option>
-                    <option value="3">Teknik Geologi</option>
-                    <option value="3">Teknik Geodesi</option>
-                    <option value="3">Teknik Komputer</option>
-                </select>
+            <input readonly type="text" class="form-control" placeholder=" " value="{{ Auth::guard('dosen')->user()->prodi->prodi }}">
             </div>
         </div>
         <div class="form-group row mb-2">

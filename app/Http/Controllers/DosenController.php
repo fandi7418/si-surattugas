@@ -6,19 +6,48 @@ use Illuminate\Http\Request;
 use App\Models\Dosen;
 use App\Models\Admin;
 use App\Models\Surat;
+use App\Models\Prodi;
 use App\Models\StatusSurat;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Carbon;
 
 class DosenController extends Controller
 {
-    public function notifDosen()
+    public function clearNotif()
     {
-        $surat = Surat::where(['surat.NIP' => Auth::user()->NIP])->get();
+        $surat = Surat::with('status')
+        ->where(['surat.NIP' => Auth::user()->NIP])
+        ->update([
+            'notif' => '2',
+        ]);
         return response()->json([
-            'surat' => $surat
+            'surat' => $surat,
+        ]);
+    }
+
+    public function notifDosen(Request $request)
+    {
+        $surat = Surat::with('status')
+        ->where([
+            'surat.NIP' => Auth::user()->NIP,
+            'surat.notif' => '1',
+        ])
+        ->orderBy('updated_at', 'DESC')
+        ->get();
+        // $surat = createFromFormat('Y-m-d H:i:s', 'updated_at')->isoFormat('D MMMM Y');
+        // if ($request->ajax()){
+        //     return ($surat)
+        //     ->editColumn('created_at', function ($data) {
+        //         return $data->created_at ? with(new Carbon($data->created_at))->isoFormat('D MMMM Y') : '';
+        //     });
+        // }
+        // $surat = Surat::where('surat.update_at' ? with(new Carbon('surat.update_at'))->isoFormat('D MMMM Y') : '');
+        return response()->json([
+            'surat' => $surat,
+            // 'surat' => $surat->updated_at ? with(new Carbon($surat->updated_at))->isoFormat('D MMMM Y') : ''
         ]);
     }
 
@@ -30,7 +59,7 @@ class DosenController extends Controller
     public function daftarsuratDosen(Request $request)
     {
         $surat = Surat::with('status')
-        ->where(['surat.NIP' => Auth::user()->NIP])
+        ->where(['surat.prodi_id' => Auth::user()->prodi_id])
         ->orderBy('updated_at', 'DESC')
         ->paginate(10);
         return view('dosen.daftarsuratdosen', ['surat' => $surat]);
@@ -38,7 +67,8 @@ class DosenController extends Controller
 
     public function profildosen()
     {
-        return view('dosen.profildosen');
+        $prodi = Prodi::all();
+        return view('dosen.profildosen', ['prodi' => $prodi]);
     }
 
     public function updateprofildosen(Request $request)
@@ -46,13 +76,12 @@ class DosenController extends Controller
         Dosen::where('id', '=', Auth::user()->id)->update([
             'nama_dosen' => $request->nama,
             'NIP' => $request->NIP,
-            'prodi_dosen' => $request->prodi,
             'pangkat' => $request->pangkat,
             'jabatan' => $request->jabatan,
             'email_dosen' => $request->email,
         ]);
-        toast('Data Berhasil Diubah', 'success')->autoClose(2000);
-        return redirect('/profildosen');
+        Alert::success('Sukses', 'Data Berhasil Diubah');
+        return redirect()->back();
     }
 
     public function editpassworddosen(Request $request)

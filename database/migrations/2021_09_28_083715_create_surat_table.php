@@ -35,6 +35,7 @@ class CreateSuratTable extends Migration
             $table->string('NIP_kadep')->nullable();
             $table->string('nama_wd')->nullable();
             $table->string('NIP_wd')->nullable();
+            $table->bigInteger('notif')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -4,6 +4,7 @@
 <title>Profil</title>
 
     <h1 class="h2">Edit Profil</h1>
+    <br>
     <form method="post" action="/updateprofilpetugas">
     @csrf
         <div class="form-group row mb-2">

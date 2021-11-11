@@ -26,8 +26,8 @@
                 <td style="display:none">{{$isi->id}}</td>
                 <td>
                 <a href="/surat/{{ $isi->id }}" target="_blank" class="btn btn-secondary btn-sm">Lihat</a>
-                <a href="/kadeptolak/{{ $isi->id }}" class="btn btn-danger btn-sm">Tolak</a>
-                <button type="button" class="btn btn-success btn-sm" onClick="konfirmasi({{ $isi->id }})">Izinkan</button>
+                <button type="button" class="btn btn-danger btn-sm" onClick="konfirmasiTolak({{ $isi->id }})">Tolak</button>
+                <button type="button" class="btn btn-success btn-sm" onClick="konfirmasiIzin({{ $isi->id }})">Izinkan</button>
                 </td>
               </tr>
             @endforeach
@@ -57,15 +57,39 @@
   </div>
 </div>
 
+<!-- Modal Konfirmasi tolak -->
+<div class="modal fade" id="tolakModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style="color:red">Peringatan !</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnClose">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" name="modal-body">
+      Tolak perizinan surat?
+            <input type="text" readonly class="form-control" style="display:none" id="ttdKadep" name="ttdKadep" value="{{Auth::user()->ttd_kadep}}">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" id="tolakBtn" onclick="tolakSurat()">TOLAK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 @section('kadep_js')
 <script>
 $(document).ready(function() {
   $('#daftarSurat').DataTable({order: [[3,'desc']]});
 });
 
-function konfirmasi(id)
+
+// konfirmasi untuk mengizinkan surat
+
+function konfirmasiIzin(id)
 {
-  let seturl = "{{ route("confirmIzin", ":id") }}";
+  let seturl = "{{ route("confirmTolak", ":id") }}";
   seturl = seturl.replace(':id', id);
 
   console.log(seturl);
@@ -109,6 +133,40 @@ function izinSurat(id) {
         window.location.reload(true);
       });
     }
+  });
+}
+
+// konfirmasi untuk menolak surat
+function konfirmasiTolak(id)
+{
+  let seturl = "{{ route("confirmTolak", ":id") }}";
+  seturl = seturl.replace(':id', id);
+
+  console.log(seturl);
+  $.get(seturl, function(data){
+    console.log(data);
+    $('#tolakBtn').attr('onclick', `tolakSurat(${data.surat.id})`);
+    $("#tolakModal").modal('show');
+  });
+  $('#btnClose').click(function(){
+    $("#tolakModal").modal('hide');
+	});
+}
+
+function tolakSurat(id) {
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+  $.ajax({
+    url: "{{ url('kadeptolak') }}"+'/'+id,
+    type: "POST",
+    dataType: 'json',
+    success: function (data) {
+      $("#tolakModal").modal('hide');
+        window.location.reload(true);
+    },
   });
 }
 </script>

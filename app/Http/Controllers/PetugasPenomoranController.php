@@ -13,6 +13,19 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class PetugasPenomoranController extends Controller
 {
+    public function notifPetugas()
+    {
+        $surat = Surat::with('status')
+        ->where([
+            'surat.status_id' => '3',
+        ])
+        ->orderBy('updated_at', 'DESC')
+        ->get();
+        return response()->json([
+            'surat' => $surat,
+        ]);
+    }
+    
     public function dashboardpetugas(Surat $surat)
     {
         return view('petugas.dashboardpetugas');
@@ -92,6 +105,7 @@ class PetugasPenomoranController extends Controller
         $surat = Surat::find($id)->update([
             'no_surat' => $request->no_surat,
             'status_id' => '4',
+            'surat.notif' => '1',
         ]);
         return response()->json([
             'success' => 'sukses',
@@ -117,8 +131,8 @@ class PetugasPenomoranController extends Controller
             'NIP' => $request->NIP,
             'email_petugas' => $request->email,
         ]);
-        toast('Data Berhasil Diubah', 'success')->autoClose(2000);
-        return redirect('/profilpetugas');
+        Alert::success('Sukses', 'Data Berhasil Diubah');
+        return redirect()->back();
     }
 
     public function editpasswordpetugas(Request $request)

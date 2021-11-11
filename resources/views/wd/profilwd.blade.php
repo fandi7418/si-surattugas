@@ -4,6 +4,7 @@
 <title>Profil</title>
 
 <h1 class="h2">Edit Profil</h1>
+<br>
 <form enctype="multipart/form-data" method="post" action="/updateprofilwd">
     @csrf
     <div class="form-group row mb-2">
@@ -56,9 +57,10 @@
         
         </div>
         <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Simpan</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Simpan</button>
         </div>
+        </form>
     </div>
     </div>
 </div>

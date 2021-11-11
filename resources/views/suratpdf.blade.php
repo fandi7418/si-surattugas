@@ -118,7 +118,11 @@
 			</tr>
 			<tr>
 				<td>Tanggal</td>
+				@if($surat->tanggalawal == $surat->tanggalakhir)
+				<td width="525">: {{ \Carbon\Carbon::parse($surat->tanggalawal)->isoFormat('dddd, D MMMM Y')}}</td>
+				@else
 				<td width="525">: {{ \Carbon\Carbon::parse($surat->tanggalawal)->isoFormat('dddd, D MMMM Y')}} s/d {{ \Carbon\Carbon::parse($surat->tanggalakhir)->isoFormat('dddd, D MMMM Y')}}</td>
+				@endif
 			</tr>
 		</table>
         <br>

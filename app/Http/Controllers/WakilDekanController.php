@@ -14,6 +14,19 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class WakilDekanController extends Controller
 {
+    public function notifWD()
+    {
+        $surat = Surat::with('status')
+        ->where([
+            'surat.status_id' => '2',
+        ])
+        ->orderBy('updated_at', 'DESC')
+        ->get();
+        return response()->json([
+            'surat' => $surat,
+        ]);
+    }
+
     public function dashboardwd(Request $request)
     {
         return view('wd.dashboardwd');
@@ -58,6 +71,7 @@ class WakilDekanController extends Controller
             'ttd_wd' => $request->ttd_wd,
             $this->validasi($request),
             'status_id' => '3',
+            'surat.notif' => '1',
             // 'surat.ttd_wd' => Auth::user()->ttd_wd,
         ]);
         return response()->json([
@@ -67,10 +81,19 @@ class WakilDekanController extends Controller
         
     }
 
+    public function confirmTolak(Request $request, $id)
+    {
+        $surat = Surat::findOrFail($id);
+        return response()->json([
+            'surat' => $surat
+        ]);
+    }
+
     public function tolak($id)
     {
         Surat::where('id', $id)->update([
             'status_id' => '6',
+            'surat.notif' => '1',
         ]);
         return redirect('/daftarsuratwd');
         
@@ -107,8 +130,8 @@ class WakilDekanController extends Controller
             'email_wd' => $request->email,
             'ttd_wd' => $imgName,
         ]);
-        toast('Data Berhasil Diubah', 'success')->autoClose(2000);
-        return redirect('/profilwd');
+        Alert::success('Sukses', 'Data Berhasil Diubah');
+        return redirect()->back();
     }
 
     public function editpasswordwd(Request $request)

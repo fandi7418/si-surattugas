@@ -15,6 +15,20 @@ use RealRashid\SweetAlert\Facades\Alert;
 class KadepController extends Controller
 {
 
+    public function notifKadep()
+    {
+        $surat = Surat::with('status')
+        ->where([
+            'surat.prodi_id' => Auth::user()->prodi_id,
+            'surat.status_id' => '1',
+        ])
+        ->orderBy('updated_at', 'DESC')
+        ->get();
+        return response()->json([
+            'surat' => $surat,
+        ]);
+    }
+    
     public function dashboardkadep(Request $request)
     {
         return view('kadep.dashboardkadep');
@@ -56,18 +70,18 @@ class KadepController extends Controller
         $validation = $request->validate([
             'ttd_kadep' => 'required',
         ], [
-            'ttd_kadep.required' => 'Anda tidak bisa menyetujui surat. Tanda tangan belum ditambahkan',
+            'ttd_kadep.required' => 'Anda tidak bisa menyetujui surat.
+                                    Silahkan upload tanda tangan di halaman Edit Profil.',
         ]);
     }
 
     public function izinkan(Request $request, $id)
     {
-        
-
         $surat = Surat::find($id)->update([
             'ttd_kadep' => $request->ttd_kadep,
             $this->validasi($request),
             'status_id' => '2',
+            'surat.notif' => '1',
         ]);
         return response()->json([
             'success' => 'Sukses diizinkan',
@@ -75,12 +89,35 @@ class KadepController extends Controller
         ]);
         
     }
+
+    // public function validasi(Request $request)
+    // {
+    //     $validation = $request->validate([
+    //         'ttd_kadep' => 'required',
+    //     ], [
+    //         'ttd_kadep.required' => 'Anda tidak bisa menyetujui surat. Tanda tangan belum ditambahkan',
+    //     ]);
+    // }
+
+
+    public function confirmTolak(Request $request, $id)
+    {
+        $surat = Surat::findOrFail($id);
+        return response()->json([
+            'surat' => $surat
+        ]);
+    }
+
     public function tolak($id)
     {
-        Surat::where('id', $id)->update([
+        $surat = Surat::where('id', $id)->update([
             'status_id' => '5',
+            'surat.notif' => '1',
         ]);
-        return redirect('/daftarsuratkadep');
+        return response()->json([
+            'success' => 'Sukses diizinkan',
+            'surat' => $surat,
+        ]);
         
     }
 
@@ -105,11 +142,10 @@ class KadepController extends Controller
         Kadep::with('prodi')->where('id', '=', Auth::user()->id)->update([
             'nama_kadep' => $request->nama,
             'NIP' => $request->NIP,
-            'prodi_id' => $request->prodi,
             'email_kadep' => $request->email,
         ]);
-        toast('Data Berhasil Diubah', 'success')->autoClose(3000);
-        return redirect('/profilkadep');
+        Alert::success('Sukses', 'Data Berhasil Diubah');
+        return redirect()->back();
     }
 
     public function editpasswordkadep(Request $request)
@@ -118,7 +154,7 @@ class KadepController extends Controller
             'password' => Hash::make($request->password),
             
         ]);
-        toast('Password Berhasil Diubah','success')->autoClose(2000);
+        toast('Berhasil', 'success')->autoClose(2000);
         return redirect('/profilkadep');
     }
 }
