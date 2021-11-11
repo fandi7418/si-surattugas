@@ -7,10 +7,7 @@
         <h3 class="card-title">Data Wakil Dekan</h3>
     </div>
     <div class="card-body">
-        @if (count($wd)==0)
-        <a href="/tambah_wakildekan" class="btn btn-success btn-sm">Tambah Wakil Dekan</a>
-        @endif
-        <a href="/data_wakildekan/trash" class="btn btn-danger btn-sm">Sampah</a>
+        <a href="/data_wakildekan" style="float: right" class="btn btn-secondary btn-sm">kembali</a>
         <br>
         <br>
         <table class="table table-striped table-bordered table-sm" style="width:100%" id="datawd">
@@ -29,9 +26,8 @@
                         <td>{{$wakil->NIP}}</td>
                         <td>{{ $wakil->email_wd }}</td>
                         <td>
-                        <a href="/edit_wakildekan/{{ $wakil->id }}" class="btn btn-info btn-sm">Edit</a>
-                        <a href="/hapus_wakildekan/{{ $wakil->id }}/konfirmasi" class="btn btn-danger btn-sm">Hapus</a>
-
+                        <a href="/data_wakildekan/restore/{{ $wakil->id }}" class="btn btn-success btn-sm">Restore</a>
+                        <a href="/hapus_wakildekanpermanen/{{ $wakil->id }}/konfirmasi" class="btn btn-danger btn-sm">Hapus Permanen</a>
                         </td>
                     </tr>
                     @endforeach

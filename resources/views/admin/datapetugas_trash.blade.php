@@ -7,11 +7,7 @@
         <h2 class="card-title">Data Petugas Penomoran</h2>
     </div>
     <div class="card-body">
-        @if (count($petugas)==0)
-        <a href="/tambah_petugas" class="btn btn-success btn-sm">Tambah Petugas
-        </a>
-        @endif
-        <a href="/data_petugas/trash" class="btn btn-danger btn-sm">Sampah</a>
+        <a href="/data_petugas" class="btn btn-secondary btn-sm">kembali</a>
         <br>
         <br>
         <table class="table table-striped table-bordered table-sm" id="datapetugas" style="width: 100%">
@@ -34,7 +30,7 @@
             processing: true,
             serverside: true,
             ajax: {
-                url: "{{ route('data petugas') }}",
+                url: "{{ route('data petugas sementara') }}",
                 type: 'GET'
             },
             columns: [{

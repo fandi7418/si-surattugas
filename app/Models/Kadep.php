@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Kadep extends Authenticatable
 {
     use HasFactory;
+    use softDeletes;
 
     protected $table = "ketua_departemen";
     protected $primarykey = "id";
@@ -34,4 +36,9 @@ class Kadep extends Authenticatable
         //Setiap kadep hanya memiliki satu prodi
         return $this->belongsTo(Prodi::class);
     }
+    // public function surat()
+    // {
+    //     //Setiap kadep hanya memiliki satu prodi
+    //     return $this->hasMany(Surat::class);
+    // }
 }
