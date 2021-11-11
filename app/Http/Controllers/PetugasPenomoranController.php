@@ -105,7 +105,7 @@ class PetugasPenomoranController extends Controller
         $surat = Surat::find($id)->update([
             'no_surat' => $request->no_surat,
             'status_id' => '4',
-            'surat.notif' => '1',
+            'notif' => '1',
         ]);
         return response()->json([
             'success' => 'sukses',

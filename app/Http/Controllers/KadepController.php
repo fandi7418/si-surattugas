@@ -81,7 +81,7 @@ class KadepController extends Controller
             'ttd_kadep' => $request->ttd_kadep,
             $this->validasi($request),
             'status_id' => '2',
-            'surat.notif' => '1',
+            'notif' => '1',
         ]);
         return response()->json([
             'success' => 'Sukses diizinkan',
@@ -112,7 +112,7 @@ class KadepController extends Controller
     {
         $surat = Surat::where('id', $id)->update([
             'status_id' => '5',
-            'surat.notif' => '1',
+            'notif' => '1',
         ]);
         return response()->json([
             'success' => 'Sukses diizinkan',

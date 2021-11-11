@@ -71,7 +71,7 @@ class WakilDekanController extends Controller
             'ttd_wd' => $request->ttd_wd,
             $this->validasi($request),
             'status_id' => '3',
-            'surat.notif' => '1',
+            'notif' => '1',
             // 'surat.ttd_wd' => Auth::user()->ttd_wd,
         ]);
         return response()->json([
@@ -93,7 +93,7 @@ class WakilDekanController extends Controller
     {
         Surat::where('id', $id)->update([
             'status_id' => '6',
-            'surat.notif' => '1',
+            'notif' => '1',
         ]);
         return redirect('/daftarsuratwd');
         
