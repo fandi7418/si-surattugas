@@ -71,7 +71,7 @@
             </div>
             <div class="modal-body" name="modal-body">
             Anda akan menyetujui surat?
-                <input type="text" readonly class="form-control" style="display:" id="ttd_kadep" name="ttd_kadep">
+                <input type="text" readonly class="form-control" style="display: none" id="ttd_kadep" name="ttd_kadep">
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-success" id="confirmBtn" onclick="izinSuratkadep()">OK</button>
@@ -92,7 +92,7 @@
             </div>
             <div class="modal-body" name="modal-bodywd">
             Anda akan menyetujui surat?
-                <input type="text" readonly class="form-control" style="display:" id="ttd_wd" name="ttd_wd">
+                <input type="text" readonly class="form-control" style="display: none" id="ttd_wd" name="ttd_wd">
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-success" id="confirmBtnwd" onclick="izinSuratkadep()">OK</button>

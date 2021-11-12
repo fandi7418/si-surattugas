@@ -7,10 +7,11 @@
         <h3 class="card-title">Data Kadep yang dihapus sementara</h3>
     </div>
     <div class="card-body">
-        <a href="/data_kadep/restore_semua" class="btn btn-success btn-sm">Restore Akun Kadep Semua
+        <a href="/data_kadep" style="float: right" class="btn btn-secondary btn-sm">Kembali</a>
+        {{-- <a href="/data_kadep/restore_semua" class="btn btn-success btn-sm">Restore Akun Kadep Semua
         </a>
         <a href="hapus_kadeppermanen/konfirmasi" class="btn btn-danger btn-sm">Hapus Permanen Semua
-        </a>
+        </a> --}}
         {{-- <select class="btn btn-secondary btn-sm filter" style="float: right" href="#" id="filter-prodis"
             aria-expanded="false" style="">Pilih Program Studi
             <ul class="dropdown-menu" aria-labelledby="dropdown03">
