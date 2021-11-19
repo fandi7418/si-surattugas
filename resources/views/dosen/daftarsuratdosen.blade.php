@@ -195,7 +195,7 @@
         <td style="text-align: center">
           <a href="/surat/{{ $isi->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
           <button class="btn btn-primary btn-sm" onClick="editSurat({{ $isi->id }})">Edit</button>
-          <a href="/hapussurat/{{ $isi->id }}/konfirmasi" class="btn btn-danger btn-sm">Hapus</a>
+          <button type="button" class="btn btn-danger btn-sm" onClick="konfirmasiHapus({{ $isi->id }})">Hapus</button>
         </td>
         @endif
       </tr>
@@ -260,6 +260,28 @@
   </div>
 </div>
 
+
+<!-- Modal Konfirmasi tolak -->
+<div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style="color:red">Peringatan !</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnClose">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" name="modal-body">
+      Anda yakin ingin menghapus surat?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" id="hapusBtn" onclick="hapusSurat()">HAPUS</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 @section('dosen_js')
 <script>
 $(document).ready(function() {
@@ -318,6 +340,40 @@ function updateSubmit(id) {
         $('#exampleModal').modal('hide');
         window.location.reload(true);
     }
+  });
+}
+
+// konfirmasi untuk menghapus surat
+function konfirmasiHapus(id)
+{
+  let seturl = "{{ route("confirmHapus", ":id") }}";
+  seturl = seturl.replace(':id', id);
+
+  console.log(seturl);
+  $.get(seturl, function(data){
+    console.log(data);
+    $('#hapusBtn').attr('onclick', `hapusSurat(${data.surat.id})`);
+    $("#hapusModal").modal('show');
+  });
+  $('#btnClose').click(function(){
+    $("#hapusModal").modal('hide');
+	});
+}
+
+function hapusSurat(id) {
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+  $.ajax({
+    url: "{{ url('hapussurat') }}"+'/'+id,
+    type: "POST",
+    dataType: 'json',
+    success: function (data) {
+      $("#hapusModal").modal('hide');
+        window.location.reload(true);
+    },
   });
 }
 </script>

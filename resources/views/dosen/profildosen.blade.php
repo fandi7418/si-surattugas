@@ -5,42 +5,55 @@
 
     <h1 class="h2">Edit Profil</h1>
     <br>
-    <form method="post" action="/updateprofildosen">
+    @foreach ($dosen as $isi)
+    <form method="post" action="/updateprofildosen/{{ $isi->id }}">
         @csrf
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Nama</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder=" " name="nama" value="{{ Auth::guard('dosen')->user()->nama_dosen }}">
+                <input required type="text" class="form-control" placeholder=" " name="nama" value="{{ $isi->nama_dosen }}">
             </div>
         </div>
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">NIP</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder=" " name="NIP" value="{{ Auth::guard('dosen')->user()->NIP }}">
+                <input type="text" class="form-control @error('NIP') is-invalid @enderror" placeholder=" " name="NIP" value="{{ $isi->NIP }}">
+                    @error('NIP')
+                        <div class="alert alert-danger alert-dismissible fade show mt-3">
+                            {{ $message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @enderror
             </div>
         </div>
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Program Studi</label>
             <div class="col-sm-5">
-            <input readonly type="text" class="form-control" placeholder=" " value="{{ Auth::guard('dosen')->user()->prodi->prodi }}">
+            <input readonly type="text" class="form-control" placeholder=" " value="{{ $isi->prodi->prodi }}">
             </div>
         </div>
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Pangkat/Gol</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder=" " name="pangkat" value="{{ Auth::guard('dosen')->user()->pangkat }}">
+                <input required type="text" class="form-control" placeholder=" " name="pangkat" value="{{ $isi->pangkat }}">
             </div>
         </div>
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Jabatan</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder=" " name="jabatan" value="{{ Auth::guard('dosen')->user()->jabatan }}">
+                <input required type="text" class="form-control" placeholder=" " name="jabatan" value="{{ $isi->jabatan }}">
             </div>
         </div>
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">E-mail</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder=" " name="email" value="{{ Auth::guard('dosen')->user()->email_dosen }}">
+                <input type="text" class="form-control @error('email_dosen') is-invalid @enderror" placeholder=" " name="email_dosen" value="{{ $isi->email_dosen }}">
+                    @error('email_dosen')
+                        <div class="alert alert-danger alert-dismissible fade show mt-3">
+                            {{ $message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @enderror
             </div>
         </div>
         <div class="col-sm-7">
@@ -48,6 +61,7 @@
             Simpan
         </button>
     </form>
+    @endforeach
 </div>
     <a class="btn btn-secondary" style="float: right; margin-right: 10px" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Ubah Password?

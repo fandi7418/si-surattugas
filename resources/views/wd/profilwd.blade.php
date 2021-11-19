@@ -5,24 +5,35 @@
 
 <h1 class="h2">Edit Profil</h1>
 <br>
-<form enctype="multipart/form-data" method="post" action="/updateprofilwd">
+@foreach ($wd as $isi)
+<form enctype="multipart/form-data" method="post" action="/updateprofilwd/{{ $isi->id }}">
     @csrf
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Nama</label>
         <div class="col-sm-5">
-            <input type="text" class="form-control" placeholder=" " name="nama" value="{{ Auth::user()->nama_wd }}">
+            <input type="text" class="form-control" placeholder=" " name="nama" value="{{ $isi->nama_wd }}">
         </div>
     </div>
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">NIP</label>
         <div class="col-sm-5">
-            <input type="text" class="form-control" placeholder=" " name="NIP" value="{{ Auth::user()->NIP }}">
+            <input type="text" class="form-control @error('NIP') is-invalid @enderror" placeholder=" " name="NIP" value="{{ $isi->NIP }}">
+            @error('NIP')
+                <div id="validationServer03Feedback" class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
     </div>
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">E-mail</label>
         <div class="col-sm-5">
-            <input type="text" class="form-control" placeholder=" " name="email" value="{{ Auth::user()->email_wd }}">
+            <input type="text" class="form-control @error('email_wd') is-invalid @enderror" placeholder=" " name="email_wd" value="{{ $isi->email_wd }}">
+            @error('email_wd')
+                <div id="validationServer03Feedback" class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
     </div>
     <div class="col-sm-7">
@@ -31,6 +42,7 @@
     </button>
     </div>
 </form>
+@endforeach
 <a class="btn btn-secondary" style="float: right; margin-right: 10px" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Ubah Password?
 </a>

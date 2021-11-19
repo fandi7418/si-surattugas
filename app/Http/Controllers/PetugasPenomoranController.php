@@ -75,8 +75,13 @@ class PetugasPenomoranController extends Controller
     }
     public function profilpetugas(Surat $surat)
     {
-        return view('petugas.profilpetugas');
-
+        $petugas = Petugas::where([
+            'petugas_penomoran.id' => Auth::user()->id,
+        ])
+        ->get();
+        return view('petugas.profilpetugas', [
+            'petugas' => $petugas
+        ]);
     }
 
     public function editnomorsurat(Request $request, $id)
@@ -124,14 +129,28 @@ class PetugasPenomoranController extends Controller
         // return redirect('/daftarsuratpetugas');
     }
 
-    public function updateprofilpetugas(Request $request)
+    public function updateprofilpetugas(Request $request, $id)
     {
-        Petugas::where('id', '=', Auth::user()->id)->update([
+        $this->validate($request,[
+            'nama' => 'required|max:255|string',
+            'NIP' => "required|numeric|min:6|unique:petugas_penomoran,NIP,$id|unique:dosen,NIP|unique:ketua_departemen,NIP|unique:wakildekan,NIP|unique:admin,NIP",
+            'email_petugas' => "email|required|unique:petugas_penomoran,email_petugas,$id|unique:dosen,email_dosen|unique:ketua_departemen,email_kadep|unique:wakildekan,email_wd|unique:admin,email_admin",
+        ], 
+            [
+            'email_petugas.email' => 'E-mail tidak boleh kosong',
+            'email_petugas.unique' => 'E-mail sudah ada yang menggunakan',
+            'nama.required' => 'Nama tidak boleh kosong',
+            'NIP.required' => 'NIP tidak boleh kosong',
+            'NIP.unique' => 'NIP sudah ada yang menggunakan',
+
+        ]);
+
+        Petugas::where('id', $request->id)->update([
             'nama_petugas' => $request->nama,
             'NIP' => $request->NIP,
-            'email_petugas' => $request->email,
+            'email_petugas' => $request->email_petugas,
         ]);
-        Alert::success('Sukses', 'Data Berhasil Diubah');
+        toast('Berhasil', 'success')->autoClose(2000);
         return redirect()->back();
     }
 

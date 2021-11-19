@@ -217,7 +217,7 @@
                 }
               }
             });
-          setTimeout(notif, 1000);
+          setTimeout(notif, 2000);
       }
     </script>
   </body>

@@ -79,11 +79,21 @@ class SuratController extends Controller
         return redirect('/daftarsuratdosen');
     }
 
+    public function confirmHapusDosen(Request $request, $id)
+    {
+        $surat = Surat::findOrFail($id);
+        return response()->json([
+            'surat' => $surat
+        ]);
+    }
+    
     public function hapussurat($id)
     {
-        DB::table('surat')->where('id', $id)->delete();
-        Alert::success('Sukses', 'Data Berhasil Dihapus');
-        return redirect('/daftarsuratdosen');
+        $surat = Surat::where('id', $id)->delete();
+        toast('Berhasil dihapus', 'success')->autoClose(2000);
+        return response()->json([
+            'surat' => $surat,
+        ]);
     }
 
     public function editsurat($id)

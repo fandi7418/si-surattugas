@@ -5,30 +5,41 @@
 
     <h1 class="h2">Edit Profil</h1>
     <br>
-    <form enctype="multipart/form-data" method="post" action="/updateprofilkadep">
+    @foreach ($kadep as $isi)
+    <form enctype="multipart/form-data" method="post" action="/updateprofilkadep/{{ $isi->id }}">
     @csrf
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Nama</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder=" " name="nama" value="{{ Auth::user()->nama_kadep }}">
+                <input required type="text" class="form-control" placeholder=" " name="nama" value="{{ $isi->nama_kadep }}">
             </div>
         </div>
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">NIP</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder=" " name="NIP" value="{{ Auth::user()->NIP }}">
+                <input required type="text" class="form-control @error('NIP') is-invalid @enderror" placeholder=" " name="NIP" value="{{ $isi->NIP }}">
+                @error('NIP')
+                    <div id="validationServer03Feedback" class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
         </div>
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Program Studi</label>
             <div class="col-sm-5">
-            <input readonly type="text" class="form-control" placeholder=" " value="{{ Auth::user()->prodi->prodi }}">
+            <input readonly type="text" class="form-control" placeholder=" " value="{{ $isi->prodi->prodi }}">
             </div>
         </div>
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">E-mail</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder=" " name="email" value="{{ Auth::user()->email_kadep }}">
+                <input required type="text" class="form-control @error('email_kadep') is-invalid @enderror" placeholder=" " name="email_kadep" value="{{ $isi->email_kadep }}">
+                @error('email_kadep')
+                    <div id="validationServer03Feedback" class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
         </div>
         <br>
@@ -38,6 +49,7 @@
         </button>
         </div>
     </form>
+    @endforeach
     <a class="btn btn-secondary" style="float: right; margin-right: 10px" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Ubah Password?
     </a>

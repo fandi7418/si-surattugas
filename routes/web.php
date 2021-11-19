@@ -244,7 +244,7 @@ Route::group(['middleware' => ['auth:dosen']], function()
 
     Route::get('/dashboarddosen', [DosenController::class, 'dashboarddosen']);
 
-    Route::post('/updateprofildosen', [DosenController::class, 'updateprofildosen']);
+    Route::post('/updateprofildosen/{id}', [DosenController::class, 'updateprofildosen']);
 
     Route::post('/editpassworddosen', [DosenController::class, 'editpassworddosen']);
 
@@ -252,9 +252,11 @@ Route::group(['middleware' => ['auth:dosen']], function()
 
     Route::post('/tambahsurat', [SuratController::class, 'tambahsurat']);
 
-    Route::get('/hapussurat/{id}/konfirmasi', [SuratController::class, 'konfirmasi']);
+    // Route::get('/hapussurat/{id}/konfirmasi', [SuratController::class, 'konfirmasi']);
     
-    Route::get('/hapussurat/{id}/hapussurat', [SuratController::class, 'hapussurat']);
+    Route::get('/confirmHapus/{id}', [SuratController::class, 'confirmHapusDosen'])->name('confirmHapus');
+
+    Route::post('/hapussurat/{id}', [SuratController::class, 'hapussurat'])->name('hapussurat');
     
     Route::get('/editsurat/{id}', [SuratController::class, 'editsurat'])->name('editsurat');
     
@@ -293,7 +295,7 @@ Route::group(['middleware' => ['auth:ketua_departemen']], function()
 
     Route::get('/daftarsuratkadep', [KadepController::class, 'daftarsurat']);
 
-    Route::post('/updateprofilkadep', [KadepController::class, 'updateprofilkadep']);
+    Route::post('/updateprofilkadep/{id}', [KadepController::class, 'updateprofilkadep']);
 
     Route::post('/editpasswordkadep', [KadepController::class, 'editpasswordkadep']);
 
@@ -329,9 +331,9 @@ Route::group(['middleware' => ['auth:petugas_penomoran']], function()
     
     // Route::get('/dropdown/{id}', [PetugasPenomoranController::class, 'dropdown'])->name('dropdown');
     
-    Route::post('/updateprofilpetugas', [PetugasPenomoranController::class, 'updateprofilpetugas']);
-    
     Route::get('/profilpetugas', [PetugasPenomoranController::class, 'profilpetugas']);
+    
+    Route::post('/updateprofilpetugas/{id}', [PetugasPenomoranController::class, 'updateprofilpetugas']);
 
     Route::post('/editpasswordpetugas', [PetugasPenomoranController::class, 'editpasswordpetugas']);
 
@@ -364,7 +366,7 @@ Route::group(['middleware' => ['auth:wakildekan']], function()
 
     Route::get('/daftarsuratwd', [WakilDekanController::class, 'daftarsurat']);
 
-    Route::post('/updateprofilwd', [WakilDekanController::class, 'updateprofilwd']);
+    Route::post('/updateprofilwd/{id}', [WakilDekanController::class, 'updateprofilwd']);
 
     Route::post('/editpasswordwd', [WakilDekanController::class, 'editpasswordwd']);
 

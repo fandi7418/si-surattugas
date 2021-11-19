@@ -5,24 +5,35 @@
 
     <h1 class="h2">Edit Profil</h1>
     <br>
-    <form method="post" action="/updateprofilpetugas">
+    @foreach ($petugas as $isi)
+    <form method="post" action="/updateprofilpetugas/{{ $isi->id }}">
     @csrf
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Nama</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder=" " name="nama" value="{{ Auth::user()->nama_petugas }}">
+                <input type="text" class="form-control" placeholder=" " name="nama" value="{{ $isi->nama_petugas }}">
             </div>
         </div>
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">NIP</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder=" " name="NIP" value="{{ Auth::user()->NIP }}">
+                <input type="text" class="form-control @error('NIP') is-invalid @enderror" placeholder=" " name="NIP" value="{{ $isi->NIP }}">
+                @error('NIP')
+                    <div id="validationServer03Feedback" class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
         </div>
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">E-mail</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder=" " name="email" value="{{ Auth::user()->email_petugas }}">
+                <input type="text" class="form-control @error('email_petugas') is-invalid @enderror" placeholder=" " name="email_petugas" value="{{ $isi->email_petugas }}">
+                @error('email_petugas')
+                    <div id="validationServer03Feedback" class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
         </div>
         <div class="col-sm-7">
@@ -31,6 +42,7 @@
         </button>
         </div>
     </form>
+    @endforeach
     <a class="btn btn-secondary" style="float: right; margin-right: 10px" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Ubah Password?
     </a>

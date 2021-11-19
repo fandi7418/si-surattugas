@@ -33,10 +33,12 @@ class KadepController extends Controller
     {
         return view('kadep.dashboardkadep');
     }
+
     public function profilKadep(Request $request)
     {
         $prodi = Prodi::all();
-        $kadep = Kadep::where([
+        $kadep = Kadep::with('prodi')
+        ->where([
             'ketua_departemen.id' => Auth::user()->id,
             ])
         ->get();
@@ -45,6 +47,7 @@ class KadepController extends Controller
             'kadep' => $kadep
         ]);
     }
+
     public function daftarsurat(Request $request)
     {
         $surat = Surat::with('status')
@@ -137,14 +140,28 @@ class KadepController extends Controller
         return redirect('/profilkadep');
     }
 
-    public function updateprofilkadep(Request $request)
+    public function updateprofilkadep(Request $request, $id)
     {
-        Kadep::with('prodi')->where('id', '=', Auth::user()->id)->update([
+        $this->validate($request,[
+            'nama' => 'required|max:255|string',
+            'NIP' => "required|numeric|min:6|unique:ketua_departemen,NIP,$id|unique:dosen,NIP|unique:petugas_penomoran,NIP|unique:wakildekan,NIP|unique:admin,NIP",
+            'email_kadep' => "email|required|unique:ketua_departemen,email_kadep,$id|unique:dosen,email_dosen|unique:petugas_penomoran,email_petugas|unique:wakildekan,email_wd|unique:admin,email_admin",
+        ], 
+            [
+            'email_kadep.email' => 'E-mail tidak boleh kosong',
+            'email_kadep.unique' => 'E-mail sudah ada yang menggunakan',
+            'nama.required' => 'Nama tidak boleh kosong',
+            'NIP.required' => 'NIP tidak boleh kosong',
+            'NIP.unique' => 'NIP sudah ada yang menggunakan',
+
+        ]);
+        
+        Kadep::with('prodi')->where('id', $request->id)->update([
             'nama_kadep' => $request->nama,
             'NIP' => $request->NIP,
-            'email_kadep' => $request->email,
+            'email_kadep' => $request->email_kadep,
         ]);
-        Alert::success('Sukses', 'Data Berhasil Diubah');
+        toast('Berhasil', 'success')->autoClose(2000);
         return redirect()->back();
     }
 

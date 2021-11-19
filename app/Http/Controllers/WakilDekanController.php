@@ -45,7 +45,13 @@ class WakilDekanController extends Controller
 
     public function profilwd(Request $request)
     {
-        return view('wd.profilwd');
+        $wd = WakilDekan::where([
+            'wakildekan.id' => Auth::user()->id,
+            ])
+        ->get();
+        return view('wd.profilwd', [
+            'wd' => $wd
+        ]);
     }
 
     public function confirmIzin(Request $request, $id)
@@ -115,22 +121,32 @@ class WakilDekanController extends Controller
         return redirect('/profilwd');
     }
 
-    public function updateprofilwd(Request $request)
+    public function updateprofilwd(Request $request, $id)
     {
-        $request->validate([
-            'ttd'=>'mimes:jpg,png,jpeg,svg',
+        $this->validate($request,[
+            'nama' => 'required|max:255|string',
+            'NIP' => "required|numeric|min:6|unique:wakildekan,NIP,$id|unique:dosen,NIP|unique:petugas_penomoran,NIP|unique:ketua_departemen,NIP|unique:admin,NIP",
+            'email_wd' => "email|required|unique:wakildekan,email_wd,$id|unique:dosen,email_dosen|unique:petugas_penomoran,email_petugas|unique:ketua_departemen,email_kadep|unique:admin,email_admin",
+        ], 
+            [
+            'email_wd.email' => 'E-mail tidak boleh kosong',
+            'email_wd.unique' => 'E-mail sudah ada yang menggunakan',
+            'nama.required' => 'Nama tidak boleh kosong',
+            'NIP.required' => 'NIP tidak boleh kosong',
+            'NIP.unique' => 'NIP sudah ada yang menggunakan',
+
         ]);
+        
+        // $request->validate([
+        //     'ttd'=>'mimes:jpg,png,jpeg,svg',
+        // ]);
 
-        $imgName = $request->ttd->getClientOriginalName() . '-' . time() . '.' . $request->ttd->extension();
-        $request->ttd->move(public_path('image'), $imgName);
-
-        WakilDekan::where('id', '=', Auth::user()->id)->update([
+        WakilDekan::where('id', $request->id)->update([
             'nama_wd' => $request->nama,
             'NIP' => $request->NIP,
-            'email_wd' => $request->email,
-            'ttd_wd' => $imgName,
+            'email_wd' => $request->email_wd,
         ]);
-        Alert::success('Sukses', 'Data Berhasil Diubah');
+        toast('Berhasil','success')->autoClose(2000);
         return redirect()->back();
     }
 

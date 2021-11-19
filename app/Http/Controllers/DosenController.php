@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Carbon;
 
+
 class DosenController extends Controller
 {
     public function clearNotif()
@@ -68,19 +69,40 @@ class DosenController extends Controller
     public function profildosen()
     {
         $prodi = Prodi::all();
-        return view('dosen.profildosen', ['prodi' => $prodi]);
+        $dosen = Dosen::with('prodi')
+        ->where('dosen.id', '=', Auth::user()->id)
+        ->get();
+        return view('dosen.profildosen', ['prodi' => $prodi, 'dosen' => $dosen]);
     }
 
-    public function updateprofildosen(Request $request)
+    public function updateprofildosen(Request $request, $id)
     {
-        Dosen::where('id', '=', Auth::user()->id)->update([
+        $this->validate($request,[
+            'nama' => 'required|max:255|string',
+            'NIP' => "required|numeric|min:6|unique:dosen,NIP,$id|unique:ketua_departemen,NIP|unique:petugas_penomoran,NIP|unique:wakildekan,NIP|unique:admin,NIP",
+            'pangkat' => 'required|string',
+            'jabatan' => 'required|string',
+            'email_dosen' => "email|required|unique:dosen,email_dosen,$id|unique:ketua_departemen,email_kadep|unique:petugas_penomoran,email_petugas|unique:wakildekan,email_wd|unique:admin,email_admin",
+        ], 
+            [
+            'email_dosen.email' => 'E-mail tidak boleh kosong',
+            'email_dosen.unique' => 'E-mail sudah ada yang menggunakan',
+            'nama.required' => 'Nama tidak boleh kosong',
+            'NIP.required' => 'NIP tidak boleh kosong',
+            'NIP.unique' => 'NIP sudah ada yang menggunakan',
+            'pangkat.required' => 'Pangkat tidak boleh kosong',
+            'jabatan.required' => 'Jabatan tidak boleh kosong',
+
+        ]);
+        
+        Dosen::where('id', $request->id)->update([
             'nama_dosen' => $request->nama,
             'NIP' => $request->NIP,
             'pangkat' => $request->pangkat,
             'jabatan' => $request->jabatan,
-            'email_dosen' => $request->email,
+            'email_dosen' => $request->email_dosen,
         ]);
-        Alert::success('Sukses', 'Data Berhasil Diubah');
+        toast('Berhasil', 'success')->autoClose(2000);
         return redirect()->back();
     }
 
