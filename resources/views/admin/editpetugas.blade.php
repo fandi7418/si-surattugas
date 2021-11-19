@@ -8,20 +8,35 @@
                         <div class="form-group row mt-4">
                             <label for="colFormLabel" class="col-sm-2 col-form-label">Nama</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="colFormLabel" name="nama" value="{{ $ptgs->nama_petugas }}" >
-                        </div>
+                                    <input type="text" class="form-control @error('nama') is-invalid @enderror" id="colFormLabel" name="nama" value="{{ old('nama', $ptgs->nama_petugas) }}" >
+                                    @error('nama')
+                                    <div class="invalid-feedback">
+                                    {{ $message }}
+                                    </div>
+                                @enderror
+                                </div>
                                 </div>
                         <div class="form-group row mt-4">
                             <label for="colFormLabel" class="col-sm-2 col-form-label">NIP</label>
                                 <div class="col-sm-8">
-                                    <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control" id="colFormLabel" name="NIP" value="{{ $ptgs->NIP }}" >
-                        </div>
+                                    <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control @error('NIP') is-invalid @enderror" id="colFormLabel" name="NIP" value="{{ old('NIP',$ptgs->NIP) }}" >
+                                    @error('NIP')
+                                    <div class="invalid-feedback">
+                                    {{ $message }}
+                                    </div>
+                                @enderror
+                                </div>
                                 </div>
                         <div class="form-group row mt-4">
                             <label for="colFormLabel" class="col-sm-2 col-form-label">Email</label>
                                 <div class="col-sm-8">
-                                    <input type="email" class="form-control" id="colFormLabel" name="email" value="{{ $ptgs->email_petugas }}">
-                        </div>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="colFormLabel" name="email" value="{{ old('email', $ptgs->email_petugas) }}">
+                                    @error('email')
+                                    <div class="invalid-feedback">
+                                    {{ $message }}
+                                    </div>
+                                @enderror
+                                </div>
                                 </div>
                         {{-- <div class="form-group row mt-4">
                             <label for="colFormLabel" class="col-sm-2 col-form-label">Password</label>

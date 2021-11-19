@@ -41,7 +41,7 @@ class AdminController extends Controller
     public function dataadmin(Request $request)
     {
         
-        $admin = DB::table('admin') -> get();
+        $admin = Admin::get();
         if ($request->ajax()){
             return datatables()->of($admin)->addColumn('action', function($data){
                 $url_edit = url('edit_admin/'.$data->id);
@@ -57,14 +57,25 @@ class AdminController extends Controller
 
     public function editadmin($id)
     {
-        $admin = DB::table('admin')->where('id', $id)->get();
+        $admin = Admin::where('id', $id)->get();
         
         return view('admin.editadmin', ['admin' => $admin, "title" => "Edit Profil Admin"]);
     }
     
-    public function updateadmin(Request $request)
+    public function updateadmin(Request $request, $id)
     {
-        DB::table('admin')->where('id', $request->id)->update([
+        $request->validate([
+            'nama' => 'required|max:255|string',
+            'NIP' => "required|numeric|min:6|unique:admin,NIP,$id|unique:wakildekan,NIP|unique:ketua_departemen,NIP|unique:dosen,NIP|unique:petugas_penomoran,NIP",
+            'email' => "email|required|unique:admin,email_admin,$id|unique:wakildekan,email_wd,$id|unique:ketua_departemen,email_kadep|unique:dosen,email_dosen|unique:petugas_penomoran,email_petugas"
+        ], [
+            'email.email' => 'Email tidak boleh kosong',
+            'email.unique' => 'Email sudah ada yang menggunakan',
+            'nama.required' => 'Nama tidak boleh kosong',
+            'NIP.required' => 'NIP tidak boleh kosong',
+            'NIP.unique' => 'NIP sudah ada yang menggunakan'
+        ]);
+        Admin::where('id', $request->id)->update([
             'nama_admin' => $request->nama,
             'NIP' => $request->NIP,
             'email_admin' => $request->email,
@@ -76,7 +87,7 @@ class AdminController extends Controller
 
     public function updatepasswordadmin(Request $request)
     {
-        DB::table('admin')->where('id', $request->id)->update([
+        Admin::where('id', $request->id)->update([
             'password' => Hash::make($request->password),
             
         ]);
@@ -163,17 +174,18 @@ class AdminController extends Controller
     {
         $request->validate([
             'nama_dosen' => 'required|max:255|string',
-            'NIP' => 'required|numeric|min:6',
+            'NIP' => 'required|numeric|min:6|unique:dosen,NIP|unique:ketua_departemen,NIP|unique:admin,NIP|unique:petugas_penomoran,NIP|unique:wakildekan,NIP',
             'prodi_id' => 'required',
             'pangkat' => 'required|string',
             'jabatan' => 'required|string',
-            'email_dosen' => 'email|required|unique:dosen',
+            'email_dosen' => 'email|required|unique:dosen,email_dosen|unique:ketua_departemen,email_kadep|unique:admin,email_admin|unique:petugas_penomoran,email_petugas|unique:wakildekan,email_wd',
             'password' => 'required|min:6',
         ], [
             'email_dosen.unique' => 'Email sudah ada yang menggunakan',
             'email_dosen.email' => 'Email tidak boleh kosong',
             'nama_dosen.required' => 'Nama tidak boleh kosong',
             'NIP.required' => 'NIP tidak boleh kosong',
+            'NIP.unique' => 'NIP sudah ada yang menggunakan',
             'prodi_id.required' => 'Program Studi tidak boleh kosong',
             'pangkat.required' => 'Pangkat tidak boleh kosong',
             'jabatan.required' => 'Jabatan tidak boleh kosong',
@@ -201,20 +213,22 @@ class AdminController extends Controller
         return view('admin.editdosen', ['dosen' => $dosen, 'prd' => $prd, "title" => "Edit Profil Dosen"]);
     }
 
-    public function updatedosen(Request $request)
+    public function updatedosen(Request $request, $id)
     {
-        $request->validate([
+        $this->validate($request,[
             'nama_dosen' => 'required|max:255|string',
-            'NIP' => 'required|numeric|min:6',
+            'NIP' => "required|numeric|min:6|unique:dosen,NIP,$id|unique:ketua_departemen,NIP|unique:admin,NIP|unique:petugas_penomoran,NIP|unique:wakildekan,NIP",
             'prodi_id' => 'required',
             'pangkat' => 'required|string',
             'jabatan' => 'required|string',
-            'email_dosen' => 'email|required',
+            'email_dosen' => "email|required|unique:dosen,email_dosen,$id|unique:ketua_departemen,email_kadep|unique:admin,email_admin|unique:petugas_penomoran,email_petugas|unique:wakildekan,email_wd"
         ], 
             [
             'email_dosen.email' => 'Email tidak boleh kosong',
+            'email_dosen.unique' => 'Email sudah ada yang menggunakan',
             'nama_dosen.required' => 'Nama tidak boleh kosong',
             'NIP.required' => 'NIP tidak boleh kosong',
+            'NIP.unique' => 'NIP sudah ada yang menggunakan',
             'prodi_id.required' => 'Program Studi tidak boleh kosong',
             'pangkat.required' => 'Pangkat tidak boleh kosong',
             'jabatan.required' => 'Jabatan tidak boleh kosong',
@@ -384,15 +398,16 @@ class AdminController extends Controller
     {
         $request->validate([
             'nama_kadep' => 'required|max:255|string',
-            'NIP' => 'required|numeric|min:6',
-            'prodi_id' => 'required|unique:ketua_departemen',
-            'email_kadep' => 'email|required|unique:ketua_departemen',
+            'NIP' => 'required|numeric|min:6|unique:ketua_departemen,NIP|unique:dosen,NIP|unique:admin,NIP|unique:petugas_penomoran,NIP|unique:wakildekan,NIP',
+            'prodi_id' => 'required|unique:ketua_departemen,prodi_id',
+            'email_kadep' => 'email|required|unique:ketua_departemen,email_kadep|unique:admin,email_admin|unique:dosen,email_dosen|unique:petugas_penomoran,email_petugas|unique:wakildekan,email_wd',
             'password' => 'required|min:6',
         ], [
             'email_kadep.unique' => 'Email sudah ada yang menggunakan',
             'email_kadep.email' => 'Email tidak boleh kosong',
             'nama_kadep.required' => 'Nama tidak boleh kosong',
             'NIP.required' => 'NIP tidak boleh kosong',
+            'NIP.unique' => 'NIP sudah ada yang menggunakan',
             'prodi_id.required' => 'Pilih salah satu program studi',
             'prodi_id.unique' => 'Ketua departemen untuk Program Studi ini sudah ada',
             'password.min' => 'Password harus lebih dari 6 karakter',
@@ -419,17 +434,19 @@ class AdminController extends Controller
         return view('admin.editkadep', ['kadep' => $kadep, 'prd' => $prd, "title" => "Edit Profil Ketua Departemen"]);
     }
 
-    public function updatekadep(Request $request)
+    public function updatekadep(Request $request, $id)
     {
         $request->validate([
             'nama_kadep' => 'required|max:255|string',
-            'NIP' => 'required|numeric|min:6',
+            'NIP' => "required|numeric|min:6|unique:ketua_departemen,NIP,$id|unique:admin,NIP|unique:dosen,NIP|unique:petugas_penomoran,NIP|unique:wakildekan,NIP",
             'prodi_id' => 'required',
-            'email_kadep' => 'email|required',
+            'email_kadep' => "email|required|unique:ketua_departemen,email_kadep,$id|unique:admin,email_admin|unique:dosen,email_dosen|unique:petugas_penomoran,email_petugas|unique:wakildekan,email_wd"
         ], [
             'email_kadep.email' => 'Email tidak boleh kosong',
+            'email_kadep.unique' => 'Email sudah ada yang menggunakan',
             'nama_kadep.required' => 'Nama tidak boleh kosong',
             'NIP.required' => 'NIP tidak boleh kosong',
+            'NIP.unique' => 'NIP sudah ada yang menggunakan',
             'prodi_id.required' => 'Pilih salah satu program studi',
         ]);
         Kadep::where('id', $request->id)->update([
@@ -550,14 +567,15 @@ class AdminController extends Controller
     {
         $request->validate([
             'nama_wd' => 'required|max:255|string',
-            'NIP' => 'required|numeric|min:6',
-            'email_wd' => 'email|required|unique:wakildekan',
+            'NIP' => 'required|numeric|min:6|unique:wakildekan,NIP|unique:ketua_departemen,NIP|unique:dosen,NIP|unique:admin,NIP|unique:petugas_penomoran,NIP',
+            'email_wd' => 'email|required|unique:wakildekan,email_wd|unique:ketua_departemen,email_kadep|unique:admin,email_admin|unique:dosen,email_dosen|unique:petugas_penomoran,email_petugas',
             'password' => 'required|min:6',
         ], [
             'email_wd.unique' => 'Email sudah ada yang menggunakan',
             'email_wd.email' => 'Email tidak boleh kosong',
             'nama_wd.required' => 'Nama tidak boleh kosong',
             'NIP.required' => 'NIP tidak boleh kosong',
+            'NIP.unique' => 'NIP sudah ada yang menggunakan',
             'password.min' => 'Password harus lebih dari 6 karakter',
             'password.required' => 'Password tidak boleh kosong'
         ]);
@@ -582,12 +600,23 @@ class AdminController extends Controller
 
     public function editwd1($id)
     {
-        $wakildekan = DB::table('wakildekan')->where('id', $id)->get();
+        $wakildekan = WakilDekan::where('id', $id)->get();
         return view('admin.editwd1', ['wakildekan' => $wakildekan, "title" => "Edit Profil Wakil Dekan"]);
     }
 
-    public function updatewd1(Request $request)
+    public function updatewd1(Request $request, $id)
     {
+        $request->validate([
+            'nama' => 'required|max:255|string',
+            'NIP' => "required|numeric|min:6|unique:wakildekan,NIP,$id|unique:ketua_departemen,NIP|unique:admin,NIP|unique:dosen,NIP|unique:petugas_penomoran,NIP",
+            'email' => "email|required|unique:wakildekan,email_wd,$id|unique:ketua_departemen,email_kadep|unique:admin,email_admin|unique:dosen,email_dosen|unique:petugas_penomoran,email_petugas"
+        ], [
+            'email.email' => 'Email tidak boleh kosong',
+            'email.unique' => 'Email sudah ada yang menggunakan',
+            'nama.required' => 'Nama tidak boleh kosong',
+            'NIP.required' => 'NIP tidak boleh kosong',
+            'NIP.unique' => 'NIP sudah ada yang menggunakan'
+        ]);
         WakilDekan::where('id', $request->id)->update([
             'nama_wd' => $request->nama,
             'NIP' => $request->NIP,
@@ -717,14 +746,15 @@ class AdminController extends Controller
     {
         $request->validate([
             'nama_petugas' => 'required|max:255|string',
-            'NIP' => 'required|numeric|min:6',
-            'email_petugas' => 'email|required|unique:petugas_penomoran',
+            'NIP' => 'required|numeric|min:6|unique:petugas_penomoran,NIP|unique:ketua_departemen,NIP|unique:dosen,NIP|unique:admin,NIP|unique:wakildekan,NIP',
+            'email_petugas' => 'email|required|unique:petugas_penomoran,email_petugas|unique:ketua_departemen,email_kadep|unique:admin,email_admin|unique:dosen,email_dosen|unique:wakildekan,email_wd',
             'password' => 'required|min:6',
         ], [
             'email_petugas.unique' => 'Email sudah ada yang menggunakan',
             'email_petugas.email' => 'Email tidak boleh kosong',
             'nama_petugas.required' => 'Nama tidak boleh kosong',
             'NIP.required' => 'NIP tidak boleh kosong',
+            'NIP.unique' => 'NIP sudah ada yang menggunakan',
             'password.min' => 'Password harus lebih dari 6 karakter',
             'password.required' => 'Password tidak boleh kosong'
         ]);
@@ -742,12 +772,23 @@ class AdminController extends Controller
 
     public function editpetugas($id)
     {
-        $petugas = DB::table('petugas_penomoran')->where('id', $id)->get();
+        $petugas = Petugas::where('id', $id)->get();
         return view('admin.editpetugas', ['petugas' => $petugas, "title" => "Edit Profil Petugas Penomoran"]);
     }
 
-    public function updatepetugas(Request $request)
+    public function updatepetugas(Request $request, $id)
     {
+        $request->validate([
+            'nama' => 'required|max:255|string',
+            'NIP' => "required|numeric|min:6|unique:petugas_penomoran,NIP,$id|unique:wakildekan,NIP|unique:ketua_departemen,NIP|unique:admin,NIP|unique:dosen,NIP",
+            'email' => "email|required|unique:petugas_penomoran,email_petugas,$id|unique:wakildekan,email_wd|unique:ketua_departemen,email_kadep|unique:admin,email_admin|unique:dosen,email_dosen"
+        ], [
+            'email.email' => 'Email tidak boleh kosong',
+            'email.unique' => 'Email sudah ada yang menggunakan',
+            'nama.required' => 'Nama tidak boleh kosong',
+            'NIP.required' => 'NIP tidak boleh kosong',
+            'NIP.unique' => 'NIP sudah ada yang menggunakan'
+        ]);
         Petugas::where('id', $request->id)->update([
             'nama_petugas' => $request->nama,
             'NIP' => $request->NIP,
