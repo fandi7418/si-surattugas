@@ -11,7 +11,7 @@
                     <label for="colFormLabel" class="col-sm-2 col-form-label">Nama</label>
                     <div class="col-sm-8">
                         <input type="text"
-                            onkeypress="return event.charCode >= 48 && event.charCode <=57" value="{{ old('nama_dosen', $dsn->nama_dosen) }}" name="nama_dosen"
+                            value="{{ old('nama_dosen', $dsn->nama_dosen) }}" name="nama_dosen"
                             class="form-control @error('nama_dosen') is-invalid @enderror" id="colFormLabel" placeholder="Silahkan Masukkan nama Anda">
                                 @error('nama_dosen')
                                     <div class="invalid-feedback">
