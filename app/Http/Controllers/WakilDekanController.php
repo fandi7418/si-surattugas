@@ -67,7 +67,8 @@ class WakilDekanController extends Controller
         $validation = $request->validate([
             'ttd_wd' => 'required',
         ], [
-            'ttd_wd.required' => 'Anda tidak bisa menyetujui surat. Tanda tangan belum ditambahkan',
+            'ttd_wd.required' => 'Anda tidak bisa menyetujui surat.
+                                Silahkan upload tanda tangan di halaman Edit Profil.',
         ]);
     }
 
