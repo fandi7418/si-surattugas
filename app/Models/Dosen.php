@@ -22,6 +22,7 @@ class Dosen extends Authenticatable
         'pangkat',
         'jabatan',
         'prodi_id',
+        'roles_id',
     ];
 
     protected $hidden = [
@@ -42,5 +43,10 @@ class Dosen extends Authenticatable
     {
     //Setiap dosen hanya memiliki satu prodi
     return $this->belongsTo(Prodi::class);
+    }
+    public function roles()
+    {
+    //Setiap dosen hanya memiliki satu prodi
+    return $this->belongsTo(Roles::class);
     }
 }

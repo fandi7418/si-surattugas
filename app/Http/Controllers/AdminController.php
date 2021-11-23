@@ -10,6 +10,7 @@ use App\Models\Prodi;
 use App\Models\Surat;
 use App\Models\StatusSurat;
 use App\Models\WakilDekan;
+use App\Models\Roles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -103,7 +104,8 @@ class AdminController extends Controller
         //     "title" => "Tambah Dosen"
         // // ]); 
         // $prd = Prodi::all();
-        $prd = Kadep::with('prodi')->get();
+        // $prd = Prodi::with('prodi')->get();
+        $prd = Prodi::all();
         return view('admin.tambahdosen', ['prd' => $prd, "title" => "Tambah Dosen"]);
     }   
     public function datadosen(Request $request)
@@ -112,9 +114,8 @@ class AdminController extends Controller
         // $dosen = Dosen::with('prodi')->orderBy('created_at', 'DESC')
         // ->paginate(10);
         // return view('admin.datadosen', ['dosen' => $dosen, 'prodi' => $prodi, "title" => "Data Dosen"]); 
-        $prodi = Prodi::all();
         if ($request->ajax()){
-            $dosen = Dosen::with('prodi')
+            $dosen = Dosen::with('prodi','roles')
             ->get();
             return datatables()->of($dosen)->addColumn('action', function($data){
                 $url_edit = url('edit_dosen/'.$data->id);
@@ -128,7 +129,7 @@ class AdminController extends Controller
                         ->addIndexColumn()
                         ->make(true);
     }
-    return view('admin.datadosen', ['prodi' => $prodi, "title" => "Data Dosen"]);
+    return view('admin.datadosen', ["title" => "Data Dosen"]);
 }
     public function datadosensementara (Request $request)
     {
@@ -199,6 +200,7 @@ class AdminController extends Controller
             'jabatan' => $request->jabatan,
             'prodi_id' => $request->prodi_id,
             'email_dosen' => $request->email_dosen,
+            'roles_id' => '1',
             'password' => Hash::make($request->password),
             
         ]);
@@ -349,14 +351,11 @@ class AdminController extends Controller
 
     public function datakadep(Request $request)
     {
-        $kadep = Kadep::with('Prodi') -> get();
+        $kadep = Dosen::with('prodi') -> where('roles_id', '=', '2')->get();
         if ($request->ajax()){
             return datatables()->of($kadep)->addColumn('action', function($data){
-                $url_edit = url('edit_kadep/'.$data->id);
                 $url_hapus = url('hapus_kadep/'.$data->id.'/konfirmasi');
-                $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Delete</a>';     
+                $button = '<a href="'.$url_hapus.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-danger btn-sm edit-post"><i class="far fa-danger"></i>Hapus</a>';  
                 return $button;
             })
             ->rawColumns(['action'])
@@ -389,40 +388,58 @@ class AdminController extends Controller
     {
         // return view('admin.tambahkadep', [
         //     "title" => "Tambah Ketua Departemen"
-        // ]);
-        $prd = Prodi::all();
+        // // ]);
+        $prd = Prodi::where([
+            'prodi.status' => '1',
+        ])->get();
         return view('admin.tambahkadep', ['prd' => $prd, "title" => "Tambah Ketua Departemen"]);
+    }
+    public function listNamaDosen($prodi_id)
+    {
+        $dosen = Dosen::where([
+            'prodi_id' => $prodi_id,
+            'roles_id' => '1',
+            ])
+            ->get();
+        return response()->json([
+            'dosen' => $dosen,
+        ]);
     }
 
     public function tambahkadep(Request $request)
     {
         $request->validate([
-            'nama_kadep' => 'required|max:255|string',
-            'NIP' => 'required|numeric|min:6|unique:ketua_departemen,NIP|unique:dosen,NIP|unique:admin,NIP|unique:petugas_penomoran,NIP|unique:wakildekan,NIP',
-            'prodi_id' => 'required|unique:ketua_departemen,prodi_id',
-            'email_kadep' => 'email|required|unique:ketua_departemen,email_kadep|unique:admin,email_admin|unique:dosen,email_dosen|unique:petugas_penomoran,email_petugas|unique:wakildekan,email_wd',
-            'password' => 'required|min:6',
+            'nama_kadep' => 'required',
+            // 'NIP' => 'required|numeric|min:6|unique:ketua_departemen,NIP|unique:dosen,NIP|unique:admin,NIP|unique:petugas_penomoran,NIP|unique:wakildekan,NIP',
+            'prodi' => 'required',
+            // 'email_kadep' => 'email|required|unique:ketua_departemen,email_kadep|unique:admin,email_admin|unique:dosen,email_dosen|unique:petugas_penomoran,email_petugas|unique:wakildekan,email_wd',
+            // 'password' => 'required|min:6',
         ], [
-            'email_kadep.unique' => 'Email sudah ada yang menggunakan',
-            'email_kadep.email' => 'Email tidak boleh kosong',
+            // 'email_kadep.unique' => 'Email sudah ada yang menggunakan',
+            // 'email_kadep.email' => 'Email tidak boleh kosong',
             'nama_kadep.required' => 'Nama tidak boleh kosong',
-            'NIP.required' => 'NIP tidak boleh kosong',
-            'NIP.unique' => 'NIP sudah ada yang menggunakan',
-            'prodi_id.required' => 'Pilih salah satu program studi',
-            'prodi_id.unique' => 'Ketua departemen untuk Program Studi ini sudah ada',
-            'password.min' => 'Password harus lebih dari 6 karakter',
-            'password.required' => 'Password tidak boleh kosong'
+            // 'NIP.required' => 'NIP tidak boleh kosong',
+            // 'NIP.unique' => 'NIP sudah ada yang menggunakan',
+            'prodi.required' => 'Pilih salah satu program studi',
+            // 'prodi_id.unique' => 'Ketua departemen untuk Program Studi ini sudah ada',
+            // 'password.min' => 'Password harus lebih dari 6 karakter',
+            // 'password.required' => 'Password tidak boleh kosong'
         ]);
 
-        Kadep::create([
-            'nama_kadep' => $request->nama_kadep,
-            'NIP' => $request->NIP,
-            'prodi_id' => $request->prodi_id,
-            'email_kadep' => $request->email_kadep,
-            'password' => Hash::make($request->password),
-
+        Dosen::with('prodi')->where('id', '=', $request->nama_kadep)->update([
+            'roles_id' => '2',
+            // 'NIP' => $request->NIP,
+            // 'prodi_id' => $request->prodi_id,
+            // 'email_kadep' => $request->email_kadep,
+            // 'password' => Hash::make($request->password),
             
         ]);
+        Prodi::where('id', '=', $request->prodi)->update([
+            'status' => '2',
+        ]);
+        // Dosen::where('prodi_id', '=', $request->prodi)->update([
+        //     'statusKadep' => ''
+        // ])
         Alert::success('Sukses', 'Data Berhasil Ditambah');
         return redirect('data_kadep');
     }
@@ -459,7 +476,7 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function konfirmasikadep($id)
+    public function konfirmasiKadep($id)
     {
         alert()->question('Peringatan','Anda yakin akan menghapus? ')
         ->showConfirmButton('<a href="/hapus_kadep/'.$id.'/hapuskadep" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
@@ -516,9 +533,11 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function hapuskadep($id)
+    public function hapusKadep($id)
     {
-        Kadep::where('id', $id)->delete();
+        Dosen::where('id', $id)->update([
+            'roles_id' => '1',
+        ]);
         Alert::success('Sukses', 'Data Berhasil Dihapus');
         return redirect('/data_kadep');
     }
@@ -554,7 +573,7 @@ class AdminController extends Controller
 
         public function datawd1(Request $request)
     {
-        $wd = WakilDekan::all();
+        $wd = Dosen::where('roles_id', '=', '3')->get();
         return view('admin.datawd1', ['wd' => $wd, "title" => "Data Wakil Dekan"]);
     }
         public function datawd1sementara(Request $request)
@@ -565,30 +584,41 @@ class AdminController extends Controller
 
     public function tambahwd1(Request $request)
     {
-        $request->validate([
-            'nama_wd' => 'required|max:255|string',
-            'NIP' => 'required|numeric|min:6|unique:wakildekan,NIP|unique:ketua_departemen,NIP|unique:dosen,NIP|unique:admin,NIP|unique:petugas_penomoran,NIP',
-            'email_wd' => 'email|required|unique:wakildekan,email_wd|unique:ketua_departemen,email_kadep|unique:admin,email_admin|unique:dosen,email_dosen|unique:petugas_penomoran,email_petugas',
-            'password' => 'required|min:6',
-        ], [
-            'email_wd.unique' => 'Email sudah ada yang menggunakan',
-            'email_wd.email' => 'Email tidak boleh kosong',
-            'nama_wd.required' => 'Nama tidak boleh kosong',
-            'NIP.required' => 'NIP tidak boleh kosong',
-            'NIP.unique' => 'NIP sudah ada yang menggunakan',
-            'password.min' => 'Password harus lebih dari 6 karakter',
-            'password.required' => 'Password tidak boleh kosong'
-        ]);
-        WakilDekan::create([
-            'nama_wd' => $request->nama_wd,
-            'NIP' => $request->NIP,
-            'email_wd' => $request->email_wd,
-            'password' => Hash::make($request->password),
+        // $request->validate([
+        //     'nama_wd' => 'required|max:255|string',
+        //     'NIP' => 'required|numeric|min:6|unique:wakildekan,NIP|unique:ketua_departemen,NIP|unique:dosen,NIP|unique:admin,NIP|unique:petugas_penomoran,NIP',
+        //     'email_wd' => 'email|required|unique:wakildekan,email_wd|unique:ketua_departemen,email_kadep|unique:admin,email_admin|unique:dosen,email_dosen|unique:petugas_penomoran,email_petugas',
+        //     'password' => 'required|min:6',
+        // ], [
+        //     'email_wd.unique' => 'Email sudah ada yang menggunakan',
+        //     'email_wd.email' => 'Email tidak boleh kosong',
+        //     'nama_wd.required' => 'Nama tidak boleh kosong',
+        //     'NIP.required' => 'NIP tidak boleh kosong',
+        //     'NIP.unique' => 'NIP sudah ada yang menggunakan',
+        //     'password.min' => 'Password harus lebih dari 6 karakter',
+        //     'password.required' => 'Password tidak boleh kosong'
+        // ]);
+        // WakilDekan::create([
+        //     'nama_wd' => $request->nama_wd,
+        //     'NIP' => $request->NIP,
+        //     'email_wd' => $request->email_wd,
+        //     'password' => Hash::make($request->password),
+        // ]);
 
-            
-        ]);
-        Alert::success('Sukses', 'Data Berhasil Ditambah');
-        return redirect('data_wakildekan');
+        // Alert::success('Sukses', 'Data Berhasil Ditambah');
+        // return redirect('data_wakildekan');
+        $wd = Dosen::with('prodi') -> where('roles_id', '=', '1')->get();
+        if ($request->ajax()){
+            return datatables()->of($wd)->addColumn('action', function($data){
+                $url_edit = url('pilihWD/'.$data->id.'/konfirmasi');
+                $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i>Pilih</a>';  
+                return $button;
+            })
+            ->rawColumns(['action'])
+                        ->addIndexColumn()
+                        ->make(true);
+        }
+        return view('admin.tambahwd1', [ 'wd' => $wd, "title" => "Tambah Wakil Dekan"]);
     }
 
     public function indexwd1()
@@ -629,17 +659,19 @@ class AdminController extends Controller
 
     public function konfirmasiwd1($id)
     {
-        alert()->question('Peringatan','Anda yakin akan menghapus? ')
-        ->showConfirmButton('<a href="/hapus_wakildekan/'.$id.'/hapuswd1" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
+        alert()->question('Peringatan','Pilih menjadi Wakil Dekan? ')
+        ->showConfirmButton('<a href="pilih_wakildekan/'.$id.'/pilihWD" class="text-white" style="text-decoration: none">Pilih</a>', '#3085d6')->toHtml()
         ->showCancelButton('Batal', '#aaa')->reverseButtons();
 
-        return redirect('/data_wakildekan');
+        return redirect()->back();
     }
 
-    public function hapuswd1($id)
+    public function pilihWD($id)
     {
-        WakilDekan::where('id', $id)->delete();
-        Alert::success('Sukses', 'Data Berhasil Dihapus');
+        Dosen::where('id', $id)->update([
+            'roles_id' => '3'
+        ]);
+        Alert::success('Sukses', 'Data Berhasil Ditambahkan');
         return redirect('/data_wakildekan');
     }
 
@@ -678,19 +710,20 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function konfirmasiwd1permanen($id)
+    public function konfirmasiWD($id)
     {
         alert()->question('Peringatan','Anda yakin akan Menghapus Akun? ')
-        ->showConfirmButton('<a href="/hapus_wakildekan/'.$id.'/hapuswakildekanpermanen" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
+        ->showConfirmButton('<a href="/hapus_wakildekan/'.$id.'/hapuswakildekan" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
         ->showCancelButton('Batal', '#aaa')->reverseButtons();
 
         return redirect()->back();
     }
 
-    public function hapuswd1permanen($id)
+    public function hapusWD($id)
     {
-        $wakildekan = WakilDekan::onlyTrashed()->where('id',$id);
-        $wakildekan->forceDelete();
+        $wakildekan = Dosen::where('id',$id)->update([
+            'roles_id' => '1'
+        ]);
         Alert::success('Sukses', 'Data Berhasil Dihapus');
         return redirect()->back();
     }

@@ -9,10 +9,9 @@
     <div class="card-body">
         @if (count($wd)==0)
         <a href="/tambah_wakildekan" class="btn btn-success btn-sm">Tambah Wakil Dekan</a>
+        <br>
+        <br>
         @endif
-        <a href="/data_wakildekan/trash" class="btn btn-danger btn-sm">Sampah</a>
-        <br>
-        <br>
         <table class="table table-striped table-bordered table-sm" style="width:100%" id="datawd">
             <thead>
                     <tr>
@@ -25,13 +24,11 @@
                 <tbody>
                     @foreach($wd as $wakil)
                     <tr>
-                        <td>{{$wakil->nama_wd}}</td>
+                        <td>{{$wakil->nama_dosen}}</td>
                         <td>{{$wakil->NIP}}</td>
-                        <td>{{ $wakil->email_wd }}</td>
+                        <td>{{ $wakil->email_dosen }}</td>
                         <td>
-                        <a href="/edit_wakildekan/{{ $wakil->id }}" class="btn btn-info btn-sm">Edit</a>
                         <a href="/hapus_wakildekan/{{ $wakil->id }}/konfirmasi" class="btn btn-danger btn-sm">Hapus</a>
-
                         </td>
                     </tr>
                     @endforeach

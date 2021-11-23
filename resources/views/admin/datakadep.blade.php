@@ -8,7 +8,7 @@
   </div>
   <div class="card-body">
     <a href="/tambah_kadep" class="btn btn-success btn-sm">Tambah Kadep</a>
-    <a href="/data_kadep/trash" class="btn btn-danger btn-sm">Sampah</a>
+    {{-- <a href="/data_kadep/trash" class="btn btn-danger btn-sm">Sampah</a> --}}
     <br><br>
     <table class="table table-striped table-bordered table-sm" id="datakadep" style="width: 100%">
       <thead>
@@ -49,7 +49,7 @@
                         type: 'GET'
                       },
                       columns:[
-                        {data:'nama_kadep', name:'nama_kadep'},
+                        {data:'nama_dosen', name:'nama_dosen'},
                         {data:'NIP', name:'NIP'},
                         {data:'prodi.prodi', name:'prodi.prodi'},
                         {

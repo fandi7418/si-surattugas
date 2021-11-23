@@ -2,8 +2,69 @@
 
 @section('container')
 
-<h1 class="">Tambah Wakil Dekan</h1>
-<form style="margin-right: 10px" method="POST" action="/tambah_wakildekan">
+<br>
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">Tambah Wakil Dekan</h2>
+  </div>
+  <div class="card-body">
+    <br>
+    <p>Silahkan pilih dosen untuk dijadikan Wakil Dekan</p>
+    <table class="table table-striped table-bordered table-sm" id="datawd" style="width: 100%">
+      <thead>
+        <tr>
+          <th scope="col">Nama Dosen</th>
+          <th scope="col">NIP</th>
+          <th scope="col">Program Studi</th>
+          <th scope="col">Aksi</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</div>
+          {{-- <tbody>
+            @foreach($kadep as $kdp)
+            <tr>
+              <td>{{ $kdp->nama_kadep }}</td>
+              <td>{{ $kdp->NIP }}</td>
+              <td>{{ $kdp->prodi->prodi }}</td>
+              <td>  <a href="/edit_kadep/{{ $kdp->id }}" class="btn btn-primary btn-sm">Edit</a>
+                    <a href="/hapus_kadep/{{ $kdp->id }}/konfirmasi" class="btn btn-danger btn-sm">Hapus</a>
+              </td>
+            </tr>
+            @endforeach
+          </tbody> --}}
+        
+        
+@endsection
+
+@push('scripts')
+        <script>
+              $(document).ready(function() {
+                  $('#datawd').DataTable({
+                      processing : true,
+                      serverside : true,
+                      ajax : {
+                        url: "{{ route('tambah wd') }}",
+                        type: 'GET'
+                      },
+                      columns:[
+                        {data:'nama_dosen', name:'nama_dosen'},
+                        {data:'NIP', name:'NIP'},
+                        {data:'prodi.prodi', name:'prodi.prodi'},
+                        {
+                            data: 'action', 
+                            name: 'action', 
+                            orderable: false, 
+                            searchable: false
+                        },
+                      ],
+                      order: [[0,'asc']]
+                  });
+              } );
+          </script>
+      @endpush
+{{-- <form style="margin-right: 10px" method="POST" action="/tambah_wakildekan">
     @csrf
     <div class="form-group row mt-4">
         <label for="colFormLabel" class="col-sm-2 col-form-label">Nama</label>
@@ -64,18 +125,4 @@
             <button type="submit" class="btn btn-primary">Simpan</button>
         </div>
     </div>
-    </div>
-</form>
-<script>
-    function myFunction() {
-        var x = document.getElementById("inputPassword");
-        if (x.type === "password") {
-            x.type = "text";
-        } else {
-            x.type = "password";
-        }
-    }
-</script>
-
-
-@endsection
+    </div> --}}

@@ -24,6 +24,7 @@ class DosenSeeder extends Seeder
             'pangkat' => 'III/C',
             'jabatan' => 'Lektor',
             'prodi_id' => '12',
+            'roles_id' => '1',
             'remember_token' => Str::random(60),
         ]);
     }

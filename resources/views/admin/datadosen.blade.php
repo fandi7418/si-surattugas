@@ -30,6 +30,7 @@
                     <th scope="col">Nama Dosen</th>
                     <th scope="col">NIP</th>
                     <th scope="col">Program Studi</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Aksi</th>
                 </tr>
 
@@ -62,6 +63,9 @@
                     data: 'prodi.prodi',
                     name: 'prodi.prodi'
                 },
+                {
+                    data:'roles.peran', 
+                    name:'roles.peran'},
                 {
                     data: 'action',
                     name: 'action',

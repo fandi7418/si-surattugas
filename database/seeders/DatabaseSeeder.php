@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(WakilDekanSeeder::class);
         $this->call(SuratSeeder::class);
         $this->call(StatusSuratSeeder::class);
+        $this->call(RolesSeeder::class);
     }
 }

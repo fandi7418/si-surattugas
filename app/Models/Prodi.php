@@ -13,6 +13,7 @@ class Prodi extends Model
     protected $fillable = [
         'id',
         'prodi',
+        'status',
     ];
 
     public function dosen()
