@@ -1,7 +1,7 @@
 @extends('kadep.main')
 @section('kadep')
 <title>Dashboard</title>
-@if ( Str::length(Auth::guard('ketua_departemen')->user()) >0 )
-        <h1 class="h2">Selamat Datang, {{ Auth::guard('ketua_departemen')->user()->nama_kadep }} !</h1>
+@if ( Str::length(Auth::guard('dosen')->user()) >0 )
+        <h1 class="h2">Selamat Datang, {{ Auth::guard('dosen')->user()->nama_dosen }} !</h1>
 @endif
 @endsection

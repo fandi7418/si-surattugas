@@ -263,30 +263,11 @@ Route::group(['middleware' => ['auth:dosen']], function()
     Route::get('/editsurat/{id}', [SuratController::class, 'editsurat'])->name('editsurat');
     
     Route::post('/updatesurat/{id}', [SuratController::class, 'updatesurat'])->name('updatesurat');
-    
-});
-Route::get('/surat/{surat}', [SuratController::class, 'show']);
-
-// Route::get('/suratpdf', [SuratController::class, 'show']);
 
 
-// Route::get('/suratpdf', [SuratController::class, 'tampilpdf']);
+    // =====================================================================================================
+    // Hak akses kadep
 
-
-/* Route kadep */
-Route::group(['middleware' => ['auth:ketua_departemen']], function()
-{
-    
-
-    // Route::get('/dashboardkadep', [KadepController::class, 'notifkadep']);
-
-    /* Route::get('/daftarsuratkadep', function () {
-        return view('/kadep/daftarsuratkadep');
-    }); */
-
-    /* Route::get('/profilkadep', function () {
-        return view('/kadep/profilkadep');
-    }); */
     Route::get('/notifKadep', [KadepController::class, 'notifKadep'])->name('notifKadep');
 
     Route::get('/profilkadep', [KadepController::class, 'profilKadep']);
@@ -311,7 +292,86 @@ Route::group(['middleware' => ['auth:ketua_departemen']], function()
 
     Route::post('/uploadTTDkadep', [KadepController::class, 'tandatangan']);
 
+
+    // =====================================================================================================
+    // Hak akses wakil dekan
+    Route::get('/daftarsuratwd', function () {
+        return view('/wd/daftarsuratwd');
+    });
+    
+    // Route::get('/profilwd', function () {
+    //     return view('/wd/profilwd');
+    // });
+    Route::get('/notifWD', [WakilDekanController::class, 'notifWD'])->name('notifWD');
+
+    Route::get('/dashboardwd', [WakilDekanController::class, 'dashboardwd']);
+
+    Route::get('/profilwd', [WakilDekanController::class, 'profilwd']);
+
+    Route::get('/daftarsuratwd', [WakilDekanController::class, 'daftarsurat']);
+
+    Route::post('/updateprofilwd/{id}', [WakilDekanController::class, 'updateprofilwd']);
+
+    Route::post('/editpasswordwd', [WakilDekanController::class, 'editpasswordwd']);
+
+    Route::post('/uploadTTD', [WakilDekanController::class, 'tandatangan']);
+
+    Route::get('/confirmIzinWD/{id}', [KadepController::class, 'confirmIzin'])->name('confirmIzinWD');
+
+    Route::post('/izinkan/{id}', [WakilDekanController::class, 'izinkan']);
+
+    Route::get('/confirmTolakWD/{id}', [KadepController::class, 'confirmTolak'])->name('confirmTolakWD');
+
+    Route::post('/tolakWD/{id}', [WakilDekanController::class, 'tolak'])->name('tolakWD');
+    
 });
+Route::get('/surat/{surat}', [SuratController::class, 'show']);
+
+// Route::get('/suratpdf', [SuratController::class, 'show']);
+
+
+// Route::get('/suratpdf', [SuratController::class, 'tampilpdf']);
+
+
+/* Route kadep */
+// Route::group(['middleware' => ['auth:ketua_departemen']], function()
+// {
+    
+
+//     // Route::get('/dashboardkadep', [KadepController::class, 'notifkadep']);
+
+//     /* Route::get('/daftarsuratkadep', function () {
+//         return view('/kadep/daftarsuratkadep');
+//     }); */
+
+//     /* Route::get('/profilkadep', function () {
+//         return view('/kadep/profilkadep');
+//     }); */
+//     Route::get('/notifKadep', [KadepController::class, 'notifKadep'])->name('notifKadep');
+
+//     Route::get('/profilkadep', [KadepController::class, 'profilKadep']);
+
+//     Route::get('/dashboardkadep', [KadepController::class, 'dashboardkadep']);
+
+//     // Route::get('/dashboardkadep', [KadepController::class, 'jumlahnotifkadep']);
+
+//     Route::get('/daftarsuratkadep', [KadepController::class, 'daftarsurat']);
+
+//     Route::post('/updateprofilkadep/{id}', [KadepController::class, 'updateprofilkadep']);
+
+//     Route::post('/editpasswordkadep', [KadepController::class, 'editpasswordkadep']);
+
+//     Route::post('/izinkankadep/{id}', [KadepController::class, 'izinkan'])->name('izinkankadep');
+
+//     Route::get('/confirmIzin/{id}', [KadepController::class, 'confirmIzin'])->name('confirmIzin');
+
+//     Route::get('/confirmTolak/{id}', [KadepController::class, 'confirmTolak'])->name('confirmTolak');
+
+//     Route::post('/kadeptolak/{id}', [KadepController::class, 'tolak'])->name('kadeptolak');
+
+//     Route::post('/uploadTTDkadep', [KadepController::class, 'tandatangan']);
+
+// });
 
 
 /* Route petugas */
@@ -346,44 +406,44 @@ Route::group(['middleware' => ['auth:petugas_penomoran']], function()
 
 
 /* Route wakil dekan */
-Route::group(['middleware' => ['auth:wakildekan']], function()
-{
+// Route::group(['middleware' => ['auth:wakildekan']], function()
+// {
     
-    // Route::get('/dashboardwd', function () {
-    //     return view('/wd/dashboardwd');
-    // });
+//     // Route::get('/dashboardwd', function () {
+//     //     return view('/wd/dashboardwd');
+//     // });
     
-    Route::get('/daftarsuratwd', function () {
-        return view('/wd/daftarsuratwd');
-    });
+//     Route::get('/daftarsuratwd', function () {
+//         return view('/wd/daftarsuratwd');
+//     });
     
-    // Route::get('/profilwd', function () {
-    //     return view('/wd/profilwd');
-    // });
-    Route::get('/notifWD', [WakilDekanController::class, 'notifWD'])->name('notifWD');
+//     // Route::get('/profilwd', function () {
+//     //     return view('/wd/profilwd');
+//     // });
+//     Route::get('/notifWD', [WakilDekanController::class, 'notifWD'])->name('notifWD');
 
-    Route::get('/dashboardwd', [WakilDekanController::class, 'dashboardwd']);
+//     Route::get('/dashboardwd', [WakilDekanController::class, 'dashboardwd']);
 
-    Route::get('/profilwd', [WakilDekanController::class, 'profilwd']);
+//     Route::get('/profilwd', [WakilDekanController::class, 'profilwd']);
 
-    Route::get('/daftarsuratwd', [WakilDekanController::class, 'daftarsurat']);
+//     Route::get('/daftarsuratwd', [WakilDekanController::class, 'daftarsurat']);
 
-    Route::post('/updateprofilwd/{id}', [WakilDekanController::class, 'updateprofilwd']);
+//     Route::post('/updateprofilwd/{id}', [WakilDekanController::class, 'updateprofilwd']);
 
-    Route::post('/editpasswordwd', [WakilDekanController::class, 'editpasswordwd']);
+//     Route::post('/editpasswordwd', [WakilDekanController::class, 'editpasswordwd']);
 
-    Route::post('/uploadTTD', [WakilDekanController::class, 'tandatangan']);
+//     Route::post('/uploadTTD', [WakilDekanController::class, 'tandatangan']);
 
-    Route::get('/confirmIzinWD/{id}', [KadepController::class, 'confirmIzin'])->name('confirmIzinWD');
+//     Route::get('/confirmIzinWD/{id}', [KadepController::class, 'confirmIzin'])->name('confirmIzinWD');
 
-    Route::post('/izinkan/{id}', [WakilDekanController::class, 'izinkan']);
+//     Route::post('/izinkan/{id}', [WakilDekanController::class, 'izinkan']);
 
-    Route::get('/confirmTolakWD/{id}', [KadepController::class, 'confirmTolak'])->name('confirmTolakWD');
+//     Route::get('/confirmTolakWD/{id}', [KadepController::class, 'confirmTolak'])->name('confirmTolakWD');
 
-    Route::post('/tolakWD/{id}', [WakilDekanController::class, 'tolak'])->name('tolakWD');
+//     Route::post('/tolakWD/{id}', [WakilDekanController::class, 'tolak'])->name('tolakWD');
 
 
-});
+// });
 
 
 

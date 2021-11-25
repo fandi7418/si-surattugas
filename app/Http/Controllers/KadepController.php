@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Kadep;
 use App\Models\Surat;
 use App\Models\Prodi;
+use App\Models\Dosen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -24,40 +25,67 @@ class KadepController extends Controller
         ])
         ->orderBy('updated_at', 'DESC')
         ->get();
+        $dosen = Surat::with('status')
+        ->where([
+            'surat.NIP' => Auth::user()->NIP,
+            'surat.nama_dosen' => Auth::user()->nama_dosen,
+            'surat.notif' => '1',
+        ])
+        ->orderBy('updated_at', 'DESC')
+        ->get();
         return response()->json([
             'surat' => $surat,
+            'dosen' => $dosen,
         ]);
     }
     
     public function dashboardkadep(Request $request)
     {
-        return view('kadep.dashboardkadep');
+        if(Auth::guard('dosen')->user()->roles_id == '2')
+        {
+            return view('kadep.dashboardkadep');
+        } else {
+            return redirect()->back();
+        }
+        
     }
 
     public function profilKadep(Request $request)
     {
-        $prodi = Prodi::all();
-        $kadep = Kadep::with('prodi')
-        ->where([
-            'ketua_departemen.id' => Auth::user()->id,
-            ])
-        ->get();
-        return view('kadep.profilkadep', [
-            'prodi' => $prodi,
-            'kadep' => $kadep
-        ]);
+        if(Auth::guard('dosen')->user()->roles_id == '2')
+        {
+            $prodi = Prodi::all();
+            $kadep = Dosen::with('prodi')
+            ->where([
+                'dosen.id' => Auth::user()->id,
+                ])
+            ->get();
+            return view('kadep.profilkadep', [
+                'prodi' => $prodi,
+                'kadep' => $kadep
+            ]);
+        } else {
+            return redirect()->back();
+        }
+        
     }
 
     public function daftarsurat(Request $request)
     {
-        $surat = Surat::with('status')
-        ->where([
-            'surat.prodi_id' => Auth::user()->prodi_id,
-            'surat.status_id' => '1',
-            ])
-        ->orderBy('updated_at', 'DESC')
-        ->get();
-        return view('kadep.daftarsuratkadep', ['surat' => $surat]);
+        if(Auth::guard('dosen')->user()->roles_id == '2')
+        {
+            $surat = Surat::with('status')
+            ->where([
+                'surat.prodi_id' => Auth::user()->prodi_id,
+                'surat.status_id' => '1',
+                ])
+            ->orderBy('updated_at', 'DESC')
+            ->get();
+            return view('kadep.daftarsuratkadep', ['surat' => $surat]);
+        } else {
+            return redirect()->back();
+        }
+        
     }
 
     public function confirmIzin(Request $request, $id)
@@ -133,7 +161,7 @@ class KadepController extends Controller
         $imgName = $request->ttd->getClientOriginalName() . '-' . time() . '.' . $request->ttd->extension();
         $request->ttd->move(public_path('image'), $imgName);
 
-        Kadep::where(['ketua_departemen.id' => Auth::user()->id])->update([
+        Dosen::where(['dosen.id' => Auth::user()->id])->update([
             'ttd_kadep' => $imgName,
         ]);
         toast('Berhasil', 'success')->autoClose(2000);
@@ -143,23 +171,23 @@ class KadepController extends Controller
     public function updateprofilkadep(Request $request, $id)
     {
         $this->validate($request,[
-            'nama' => 'required|max:255|string',
-            'NIP' => "required|numeric|min:6|unique:ketua_departemen,NIP,$id|unique:dosen,NIP|unique:petugas_penomoran,NIP|unique:wakildekan,NIP|unique:admin,NIP",
-            'email_kadep' => "email|required|unique:ketua_departemen,email_kadep,$id|unique:dosen,email_dosen|unique:petugas_penomoran,email_petugas|unique:wakildekan,email_wd|unique:admin,email_admin",
+            'nama_dosen' => 'required|max:255|string',
+            'NIP' => "required|numeric|min:6|unique:dosen,NIP,$id|unique:petugas_penomoran,NIPunique:admin,NIP",
+            'email_dosen' => "email|required|unique:dosen,email_dosen,$id|unique:petugas_penomoran,email_petugas|unique:admin,email_admin",
         ], 
             [
-            'email_kadep.email' => 'E-mail tidak boleh kosong',
-            'email_kadep.unique' => 'E-mail sudah ada yang menggunakan',
-            'nama.required' => 'Nama tidak boleh kosong',
+            'email_dosen.email' => 'E-mail tidak boleh kosong',
+            'email_dosen.unique' => 'E-mail sudah ada yang menggunakan',
+            'nama_dosen.required' => 'Nama tidak boleh kosong',
             'NIP.required' => 'NIP tidak boleh kosong',
             'NIP.unique' => 'NIP sudah ada yang menggunakan',
 
         ]);
         
-        Kadep::with('prodi')->where('id', $request->id)->update([
-            'nama_kadep' => $request->nama,
+        Dosen::with('prodi')->where('id', $request->id)->update([
+            'nama_dosen' => $request->nama_dosen,
             'NIP' => $request->NIP,
-            'email_kadep' => $request->email_kadep,
+            'email_dosen' => $request->email_dosen,
         ]);
         toast('Berhasil', 'success')->autoClose(2000);
         return redirect()->back();
@@ -167,11 +195,11 @@ class KadepController extends Controller
 
     public function editpasswordkadep(Request $request)
     {
-        Kadep::where('id', '=', Auth::user()->id)->update([
+        Dosen::where('id', '=', Auth::user()->id)->update([
             'password' => Hash::make($request->password),
             
         ]);
         toast('Berhasil', 'success')->autoClose(2000);
-        return redirect('/profilkadep');
+        return redirect()->back();
     }
 }

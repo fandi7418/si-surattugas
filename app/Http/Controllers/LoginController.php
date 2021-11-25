@@ -15,14 +15,14 @@ class LoginController extends Controller
     {
         if(Auth::guard('dosen')->check()){
             return redirect('/dashboarddosen');
-        } else if (Auth::guard('ketua_departemen')->check()){
-            return redirect('/dashboardkadep');
+        // } else if (Auth::guard('ketua_departemen')->check()){
+        //     return redirect('/dashboardkadep');
+        // } else if (Auth::guard('wakildekan')->check()){
+        //     return redirect('/dashboardwd');
         } else if (Auth::guard('petugas_penomoran')->check()){
             return redirect('/dashboardpetugas');
         } else if (Auth::guard('admin')->check()){
             return redirect('/dashboard_admin');
-        } else if (Auth::guard('wakildekan')->check()){
-            return redirect('/dashboardwd');
         } else {
             return view('login');
         }
@@ -34,14 +34,14 @@ class LoginController extends Controller
 
         if(Auth::guard('dosen')->attempt(['email_dosen' => $request->email, 'password' => $request->password])) {
             return redirect('/dashboarddosen');
-        } else if (Auth::guard('ketua_departemen')->attempt(['email_kadep' => $request->email, 'password' => $request->password])) {
-            return redirect('/dashboardkadep');
+        // } else if (Auth::guard('ketua_departemen')->attempt(['email_kadep' => $request->email, 'password' => $request->password])) {
+        //     return redirect('/dashboardkadep');
+        // } else if (Auth::guard('wakildekan')->attempt(['email_wd' => $request->email, 'password' => $request->password])) {
+        //     return redirect('/dashboardwd');
         } else if (Auth::guard('petugas_penomoran')->attempt(['email_petugas' => $request->email, 'password' => $request->password])) {
             return redirect('/dashboardpetugas');
         } else if (Auth::guard('admin')->attempt(['email_admin' => $request->email, 'password' => $request->password])) {
             return redirect('/dashboard_admin');
-        } else if (Auth::guard('wakildekan')->attempt(['email_wd' => $request->email, 'password' => $request->password])) {
-            return redirect('/dashboardwd');
         } else {
             // return back()->with('loginError', 'Login Gagal!');
             Alert::error('Login Gagal', 'Email atau Password Salah');
@@ -54,10 +54,14 @@ class LoginController extends Controller
         {
             Auth::guard('dosen')->logout();
         }
-        else if (Auth::guard('ketua_departemen')->check())
-        {
-            Auth::guard('ketua_departemen')->logout();
-        }
+        // else if (Auth::guard('ketua_departemen')->check())
+        // {
+        //     Auth::guard('ketua_departemen')->logout();
+        // }
+        // else if (Auth::guard('wakildekan')->check())
+        // {
+        //     Auth::guard('wakildekan')->logout();
+        // }
         else if (Auth::guard('petugas_penomoran')->check())
         {
             Auth::guard('petugas_penomoran')->logout();
@@ -65,10 +69,6 @@ class LoginController extends Controller
         else if (Auth::guard('admin')->check())
         {
             Auth::guard('admin')->logout();
-        }
-        else if (Auth::guard('wakildekan')->check())
-        {
-            Auth::guard('wakildekan')->logout();
         }
         return redirect('/');
         }

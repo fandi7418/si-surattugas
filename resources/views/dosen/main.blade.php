@@ -101,10 +101,22 @@
                   @endif
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    @if ( Auth::guard('dosen')->user()->roles_id == '2' )
+                    <a class="dropdown-item" href="/profilkadep" style="margin-bottom:5px">
+                      <i class="bi bi-pencil-square" style="margin-right:10px"></i>
+                      Edit Profil
+                    </a>
+                    @elseif ( Auth::guard('dosen')->user()->roles_id == '3' )
+                    <a class="dropdown-item" href="/profilwd" style="margin-bottom:5px">
+                      <i class="bi bi-pencil-square" style="margin-right:10px"></i>
+                      Edit Profil
+                    </a>
+                    @else
                     <a class="dropdown-item" href="/profildosen" style="margin-bottom:5px">
                       <i class="bi bi-pencil-square" style="margin-right:10px"></i>
                       Edit Profil
                     </a>
+                    @endif
                     <a class="dropdown-item" href="/logout">
                       <i class="bi bi-box-arrow-left" style="margin-right:10px"></i>
                       Logout
@@ -152,6 +164,22 @@
             Daftar Surat
           </a>
         </li>
+
+        @if ( Auth::guard('dosen')->user()->roles_id == '2' )
+        <hr>
+        <li >
+          <a href="/dashboardkadep" class="nav-link text-white" id="angkaNotifKadep" name="angkaNotifKadep">
+            Menu Kadep
+          </a>
+        </li>
+        @elseif ( Auth::guard('dosen')->user()->roles_id == '3' )
+        <hr>
+        <li>
+          <a href="/dashboardwd" class="nav-link text-white" id="angkaNotifWD" name="angkaNotifWD">
+            Menu Wakil Dekan
+          </a>
+        </li>
+        @endif
       </ul>
     </div>
 
@@ -216,6 +244,8 @@
               success: function (data) {
                 $("#isiNotif").empty();
                 $("#angkaNotif").empty();
+                $("#angkaNotifKadep").empty();
+                $("#angkaNotifWD").empty();
                 for (var i=0; i < data.surat.length; i++){
                   var waktu = new Date(data.surat[i].updated_at);
                   var jam = waktu.getHours();
@@ -241,6 +271,24 @@
                       '<span class=" badge rounded-pill bg-danger">'+data.surat.length+''
                     );
                   }
+                    if(data.kadep.length != '0'){
+                      $("#angkaNotifKadep").html(
+                        `Menu Kadep <span class=" badge rounded-pill bg-danger">`+data.kadep.length+``
+                      );
+                    }else{
+                      $("#angkaNotifKadep").html(
+                        `Menu Kadep`
+                      );
+                    }
+                    if(data.wd.length != '0'){
+                      $("#angkaNotifWD").html(
+                        `Menu Wakil Dekan <span class=" badge rounded-pill bg-danger">`+data.wd.length+``
+                      );
+                    }else{
+                      $("#angkaNotifWD").html(
+                        `Menu Wakil Dekan`
+                      );
+                    }
               }
             });
           setTimeout(notif, 2000);

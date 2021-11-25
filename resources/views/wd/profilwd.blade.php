@@ -11,7 +11,7 @@
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Nama</label>
         <div class="col-sm-5">
-            <input type="text" class="form-control" placeholder=" " name="nama" value="{{ $isi->nama_wd }}">
+            <input type="text" class="form-control" placeholder=" " name="nama_dosen" value="{{ $isi->nama_dosen }}">
         </div>
     </div>
     <div class="form-group row mb-2">
@@ -28,8 +28,8 @@
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">E-mail</label>
         <div class="col-sm-5">
-            <input type="text" class="form-control @error('email_wd') is-invalid @enderror" placeholder=" " name="email_wd" value="{{ $isi->email_wd }}">
-            @error('email_wd')
+            <input type="text" class="form-control @error('email_dosen') is-invalid @enderror" placeholder=" " name="email_dosen" value="{{ $isi->email_dosen }}">
+            @error('email_dosen')
                 <div id="validationServer03Feedback" class="invalid-feedback">
                     {{ $message }}
                 </div>

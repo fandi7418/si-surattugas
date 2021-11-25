@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use PDF;
 use App\Models\WakilDekan;
 use App\Models\Surat;
+use App\Models\Dosen;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -22,36 +23,61 @@ class WakilDekanController extends Controller
         ])
         ->orderBy('updated_at', 'DESC')
         ->get();
+        $dosen = Surat::with('status')
+        ->where([
+            'surat.status_id' => '1',
+        ])
+        ->orderBy('updated_at', 'DESC')
+        ->get();
         return response()->json([
             'surat' => $surat,
+            'dosen' => $dosen,
         ]);
     }
 
     public function dashboardwd(Request $request)
     {
-        return view('wd.dashboardwd');
+        if(Auth::guard('dosen')->user()->roles_id == '3')
+        {
+            return view('wd.dashboardwd');
+        } else {
+            return redirect()->back();
+        }
+        
     }
 
     public function daftarsurat(Request $request)
     {
-        $surat = Surat::with('status')
-        ->where([
-            'surat.status_id' => '2',
-            ])
-        ->orderBy('updated_at', 'DESC')
-        ->get();
-        return view('wd.daftarsuratwd', ['surat' => $surat]);
+        if(Auth::guard('dosen')->user()->roles_id == '3')
+        {
+            $surat = Surat::with('status')
+            ->where([
+                'surat.status_id' => '2',
+                ])
+            ->orderBy('updated_at', 'DESC')
+            ->get();
+            return view('wd.daftarsuratwd', ['surat' => $surat]);
+        } else {
+            return redirect()->back();
+        }
+        
     }
 
     public function profilwd(Request $request)
     {
-        $wd = WakilDekan::where([
-            'wakildekan.id' => Auth::user()->id,
-            ])
-        ->get();
-        return view('wd.profilwd', [
-            'wd' => $wd
-        ]);
+        if(Auth::guard('dosen')->user()->roles_id == '3')
+        {
+            $wd = Dosen::where([
+                'dosen.id' => Auth::user()->id,
+                ])
+            ->get();
+            return view('wd.profilwd', [
+                'wd' => $wd
+            ]);
+        } else {
+            return redirect()->back();
+        }
+        
     }
 
     public function confirmIzin(Request $request, $id)
@@ -115,7 +141,7 @@ class WakilDekanController extends Controller
         $imgName = $request->ttd->getClientOriginalName() . '-' . time() . '.' . $request->ttd->extension();
         $request->ttd->move(public_path('image'), $imgName);
 
-        WakilDekan::where(['wakildekan.id' => Auth::user()->id])->update([
+        Dosen::where(['dosen.id' => Auth::user()->id])->update([
             'ttd_wd' => $imgName,
         ]);
         toast('Berhasil', 'success')->autoClose(2000);
@@ -125,14 +151,14 @@ class WakilDekanController extends Controller
     public function updateprofilwd(Request $request, $id)
     {
         $this->validate($request,[
-            'nama' => 'required|max:255|string',
-            'NIP' => "required|numeric|min:6|unique:wakildekan,NIP,$id|unique:dosen,NIP|unique:petugas_penomoran,NIP|unique:ketua_departemen,NIP|unique:admin,NIP",
-            'email_wd' => "email|required|unique:wakildekan,email_wd,$id|unique:dosen,email_dosen|unique:petugas_penomoran,email_petugas|unique:ketua_departemen,email_kadep|unique:admin,email_admin",
+            'nama_dosen' => 'required|max:255|string',
+            'NIP' => "required|numeric|min:6|unique:dosen,NIP,$id|unique:petugas_penomoran,NIP|unique:admin,NIP",
+            'email_dosen' => "email|required|unique:dosen,email_dosen,$id|unique:petugas_penomoran,email_petugas|unique:admin,email_admin",
         ], 
             [
-            'email_wd.email' => 'E-mail tidak boleh kosong',
-            'email_wd.unique' => 'E-mail sudah ada yang menggunakan',
-            'nama.required' => 'Nama tidak boleh kosong',
+            'email_dosen.email' => 'E-mail tidak boleh kosong',
+            'email_dosen.unique' => 'E-mail sudah ada yang menggunakan',
+            'nama_dosen.required' => 'Nama tidak boleh kosong',
             'NIP.required' => 'NIP tidak boleh kosong',
             'NIP.unique' => 'NIP sudah ada yang menggunakan',
 
@@ -142,10 +168,10 @@ class WakilDekanController extends Controller
         //     'ttd'=>'mimes:jpg,png,jpeg,svg',
         // ]);
 
-        WakilDekan::where('id', $request->id)->update([
-            'nama_wd' => $request->nama,
+        Dosen::where('id', $request->id)->update([
+            'nama_dosen' => $request->nama_dosen,
             'NIP' => $request->NIP,
-            'email_wd' => $request->email_wd,
+            'email_dosen' => $request->email_dosen,
         ]);
         toast('Berhasil','success')->autoClose(2000);
         return redirect()->back();
@@ -153,7 +179,7 @@ class WakilDekanController extends Controller
 
     public function editpasswordwd(Request $request)
     {
-        WakilDekan::where('id', '=', Auth::user()->id)->update([
+        Dosen::where('id', '=', Auth::user()->id)->update([
             'password' => Hash::make($request->password),
             
         ]);

@@ -92,8 +92,8 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="bi bi-person-circle" style="margin-right:5px"></i>  
-                @if ( Str::length(Auth::guard('wakildekan')->user()) >0 )
-                  {{ Auth::guard('wakildekan')->user()->nama_wd }}
+                @if ( Str::length(Auth::guard('dosen')->user()) >0 )
+                  {{ Auth::guard('dosen')->user()->nama_dosen }}
                 @endif
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -139,6 +139,13 @@
           Daftar Surat
         </a>
       </li>
+
+      <hr>
+        <li>
+          <a href="/dashboarddosen" class="nav-link text-white" id="angkaNotifDosen" name="angkaNotifDosen">
+            Menu Dosen
+          </a>
+        </li>
     </ul>
   </div>
 
@@ -187,6 +194,7 @@
               success: function (data) {
                 $("#isiNotif").empty();
                 $("#angkaNotif").empty();
+                $("#angkaNotifDosen").html(`Menu Dosen`);
                 for (var i=0; i < data.surat.length; i++){
                   var waktu = new Date(data.surat[i].updated_at);
                   var jam = waktu.getHours();
@@ -210,6 +218,15 @@
                   );
                   $("#angkaNotif").html(
                     '<span class=" badge rounded-pill bg-danger">'+data.surat.length+''
+                  );
+                }
+                if(data.dosen.length != '0'){
+                  $("#angkaNotifDosen").html(
+                    `Menu Dosen <span class=" badge rounded-pill bg-danger">`+data.dosen.length+``
+                  );
+                }else{
+                  $("#angkaNotifDosen").html(
+                    `Menu Dosen`
                   );
                 }
               }

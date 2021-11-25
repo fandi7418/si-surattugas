@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Surat;
 use App\Models\Prodi;
 use App\Models\Kadep;
+use App\Models\Dosen;
 use App\Models\WakilDekan;
 use App\Models\StatusSurat;
 use Illuminate\Support\Facades\DB;
@@ -44,6 +45,14 @@ class SuratController extends Controller
 
     public function tambahsurat(Request $request)
     {
+        $request->validate([
+            'tanggalawal' => 'date_format:Y-m-d|after_or_equal:today',
+            'tanggalakhir' => 'date_format:Y-m-d|after_or_equal:tanggalawal',
+        ], [
+            // 'tanggalawal.required' => 'Nama tidak boleh kosong',
+            'tanggalawal.after_or_equal' => 'Input tidak valid',
+            'tanggalakhir.after_or_equal' => 'Input tidak valid',
+        ]);
         Surat::create([
             'nama_dosen' => $request->nama,
             'NIP' => $request->nip,
@@ -57,13 +66,26 @@ class SuratController extends Controller
             'tanggalawal' => $request->tanggalawal,
             'tanggalakhir' => $request->tanggalakhir,
             'status_id' => '1',
-            'nama_kadep' => Kadep::where('prodi_id', '=', Auth::user()->prodi_id)
-            ->first()->nama_kadep,
-            'NIP_kadep' => Kadep::where('prodi_id', '=', Auth::user()->prodi_id)
+            'nama_kadep' => Dosen::where([
+                'prodi_id' => Auth::user()->prodi_id,
+                'roles_id' => '2',
+                ])
+            ->first()->nama_dosen,
+            'NIP_kadep' => Dosen::where([
+                'prodi_id' => Auth::user()->prodi_id,
+                'roles_id' => '2',
+                ])
             ->first()->NIP,
-            'nama_wd' => WakilDekan::first()->nama_wd,
-            'NIP_wd' => WakilDekan::first()->NIP,
+            'nama_wd' => Dosen::where([
+                'roles_id' => '3',
+                ])
+            ->first()->nama_dosen,
+            'NIP_wd' => Dosen::where([
+                'roles_id' => '3',
+                ])
+            ->first()->NIP,
             'notif' => '1',
+            'id_dosen' => Auth::guard('dosen')->user()->id,
             'remember_token' => Str::random(60),
         ]);
         Alert::success('Sukses', 'Data Berhasil Ditambah');

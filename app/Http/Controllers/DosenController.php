@@ -20,7 +20,7 @@ class DosenController extends Controller
     public function clearNotif()
     {
         $surat = Surat::with('status')
-        ->where(['surat.NIP' => Auth::user()->NIP])
+        ->where(['surat.id_dosen' => Auth::user()->id,])
         ->update([
             'notif' => '2',
         ]);
@@ -33,8 +33,21 @@ class DosenController extends Controller
     {
         $surat = Surat::with('status')
         ->where([
-            'surat.NIP' => Auth::user()->NIP,
+            'surat.id_dosen' => Auth::user()->id,
             'surat.notif' => '1',
+        ])
+        ->orderBy('updated_at', 'DESC')
+        ->get();
+        $kadep = Surat::with('status')
+        ->where([
+            'surat.prodi_id' => Auth::user()->prodi_id,
+            'surat.status_id' => '1',
+        ])
+        ->orderBy('updated_at', 'DESC')
+        ->get();
+        $wd = Surat::with('status')
+        ->where([
+            'surat.status_id' => '2',
         ])
         ->orderBy('updated_at', 'DESC')
         ->get();
@@ -48,6 +61,8 @@ class DosenController extends Controller
         // $surat = Surat::where('surat.update_at' ? with(new Carbon('surat.update_at'))->isoFormat('D MMMM Y') : '');
         return response()->json([
             'surat' => $surat,
+            'kadep' => $kadep,
+            'wd' => $wd,
             // 'surat' => $surat->updated_at ? with(new Carbon($surat->updated_at))->isoFormat('D MMMM Y') : ''
         ]);
     }
@@ -60,7 +75,14 @@ class DosenController extends Controller
     public function daftarsuratDosen(Request $request)
     {
         $surat = Surat::with('status')
-        ->where(['surat.prodi_id' => Auth::user()->prodi_id])
+        ->where([
+            'surat.id_dosen' => Auth::user()->id,
+        ])
+        ->where([
+            'surat.NIP' => Auth::user()->NIP,
+            'surat.prodi_id' => Auth::user()->prodi_id,
+            'surat.notif' => '1',
+        ])
         ->orderBy('updated_at', 'DESC')
         ->paginate(10);
         return view('dosen.daftarsuratdosen', ['surat' => $surat]);

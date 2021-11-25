@@ -3,7 +3,7 @@
 @section('kadep')
 <title>Daftar Surat</title>
 <meta name="csrf-token" content="{{ csrf_token() }}">
-        <h2>Daftar Surat</h2>
+        <h2>Daftar Surat Kadep</h2>
         <br>
         <div class="table-responsive" name="daftarSurat">
           </a>

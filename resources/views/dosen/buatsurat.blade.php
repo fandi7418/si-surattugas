@@ -4,6 +4,7 @@
 <title>Buat Surat</title>
 
 <h1 class="h2">Buat Surat</h1>
+<br>
 <form class="mb-8" method="post" action="/tambahsurat">
     @csrf
     <div class="form-group row mb-2">
@@ -47,40 +48,52 @@
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Judul</label>
         <div class="col-sm-5">
-            <input type="text" required class="form-control" placeholder=" " name="judul">
+            <input type="text" required class="form-control" placeholder=" " name="judul" value="{{ old('judul') }}">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Jenis Kegiatan</label>
         <div class="col-sm-5">
-            <input type="text" required class="form-control" placeholder=" " name="jeniskegiatan">
+            <input type="text" required class="form-control" placeholder=" " name="jeniskegiatan" value="{{ old('jeniskegiatan') }}">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Tempat Kegiatan</label>
         <div class="col-sm-5">
-            <input type="text" required class="form-control" placeholder=" " name="tempat">
+            <input type="text" required class="form-control" placeholder=" " name="tempat" value="{{ old('tempat') }}">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Kota/Kabupaten</label>
         <div class="col-sm-5">
-            <input type="text" required class="form-control" placeholder=" " name="kota">
+            <input type="text" required class="form-control" placeholder=" " name="kota" value="{{ old('kota') }}">
         </div>
     </div>
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Tanggal Awal Perjalanan Dinas</label>
         <div class="col-sm-5">
-            <input type="date" required class="form-control" placeholder=" " name="tanggalawal">
+            <input type="date" required class="form-control @error('tanggalawal') is-invalid @enderror" placeholder=" " name="tanggalawal" value="{{ old('tanggalawal') }}">
+            @error('tanggalawal')
+                <div class="alert alert-danger alert-dismissible fade show mt-3">
+                    {{ $message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @enderror
         </div>
     </div>
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Tanggal Akhir Perjalanan Dinas</label>
         <div class="col-sm-5">
-            <input type="date" required class="form-control" placeholder=" " name="tanggalakhir">
+            <input type="date" required class="form-control @error('tanggalakhir') is-invalid @enderror" placeholder=" " name="tanggalakhir" value="{{ old('tanggalakhir') }}">
+            @error('tanggalakhir')
+                <div class="alert alert-danger alert-dismissible fade show mt-3">
+                    {{ $message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @enderror
         </div>
     </div>
     <div class="col-sm-7">

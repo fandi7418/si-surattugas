@@ -3,7 +3,7 @@
 @section('wd')
 <title>Daftar Surat</title>
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<h2>Daftar Surat</h2>
+<h2>Daftar Surat Wakil Dekan</h2>
 <br>
 <div class="table-responsive">
   <table class="table table-striped table-bordered" style="width:100%" id="daftarSurat">

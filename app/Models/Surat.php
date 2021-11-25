@@ -38,6 +38,7 @@ class Surat extends Authenticatable
         'nama_wd',
         'NIP_wd',
         'notif',
+        'id_dosen',
     ];
 
     protected $hidden = [
