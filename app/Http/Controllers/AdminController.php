@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\Dosen;
+use App\Models\Staff;
 use App\Models\Kadep;
 use App\Models\Petugas;
 use App\Models\Prodi;
@@ -1100,4 +1101,195 @@ public function restoresurat($id)
     return redirect()->back();
 }
 
+//Controller Staff di Admin
+
+public function indexstaff()
+{
+    $prd = Prodi::all();
+    return view('admin.tambahstaff', ['prd' => $prd, "title" => "Tambah staff"]);
+}   
+public function datastaff(Request $request)
+{
+    // $prodi = Prodi::all();
+    // $dosen = Dosen::with('prodi')->orderBy('created_at', 'DESC')
+    // ->paginate(10);
+    // return view('admin.datadosen', ['dosen' => $dosen, 'prodi' => $prodi, "title" => "Data Dosen"]); 
+    $staff = Staff::with('prodi','roles')->get();
+    if ($request->ajax()){
+        $staff = Staff::with('prodi','roles')->get();
+        return datatables()->of($staff)->addColumn('action', function($data){
+            $url_edit = url('edit_staff/'.$data->id);
+            $url_hapus = url('hapus_staff/'.$data->id.'/konfirmasi');
+            $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';
+            $button .= '&nbsp;&nbsp;';
+            $button .= '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Nonaktif</a>';     
+            return $button;
+        })
+        ->rawColumns(['action'])
+                    ->addIndexColumn()
+                    ->make(true);
+}
+return view('admin.datastaff', ['staff' => $staff, "title" => "Data Staff"]);
+}
+public function datastaffsementara (Request $request)
+{
+    $staff = Staff::onlyTrashed()->with('prodi','roles');
+    if ($request->ajax()){
+        $staff = Staff::onlyTrashed()->with('prodi','roles')
+        ->get();
+        return datatables()->of($staff)->addColumn('action', function($data){
+            $url_restore = url('data_staff/restore/'.$data->id);
+            $url_hapus = url('hapus_staffpermanen/'.$data->id.'/konfirmasi');
+            $button = '<a href="'.$url_restore.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-success btn-sm edit-post"><i class="far fa-edit"></i> Restore</a>';
+            $button .= '&nbsp;&nbsp;';
+            $button .= '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Hapus Permanen</a>';     
+            return $button;
+        })
+        ->rawColumns(['action'])
+                    ->addIndexColumn()
+                    ->make(true);
+}
+return view('admin.datastaff_trash', ['staff' => $staff, "title" => "Data Staff Sementara"]);
+}
+
+public function tambahstaff(Request $request)
+{
+    $request->validate([
+        'nama_staff' => 'required|max:255|string',
+        'NIP' => 'required|numeric|min:6|unique:staff,NIP|unique:admin,NIP|unique:dosen,NIP',
+        'pangkat' => 'required|string',
+        'jabatan' => 'required|string',
+        'roles_id' => 'required',
+        'email_staff' => 'email|required|unique:staff,email_staff|unique:admin,email_admin|unique:dosen,email_dosen',
+        'password' => 'required|min:6',
+    ], [
+        'email_staff.unique' => 'Email sudah ada yang menggunakan',
+        'email_staff.email' => 'Email tidak boleh kosong',
+        'nama_staff.required' => 'Nama tidak boleh kosong',
+        'roles_id.required' => 'status tidak boleh kosong',
+        'NIP.required' => 'NIP tidak boleh kosong',
+        'NIP.unique' => 'NIP sudah ada yang menggunakan',
+        'pangkat.required' => 'Pangkat tidak boleh kosong',
+        'jabatan.required' => 'Jabatan tidak boleh kosong',
+        'password.min' => 'Password harus lebih dari 6 karakter',
+        'password.required' => 'Password tidak boleh kosong'
+    ]);
+    Staff::create([
+        'nama_staff' => $request->nama_staff,
+        'NIP' => $request->NIP,
+        'pangkat' => $request->pangkat,
+        'jabatan' => $request->jabatan,
+        'prodi_id' => $request->prodi_id,
+        'email_staff' => $request->email_staff,
+        'roles_id' => $request->roles_id,
+        'password' => Hash::make($request->password),
+        
+    ]);
+    Alert::success('Sukses', 'Data Berhasil Ditambahkan');
+    return redirect('data_staff');
+}
+
+public function editstaff($id)
+{
+    $prd = Prodi::all();
+    $staff = Staff::with('Prodi')->where('id', $id)->get();
+    return view('admin.editstaff', ['staff' => $staff, 'prd' => $prd, "title" => "Edit Profil Staff"]);
+}
+
+public function updatestaff(Request $request, $id)
+{
+    // $this->validate($request,[
+    //     'nama_dosen' => 'required|max:255|string',
+    //     'NIP' => "required|numeric|min:6|unique:dosen,NIP,$id|unique:ketua_departemen,NIP|unique:admin,NIP|unique:petugas_penomoran,NIP|unique:wakildekan,NIP",
+    //     'prodi_id' => 'required',
+    //     'pangkat' => 'required|string',
+    //     'jabatan' => 'required|string',
+    //     'email_dosen' => "email|required|unique:dosen,email_dosen,$id|unique:ketua_departemen,email_kadep|unique:admin,email_admin|unique:petugas_penomoran,email_petugas|unique:wakildekan,email_wd"
+    // ], 
+    //     [
+    //     'email_dosen.email' => 'Email tidak boleh kosong',
+    //     'email_dosen.unique' => 'Email sudah ada yang menggunakan',
+    //     'nama_dosen.required' => 'Nama tidak boleh kosong',
+    //     'NIP.required' => 'NIP tidak boleh kosong',
+    //     'NIP.unique' => 'NIP sudah ada yang menggunakan',
+    //     'prodi_id.required' => 'Program Studi tidak boleh kosong',
+    //     'pangkat.required' => 'Pangkat tidak boleh kosong',
+    //     'jabatan.required' => 'Jabatan tidak boleh kosong',
+
+    // ]);
+    Staff::where('id', $request->id)->update([
+        'nama_staff' => $request->nama_staff,
+        'NIP' => $request->NIP,
+        'jabatan' => $request->jabatan,
+        'pangkat' => $request->pangkat,
+        'prodi_id' => $request->prodi_id,
+        'email_staff' => $request->email_staff,
+    ]);
+    toast('Data Berhasil Diubah','success')->autoClose(5000);
+    return redirect()->back();
+}
+
+public function updatepasswordstaff(Request $request)
+{
+    Staff::where('id', $request->id)->update([
+        'password' => Hash::make($request->password),
+        
+    ]);
+    toast('Password Berhasil Diubah','success')->autoClose(5000);
+    return redirect('/data_staff');
+}
+
+public function konfirmasistaff($id)
+{
+    alert()->question('Peringatan','Anda yakin akan Menonaktifkan Akun? ')
+    ->showConfirmButton('<a href="/hapus_staff/'.$id.'/hapusstaff" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
+    ->showCancelButton('Batal', '#aaa')->reverseButtons();
+
+    return redirect('/data_staff');
+}
+
+public function hapusstaff($id)
+{
+    Staff::where('id', $id)->delete();
+    Alert::success('Sukses', 'Data Berhasil Dinonaktifkan');
+    return redirect('/data_staff');
+
+    // $dosen = dosen::select('sampul', 'id')->whereId($id)->firstOrfail();
+    // file::delete()
+}
+public function konfirmasistaffpermanen($id)
+{
+    alert()->question('Peringatan','Anda yakin akan Menghapus Akun? ')
+    ->showConfirmButton('<a href="/hapus_staff/'.$id.'/hapusstaffpermanen" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
+    ->showCancelButton('Batal', '#aaa')->reverseButtons();
+
+    return redirect()->back();
+}
+public function hapusstaffpermanen($id)
+{
+    $staff = Staff::onlyTrashed()->where('id',$id);
+    $staff->forceDelete();
+    Alert::success('Sukses', 'Data Berhasil Dihapus');
+    return redirect('/data_staff/trash');
+
+    // $dosen = dosen::select('sampul', 'id')->whereId($id)->firstOrfail();
+    // file::delete()
+}
+
+public function restorestaff($id)
+{
+    // staff::where('id', $id)->delete();
+    // Alert::success('Sukses', 'Data Berhasil Dihapus');
+    // return redirect('/data_staff');
+
+    $staff = Staff::onlyTrashed()->where('id',$id);
+    $staff->restore();
+    
+    Alert::success('Sukses', 'Data Berhasil Dikembalikkan');
+    
+    return redirect('/data_staff/trash');
+
+    // $dosen = dosen::select('sampul', 'id')->whereId($id)->firstOrfail();
+    // file::delete()
+}
 }

@@ -21,6 +21,11 @@ class Prodi extends Model
     //Setiap Prodi memiliki banyak id dosen
     return $this->hasMany(Dosen::class);
     }
+    public function staff()
+    {
+    //Setiap Prodi memiliki banyak id dosen
+    return $this->hasMany(Staff::class);
+    }
     public function kadep()
     {
     //Setiap Prodi memiliki banyak id dosen

@@ -20,6 +20,11 @@ class Roles extends Model
     //Setiap Roles memiliki banyak id dosen
     return $this->hasMany(Dosen::class);
     }
+    public function staff()
+    {
+    //Setiap Roles memiliki banyak id dosen
+    return $this->hasMany(Staff::class);
+    }
 //     public function kadep()
 //     {
 //     //Setiap Roles memiliki banyak id dosen

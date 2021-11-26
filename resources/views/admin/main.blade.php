@@ -33,8 +33,10 @@
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li ><a href="/data_admin" class="link-dark rounded">Admin</a></li>
                                 <li><a href="/data_dosen" class="link-dark rounded">Dosen</a></li>
+                                <li><a href="/data_staff" class="link-dark rounded">Staff</a></li>
                                 <li><a href="/data_kadep" class="link-dark rounded">Ketua Departemen</a></li>
                                 <li><a href="/data_wakildekan" class="link-dark rounded">Wakil Dekan</a></li>
+                                <li><a href="/data_supervisor" class="link-dark rounded">Supervisor</a></li>
                                 <li><a href="/data_petugas" class="link-dark rounded">Petugas Penomoran</a></li>
                             </ul>
                         </div>

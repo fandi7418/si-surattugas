@@ -25,5 +25,17 @@ class RolesSeeder extends Seeder
         Roles::create([
             'peran' => 'Wakil Dekan',
         ]);
+        Roles::create([
+            'peran' => 'Staff Dekanat FT',
+        ]);
+        Roles::create([
+            'peran' => 'Staff Departemen',
+        ]);
+        Roles::create([
+            'peran' => 'Supervisor',
+        ]);
+        Roles::create([
+            'peran' => 'Petugas Penomoran',
+        ]);
     }
 }

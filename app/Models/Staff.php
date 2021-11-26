@@ -7,24 +7,23 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Dosen extends Authenticatable
+class Staff extends Authenticatable
 {
     use HasFactory;
     use softDeletes;
 
-    protected $table = "dosen";
+    protected $table = "staff";
     protected $primarykey = "id";
     protected $fillable = [
-        'email_dosen',
+        'email_staff',
         'password',
-        'nama_dosen',
+        'nama_staff',
         'NIP',
         'pangkat',
         'jabatan',
         'prodi_id',
         'roles_id',
-        'ttd_kadep',
-        'ttd_wd',
+        'ttd_spv',
     ];
 
     protected $hidden = [
@@ -32,15 +31,6 @@ class Dosen extends Authenticatable
         'remember_token',
     ];
 
-    // protected $casts = [
-    //     'email_verified_at' => 'datetime',
-    // ];
-
-    public function surat()
-    {
-    //Setiap user akan memiliki banyak data
-    return $this->hasMany('App\Models\Surat', 'NIP');
-    }
     public function prodi()
     {
     //Setiap dosen hanya memiliki satu prodi

@@ -199,7 +199,37 @@ Route::group(['middleware' => ['auth:admin']], function()
 
     Route::get('data_surat/restore/{id}', [AdminController::class, 'restoresurat']);
 
+    //staff
 
+    Route::get('/data_staff', [AdminController::class, 'datastaff'])->name('data staff');
+
+    Route::get('/data_staff/trash', [AdminController::class, 'datastaffsementara'])->name('data staff sementara');
+    
+    Route::get('/edit_staff/{id}', [AdminController::class, 'editstaff'])->name('edit staff');
+
+    Route::post('/update_staff/{id}', [AdminController::class, 'updatestaff']);
+
+    Route::get('/tambah_staff', [AdminController::class, 'indexstaff']);
+
+    Route::post('/tambah_staff', [AdminController::class, 'tambahstaff']);
+
+    Route::get('/hapus_staff/{id}/konfirmasi', [AdminController::class, 'konfirmasistaff']);
+    
+    Route::get('/hapus_staffpermanen/{id}/konfirmasi', [AdminController::class, 'konfirmasistaffpermanen']);
+
+    Route::get('/hapus_staffpermanen/konfirmasisemua', [AdminController::class, 'konfirmasistaffpermanensemua']);
+    
+    Route::get('/hapus_staff/{id}/hapusstaff', [AdminController::class, 'hapusstaff']);
+    
+    Route::get('/hapus_staff/{id}/hapusstaffpermanen', [AdminController::class, 'hapusstaffpermanen']);
+
+    Route::get('/hapusstaffpermanensemua', [AdminController::class, 'hapusstaffpermanensemua']);
+    
+    Route::get('data_staff/restore/{id}', [AdminController::class, 'restorestaff']);
+
+    Route::get('data_staff/restore_semua', [AdminController::class, 'restorestaffsemua']);
+
+    Route::post('/update_passwordstaff/{id}', [AdminController::class, 'updatepasswordstaff'])->name('aksi ubah password staff'); 
     
     
 
