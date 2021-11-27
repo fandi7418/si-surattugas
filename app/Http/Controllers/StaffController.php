@@ -3,8 +3,193 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Dosen;
+use App\Models\Admin;
+use App\Models\Surat;
+use App\Models\Prodi;
+use App\Models\Staff;
+use App\Models\StatusSurat;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Carbon;
 
 class StaffController extends Controller
 {
-    //
+    public function dashboardStaff(Request $request)
+    {
+        return view('staff.dashboardStaff');
+    }
+
+    public function daftarsuratStaff(Request $request)
+    {
+        $surat = Surat::with('status')
+        ->where([
+            'surat.id_staff' => Auth::user()->id,
+        ])->orderBy('updated_at', 'DESC');
+        // ->where([
+        //     'surat.NIP' => Auth::user()->NIP,
+        //     'surat.prodi_id' => Auth::user()->prodi_id,
+        //     'surat.notif' => '1',
+        // ])
+        // ->orderBy('updated_at', 'DESC')
+        // ->paginate(10);
+        return view('staff.daftarsuratStaff', ['surat' => $surat]);
+    }
+
+    public function profilStaff()
+    {
+        // $prodi = Prodi::all();
+        $staff = Staff::with('prodi')
+        ->where('staff.id', '=', Auth::user()->id)
+        ->get();
+    return view('staff.profilStaff', [/*'prodi' => $prodi,*/ 'staff' => $staff]);
+    }
+
+    public function buatsuratStaff()
+    {
+    return view('staff.buatsuratStaff');
+    }
+
+    public function tambahsuratStaff(Request $request)
+    {
+        $request->validate([
+            'tanggalawal' => 'date_format:Y-m-d|after_or_equal:today',
+            'tanggalakhir' => 'date_format:Y-m-d|after_or_equal:tanggalawal',
+        ], [
+            // 'tanggalawal.required' => 'Nama tidak boleh kosong',
+            'tanggalawal.after_or_equal' => 'Input tidak valid',
+            'tanggalakhir.after_or_equal' => 'Input tidak valid',
+        ]);
+        Surat::create([
+            'nama_dosen' => $request->nama,
+            'NIP' => $request->nip,
+            'prodi_id' => Auth::guard('staff')->user()->prodi->id,
+            'pangkat' => $request->pangkat,
+            'jabatan' => $request->jabatan,
+            'judul' => $request->judul,
+            'jenis' => $request->jeniskegiatan,
+            'tempat' => $request->tempat,
+            'kota' => $request->kota,
+            'tanggalawal' => $request->tanggalawal,
+            'tanggalakhir' => $request->tanggalakhir,
+            'status_id' => '1',
+            'nama_kadep' => Dosen::where([
+                'prodi_id' => Auth::user()->prodi_id,
+                'roles_id' => '2',
+                ])
+            ->first()->nama_dosen,
+            'NIP_kadep' => Dosen::where([
+                'prodi_id' => Auth::user()->prodi_id,
+                'roles_id' => '2',
+                ])
+            ->first()->NIP,
+            'nama_wd' => Dosen::where([
+                'roles_id' => '3',
+                ])
+            ->first()->nama_dosen,
+            'NIP_wd' => Dosen::where([
+                'roles_id' => '3',
+                ])
+            ->first()->NIP,
+            'notif' => '1',
+            'id_dosen' => Auth::guard('staff')->user()->id,
+            'roles_id' => Auth::guard('staff')->user()->roles_id,
+            'remember_token' => Str::random(60),
+        ]);
+        Alert::success('Sukses', 'Data Berhasil Ditambah');
+        return redirect('/daftarsuratStaff');
+    }
+
+    public function tambahsuratStaffDekanat(Request $request)
+    {
+        $request->validate([
+            'tanggalawal' => 'date_format:Y-m-d|after_or_equal:today',
+            'tanggalakhir' => 'date_format:Y-m-d|after_or_equal:tanggalawal',
+        ], [
+            // 'tanggalawal.required' => 'Nama tidak boleh kosong',
+            'tanggalawal.after_or_equal' => 'Input tidak valid',
+            'tanggalakhir.after_or_equal' => 'Input tidak valid',
+        ]);
+        Surat::create([
+            'nama_dosen' => $request->nama,
+            'NIP' => $request->nip,
+            'prodi_id' => Auth::guard('staff')->user()->prodi->id,
+            'pangkat' => $request->pangkat,
+            'jabatan' => $request->jabatan,
+            'judul' => $request->judul,
+            'jenis' => $request->jeniskegiatan,
+            'tempat' => $request->tempat,
+            'kota' => $request->kota,
+            'tanggalawal' => $request->tanggalawal,
+            'tanggalakhir' => $request->tanggalakhir,
+            'status_id' => '1',
+            'nama_kadep' => Dosen::where([
+                'prodi_id' => Auth::user()->prodi_id,
+                'roles_id' => '2',
+                ])
+            ->first()->nama_dosen,
+            'NIP_kadep' => Dosen::where([
+                'prodi_id' => Auth::user()->prodi_id,
+                'roles_id' => '2',
+                ])
+            ->first()->NIP,
+            'nama_wd' => Dosen::where([
+                'roles_id' => '3',
+                ])
+            ->first()->nama_dosen,
+            'NIP_wd' => Dosen::where([
+                'roles_id' => '3',
+                ])
+            ->first()->NIP,
+            'notif' => '1',
+            'id_dosen' => Auth::guard('staff')->user()->id,
+            'roles_id' => Auth::guard('staff')->user()->roles_id,
+            'remember_token' => Str::random(60),
+        ]);
+        Alert::success('Sukses', 'Data Berhasil Ditambah');
+        return redirect('/daftarsuratdosen');
+    }
+
+    public function updateprofilStaff(Request $request, $id)
+    {
+        $this->validate($request,[
+            'nama' => 'required|max:255|string',
+            'NIP' => "required|numeric|min:6|unique:staff,NIP,$id|unique:dosen,NIP|unique:ketua_departemen,NIP|unique:petugas_penomoran,NIP|unique:wakildekan,NIP|unique:admin,NIP",
+            'pangkat' => 'required|string',
+            'jabatan' => 'required|string',
+            'email_staff' => "email|required|unique:staff,email_staff,$id|unique:ketua_departemen,email_kadep|unique:petugas_penomoran,email_petugas|unique:wakildekan,email_wd|unique:admin,email_admin",
+        ], 
+            [
+            'email_staff.email' => 'E-mail tidak boleh kosong',
+            'email_staff.unique' => 'E-mail sudah ada yang menggunakan',
+            'nama.required' => 'Nama tidak boleh kosong',
+            'NIP.required' => 'NIP tidak boleh kosong',
+            'NIP.unique' => 'NIP sudah ada yang menggunakan',
+            'pangkat.required' => 'Pangkat tidak boleh kosong',
+            'jabatan.required' => 'Jabatan tidak boleh kosong',
+
+        ]);
+        
+        Staff::where('id', $request->id)->update([
+            'nama_staff' => $request->nama,
+            'NIP' => $request->NIP,
+            'pangkat' => $request->pangkat,
+            'jabatan' => $request->jabatan,
+            'email_staff' => $request->email_staff,
+        ]);
+        toast('Berhasil', 'success')->autoClose(2000);
+        return redirect()->back();
+    }
+
+    public function editpasswordStaff(Request $request)
+    {
+        Staff::where('id', '=', Auth::user()->id)->update([
+            'password' => Hash::make($request->password),
+            
+        ]);
+        toast('Password Berhasil Diubah','success')->autoClose(2000);
+        return redirect('/profilStaff');
+    }
 }

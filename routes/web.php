@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\KadepController;
+use App\Http\Controllers\StaffController;
 use App\Http\Controllers\WakilDekanController;
 use App\Http\Controllers\PetugasPenomoranController;
 use App\Http\Controllers\SuratController;
@@ -475,7 +476,27 @@ Route::group(['middleware' => ['auth:petugas_penomoran']], function()
 
 // });
 
+/* Route dosen */
+Route::group(['middleware' => ['auth:staff']], function()
+{
+    
+    Route::get('/daftarsuratStaff', [StaffController::class, 'daftarsuratStaff']);
 
+    Route::get('/buatsuratStaff', [StaffController::class, 'buatsuratStaff']);
+
+    // Route::get('/notifStaff', [StaffController::class, 'notifStaff'])->name('notifStaff');
+
+    // Route::post('/clearNotif', [DosenController::class, 'clearNotif'])->name('clearNotif');
+
+    Route::get('/profilStaff', [StaffController::class, 'profilStaff']);
+
+    Route::post('/updateprofilStaff/{id}', [StaffController::class, 'updateprofilStaff']);
+
+    Route::post('/editpasswordStaff', [StaffController::class, 'editpasswordStaff']);
+
+    Route::get('/dashboardStaff', [StaffController::class, 'dashboardStaff']);
+    
+});
 
 
 

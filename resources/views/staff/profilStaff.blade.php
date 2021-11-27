@@ -1,17 +1,17 @@
-@extends('dosen.main')
+@extends('staff.main')
 
-@section('dosen')
+@section('staff')
 <title>Profil</title>
 
     <h1 class="h2">Edit Profil</h1>
     <br>
-    @foreach ($dosen as $isi)
-    <form method="post" action="/updateprofildosen/{{ $isi->id }}">
+    @foreach ($staff as $isi)
+    <form method="post" action="/updateprofilStaff/{{ $isi->id }}">
         @csrf
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Nama</label>
             <div class="col-sm-5">
-                <input required type="text" class="form-control" placeholder=" " name="nama" value="{{ $isi->nama_dosen }}">
+                <input required type="text" class="form-control" placeholder=" " name="nama" value="{{ $isi->nama_staff }}">
             </div>
         </div>
         <div class="form-group row mb-2">
@@ -26,12 +26,14 @@
                     @enderror
             </div>
         </div>
+        @if( Auth::guard('staff')->user()->roles_id == '5')
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Program Studi</label>
             <div class="col-sm-5">
             <input readonly type="text" class="form-control" placeholder=" " value="{{ $isi->prodi->prodi }}">
             </div>
         </div>
+        @endif
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Pangkat/Gol</label>
             <div class="col-sm-5">
@@ -47,8 +49,8 @@
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">E-mail</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control @error('email_dosen') is-invalid @enderror" placeholder=" " name="email_dosen" value="{{ $isi->email_dosen }}">
-                    @error('email_dosen')
+                <input type="text" class="form-control @error('email_staff') is-invalid @enderror" placeholder=" " name="email_staff" value="{{ $isi->email_staff }}">
+                    @error('email_staff')
                         <div class="alert alert-danger alert-dismissible fade show mt-3">
                             {{ $message }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -75,7 +77,7 @@
            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
            </div>
            <div class="modal-body">
-            <form action="/editpassworddosen" method="post">
+            <form action="/editpasswordStaff" method="post">
                 @csrf
                 <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">Masukkan Password Baru :</label>

@@ -1,6 +1,6 @@
-@extends('dosen.main')
+@extends('supervisor.main')
 
-@section('dosen')
+@section('supervisor')
 <title>Profil</title>
 
     <h1 class="h2">Edit Profil</h1>
@@ -82,12 +82,12 @@
                 <input type="password" required minlength="6" name="password" class="form-control" id="myInput">
                 <input type="checkbox" onclick="myFunction()"> Tampilkan Password
                 </div>
+            </form>
            </div>
            <div class="modal-footer">
            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
            <button type="submit" class="btn btn-primary">Simpan</button>
            </div>
-            </form>
        </div>
        </div>
    </div>

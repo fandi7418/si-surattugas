@@ -65,6 +65,11 @@ return [
             'driver' => 'session',
             'provider' => 'wakildekans',
         ],
+
+        'staff' => [
+            'driver' => 'session',
+            'provider' => 'staffs',
+        ],
     ],
 
     /*
@@ -113,6 +118,11 @@ return [
         'wakildekans' => [
             'driver' => 'eloquent',
             'model' => App\Models\WakilDekan::class,
+        ],
+
+        'staffs' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Staff::class,
         ],
     ],
 

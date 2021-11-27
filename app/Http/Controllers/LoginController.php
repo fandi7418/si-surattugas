@@ -19,6 +19,8 @@ class LoginController extends Controller
         //     return redirect('/dashboardkadep');
         // } else if (Auth::guard('wakildekan')->check()){
         //     return redirect('/dashboardwd');
+        } else if (Auth::guard('staff')->check()){
+            return redirect('/dashboardStaff');
         } else if (Auth::guard('petugas_penomoran')->check()){
             return redirect('/dashboardpetugas');
         } else if (Auth::guard('admin')->check()){
@@ -38,6 +40,8 @@ class LoginController extends Controller
         //     return redirect('/dashboardkadep');
         // } else if (Auth::guard('wakildekan')->attempt(['email_wd' => $request->email, 'password' => $request->password])) {
         //     return redirect('/dashboardwd');
+        } else if (Auth::guard('staff')->attempt(['email_staff' => $request->email, 'password' => $request->password])) {
+            return redirect('/dashboardStaff');
         } else if (Auth::guard('petugas_penomoran')->attempt(['email_petugas' => $request->email, 'password' => $request->password])) {
             return redirect('/dashboardpetugas');
         } else if (Auth::guard('admin')->attempt(['email_admin' => $request->email, 'password' => $request->password])) {
@@ -62,6 +66,10 @@ class LoginController extends Controller
         // {
         //     Auth::guard('wakildekan')->logout();
         // }
+        else if (Auth::guard('staff')->check())
+        {
+            Auth::guard('staff')->logout();
+        }
         else if (Auth::guard('petugas_penomoran')->check())
         {
             Auth::guard('petugas_penomoran')->logout();

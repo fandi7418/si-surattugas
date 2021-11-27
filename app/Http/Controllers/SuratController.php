@@ -86,6 +86,7 @@ class SuratController extends Controller
             ->first()->NIP,
             'notif' => '1',
             'id_dosen' => Auth::guard('dosen')->user()->id,
+            'roles_id' => Auth::guard('dosen')->user()->roles_id,
             'remember_token' => Str::random(60),
         ]);
         Alert::success('Sukses', 'Data Berhasil Ditambah');
