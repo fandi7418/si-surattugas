@@ -4,22 +4,22 @@
 <br>
 <div class="card">
     <div class="card-header">
-        <h2 class="card-title">Data Petugas Penomoran</h2>
+        <h2 class="card-title">Data Supervisor</h2>
     </div>
     <div class="card-body">
-        @if (count($petugas)==0)
-        <a href="/tambah_petugas" class="btn btn-success btn-sm">Tambah Petugas
+        @if (count($spv)==0)
+        <a href="/tambah_supervisor" class="btn btn-success btn-sm">Tambah Supervisor
         </a>
         <br>
         <br>
         @endif
         {{-- <a href="/data_petugas/trash" class="btn btn-danger btn-sm">Sampah</a> --}}
-        <table class="table table-striped table-bordered table-sm" id="datapetugas" style="width: 100%">
+        <table class="table table-striped table-bordered table-sm" id="dataspv" style="width: 100%">
             <thead>
                 <tr>
-                    <th scope="col">Nama Petugas</th>
+                    <th scope="col">Nama Supervisor</th>
                     <th scope="col">NIP</th>
-                    <th scope="col">E-mail Petugas</th>
+                    <th scope="col">E-mail Supervisor</th>
                     <th scope="col">Aksi</th>
                 </tr>
             </thead>
@@ -30,11 +30,11 @@
 @push('scripts')
 <script>
     $(document).ready(function () {
-        $('#datapetugas').DataTable({
+        $('#dataspv').DataTable({
             processing: true,
             serverside: true,
             ajax: {
-                url: "{{ route('data petugas') }}",
+                url: "{{ route('data spv') }}",
                 type: 'GET'
             },
             columns: [{

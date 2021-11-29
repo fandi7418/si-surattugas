@@ -2,7 +2,7 @@
 
 @section('container')
 
-<h1 class="">Edit Dosen</h1>
+<h1 class="">Edit Staff</h1>
 @foreach ($staff as $stf )
     
         <form method="post" action="{{ url('update_staff/'. $stf->id) }}" style="margin-right: 10px">
@@ -59,6 +59,7 @@
                                 @enderror
                     </div>
                 </div>
+                @if ($stf->roles_id =='5')
                 <div class="form-group row mt-4">
                     <label for="colFormLabel" class="col-sm-2 col-form-label">Program Studi</label>
                     <div class="col-sm-8">
@@ -75,6 +76,7 @@
                     @enderror
                     </div>
                 </div>
+                @endif
                 <div class="form-group row mt-4">
                     <label for="colFormLabel" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-8">

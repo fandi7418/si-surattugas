@@ -5,12 +5,12 @@
 <br>
 <div class="card">
   <div class="card-header">
-    <h2 class="card-title">Tambah Petugas Penomoran</h2>
+    <h2 class="card-title">Tambah Supervisor</h2>
   </div>
   <div class="card-body">
     <br>
-    <p>Silahkan pilih Staff untuk dijadikan Petugas Penomoran</p>
-    <table class="table table-striped table-bordered table-sm" id="datapetugas" style="width: 100%">
+    <p>Silahkan pilih Staff untuk dijadikan Supervisor</p>
+    <table class="table table-striped table-bordered table-sm" id="dataspv" style="width: 100%">
       <thead>
         <tr>
           <th scope="col">Nama Staff Dekanat FT</th>
@@ -41,11 +41,11 @@
 @push('scripts')
         <script>
               $(document).ready(function() {
-                  $('#datapetugas').DataTable({
+                  $('#dataspv').DataTable({
                       processing : true,
                       serverside : true,
                       ajax : {
-                        url: "{{ route('tambah petugas') }}",
+                        url: "{{ route('tambah spv') }}",
                         type: 'GET'
                       },
                       columns:[

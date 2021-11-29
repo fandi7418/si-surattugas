@@ -117,7 +117,7 @@ Route::group(['middleware' => ['auth:admin']], function()
 
     Route::get('/data_wakildekan/trash', [AdminController::class, 'datawd1sementara'])->name('data wd sementara');
 
-    Route::get('/tambah_wakildekan', [AdminController::class, 'indexwd1']);
+    // Route::get('/tambah_wakildekan', [AdminController::class, 'indexwd1']);
 
     Route::get('/tambah_wakildekan', [AdminController::class, 'tambahwd1'])->name('tambah wd');
 
@@ -143,28 +143,47 @@ Route::group(['middleware' => ['auth:admin']], function()
     
     Route::get('/data_petugas', [AdminController::class, 'datapetugas'])->name('data petugas');
     
-    Route::get('/data_petugas/trash', [AdminController::class, 'datapetugassementara'])->name('data petugas sementara');
+    // Route::get('/data_petugas/trash', [AdminController::class, 'datapetugassementara'])->name('data petugas sementara');
     
-    Route::get('/tambah_petugas', [AdminController::class, 'indexpetugas']);
+    // Route::get('/tambah_petugas', [AdminController::class, 'indexpetugas']);
+    
+    Route::get('/tambah_petugas', [AdminController::class, 'tambahpetugas'])->name('tambah petugas');
 
-    Route::post('/tambah_petugas', [AdminController::class, 'tambahpetugas']);
+    // Route::post('/tambah_petugas', [AdminController::class, 'tambahpetugas']);
 
-    Route::get('/edit_petugas/{id}', [AdminController::class, 'editpetugas']);
+    Route::get('/pilihPetugas/{id}/konfirmasi', [AdminController::class, 'konfirmasiPilihPetugas']);
 
-    Route::post('/update_petugas/{id}', [AdminController::class, 'updatepetugas']);
+    Route::get('/pilih_PetugasPenomoran/{id}/pilihPetugas', [AdminController::class, 'pilihPetugas']);
+
+    // Route::get('/edit_petugas/{id}', [AdminController::class, 'editpetugas']);
+
+    // Route::post('/update_petugas/{id}', [AdminController::class, 'updatepetugas']);
 
     Route::get('/hapus_petugas/{id}/konfirmasi', [AdminController::class, 'konfirmasipetugas']);
     
     Route::get('/hapus_petugas/{id}/hapuspetugas', [AdminController::class, 'hapuspetugas']);
 
-    Route::get('/hapus_petugaspermanen/{id}/konfirmasi', [AdminController::class, 'konfirmasipetugaspermanen']);
+    // Route::get('/hapus_petugaspermanen/{id}/konfirmasi', [AdminController::class, 'konfirmasipetugaspermanen']);
 
-    Route::get('/hapus_petugas/{id}/hapuspetugaspermanen', [AdminController::class, 'hapuspetugaspermanen']);
+    // Route::get('/hapus_petugas/{id}/hapuspetugaspermanen', [AdminController::class, 'hapuspetugaspermanen']);
 
-    Route::get('data_petugas/restore/{id}', [AdminController::class, 'restorepetugas']);
+    // Route::get('data_petugas/restore/{id}', [AdminController::class, 'restorepetugas']);
 
-    Route::post('/update_passwordpetugas/{id}', [AdminController::class, 'updatepasswordpetugas'])->name('aksi ubah password petugas'); 
+    // Route::post('/update_passwordpetugas/{id}', [AdminController::class, 'updatepasswordpetugas'])->name('aksi ubah password petugas'); 
 
+    // route untuk supervisor
+
+    Route::get('/data_supervisor', [AdminController::class, 'dataspv'])->name('data spv');
+    
+    Route::get('/tambah_supervisor', [AdminController::class, 'tambahspv'])->name('tambah spv');
+
+    Route::get('/pilihSpv/{id}/konfirmasi', [AdminController::class, 'konfirmasiPilihSpv']);
+
+    Route::get('/pilih_supervisor/{id}/pilih', [AdminController::class, 'pilihSpv']);
+
+    Route::get('/hapus_spv/{id}/konfirmasi', [AdminController::class, 'konfirmasispv']);
+    
+    Route::get('/hapus_spv/{id}/hapusspv', [AdminController::class, 'hapusspv']);
 
     // route untuk data surat
     

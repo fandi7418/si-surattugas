@@ -732,16 +732,16 @@ class AdminController extends Controller
 
         // controller Petugas di Admin //
 
-    public function indexpetugas()
-    {
-        return view('admin.tambahpetugas', [
-            "title" => "Tambah Petugas Penomoran"
-        ]); 
-    } 
+    // public function indexpetugas()
+    // {
+    //     return view('admin.tambahpetugas', [
+    //         "title" => "Tambah Petugas Penomoran"
+    //     ]); 
+    // } 
 
     public function datapetugas(Request $request)
     {
-        $petugas = Petugas::get();
+        $petugas = Staff::where('roles_id', '=', '7')->get();
         if ($request->ajax()){
             return datatables()->of($petugas)->addColumn('action', function($data){
                 $url_edit = url('edit_petugas/'.$data->id);
@@ -778,30 +778,60 @@ class AdminController extends Controller
 
     public function tambahpetugas(Request $request)
     {
-        $request->validate([
-            'nama_petugas' => 'required|max:255|string',
-            'NIP' => 'required|numeric|min:6|unique:petugas_penomoran,NIP|unique:ketua_departemen,NIP|unique:dosen,NIP|unique:admin,NIP|unique:wakildekan,NIP',
-            'email_petugas' => 'email|required|unique:petugas_penomoran,email_petugas|unique:ketua_departemen,email_kadep|unique:admin,email_admin|unique:dosen,email_dosen|unique:wakildekan,email_wd',
-            'password' => 'required|min:6',
-        ], [
-            'email_petugas.unique' => 'Email sudah ada yang menggunakan',
-            'email_petugas.email' => 'Email tidak boleh kosong',
-            'nama_petugas.required' => 'Nama tidak boleh kosong',
-            'NIP.required' => 'NIP tidak boleh kosong',
-            'NIP.unique' => 'NIP sudah ada yang menggunakan',
-            'password.min' => 'Password harus lebih dari 6 karakter',
-            'password.required' => 'Password tidak boleh kosong'
-        ]);
-        Petugas::create([
-            'nama_petugas' => $request->nama_petugas,
-            'NIP' => $request->NIP,
-            'email_petugas' => $request->email_petugas,
-            'password' => Hash::make($request->password),
+        // $request->validate([
+        //     'nama_petugas' => 'required|max:255|string',
+        //     'NIP' => 'required|numeric|min:6|unique:petugas_penomoran,NIP|unique:ketua_departemen,NIP|unique:dosen,NIP|unique:admin,NIP|unique:wakildekan,NIP',
+        //     'email_petugas' => 'email|required|unique:petugas_penomoran,email_petugas|unique:ketua_departemen,email_kadep|unique:admin,email_admin|unique:dosen,email_dosen|unique:wakildekan,email_wd',
+        //     'password' => 'required|min:6',
+        // ], [
+        //     'email_petugas.unique' => 'Email sudah ada yang menggunakan',
+        //     'email_petugas.email' => 'Email tidak boleh kosong',
+        //     'nama_petugas.required' => 'Nama tidak boleh kosong',
+        //     'NIP.required' => 'NIP tidak boleh kosong',
+        //     'NIP.unique' => 'NIP sudah ada yang menggunakan',
+        //     'password.min' => 'Password harus lebih dari 6 karakter',
+        //     'password.required' => 'Password tidak boleh kosong'
+        // ]);
+        // Petugas::create([
+        //     'nama_petugas' => $request->nama_petugas,
+        //     'NIP' => $request->NIP,
+        //     'email_petugas' => $request->email_petugas,
+        //     'password' => Hash::make($request->password),
 
             
+        // ]);
+        // Alert::success('Sukses', 'Data Berhasil Ditambah');
+        // return redirect('data_petugas');
+        $petugas = Staff::where('roles_id', '=', '4')->get();
+        if ($request->ajax()){
+            return datatables()->of($petugas)->addColumn('action', function($data){
+                $url_edit = url('pilihPetugas/'.$data->id.'/konfirmasi');
+                $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i>Pilih</a>';  
+                return $button;
+            })
+            ->rawColumns(['action'])
+                        ->addIndexColumn()
+                        ->make(true);
+        }
+        return view('admin.tambahpetugas', [ 'petugas' => $petugas, "title" => "Tambah Petugas Penomoran"]);
+    }
+
+    public function konfirmasiPilihPetugas($id)
+    {
+        alert()->question('Peringatan','Pilih menjadi Petugas Penomoran? ')
+        ->showConfirmButton('<a href="pilih_PetugasPenomoran/'.$id.'/pilihPetugas" class="text-white" style="text-decoration: none">Pilih</a>', '#3085d6')->toHtml()
+        ->showCancelButton('Batal', '#aaa')->reverseButtons();
+
+        return redirect()->back();
+    }
+
+    public function pilihPetugas($id)
+    {
+        Staff::where('id', $id)->update([
+            'roles_id' => '7'
         ]);
-        Alert::success('Sukses', 'Data Berhasil Ditambah');
-        return redirect('data_petugas');
+        Alert::success('Sukses', 'Data Berhasil Ditambahkan');
+        return redirect('/data_petugas');
     }
 
     public function editpetugas($id)
@@ -838,14 +868,16 @@ class AdminController extends Controller
         ->showConfirmButton('<a href="/hapus_petugas/'.$id.'/hapuspetugas" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
         ->showCancelButton('Batal', '#aaa')->reverseButtons();
 
-        return redirect('/data_petugas');
+        return redirect()->back();
     }
 
     public function hapuspetugas($id)
     {
-        Petugas::where('id', $id)->delete();
+        $petugas = Staff::where('id',$id)->update([
+            'roles_id' => '4'
+        ]);
         Alert::success('Sukses', 'Data Berhasil Dihapus');
-        return redirect('/data_petugas');
+        return redirect()->back();
     }
 
     public function restorepetugas($id)
@@ -882,6 +914,79 @@ class AdminController extends Controller
         toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect('/data_petugas');
     }
+
+// Route Data Supervisor
+
+public function dataspv(Request $request)
+{
+    $spv = Staff::where('roles_id', '=', '6')->get();
+    if ($request->ajax()){
+        return datatables()->of($spv)->addColumn('action', function($data){
+            $url_edit = url('edit_spv/'.$data->id);
+            $url_hapus = url('hapus_spv/'.$data->id.'/konfirmasi');
+            $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';
+            $button .= '&nbsp;&nbsp;';
+            $button .= '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Delete</a>';     
+            return $button;
+        })
+        ->rawColumns(['action'])
+                    ->addIndexColumn()
+                    ->make(true);
+    }
+    return view('admin.datasupervisor', ['spv' => $spv, "title" => "Data Supervisor"]);
+}
+
+public function tambahspv(Request $request)
+{
+    $spv = Staff::where('roles_id', '=', '4')->get();
+    if ($request->ajax()){
+        return datatables()->of($spv)->addColumn('action', function($data){
+            $url_edit = url('pilihSpv/'.$data->id.'/konfirmasi');
+            $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i>Pilih</a>';  
+            return $button;
+        })
+        ->rawColumns(['action'])
+                    ->addIndexColumn()
+                    ->make(true);
+    }
+    return view('admin.tambahsupervisor', [ 'spv' => $spv, "title" => "Tambah Supervisor"]);
+}
+
+public function konfirmasiPilihSpv($id)
+{
+    alert()->question('Peringatan','Pilih menjadi Supervisor? ')
+    ->showConfirmButton('<a href="pilih_supervisor/'.$id.'/pilih" class="text-white" style="text-decoration: none">Pilih</a>', '#3085d6')->toHtml()
+    ->showCancelButton('Batal', '#aaa')->reverseButtons();
+
+    return redirect()->back();
+}
+
+public function pilihSpv($id)
+{
+    Staff::where('id', $id)->update([
+        'roles_id' => '6'
+    ]);
+    Alert::success('Sukses', 'Data Berhasil Ditambahkan');
+    return redirect('data_supervisor');
+}
+
+public function konfirmasispv($id)
+{
+    alert()->question('Peringatan','Anda yakin akan menghapus? ')
+    ->showConfirmButton('<a href="/hapus_spv/'.$id.'/hapusspv" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
+    ->showCancelButton('Batal', '#aaa')->reverseButtons();
+
+    return redirect()->back();
+}
+
+public function hapusspv($id)
+{
+    $spv = Staff::where('id',$id)->update([
+        'roles_id' => '4'
+    ]);
+    Alert::success('Sukses', 'Data Berhasil Dihapus');
+    return redirect()->back();
+}
 
 // Route Data Surat
 
