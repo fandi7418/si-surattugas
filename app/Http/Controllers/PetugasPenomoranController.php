@@ -21,14 +21,27 @@ class PetugasPenomoranController extends Controller
         ])
         ->orderBy('updated_at', 'DESC')
         ->get();
+        $staff = Surat::with('status')
+        ->where([
+            'surat.id_staff' => Auth::user()->id,
+        ])
+        ->orderBy('updated_at', 'DESC')
+        ->get();
         return response()->json([
             'surat' => $surat,
+            'staff' => $staff,
         ]);
     }
     
     public function dashboardpetugas(Surat $surat)
     {
-        return view('petugas.dashboardpetugas');
+        if(Auth::guard('staff')->user()->roles_id == '7')
+        {
+            return view('petugas.dashboardpetugas');
+        } else {
+            return redirect()->back();
+        }
+        
     }
 
     // public function dropdown($id)
@@ -52,36 +65,37 @@ class PetugasPenomoranController extends Controller
 
     public function daftarsuratpetugas(Surat $surat)
     {
-        $prodi = Prodi::all();
-        // if($id==0)
-        // {
-        //     $surat = Surat::with('status')
-        //     ->whereNotNull('surat.ttd_wd')
-        //     ->get();
-        // }else{
-        //     $surat = Surat::with('status')
-        //     ->where('prodi_id', '=', $id)
-        //     ->get();
-        // }
-        // return response()->json($surat);
-        $surat = Surat::with('status')->whereNotNull('surat.ttd_wd')
-        ->orderBy('updated_at', 'DESC')
-        ->get(); 
-        return view('petugas.daftarsuratpetugas', 
-        [
-            'surat' => $surat, 
-            'prodi' => $prodi,
-        ]);
+        if(Auth::guard('staff')->user()->roles_id == '7')
+        {
+            $prodi = Prodi::all();
+            $surat = Surat::with('status')->whereNotNull('surat.ttd_wd')
+            ->orderBy('updated_at', 'DESC')
+            ->get(); 
+            return view('petugas.daftarsuratpetugas', 
+            [
+                'surat' => $surat, 
+                'prodi' => $prodi,
+            ]);
+        } else {
+            return redirect()->back();
+        }
+        
     }
     public function profilpetugas(Surat $surat)
     {
-        $petugas = Petugas::where([
-            'petugas_penomoran.id' => Auth::user()->id,
-        ])
-        ->get();
-        return view('petugas.profilpetugas', [
-            'petugas' => $petugas
-        ]);
+        if(Auth::guard('staff')->user()->roles_id == '7')
+        {
+            $petugas = Staff::where([
+                'staff.id' => Auth::user()->id,
+            ])
+            ->get();
+            return view('petugas.profilpetugas', [
+                'petugas' => $petugas
+            ]);
+        } else {
+            return redirect()->back();
+        }
+        
     }
 
     public function editnomorsurat(Request $request, $id)
@@ -145,8 +159,8 @@ class PetugasPenomoranController extends Controller
 
         ]);
 
-        Petugas::where('id', $request->id)->update([
-            'nama_petugas' => $request->nama,
+        Staff::where('id', $request->id)->update([
+            'nama_staff' => $request->nama,
             'NIP' => $request->NIP,
             'email_petugas' => $request->email_petugas,
         ]);

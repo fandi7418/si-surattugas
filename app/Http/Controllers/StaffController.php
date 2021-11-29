@@ -13,10 +13,51 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 
 class StaffController extends Controller
 {
+    public function clearNotifStaff()
+    {
+        $surat = Surat::with('status')
+        ->where(['surat.id_staff' => Auth::user()->id,])
+        ->update([
+            'notif' => '2',
+        ]);
+        return response()->json([
+            'surat' => $surat,
+        ]);
+    }
+    
+    public function notifStaff(Request $request)
+    {
+        $surat = Surat::with('status')
+        ->where([
+            'surat.id_staff' => Auth::user()->id,
+            'surat.notif' => '1',
+        ])
+        ->orderBy('updated_at', 'DESC')
+        ->get();
+        $petugas = Surat::with('status')
+        ->where([
+            'surat.status_id' => '3',
+        ])
+        ->orderBy('updated_at', 'DESC')
+        ->get();
+        // $wd = Surat::with('status')
+        // ->where([
+        //     'surat.status_id' => '2',
+        // ])
+        // ->orderBy('updated_at', 'DESC')
+        // ->get();
+        return response()->json([
+            'surat' => $surat,
+            'petugas' => $petugas,
+            // 'wd' => $wd,
+        ]);
+    }
+    
     public function dashboardStaff(Request $request)
     {
         return view('staff.dashboardStaff');
@@ -27,7 +68,7 @@ class StaffController extends Controller
         $surat = Surat::with('status')
         ->where([
             'surat.id_staff' => Auth::user()->id,
-        ])->orderBy('updated_at', 'DESC');
+        ])->orderBy('updated_at', 'DESC')->get();
         // ->where([
         //     'surat.NIP' => Auth::user()->NIP,
         //     'surat.prodi_id' => Auth::user()->prodi_id,
@@ -63,7 +104,7 @@ class StaffController extends Controller
             'tanggalakhir.after_or_equal' => 'Input tidak valid',
         ]);
         Surat::create([
-            'nama_dosen' => $request->nama,
+            'nama_staff' => $request->nama,
             'NIP' => $request->nip,
             'prodi_id' => Auth::guard('staff')->user()->prodi->id,
             'pangkat' => $request->pangkat,
@@ -94,7 +135,7 @@ class StaffController extends Controller
                 ])
             ->first()->NIP,
             'notif' => '1',
-            'id_dosen' => Auth::guard('staff')->user()->id,
+            'id_staff' => Auth::guard('staff')->user()->id,
             'roles_id' => Auth::guard('staff')->user()->roles_id,
             'remember_token' => Str::random(60),
         ]);
@@ -102,7 +143,7 @@ class StaffController extends Controller
         return redirect('/daftarsuratStaff');
     }
 
-    public function tambahsuratStaffDekanat(Request $request)
+    public function tambahsuratStaffFT(Request $request)
     {
         $request->validate([
             'tanggalawal' => 'date_format:Y-m-d|after_or_equal:today',
@@ -113,9 +154,8 @@ class StaffController extends Controller
             'tanggalakhir.after_or_equal' => 'Input tidak valid',
         ]);
         Surat::create([
-            'nama_dosen' => $request->nama,
+            'nama_staff' => $request->nama,
             'NIP' => $request->nip,
-            'prodi_id' => Auth::guard('staff')->user()->prodi->id,
             'pangkat' => $request->pangkat,
             'jabatan' => $request->jabatan,
             'judul' => $request->judul,
@@ -124,15 +164,13 @@ class StaffController extends Controller
             'kota' => $request->kota,
             'tanggalawal' => $request->tanggalawal,
             'tanggalakhir' => $request->tanggalakhir,
-            'status_id' => '1',
-            'nama_kadep' => Dosen::where([
-                'prodi_id' => Auth::user()->prodi_id,
-                'roles_id' => '2',
+            'status_id' => '7',
+            'nama_supervisor' => Staff::where([
+                'roles_id' => '6',
                 ])
-            ->first()->nama_dosen,
-            'NIP_kadep' => Dosen::where([
-                'prodi_id' => Auth::user()->prodi_id,
-                'roles_id' => '2',
+            ->first()->nama_staff,
+            'NIP_supervisor' => Staff::where([
+                'roles_id' => '6',
                 ])
             ->first()->NIP,
             'nama_wd' => Dosen::where([
@@ -144,12 +182,53 @@ class StaffController extends Controller
                 ])
             ->first()->NIP,
             'notif' => '1',
-            'id_dosen' => Auth::guard('staff')->user()->id,
+            'id_staff' => Auth::guard('staff')->user()->id,
             'roles_id' => Auth::guard('staff')->user()->roles_id,
             'remember_token' => Str::random(60),
         ]);
         Alert::success('Sukses', 'Data Berhasil Ditambah');
-        return redirect('/daftarsuratdosen');
+        return redirect('/daftarsuratStaff');
+    }
+
+    public function editsuratStaff($id)
+    {
+        $surat = Surat::findOrFail($id);
+        return response()->json([
+            'surat' => $surat
+        ]);
+    }
+
+    public function updatesuratStaff(Request $request, $id)
+    {
+        $surat = Surat::find($id)->update([
+            'judul' => $request->judul,
+            'jenis' => $request->jenis,
+            'tempat' => $request->tempat,
+            'kota' => $request->kota,
+            'tanggalawal' => $request->tanggalawal,
+            'tanggalakhir' => $request->tanggalakhir,
+        ]);
+        return response()->json([ 
+            'success' => true,
+            'surat' => $surat
+        ]);
+    }
+
+    public function confirmHapusStaff(Request $request, $id)
+    {
+        $surat = Surat::findOrFail($id);
+        return response()->json([
+            'surat' => $surat
+        ]);
+    }
+    
+    public function hapussuratStaff($id)
+    {
+        $surat = Surat::where('id', $id)->delete();
+        toast('Berhasil dihapus', 'success')->autoClose(2000);
+        return response()->json([
+            'surat' => $surat,
+        ]);
     }
 
     public function updateprofilStaff(Request $request, $id)

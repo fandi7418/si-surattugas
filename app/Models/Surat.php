@@ -19,6 +19,7 @@ class Surat extends Authenticatable
     protected $fillable = [
         'no_surat',
         'nama_dosen',
+        'nama_staff',
         'NIP',
         'prodi_id',
         'pangkat',
@@ -31,14 +32,18 @@ class Surat extends Authenticatable
         'tanggalakhir',
         'tanggalsurat',
         'status_id',
+        'ttd_spv',
         'ttd_kadep',
         'ttd_wd',
+        'nama_supervisor',
+        'NIP_supervisor',
         'nama_kadep',
         'NIP_kadep',
         'nama_wd',
         'NIP_wd',
         'notif',
         'id_dosen',
+        'id_staff',
         'roles_id',
     ];
 

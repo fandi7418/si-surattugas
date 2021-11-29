@@ -71,16 +71,22 @@
 		<table width="625">
 			<tr class="text2">
 				<td width="150">Nama</td>
+				@if(isset($surat->nama_dosen))
 				<td width="500">: {{ $surat->nama_dosen }}</td>
+				@else
+				<td width="500">: {{ $surat->nama_staff }}</td>
+				@endif
 			</tr>
 			<tr>
 				<td>NIP</td>
 				<td width="525">: {{ $surat->NIP }}</td>
 			</tr>
+			@if(isset($surat->prodi_id))
 			<tr>
 				<td>Departemen/Prodi</td>
 				<td width="525">: {{ $surat->prodi->prodi }}</td>
 			</tr>
+			@endif
 			<tr>
 				<td>Pangkat/Golongan</td>
 				<td width="525">: {{ $surat->pangkat }}</td>
@@ -150,19 +156,35 @@
 				<td class="text" >a.n Dekan</td>
 			</tr>
 			<tr>
-				<td width="350">Kepala Departemen/Prodi</td>
+				@if(isset($surat->nama_kadep))
+				<td width="350">Ketua Departemen/Prodi</td>
+				@else
+				<td width="350">Supervisor</td>
+				@endif
 				<td class="text" >Wakil Dekan Akademik dan Kemahasiswaan</td>
 			</tr>
 			<tr>
+				@if(isset($surat->ttd_kadep))
 				<td class="text"><img src="/image/{{ $surat->ttd_kadep }}" alt="" width="auto" height="100px"></td>
+				@else
+				<td class="text"><img src="/image/{{ $surat->ttd_spv }}" alt="" width="auto" height="100px"></td>
+				@endif
 				<td class="text"><img src="/image/{{ $surat->ttd_wd }}" alt="" width="auto" height="100px"></td>
 			</tr>
 			<tr>
+				@if(isset($surat->nama_kadep))
 				<td class="text">{{ $surat->nama_kadep }}</td>
+				@else
+				<td class="text">{{ $surat->nama_supervisor }}</td>
+				@endif
 				<td class="text">{{ $surat->nama_wd }}</td>
 			</tr>
 			<tr>
+				@if(isset($surat->NIP_kadep))
 				<td class="text">NIP. {{ $surat->NIP_kadep }}</td>
+				@else
+				<td class="text">NIP. {{ $surat->NIP_supervisor }}</td>
+				@endif
 				<td class="text">NIP. {{ $surat->NIP_wd }}</td>
 			</tr>
 	     </table>

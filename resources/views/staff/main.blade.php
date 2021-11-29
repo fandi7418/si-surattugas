@@ -152,6 +152,14 @@
             Daftar Surat
           </a>
         </li>
+        @if ( Auth::guard('staff')->user()->roles_id == '7' )
+        <hr>
+        <li >
+          <a href="/dashboardpetugas" class="nav-link text-white" id="angkaNotifPetugas" name="angkaNotifPetugas">
+            Menu Penomoran
+          </a>
+        </li>
+        @endif
       </ul>
     </div>
 
@@ -196,7 +204,7 @@
               }
             });
             $.ajax({
-              url: "{{ url('/clearNotif') }}",
+              url: "{{ url('/clearNotifStaff') }}",
               type: "POST",
               success: function () {
                 $("#isiNotif").empty();
@@ -206,7 +214,7 @@
           });
       });
       function notif(){
-        let seturl = "{{ route("notifDosen") }}";
+        let seturl = "{{ route("notifStaff") }}";
         console.log(seturl);
           
           $.ajax({
@@ -216,8 +224,7 @@
               success: function (data) {
                 $("#isiNotif").empty();
                 $("#angkaNotif").empty();
-                $("#angkaNotifKadep").empty();
-                $("#angkaNotifWD").empty();
+                $("#angkaNotifPetugas").empty();
                 for (var i=0; i < data.surat.length; i++){
                   var waktu = new Date(data.surat[i].updated_at);
                   var jam = waktu.getHours();
@@ -243,22 +250,13 @@
                       '<span class=" badge rounded-pill bg-danger">'+data.surat.length+''
                     );
                   }
-                    if(data.kadep.length != '0'){
-                      $("#angkaNotifKadep").html(
-                        `Menu Kadep <span class=" badge rounded-pill bg-danger">`+data.kadep.length+``
+                    if(data.petugas.length != '0'){
+                      $("#angkaNotifPetugas").html(
+                        `Menu Penomoran <span class=" badge rounded-pill bg-danger">`+data.petugas.length+``
                       );
                     }else{
-                      $("#angkaNotifKadep").html(
-                        `Menu Kadep`
-                      );
-                    }
-                    if(data.wd.length != '0'){
-                      $("#angkaNotifWD").html(
-                        `Menu Wakil Dekan <span class=" badge rounded-pill bg-danger">`+data.wd.length+``
-                      );
-                    }else{
-                      $("#angkaNotifWD").html(
-                        `Menu Wakil Dekan`
+                      $("#angkaNotifPetugas").html(
+                        `Menu Penomoran`
                       );
                     }
               }

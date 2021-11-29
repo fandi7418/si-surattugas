@@ -94,12 +94,12 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="bi bi-person-circle" style="margin-right:5px"></i>  
-                @if ( Str::length(Auth::guard('petugas_penomoran')->user()) >0 )
-                  {{ Auth::guard('petugas_penomoran')->user()->nama_petugas }}
+                @if ( Str::length(Auth::guard('staff')->user()) >0 )
+                    {{ Auth::guard('staff')->user()->nama_staff }}
                 @endif
               </a>
               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="/profilpetugas" style="margin-bottom:5px">
+                  <a class="dropdown-item" href="/profilStaff" style="margin-bottom:5px">
                     <i class="bi bi-pencil-square" style="margin-right:10px"></i>
                     Edit Profil
                   </a>
@@ -141,6 +141,14 @@
           Daftar Surat
         </a>
       </li>
+      @if ( Auth::guard('staff')->user()->roles_id == '7' )
+        <hr>
+        <li >
+          <a href="/dashboardStaff" class="nav-link text-white" id="angkaNotifStaff" name="angkaNotifStaff">
+            Menu Staff
+          </a>
+        </li>
+      @endif
     </ul>
   </div>
   <div class="col-lg-10" style="margin-left: 20px; margin-top: 20px">
@@ -191,6 +199,7 @@
               success: function (data) {
                 $("#isiNotif").empty();
                 $("#angkaNotif").empty();
+                $("#angkaNotifStaff").empty();
                 for (var i=0; i < data.surat.length; i++){
                   var waktu = new Date(data.surat[i].updated_at);
                   var jam = waktu.getHours();
@@ -214,6 +223,15 @@
                   );
                   $("#angkaNotif").html(
                     '<span class=" badge rounded-pill bg-danger">'+data.surat.length+''
+                  );
+                }
+                if(data.staff.length != '0'){
+                  $("#angkaNotifStaff").html(
+                    `Menu Staff <span class=" badge rounded-pill bg-danger">`+data.staff.length+``
+                  );
+                }else{
+                  $("#angkaNotifStaff").html(
+                    `Menu Staff`
                   );
                 }
               }

@@ -425,34 +425,34 @@ Route::get('/surat/{surat}', [SuratController::class, 'show']);
 
 
 /* Route petugas */
-Route::group(['middleware' => ['auth:petugas_penomoran']], function()
-{
-    // Route::get('/dashboardpetugas', function () {
-    //     return view('/petugas/dashboardpetugas');
-    // });
+// Route::group(['middleware' => ['auth:petugas_penomoran']], function()
+// {
+//     // Route::get('/dashboardpetugas', function () {
+//     //     return view('/petugas/dashboardpetugas');
+//     // });
         
-    // Route::get('/profilpetugas', function () {
-    //     return view('/petugas/profilpetugas');
-    // });
+//     // Route::get('/profilpetugas', function () {
+//     //     return view('/petugas/profilpetugas');
+//     // });
 
-    Route::get('/notifPetugas', [PetugasPenomoranController::class, 'notifPetugas'])->name('notifPetugas');
+//     Route::get('/notifPetugas', [PetugasPenomoranController::class, 'notifPetugas'])->name('notifPetugas');
     
-    Route::get('/dashboardpetugas', [PetugasPenomoranController::class, 'dashboardpetugas']);
+//     Route::get('/dashboardpetugas', [PetugasPenomoranController::class, 'dashboardpetugas']);
     
-    Route::get('/daftarsuratpetugas', [PetugasPenomoranController::class, 'daftarsuratpetugas'])->name('daftarsuratpetugas');
+//     Route::get('/daftarsuratpetugas', [PetugasPenomoranController::class, 'daftarsuratpetugas'])->name('daftarsuratpetugas');
     
-    // Route::get('/dropdown/{id}', [PetugasPenomoranController::class, 'dropdown'])->name('dropdown');
+//     // Route::get('/dropdown/{id}', [PetugasPenomoranController::class, 'dropdown'])->name('dropdown');
     
-    Route::get('/profilpetugas', [PetugasPenomoranController::class, 'profilpetugas']);
+//     Route::get('/profilpetugas', [PetugasPenomoranController::class, 'profilpetugas']);
     
-    Route::post('/updateprofilpetugas/{id}', [PetugasPenomoranController::class, 'updateprofilpetugas']);
+//     Route::post('/updateprofilpetugas/{id}', [PetugasPenomoranController::class, 'updateprofilpetugas']);
 
-    Route::post('/editpasswordpetugas', [PetugasPenomoranController::class, 'editpasswordpetugas']);
+//     Route::post('/editpasswordpetugas', [PetugasPenomoranController::class, 'editpasswordpetugas']);
 
-    Route::post('/updatenomorsurat/{id}', [PetugasPenomoranController::class, 'updatenomorsurat'])->name('updatenomorsurat');
+//     Route::post('/updatenomorsurat/{id}', [PetugasPenomoranController::class, 'updatenomorsurat'])->name('updatenomorsurat');
 
-    Route::get('/editnomorsurat/{id}', [PetugasPenomoranController::class, 'editnomorsurat'])->name('editnomorsurat');
-});
+//     Route::get('/editnomorsurat/{id}', [PetugasPenomoranController::class, 'editnomorsurat'])->name('editnomorsurat');
+// });
 
 
 /* Route wakil dekan */
@@ -499,13 +499,25 @@ Route::group(['middleware' => ['auth:petugas_penomoran']], function()
 Route::group(['middleware' => ['auth:staff']], function()
 {
     
+    Route::get('/notifStaff', [StaffController::class, 'notifStaff'])->name('notifStaff');
+
+    Route::post('/clearNotifStaff', [StaffController::class, 'clearNotifStaff'])->name('clearNotifStaff');
+    
     Route::get('/daftarsuratStaff', [StaffController::class, 'daftarsuratStaff']);
 
     Route::get('/buatsuratStaff', [StaffController::class, 'buatsuratStaff']);
 
-    // Route::get('/notifStaff', [StaffController::class, 'notifStaff'])->name('notifStaff');
+    Route::post('/tambahsuratStaff', [StaffController::class, 'tambahsuratStaff']);
 
-    // Route::post('/clearNotif', [DosenController::class, 'clearNotif'])->name('clearNotif');
+    Route::post('/tambahsuratStaffFT', [StaffController::class, 'tambahsuratStaffFT']);
+
+    Route::get('/editsuratStaff/{id}', [StaffController::class, 'editsuratStaff'])->name('editsuratStaff');
+    
+    Route::post('/updatesuratStaff/{id}', [StaffController::class, 'updatesuratStaff'])->name('updatesuratStaff');
+
+    Route::get('/confirmHapusStaff/{id}', [StaffController::class, 'confirmHapusStaff'])->name('confirmHapusStaff');
+
+    Route::post('/hapussuratStaff/{id}', [StaffController::class, 'hapussuratStaff'])->name('hapussuratStaff');
 
     Route::get('/profilStaff', [StaffController::class, 'profilStaff']);
 
@@ -514,7 +526,27 @@ Route::group(['middleware' => ['auth:staff']], function()
     Route::post('/editpasswordStaff', [StaffController::class, 'editpasswordStaff']);
 
     Route::get('/dashboardStaff', [StaffController::class, 'dashboardStaff']);
+
     
+    /* Hak akses petugas ===================================================================*/
+
+    Route::get('/notifPetugas', [PetugasPenomoranController::class, 'notifPetugas'])->name('notifPetugas');
+    
+    Route::get('/dashboardpetugas', [PetugasPenomoranController::class, 'dashboardpetugas']);
+    
+    Route::get('/daftarsuratpetugas', [PetugasPenomoranController::class, 'daftarsuratpetugas'])->name('daftarsuratpetugas');
+    
+    // Route::get('/dropdown/{id}', [PetugasPenomoranController::class, 'dropdown'])->name('dropdown');
+    
+    Route::get('/profilpetugas', [PetugasPenomoranController::class, 'profilpetugas']);
+    
+    Route::post('/updateprofilpetugas/{id}', [PetugasPenomoranController::class, 'updateprofilpetugas']);
+
+    Route::post('/editpasswordpetugas', [PetugasPenomoranController::class, 'editpasswordpetugas']);
+
+    Route::post('/updatenomorsurat/{id}', [PetugasPenomoranController::class, 'updatenomorsurat'])->name('updatenomorsurat');
+
+    Route::get('/editnomorsurat/{id}', [PetugasPenomoranController::class, 'editnomorsurat'])->name('editnomorsurat');
 });
 
 

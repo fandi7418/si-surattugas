@@ -34,6 +34,12 @@ class StatusSuratSeeder extends Seeder
         StatusSurat::create([
             'status' => 'Ditolak Wakil Dekan',
         ]);
+        StatusSurat::create([
+            'status' => 'Menunggu persetujuan Supervisor',
+        ]);
+        StatusSurat::create([
+            'status' => 'Ditolak Supervisor',
+        ]);
     }
 }
 
