@@ -78,11 +78,6 @@ class DosenController extends Controller
         ->where([
             'surat.id_dosen' => Auth::user()->id,
         ])
-        ->where([
-            'surat.NIP' => Auth::user()->NIP,
-            'surat.prodi_id' => Auth::user()->prodi_id,
-            'surat.notif' => '1',
-        ])
         ->orderBy('updated_at', 'DESC')
         ->paginate(10);
         return view('dosen.daftarsuratdosen', ['surat' => $surat]);

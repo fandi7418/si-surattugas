@@ -9,195 +9,25 @@
   <table class="table table-striped table-bordered" style="width:100%;" id="daftarSurat">
     <thead>
       <tr style="text-align:center">
-        <th scope="col">No. Surat</th>
-        <th scope="col">Nama Surat</th>
+        <th scope="col">Nama</th>
+        <th scope="col">Judul Surat</th>
         <th scope="col">Tanggal</th>
-        <th scope="col" style="width:400px;">Tracking</th>
+        <th scope="col"></th>
         <th scope="col" style="display:none">id</th>
-        <th scope="col"> </th>
       </tr>
     </thead>
     <tbody>
       @foreach($surat as $isi)
       <tr>
-        @if($isi->status_id == '5')
-        <td class="align-middle" style="color:red; text-align: center">
-          <i class="bi bi-exclamation-triangle-fill"></i>
-        </td>
-        @elseif($isi->status_id == '6')
-        <td class="align-middle" style="color:red; text-align: center">
-          <i class="bi bi-exclamation-triangle-fill"></i>
-        </td>
-        @else
-        <td>{{$isi->no_surat}}</td>
-        @endif
+        <td>{{$isi->nama}}</td>
         <td>{{$isi->judul}}</td>
         <td>{{ \Carbon\Carbon::parse($isi->created_at)->isoFormat('D MMMM Y')}}</td>
-        @if($isi->status_id == '1')
-        <td>
-          <div class="container">
-            <div class="row text-center w-10" style="color:grey">
-              <div class="col">
-                <i class="bi bi-check-circle-fill" style="color:green"></i>
-              </div>
-              <div class="col">
-                <i class="bi bi-clock" width="15" height="15"></i>
-              </div>
-              <div class="col">
-                <i class="bi bi-clock" width="15" height="15"></i>
-              </div>
-              <div class="col">
-                <i class="bi bi-clock" width="15" height="15"></i>
-              </div>
-              <div></div>
-              <div class="col"  style="color:green"><small>Pengajuan</small></div>
-              <div class="col"><small>Kadep</small></div>
-              <div class="col"><small>WD 1</small></div>
-              <div class="col"><small>Sukses</small></div>
-            </div>
-          </div>
+        <td style="text-align: center">
+          <a href="/surat/{{ $isi->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
+          <button type="button" class="btn btn-danger btn-sm" onClick="konfirmasiTolak({{ $isi->id }})">Tolak</button>
+          <button type="button" class="btn btn-success btn-sm" onClick="konfirmasiIzin({{ $isi->id }})">Izinkan</button>
         </td>
-        @elseif($isi->status_id == '2')
-        <td>
-          <div class="container">
-            <div class="row text-center w-10" style="color:grey">
-              <div class="col">
-                <i class="bi bi-check-circle-fill" style="color:green"></i>
-              </div>
-              <div class="col">
-                <i class="bi bi-check-circle-fill" style="color:green"></i>
-              </div>
-              <div class="col">
-                <i class="bi bi-clock" width="15" height="15"></i>
-              </div>
-              <div class="col">
-                <i class="bi bi-clock" width="15" height="15"></i>
-              </div>
-              <div></div>
-              <div class="col" style="color:green"><small>Pengajuan</small></div>
-              <div class="col" style="color:green"><small>Kadep</small></div>
-              <div class="col"><small>WD 1</small></div>
-              <div class="col"><small>Sukses</small></div>
-            </div>
-          </div>
-        </td>
-        @elseif($isi->status_id == '3')
-        <td>
-          <div class="container">
-            <div class="row text-center w-10" style="color:grey">
-              <div class="col">
-                <i class="bi bi-check-circle-fill" style="color:green"></i>
-              </div>
-              <div class="col">
-                <i class="bi bi-check-circle-fill" style="color:green"></i>
-              </div>
-              <div class="col">
-                <i class="bi bi-check-circle-fill" style="color:green"></i>
-              </div>
-              <div class="col">
-                <i class="bi bi-clock" width="15" height="15"></i>
-              </div>
-              <div></div>
-              <div class="col" style="color:green"><small>Pengajuan</small></div>
-              <div class="col" style="color:green"><small>Kadep</small></div>
-              <div class="col" style="color:green"><small>WD 1</small></div>
-              <div class="col"><small>Sukses</small></div>
-            </div>
-          </div>
-        </td>
-        @elseif($isi->status_id == '4')
-        <td>
-          <div class="container">
-            <div class="row text-center w-10" style="color:grey">
-              <div class="col">
-                <i class="bi bi-check-circle-fill" style="color:green"></i>
-              </div>
-              <div class="col">
-                <i class="bi bi-check-circle-fill" style="color:green"></i>
-              </div>
-              <div class="col">
-                <i class="bi bi-check-circle-fill" style="color:green"></i>
-              </div>
-              <div class="col">
-                <i class="bi bi-check-circle-fill" style="color:green"></i>
-              </div>
-              <div></div>
-              <div class="col" style="color:green"><small>Pengajuan</small></div>
-              <div class="col" style="color:green"><small>Kadep</small></div>
-              <div class="col" style="color:green"><small>WD 1</small></div>
-              <div class="col" style="color:green"><small>Sukses</small></div>
-            </div>
-          </div>
-        </td>
-        @elseif($isi->status_id == '5')
-        <td>
-          <div class="container">
-            <div class="row text-center w-10" style="color:grey">
-              <div class="col">
-                <i class="bi bi-check-circle-fill" style="color:green"></i>
-              </div>
-              <div class="col">
-                <i class="bi bi-x-circle-fill" style="color:red"></i>
-              </div>
-              <div class="col">
-                <i class="bi bi-clock" width="15" height="15"></i>
-              </div>
-              <div class="col">
-                <i class="bi bi-clock" width="15" height="15"></i>
-              </div>
-              <div></div>
-              <div class="col" style="color:green"><small>Pengajuan</small></div>
-              <div class="col" style="color:red"><small>Kadep</small></div>
-              <div class="col"><small>WD 1</small></div>
-              <div class="col"><small>Sukses</small></div>
-            </div>
-          </div>
-        </td>
-        @elseif($isi->status_id == '6')
-        <td>
-          <div class="container">
-            <div class="row text-center w-10" style="color:grey">
-              <div class="col">
-                <i class="bi bi-check-circle-fill" style="color:green"></i>
-              </div>
-              <div class="col">
-                <i class="bi bi-check-circle-fill" style="color:green"></i>
-              </div>
-              <div class="col">
-                <i class="bi bi-x-circle-fill" style="color:red"></i>
-              </div>
-              <div class="col">
-                <i class="bi bi-clock" width="15" height="15"></i>
-              </div>
-              <div></div>
-              <div class="col" style="color:green"><small>Pengajuan</small></div>
-              <div class="col" style="color:green"><small>Kadep</small></div>
-              <div class="col" style="color:red"><small>WD 1</small></div>
-              <div class="col"><small>Sukses</small></div>
-            </div>
-          </div>
-        </td>
-        @endif
         <td style="display:none">{{$isi->id}}</td>
-        @if($isi->status_id == '4')
-        <td style="text-align: center">
-          <a href="/surat/{{ $isi->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
-        </td>
-        @elseif($isi->status_id == '5')
-        <td style="text-align: center">
-          <a href="/surat/{{ $isi->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
-        </td>
-        @elseif($isi->status_id == '6')
-        <td style="text-align: center">
-          <a href="/surat/{{ $isi->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
-        </td>
-        @else
-        <td style="text-align: center">
-          <a href="/surat/{{ $isi->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
-          <button class="btn btn-primary btn-sm" onClick="editSurat({{ $isi->id }})">Edit</button>
-          <button type="button" class="btn btn-danger btn-sm" onClick="konfirmasiHapus({{ $isi->id }})">Hapus</button>
-        </td>
-        @endif
       </tr>
       @endforeach
     </tbody>
@@ -205,56 +35,22 @@
 </div>
 @endsection
 
-<!-- Modal Edit Surat-->
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable" role="document">
+<!-- Modal Konfirmasi izin -->
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ubah Isi Surat</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Konfirmasi</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeBtn">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-      <form>
-          @csrf
-          <div class="form-group mb-3">
-              <label for="formGroupExampleInput">No. Surat</label>
-              <input type="text" readonly class="form-control" id="nomorSurat" name="nomorSurat">
-          </div>
-
-          <div class="form-group mb-3">
-              <label for="formGroupExampleInput">Judul</label>
-              <input type="text" class="form-control" id="judulSurat" name="judulSurat">
-          </div>
-
-          <div class="form-group mb-3">
-              <label for="formGroupExampleInput">Jenis Kegiatan</label>
-              <input type="text" class="form-control" id="jenisSurat" name="jenisSurat">
-          </div>
-
-          <div class="form-group mb-3">
-              <label for="formGroupExampleInput">Tempat Kegiatan</label>
-              <input type="text" class="form-control" id="tempatSurat" name="tempatSurat">
-          </div>
-
-          <div class="form-group mb-3">
-              <label for="formGroupExampleInput">Kota/Kabupaten</label>
-              <input type="text" class="form-control" id="kotaSurat" name="kotaSurat">
-          </div>
-          <div class="form-group mb-3">
-              <label for="formGroupExampleInput">Tanggal Awal Perjalanan Dinas</label>
-              <input type="date" class="form-control" id="tglAwalSurat" name="tglAwalSurat">
-          </div>
-          <div class="form-group mb-3">
-              <label for="formGroupExampleInput">Tanggal Akhir Perjalanan Dinas</label>
-              <input type="date" class="form-control" id="tglAkhirSurat" name="tglAkhirSurat">
-          </div>
-        </form>
+      <div class="modal-body" name="modal-body">
+      Anda akan menyetujui surat?
+            <input type="text" readonly class="form-control" style="display:none" id="ttdSpv" name="ttdSpv" value="{{Auth::user()->ttd_spv}}">
       </div>
       <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" id="saveBtn" onclick="updateSubmit()">Simpan</button>
+        <button type="button" class="btn btn-success" id="confirmBtn" onclick="izinSurat()">OK</button>
       </div>
     </div>
   </div>
@@ -262,7 +58,7 @@
 
 
 <!-- Modal Konfirmasi tolak -->
-<div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="tolakModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -272,10 +68,11 @@
         </button>
       </div>
       <div class="modal-body" name="modal-body">
-      Anda yakin ingin menghapus surat?
+      Tolak perizinan surat?
+            <input type="text" readonly class="form-control" style="display:none" id="ttdKadep" name="ttdKadep" value="{{Auth::user()->ttd_kadep}}">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" id="hapusBtn" onclick="hapusSurat()">HAPUS</button>
+        <button type="button" class="btn btn-danger" id="tolakBtn" onclick="tolakSurat()">TOLAK</button>
       </div>
     </div>
   </div>
@@ -343,35 +140,86 @@ function updateSubmit(id) {
   });
 }
 
-// konfirmasi untuk menghapus surat
-function konfirmasiHapus(id)
+// konfirmasi untuk mengizinkan surat
+
+function konfirmasiIzin(id)
 {
-  let seturl = "{{ route("confirmHapus", ":id") }}";
+  let seturl = "{{ route("confirmIzinSpv", ":id") }}";
   seturl = seturl.replace(':id', id);
 
   console.log(seturl);
   $.get(seturl, function(data){
     console.log(data);
-    $('#hapusBtn').attr('onclick', `hapusSurat(${data.surat.id})`);
-    $("#hapusModal").modal('show');
+    $('#confirmBtn').attr('onclick', `izinSurat(${data.surat.id})`);
+    $("#confirmModal").modal('show');
   });
-  $('#btnClose').click(function(){
-    $("#hapusModal").modal('hide');
+  $('#closeBtn').click(function(){
+    $("#confirmModal").modal('hide');
 	});
 }
 
-function hapusSurat(id) {
+function izinSurat(id) {
+  var ttd_spv = $("#ttdSpv").val();
   $.ajaxSetup({
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
   });
   $.ajax({
-    url: "{{ url('hapussurat') }}"+'/'+id,
+    url: "{{ url('izinkanSpv') }}"+'/'+id,
+    type: "POST",
+    data: {
+      ttd_spv: ttd_spv,
+    },
+    dataType: 'json',
+    success: function (data) {
+      $("#confirmModal").modal('hide');
+        window.location.reload(true);
+    },
+    error: function(err) {
+      console.log(err.responseJSON);
+      let err_log = err.responseJSON.errors;
+      if (err.status == 422){
+        $('#confirmModal').find('[name="modal-body"]')
+        .html('<span style="color:red">'+err_log.ttd_spv[0]+'</span>')
+      }
+      $('#confirmBtn').click(function(){
+        $("#confirmModal").modal('hide');
+        window.location.reload(true);
+      });
+    }
+  });
+}
+
+// konfirmasi untuk menolak surat
+function konfirmasiTolak(id)
+{
+  let seturl = "{{ route("confirmTolakSpv", ":id") }}";
+  seturl = seturl.replace(':id', id);
+
+  console.log(seturl);
+  $.get(seturl, function(data){
+    console.log(data);
+    $('#tolakBtn').attr('onclick', `tolakSurat(${data.surat.id})`);
+    $("#tolakModal").modal('show');
+  });
+  $('#btnClose').click(function(){
+    $("#tolakModal").modal('hide');
+	});
+}
+
+function tolakSurat(id) {
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+  $.ajax({
+    url: "{{ url('tolakSpv') }}"+'/'+id,
     type: "POST",
     dataType: 'json',
     success: function (data) {
-      $("#hapusModal").modal('hide');
+      $("#tolakModal").modal('hide');
         window.location.reload(true);
     },
   });

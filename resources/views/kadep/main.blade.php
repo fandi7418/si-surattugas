@@ -202,13 +202,13 @@
                   var waktu = new Date(data.surat[i].updated_at);
                   var jam = waktu.getHours();
                   var menit = waktu.getMinutes();
-
+                  
                   $("#isiNotif").append(
                     `<tbody>
                         <tr>
                           <td class="align-middle" scope="row" style="height: auto; width: 500px; margin-left:5px; margin-right:5px">
-                            <div style="height: auto; width: 480px; margin-left:10px;">
-                              Anda belum menyetujui surat dari `+data.surat[i].nama_dosen+` dengan judul "`+data.surat[i].judul+`"
+                            <div style="height: auto; width: 480px; margin-left:10px; margin-top:5px">
+                              Anda belum menyetujui surat dari `+data.surat[i].nama+` dengan judul "`+data.surat[i].judul+`"
                               <br>
                               <br>
                                 <small style="float: right">

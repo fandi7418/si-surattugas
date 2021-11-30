@@ -18,8 +18,7 @@ class Surat extends Authenticatable
     protected $primarykey = "id";
     protected $fillable = [
         'no_surat',
-        'nama_dosen',
-        'nama_staff',
+        'nama',
         'NIP',
         'prodi_id',
         'pangkat',

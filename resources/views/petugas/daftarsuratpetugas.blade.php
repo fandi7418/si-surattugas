@@ -11,7 +11,7 @@
       <tr>
         <th scope="col">No. Surat</th>
         <th scope="col">Nama Surat</th>
-        <th scope="col">Nama Dosen</th>
+        <th scope="col">Nama</th>
         <th scope="col">Prodi</th>
         <th scope="col" style="display:none">id</th>
         <th scope="col">Tanggal</th>
@@ -30,8 +30,12 @@
         <td>{{$isi->no_surat}}</td>
         @endif
         <td>{{$isi->judul}}</td>
-        <td>{{$isi->nama_dosen}}</td>
-        <td>{{$isi->prodi->prodi}}</td>
+        <td>{{$isi->nama}}</td>
+          @if(isset($isi->prodi_id))
+          <td>{{$isi->prodi->prodi}}</td>
+          @else
+          <td style="color:blue">Staff Dekanat FT</td>
+          @endif
         <td style="display:none">{{$isi->id}}</td>
         <td>{{ \Carbon\Carbon::parse($isi->created_at)->isoFormat('D MMMM Y')}}</td>
         @if(is_null($isi->no_surat))

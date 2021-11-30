@@ -72,11 +72,6 @@
                     <thead>
                       <tr>
                         <th scope="col">Notifikasi</th>
-                        <th scope="col">
-                            <button class="btn btn-secondary btn-outline-light btn-sm" type ="button" id="clearNotif" style="background-color:transparent; color:grey; float:right" >
-                              Clear
-                            </button>
-                        </th>
                       </tr>
                     </thead>
                   </table>
@@ -96,27 +91,15 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="bi bi-person-circle" style="margin-right:5px"></i>  
-                  @if ( Str::length(Auth::guard('dosen')->user()) >0 )
-                    {{ Auth::guard('dosen')->user()->nama_dosen }}
+                  @if ( Str::length(Auth::guard('staff')->user()) >0 )
+                    {{ Auth::guard('staff')->user()->nama_staff }}
                   @endif
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    @if ( Auth::guard('dosen')->user()->roles_id == '2' )
-                    <a class="dropdown-item" href="/profilkadep" style="margin-bottom:5px">
+                    <a class="dropdown-item" href="/profilSpv" style="margin-bottom:5px">
                       <i class="bi bi-pencil-square" style="margin-right:10px"></i>
                       Edit Profil
                     </a>
-                    @elseif ( Auth::guard('dosen')->user()->roles_id == '3' )
-                    <a class="dropdown-item" href="/profilwd" style="margin-bottom:5px">
-                      <i class="bi bi-pencil-square" style="margin-right:10px"></i>
-                      Edit Profil
-                    </a>
-                    @else
-                    <a class="dropdown-item" href="/profildosen" style="margin-bottom:5px">
-                      <i class="bi bi-pencil-square" style="margin-right:10px"></i>
-                      Edit Profil
-                    </a>
-                    @endif
                     <a class="dropdown-item" href="/logout">
                       <i class="bi bi-box-arrow-left" style="margin-right:10px"></i>
                       Logout
@@ -139,7 +122,7 @@
       </a>
       <ul class="nav nav-pills flex-column mb-auto">
         <li>
-          <a href="/dashboarddosen" class="nav-link text-white">
+          <a href="/dashboardSpv" class="nav-link text-white">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16" style="margin-right: 10px">
             <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
           </svg>
@@ -147,15 +130,7 @@
           </a>
         </li>
         <li>
-          <a href="/buatsurat" class="nav-link text-white">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16" style="margin-right: 10px">
-            <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
-          </svg>
-            Buat Surat
-          </a>
-        </li>
-        <li>
-          <a href="/daftarsuratdosen" class="nav-link text-white">
+          <a href="/daftarsuratSpv" class="nav-link text-white">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16" style="margin-right: 10px">
             <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
             <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
@@ -165,21 +140,12 @@
           </a>
         </li>
 
-        @if ( Auth::guard('dosen')->user()->roles_id == '2' )
         <hr>
         <li >
-          <a href="/dashboardkadep" class="nav-link text-white" id="angkaNotifKadep" name="angkaNotifKadep">
-            Menu Kadep
+          <a href="/dashboardStaff" class="nav-link text-white" id="angkaNotifStaff" name="angkaNotifStaff">
+            Menu Staff
           </a>
         </li>
-        @elseif ( Auth::guard('dosen')->user()->roles_id == '3' )
-        <hr>
-        <li>
-          <a href="/dashboardwd" class="nav-link text-white" id="angkaNotifWD" name="angkaNotifWD">
-            Menu Wakil Dekan
-          </a>
-        </li>
-        @endif
       </ul>
     </div>
 
@@ -234,7 +200,7 @@
           });
       });
       function notif(){
-        let seturl = "{{ route("notifDosen") }}";
+        let seturl = "{{ route("notifSpv") }}";
         console.log(seturl);
           
           $.ajax({
@@ -244,8 +210,7 @@
               success: function (data) {
                 $("#isiNotif").empty();
                 $("#angkaNotif").empty();
-                $("#angkaNotifKadep").empty();
-                $("#angkaNotifWD").empty();
+                $("#angkaNotifStaff").empty();
                 for (var i=0; i < data.surat.length; i++){
                   var waktu = new Date(data.surat[i].updated_at);
                   var jam = waktu.getHours();
@@ -256,7 +221,7 @@
                         <tr>
                           <td class="align-middle" scope="row" style="height: auto; width: 500px;">
                             <div style="height: auto; width: 480px; margin-left:10px;">
-                              Surat dengan judul "`+data.surat[i].judul+`" `+data.surat[i].status.status+`
+                              Anda belum menyetujui surat dari `+data.surat[i].nama+` dengan judul "`+data.surat[i].judul+`" 
                               <br>
                               <br>
                                 <small style="float: right">
@@ -271,22 +236,13 @@
                       '<span class=" badge rounded-pill bg-danger">'+data.surat.length+''
                     );
                   }
-                    if(data.kadep.length != '0'){
-                      $("#angkaNotifKadep").html(
-                        `Menu Kadep <span class=" badge rounded-pill bg-danger">`+data.kadep.length+``
+                    if(data.staff.length != '0'){
+                      $("#angkaNotifStaff").html(
+                        `Menu Staff <span class=" badge rounded-pill bg-danger">`+data.staff.length+``
                       );
                     }else{
-                      $("#angkaNotifKadep").html(
-                        `Menu Kadep`
-                      );
-                    }
-                    if(data.wd.length != '0'){
-                      $("#angkaNotifWD").html(
-                        `Menu Wakil Dekan <span class=" badge rounded-pill bg-danger">`+data.wd.length+``
-                      );
-                    }else{
-                      $("#angkaNotifWD").html(
-                        `Menu Wakil Dekan`
+                      $("#angkaNotifStaff").html(
+                        `Menu Staff`
                       );
                     }
               }

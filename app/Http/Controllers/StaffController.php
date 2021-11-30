@@ -45,16 +45,16 @@ class StaffController extends Controller
         ])
         ->orderBy('updated_at', 'DESC')
         ->get();
-        // $wd = Surat::with('status')
-        // ->where([
-        //     'surat.status_id' => '2',
-        // ])
-        // ->orderBy('updated_at', 'DESC')
-        // ->get();
+        $supervisor = Surat::with('status')
+        ->where([
+            'surat.status_id' => '7',
+        ])
+        ->orderBy('updated_at', 'DESC')
+        ->get();
         return response()->json([
             'surat' => $surat,
             'petugas' => $petugas,
-            // 'wd' => $wd,
+            'supervisor' => $supervisor,
         ]);
     }
     
@@ -104,7 +104,7 @@ class StaffController extends Controller
             'tanggalakhir.after_or_equal' => 'Input tidak valid',
         ]);
         Surat::create([
-            'nama_staff' => $request->nama,
+            'nama' => $request->nama,
             'NIP' => $request->nip,
             'prodi_id' => Auth::guard('staff')->user()->prodi->id,
             'pangkat' => $request->pangkat,
@@ -154,7 +154,7 @@ class StaffController extends Controller
             'tanggalakhir.after_or_equal' => 'Input tidak valid',
         ]);
         Surat::create([
-            'nama_staff' => $request->nama,
+            'nama' => $request->nama,
             'NIP' => $request->nip,
             'pangkat' => $request->pangkat,
             'jabatan' => $request->jabatan,

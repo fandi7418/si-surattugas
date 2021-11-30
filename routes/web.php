@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\KadepController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\SupervisorController;
 use App\Http\Controllers\WakilDekanController;
 use App\Http\Controllers\PetugasPenomoranController;
 use App\Http\Controllers\SuratController;
@@ -495,7 +496,7 @@ Route::get('/surat/{surat}', [SuratController::class, 'show']);
 
 // });
 
-/* Route dosen */
+/* Route Staff */
 Route::group(['middleware' => ['auth:staff']], function()
 {
     
@@ -547,6 +548,33 @@ Route::group(['middleware' => ['auth:staff']], function()
     Route::post('/updatenomorsurat/{id}', [PetugasPenomoranController::class, 'updatenomorsurat'])->name('updatenomorsurat');
 
     Route::get('/editnomorsurat/{id}', [PetugasPenomoranController::class, 'editnomorsurat'])->name('editnomorsurat');
+    
+
+    /* Hak akses supervisor ===================================================================*/
+
+    Route::get('/notifSpv', [SupervisorController::class, 'notifSpv'])->name('notifSpv');
+    
+    Route::get('/dashboardSpv', [SupervisorController::class, 'dashboardSpv']);
+    
+    Route::get('/daftarsuratSpv', [SupervisorController::class, 'daftarsuratSpv'])->name('daftarsuratSpv');
+    
+    // Route::get('/dropdown/{id}', [SupervisorController::class, 'dropdown'])->name('dropdown');
+    
+    Route::get('/profilSpv', [SupervisorController::class, 'profilSpv']);
+    
+    Route::post('/updateprofilSpv/{id}', [SupervisorController::class, 'updateprofilSpv']);
+
+    Route::post('/editpasswordSpv', [SupervisorController::class, 'editpasswordSpv']);
+
+    Route::post('/uploadTTDSpv', [SupervisorController::class, 'tandatanganSpv']);
+
+    Route::get('/confirmIzinSpv/{id}', [SupervisorController::class, 'confirmIzinSpv'])->name('confirmIzinSpv');
+    
+    Route::post('/izinkanSpv/{id}', [SupervisorController::class, 'izinkanSpv'])->name('izinkanSpv');
+
+    Route::get('/confirmTolakSpv/{id}', [SupervisorController::class, 'confirmTolakSpv'])->name('confirmTolakSpv');
+
+    Route::post('/tolakSpv/{id}', [SupervisorController::class, 'tolakSpv'])->name('tolakSpv');
 });
 
 

@@ -101,10 +101,17 @@
                   @endif
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    @if ( Auth::guard('staff')->user()->roles_id == '6' )
+                    <a class="dropdown-item" href="/profilSpv" style="margin-bottom:5px">
+                      <i class="bi bi-pencil-square" style="margin-right:10px"></i>
+                      Edit Profil
+                    </a>
+                    @else
                     <a class="dropdown-item" href="/profilStaff" style="margin-bottom:5px">
                       <i class="bi bi-pencil-square" style="margin-right:10px"></i>
                       Edit Profil
                     </a>
+                    @endif
                     <a class="dropdown-item" href="/logout">
                       <i class="bi bi-box-arrow-left" style="margin-right:10px"></i>
                       Logout
@@ -157,6 +164,13 @@
         <li >
           <a href="/dashboardpetugas" class="nav-link text-white" id="angkaNotifPetugas" name="angkaNotifPetugas">
             Menu Penomoran
+          </a>
+        </li>
+        @elseif( Auth::guard('staff')->user()->roles_id == '6' )
+        <hr>
+        <li >
+          <a href="/dashboardSpv" class="nav-link text-white" id="angkaNotifSpv" name="angkaNotifSpv">
+            Menu Supervisor
           </a>
         </li>
         @endif
@@ -225,6 +239,7 @@
                 $("#isiNotif").empty();
                 $("#angkaNotif").empty();
                 $("#angkaNotifPetugas").empty();
+                $("#angkaNotifSpv").empty();
                 for (var i=0; i < data.surat.length; i++){
                   var waktu = new Date(data.surat[i].updated_at);
                   var jam = waktu.getHours();
@@ -257,6 +272,15 @@
                     }else{
                       $("#angkaNotifPetugas").html(
                         `Menu Penomoran`
+                      );
+                    }
+                    if(data.supervisor.length != '0'){
+                      $("#angkaNotifSpv").html(
+                        `Menu Supervisor <span class=" badge rounded-pill bg-danger">`+data.supervisor.length+``
+                      );
+                    }else{
+                      $("#angkaNotifSpv").html(
+                        `Menu Supervisor`
                       );
                     }
               }

@@ -54,7 +54,7 @@ class SuratController extends Controller
             'tanggalakhir.after_or_equal' => 'Input tidak valid',
         ]);
         Surat::create([
-            'nama_dosen' => $request->nama,
+            'nama' => $request->nama,
             'NIP' => $request->nip,
             'prodi_id' => Auth::guard('dosen')->user()->prodi->id,
             'pangkat' => $request->pangkat,

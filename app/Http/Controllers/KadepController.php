@@ -20,17 +20,18 @@ class KadepController extends Controller
     {
         $surat = Surat::with('status')
         ->where([
-            'surat.prodi_id' => Auth::user()->prodi_id,
             'surat.status_id' => '1',
         ])
         ->orderBy('updated_at', 'DESC')
         ->get();
         $dosen = Surat::with('status')
         ->where([
-            'surat.NIP' => Auth::user()->NIP,
-            'surat.nama_dosen' => Auth::user()->nama_dosen,
+            'surat.id_dosen' => Auth::user()->id,
             'surat.notif' => '1',
         ])
+        // ->where([
+        //     'surat.notif' => '1',
+        // ])
         ->orderBy('updated_at', 'DESC')
         ->get();
         return response()->json([

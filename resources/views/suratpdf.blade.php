@@ -55,7 +55,7 @@
 				<td>
 				<center>
 					<font size="4"><b>SURAT TUGAS</b></font><br>
-					<font size="4"><b>No. {{ $surat->no_surat }}/XXXX/XXXX/2021</b></font><br>
+					<font size="4"><b>No. {{ $surat->no_surat }}</b></font><br>
 				</center>
 				</td>
 			</tr>
@@ -71,11 +71,7 @@
 		<table width="625">
 			<tr class="text2">
 				<td width="150">Nama</td>
-				@if(isset($surat->nama_dosen))
-				<td width="500">: {{ $surat->nama_dosen }}</td>
-				@else
-				<td width="500">: {{ $surat->nama_staff }}</td>
-				@endif
+				<td width="500">: {{ $surat->nama }}</td>
 			</tr>
 			<tr>
 				<td>NIP</td>

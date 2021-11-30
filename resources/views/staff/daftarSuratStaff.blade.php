@@ -58,7 +58,7 @@
                 <div class="col"  style="color:green"><small>Pengajuan</small></div>
                 <div class="col"><small>Kadep</small></div>
                 <div class="col"><small>WD 1</small></div>
-                <div class="col"><small>Sukses</small></div>
+                <div class="col"><small>Penomoran</small></div>
               </div>
             </div>
           </td>
@@ -82,7 +82,7 @@
                 <div class="col" style="color:green"><small>Pengajuan</small></div>
                 <div class="col" style="color:green"><small>Kadep</small></div>
                 <div class="col"><small>WD 1</small></div>
-                <div class="col"><small>Sukses</small></div>
+                <div class="col"><small>Penomoran</small></div>
               </div>
             </div>
           </td>
@@ -106,7 +106,7 @@
                 <div class="col" style="color:green"><small>Pengajuan</small></div>
                 <div class="col" style="color:green"><small>Kadep</small></div>
                 <div class="col" style="color:green"><small>WD 1</small></div>
-                <div class="col"><small>Sukses</small></div>
+                <div class="col"><small>Penomoran</small></div>
               </div>
             </div>
           </td>
@@ -130,7 +130,7 @@
                 <div class="col" style="color:green"><small>Pengajuan</small></div>
                 <div class="col" style="color:green"><small>Kadep</small></div>
                 <div class="col" style="color:green"><small>WD 1</small></div>
-                <div class="col" style="color:green"><small>Sukses</small></div>
+                <div class="col" style="color:green"><small>Penomoran</small></div>
               </div>
             </div>
           </td>
@@ -154,7 +154,7 @@
                 <div class="col" style="color:green"><small>Pengajuan</small></div>
                 <div class="col" style="color:red"><small>Kadep</small></div>
                 <div class="col"><small>WD 1</small></div>
-                <div class="col"><small>Sukses</small></div>
+                <div class="col"><small>Penomoran</small></div>
               </div>
             </div>
           </td>
@@ -178,7 +178,7 @@
                 <div class="col" style="color:green"><small>Pengajuan</small></div>
                 <div class="col" style="color:green"><small>Kadep</small></div>
                 <div class="col" style="color:red"><small>WD 1</small></div>
-                <div class="col"><small>Sukses</small></div>
+                <div class="col"><small>Penomoran</small></div>
               </div>
             </div>
           </td>
@@ -224,7 +224,7 @@
                 <div class="col"  style="color:green"><small>Pengajuan</small></div>
                 <div class="col"><small>Supervisor</small></div>
                 <div class="col"><small>WD 1</small></div>
-                <div class="col"><small>Sukses</small></div>
+                <div class="col"><small>Penomoran</small></div>
               </div>
             </div>
           </td>
@@ -248,7 +248,7 @@
                 <div class="col" style="color:green"><small>Pengajuan</small></div>
                 <div class="col" style="color:green"><small>Supervisor</small></div>
                 <div class="col"><small>WD 1</small></div>
-                <div class="col"><small>Sukses</small></div>
+                <div class="col"><small>Penomoran</small></div>
               </div>
             </div>
           </td>
@@ -272,7 +272,7 @@
                 <div class="col" style="color:green"><small>Pengajuan</small></div>
                 <div class="col" style="color:green"><small>Supervisor</small></div>
                 <div class="col" style="color:green"><small>WD 1</small></div>
-                <div class="col"><small>Sukses</small></div>
+                <div class="col"><small>Penomoran</small></div>
               </div>
             </div>
           </td>
@@ -296,7 +296,7 @@
                 <div class="col" style="color:green"><small>Pengajuan</small></div>
                 <div class="col" style="color:green"><small>Supervisor</small></div>
                 <div class="col" style="color:green"><small>WD 1</small></div>
-                <div class="col" style="color:green"><small>Sukses</small></div>
+                <div class="col" style="color:green"><small>Penomoran</small></div>
               </div>
             </div>
           </td>
@@ -320,7 +320,7 @@
                 <div class="col" style="color:green"><small>Pengajuan</small></div>
                 <div class="col" style="color:red"><small>Supervisor</small></div>
                 <div class="col"><small>WD 1</small></div>
-                <div class="col"><small>Sukses</small></div>
+                <div class="col"><small>Penomoran</small></div>
               </div>
             </div>
           </td>
@@ -344,7 +344,7 @@
                 <div class="col" style="color:green"><small>Pengajuan</small></div>
                 <div class="col" style="color:green"><small>Supervisor</small></div>
                 <div class="col" style="color:red"><small>WD 1</small></div>
-                <div class="col"><small>Sukses</small></div>
+                <div class="col"><small>Penomoran</small></div>
               </div>
             </div>
           </td>
@@ -371,6 +371,172 @@
           @endif
         @elseif(Auth::guard('staff')->user()->roles_id == '6')
           @if($isi->status_id == '7')
+            <td>
+              <div class="container">
+                <div class="row text-center w-10" style="color:grey">
+                  <div class="col">
+                    <i class="bi bi-check-circle-fill" style="color:green"></i>
+                  </div>
+                  <div class="col">
+                    <i class="bi bi-clock" width="15" height="15"></i>
+                  </div>
+                  <div class="col">
+                    <i class="bi bi-clock" width="15" height="15"></i>
+                  </div>
+                  <div class="col">
+                    <i class="bi bi-clock" width="15" height="15"></i>
+                  </div>
+                  <div></div>
+                  <div class="col"  style="color:green"><small>Pengajuan</small></div>
+                  <div class="col"><small>Supervisor</small></div>
+                  <div class="col"><small>WD 1</small></div>
+                  <div class="col"><small>Penomoran</small></div>
+                </div>
+              </div>
+            </td>
+            @elseif($isi->status_id == '2')
+            <td>
+              <div class="container">
+                <div class="row text-center w-10" style="color:grey">
+                  <div class="col">
+                    <i class="bi bi-check-circle-fill" style="color:green"></i>
+                  </div>
+                  <div class="col">
+                    <i class="bi bi-check-circle-fill" style="color:green"></i>
+                  </div>
+                  <div class="col">
+                    <i class="bi bi-clock" width="15" height="15"></i>
+                  </div>
+                  <div class="col">
+                    <i class="bi bi-clock" width="15" height="15"></i>
+                  </div>
+                  <div></div>
+                  <div class="col" style="color:green"><small>Pengajuan</small></div>
+                  <div class="col" style="color:green"><small>Supervisor</small></div>
+                  <div class="col"><small>WD 1</small></div>
+                  <div class="col"><small>Penomoran</small></div>
+                </div>
+              </div>
+            </td>
+            @elseif($isi->status_id == '3')
+            <td>
+              <div class="container">
+                <div class="row text-center w-10" style="color:grey">
+                  <div class="col">
+                    <i class="bi bi-check-circle-fill" style="color:green"></i>
+                  </div>
+                  <div class="col">
+                    <i class="bi bi-check-circle-fill" style="color:green"></i>
+                  </div>
+                  <div class="col">
+                    <i class="bi bi-check-circle-fill" style="color:green"></i>
+                  </div>
+                  <div class="col">
+                    <i class="bi bi-clock" width="15" height="15"></i>
+                  </div>
+                  <div></div>
+                  <div class="col" style="color:green"><small>Pengajuan</small></div>
+                  <div class="col" style="color:green"><small>Supervisor</small></div>
+                  <div class="col" style="color:green"><small>WD 1</small></div>
+                  <div class="col"><small>Penomoran</small></div>
+                </div>
+              </div>
+            </td>
+            @elseif($isi->status_id == '4')
+            <td>
+              <div class="container">
+                <div class="row text-center w-10" style="color:grey">
+                  <div class="col">
+                    <i class="bi bi-check-circle-fill" style="color:green"></i>
+                  </div>
+                  <div class="col">
+                    <i class="bi bi-check-circle-fill" style="color:green"></i>
+                  </div>
+                  <div class="col">
+                    <i class="bi bi-check-circle-fill" style="color:green"></i>
+                  </div>
+                  <div class="col">
+                    <i class="bi bi-check-circle-fill" style="color:green"></i>
+                  </div>
+                  <div></div>
+                  <div class="col" style="color:green"><small>Pengajuan</small></div>
+                  <div class="col" style="color:green"><small>Supervisor</small></div>
+                  <div class="col" style="color:green"><small>WD 1</small></div>
+                  <div class="col" style="color:green"><small>Penomoran</small></div>
+                </div>
+              </div>
+            </td>
+            @elseif($isi->status_id == '8')
+            <td>
+              <div class="container">
+                <div class="row text-center w-10" style="color:grey">
+                  <div class="col">
+                    <i class="bi bi-check-circle-fill" style="color:green"></i>
+                  </div>
+                  <div class="col">
+                    <i class="bi bi-x-circle-fill" style="color:red"></i>
+                  </div>
+                  <div class="col">
+                    <i class="bi bi-clock" width="15" height="15"></i>
+                  </div>
+                  <div class="col">
+                    <i class="bi bi-clock" width="15" height="15"></i>
+                  </div>
+                  <div></div>
+                  <div class="col" style="color:green"><small>Pengajuan</small></div>
+                  <div class="col" style="color:red"><small>Supervisor</small></div>
+                  <div class="col"><small>WD 1</small></div>
+                  <div class="col"><small>Penomoran</small></div>
+                </div>
+              </div>
+            </td>
+            @elseif($isi->status_id == '6')
+            <td>
+              <div class="container">
+                <div class="row text-center w-10" style="color:grey">
+                  <div class="col">
+                    <i class="bi bi-check-circle-fill" style="color:green"></i>
+                  </div>
+                  <div class="col">
+                    <i class="bi bi-check-circle-fill" style="color:green"></i>
+                  </div>
+                  <div class="col">
+                    <i class="bi bi-x-circle-fill" style="color:red"></i>
+                  </div>
+                  <div class="col">
+                    <i class="bi bi-clock" width="15" height="15"></i>
+                  </div>
+                  <div></div>
+                  <div class="col" style="color:green"><small>Pengajuan</small></div>
+                  <div class="col" style="color:green"><small>Supervisor</small></div>
+                  <div class="col" style="color:red"><small>WD 1</small></div>
+                  <div class="col"><small>Penomoran</small></div>
+                </div>
+              </div>
+            </td>
+            @endif
+            <td style="display:none">{{$isi->id}}</td>
+            @if($isi->status_id == '4')
+            <td style="text-align: center">
+              <a href="/surat/{{ $isi->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
+            </td>
+            @elseif($isi->status_id == '8')
+            <td style="text-align: center">
+              <a href="/surat/{{ $isi->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
+            </td>
+            @elseif($isi->status_id == '6')
+            <td style="text-align: center">
+              <a href="/surat/{{ $isi->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
+            </td>
+            @else
+            <td style="text-align: center">
+              <a href="/surat/{{ $isi->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
+              <button class="btn btn-primary btn-sm" onClick="editSurat({{ $isi->id }})">Edit</button>
+              <button type="button" class="btn btn-danger btn-sm" onClick="konfirmasiHapus({{ $isi->id }})">Hapus</button>
+            </td>
+            @endif
+        @elseif(Auth::guard('staff')->user()->roles_id == '7')
+          @if($isi->status_id == '7')
           <td>
             <div class="container">
               <div class="row text-center w-10" style="color:grey">
@@ -390,7 +556,7 @@
                 <div class="col"  style="color:green"><small>Pengajuan</small></div>
                 <div class="col"><small>Supervisor</small></div>
                 <div class="col"><small>WD 1</small></div>
-                <div class="col"><small>Sukses</small></div>
+                <div class="col"><small>Penomoran</small></div>
               </div>
             </div>
           </td>
@@ -414,7 +580,7 @@
                 <div class="col" style="color:green"><small>Pengajuan</small></div>
                 <div class="col" style="color:green"><small>Supervisor</small></div>
                 <div class="col"><small>WD 1</small></div>
-                <div class="col"><small>Sukses</small></div>
+                <div class="col"><small>Penomoran</small></div>
               </div>
             </div>
           </td>
@@ -438,7 +604,7 @@
                 <div class="col" style="color:green"><small>Pengajuan</small></div>
                 <div class="col" style="color:green"><small>Supervisor</small></div>
                 <div class="col" style="color:green"><small>WD 1</small></div>
-                <div class="col"><small>Sukses</small></div>
+                <div class="col"><small>Penomoran</small></div>
               </div>
             </div>
           </td>
@@ -462,7 +628,7 @@
                 <div class="col" style="color:green"><small>Pengajuan</small></div>
                 <div class="col" style="color:green"><small>Supervisor</small></div>
                 <div class="col" style="color:green"><small>WD 1</small></div>
-                <div class="col" style="color:green"><small>Sukses</small></div>
+                <div class="col" style="color:green"><small>Penomoran</small></div>
               </div>
             </div>
           </td>
@@ -486,7 +652,7 @@
                 <div class="col" style="color:green"><small>Pengajuan</small></div>
                 <div class="col" style="color:red"><small>Supervisor</small></div>
                 <div class="col"><small>WD 1</small></div>
-                <div class="col"><small>Sukses</small></div>
+                <div class="col"><small>Penomoran</small></div>
               </div>
             </div>
           </td>
@@ -510,7 +676,7 @@
                 <div class="col" style="color:green"><small>Pengajuan</small></div>
                 <div class="col" style="color:green"><small>Supervisor</small></div>
                 <div class="col" style="color:red"><small>WD 1</small></div>
-                <div class="col"><small>Sukses</small></div>
+                <div class="col"><small>Penomoran</small></div>
               </div>
             </div>
           </td>

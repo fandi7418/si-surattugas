@@ -24,6 +24,7 @@ class PetugasPenomoranController extends Controller
         $staff = Surat::with('status')
         ->where([
             'surat.id_staff' => Auth::user()->id,
+            'surat.notif' => '1',
         ])
         ->orderBy('updated_at', 'DESC')
         ->get();
@@ -68,7 +69,8 @@ class PetugasPenomoranController extends Controller
         if(Auth::guard('staff')->user()->roles_id == '7')
         {
             $prodi = Prodi::all();
-            $surat = Surat::with('status')->whereNotNull('surat.ttd_wd')
+            $surat = Surat::with('status', 'prodi')
+            ->whereNotNull('surat.ttd_wd')
             ->orderBy('updated_at', 'DESC')
             ->get(); 
             return view('petugas.daftarsuratpetugas', 

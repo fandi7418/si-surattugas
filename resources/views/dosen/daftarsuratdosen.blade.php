@@ -53,7 +53,7 @@
               <div class="col"  style="color:green"><small>Pengajuan</small></div>
               <div class="col"><small>Kadep</small></div>
               <div class="col"><small>WD 1</small></div>
-              <div class="col"><small>Sukses</small></div>
+              <div class="col"><small>Penomoran</small></div>
             </div>
           </div>
         </td>
@@ -77,7 +77,7 @@
               <div class="col" style="color:green"><small>Pengajuan</small></div>
               <div class="col" style="color:green"><small>Kadep</small></div>
               <div class="col"><small>WD 1</small></div>
-              <div class="col"><small>Sukses</small></div>
+              <div class="col"><small>Penomoran</small></div>
             </div>
           </div>
         </td>
@@ -101,7 +101,7 @@
               <div class="col" style="color:green"><small>Pengajuan</small></div>
               <div class="col" style="color:green"><small>Kadep</small></div>
               <div class="col" style="color:green"><small>WD 1</small></div>
-              <div class="col"><small>Sukses</small></div>
+              <div class="col"><small>Penomoran</small></div>
             </div>
           </div>
         </td>
@@ -125,7 +125,7 @@
               <div class="col" style="color:green"><small>Pengajuan</small></div>
               <div class="col" style="color:green"><small>Kadep</small></div>
               <div class="col" style="color:green"><small>WD 1</small></div>
-              <div class="col" style="color:green"><small>Sukses</small></div>
+              <div class="col" style="color:green"><small>Penomoran</small></div>
             </div>
           </div>
         </td>
@@ -149,7 +149,7 @@
               <div class="col" style="color:green"><small>Pengajuan</small></div>
               <div class="col" style="color:red"><small>Kadep</small></div>
               <div class="col"><small>WD 1</small></div>
-              <div class="col"><small>Sukses</small></div>
+              <div class="col"><small>Penomoran</small></div>
             </div>
           </div>
         </td>
@@ -173,7 +173,7 @@
               <div class="col" style="color:green"><small>Pengajuan</small></div>
               <div class="col" style="color:green"><small>Kadep</small></div>
               <div class="col" style="color:red"><small>WD 1</small></div>
-              <div class="col"><small>Sukses</small></div>
+              <div class="col"><small>Penomoran</small></div>
             </div>
           </div>
         </td>

@@ -10,7 +10,7 @@
     <thead>
       <tr>
         <th scope="col">Nama Surat</th>
-        <th scope="col">Nama Dosen</th>
+        <th scope="col">Nama</th>
         <th scope="col">Tanggal</th>
         <th scope="col" style="display:none">id</th>
         <th scope="col"> </th>
@@ -20,7 +20,7 @@
     @foreach($surat as $isi)
       <tr>
       <td>{{$isi->judul}}</td>
-        <td>{{$isi->nama_dosen}}</td>
+        <td>{{$isi->nama}}</td>
         <td>{{ \Carbon\Carbon::parse($isi->created_at)->isoFormat('D MMMM Y')}}</td>
         <td style="display:none">{{$isi->id}}</td>
         <td>
