@@ -19,8 +19,8 @@ class Staff extends Authenticatable
         'password',
         'nama_staff',
         'NIP',
-        'pangkat',
-        'jabatan',
+        'jabatan_id',
+        'golongan_id',
         'prodi_id',
         'roles_id',
         'ttd_spv',
@@ -40,5 +40,15 @@ class Staff extends Authenticatable
     {
     //Setiap dosen hanya memiliki satu prodi
     return $this->belongsTo(Roles::class);
+    }
+    public function jabatan()
+    {
+    //Setiap dosen hanya memiliki satu prodi
+    return $this->belongsTo(Jabatan::class);
+    }
+    public function golongan()
+    {
+    //Setiap dosen hanya memiliki satu prodi
+    return $this->belongsTo(golongan::class);
     }
 }

@@ -12,6 +12,8 @@ use App\Models\Surat;
 use App\Models\StatusSurat;
 use App\Models\WakilDekan;
 use App\Models\Roles;
+use App\Models\Jabatan;
+use App\Models\Golongan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -107,7 +109,18 @@ class AdminController extends Controller
         // $prd = Prodi::all();
         // $prd = Prodi::with('prodi')->get();
         $prd = Prodi::all();
-        return view('admin.tambahdosen', ['prd' => $prd, "title" => "Tambah Dosen"]);
+        $jabatan = Jabatan::where([
+            'id' => '1',
+        ])->orWhere([
+            'id' => '2',
+        ])->orWhere([
+            'id' => '3',
+        ])->orWhere([
+            'id' => '4',
+        ])
+        ->get();
+        $golongan = Golongan::all();
+        return view('admin.tambahdosen', ['prd' => $prd, 'jabatan' => $jabatan, 'golongan' => $golongan, "title" => "Tambah Dosen"]);
     }   
     public function datadosen(Request $request)
     {
@@ -197,8 +210,8 @@ class AdminController extends Controller
         Dosen::create([
             'nama_dosen' => $request->nama_dosen,
             'NIP' => $request->NIP,
-            'pangkat' => $request->pangkat,
-            'jabatan' => $request->jabatan,
+            'jabatan_id' => $request->jabatan,
+            'golongan_id' => $request->pangkat,
             'prodi_id' => $request->prodi_id,
             'email_dosen' => $request->email_dosen,
             'roles_id' => '1',
@@ -209,11 +222,33 @@ class AdminController extends Controller
         return redirect('data_dosen');
     }
 
+    public function listNamaGolongan($jabatan_id)
+    {
+        $golongan = Golongan::where([
+            'jabatan_id' => $jabatan_id,
+            ])
+            ->get();
+        return response()->json([
+            'golongan' => $golongan,
+        ]);
+    }
+
     public function editdosen($id)
     {
         $prd = Prodi::all();
-        $dosen = Dosen::with('Prodi')->where('id', $id)->get();
-        return view('admin.editdosen', ['dosen' => $dosen, 'prd' => $prd, "title" => "Edit Profil Dosen"]);
+        $jabatan = Jabatan::where([
+            'id' => '1',
+        ])->orWhere([
+            'id' => '2',
+        ])->orWhere([
+            'id' => '3',
+        ])->orWhere([
+            'id' => '4',
+        ])
+        ->get();
+        $golongan = Golongan::all();
+        $dosen = Dosen::with('prodi','jabatan','golongan')->where('id', $id)->get();
+        return view('admin.editdosen', ['dosen' => $dosen, 'prd' => $prd, 'jabatan' => $jabatan, 'golongan' => $golongan, "title" => "Edit Profil Dosen"]);
     }
 
     public function updatedosen(Request $request, $id)
@@ -240,8 +275,8 @@ class AdminController extends Controller
         Dosen::where('id', $request->id)->update([
             'nama_dosen' => $request->nama_dosen,
             'NIP' => $request->NIP,
-            'jabatan' => $request->jabatan,
-            'pangkat' => $request->pangkat,
+            'jabatan_id' => $request->jabatan,
+            'golongan_id' => $request->pangkat,
             'prodi_id' => $request->prodi_id,
             'email_dosen' => $request->email_dosen,
         ]);
@@ -562,7 +597,7 @@ class AdminController extends Controller
         $imgName = $request->ttd_kadep->getClientOriginalName() . '-' . time() . '.' . $request->ttd_kadep->extension();
         $request->ttd_kadep->move(public_path('image'), $imgName);
 
-        Kadep::where('id', $request->id)->update([
+        Dosen::where('id', $request->id)->update([
             'ttd_kadep' => $imgName,
             
         ]);
@@ -695,7 +730,7 @@ class AdminController extends Controller
         $imgName = $request->ttd_wd->getClientOriginalName() . '-' . time() . '.' . $request->ttd_wd->extension();
         $request->ttd_wd->move(public_path('image'), $imgName);
 
-        WakilDekan::where('id', $request->id)->update([
+        Dosen::where('id', $request->id)->update([
             'ttd_wd' => $imgName,
             
         ]);
@@ -1211,7 +1246,14 @@ public function restoresurat($id)
 public function indexstaff()
 {
     $prd = Prodi::all();
-    return view('admin.tambahstaff', ['prd' => $prd, "title" => "Tambah staff"]);
+    $jabatan = Jabatan::where([
+        'id' => '5',
+    ])->orWhere([
+        'id' => '6',
+    ])
+    ->get();
+    $golongan = Golongan::all();
+    return view('admin.tambahstaff', ['prd' => $prd, 'jabatan' => $jabatan, 'golongan' => $golongan, "title" => "Tambah staff"]);
 }   
 public function datastaff(Request $request)
 {
@@ -1220,20 +1262,20 @@ public function datastaff(Request $request)
     // ->paginate(10);
     // return view('admin.datadosen', ['dosen' => $dosen, 'prodi' => $prodi, "title" => "Data Dosen"]); 
     $staff = Staff::with('prodi','roles')->get();
-    if ($request->ajax()){
-        $staff = Staff::with('prodi','roles')->get();
-        return datatables()->of($staff)->addColumn('action', function($data){
-            $url_edit = url('edit_staff/'.$data->id);
-            $url_hapus = url('hapus_staff/'.$data->id.'/konfirmasi');
-            $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';
-            $button .= '&nbsp;&nbsp;';
-            $button .= '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Nonaktif</a>';     
-            return $button;
-        })
-        ->rawColumns(['action'])
-                    ->addIndexColumn()
-                    ->make(true);
-}
+//     if ($request->ajax()){
+//         $staff = Staff::with('prodi','roles')->get();
+//         return datatables()->of($staff)->addColumn('action', function($data){
+//             $url_edit = url('edit_staff/'.$data->id);
+//             $url_hapus = url('hapus_staff/'.$data->id.'/konfirmasi');
+//             $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';
+//             $button .= '&nbsp;&nbsp;';
+//             $button .= '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Nonaktif</a>';     
+//             return $button;
+//         })
+//         ->rawColumns(['action'])
+//                     ->addIndexColumn()
+//                     ->make(true);
+// }
 return view('admin.datastaff', ['staff' => $staff, "title" => "Data Staff"]);
 }
 public function datastaffsementara (Request $request)
@@ -1262,8 +1304,8 @@ public function tambahstaff(Request $request)
     $request->validate([
         'nama_staff' => 'required|max:255|string',
         'NIP' => 'required|numeric|min:6|unique:staff,NIP|unique:admin,NIP|unique:dosen,NIP',
-        'pangkat' => 'required|string',
-        'jabatan' => 'required|string',
+        'pangkat' => 'required',
+        'jabatan' => 'required',
         'roles_id' => 'required',
         'email_staff' => 'email|required|unique:staff,email_staff|unique:admin,email_admin|unique:dosen,email_dosen',
         'password' => 'required|min:6',
@@ -1282,8 +1324,8 @@ public function tambahstaff(Request $request)
     Staff::create([
         'nama_staff' => $request->nama_staff,
         'NIP' => $request->NIP,
-        'pangkat' => $request->pangkat,
-        'jabatan' => $request->jabatan,
+        'golongan_id' => $request->pangkat,
+        'jabatan_id' => $request->jabatan,
         'prodi_id' => $request->prodi_id,
         'email_staff' => $request->email_staff,
         'roles_id' => $request->roles_id,
@@ -1297,8 +1339,15 @@ public function tambahstaff(Request $request)
 public function editstaff($id)
 {
     $prd = Prodi::all();
-    $staff = Staff::with('Prodi')->where('id', $id)->get();
-    return view('admin.editstaff', ['staff' => $staff, 'prd' => $prd, "title" => "Edit Profil Staff"]);
+    $jabatan = Jabatan::where([
+        'id' => '5',
+    ])->orWhere([
+        'id' => '6',
+    ])
+    ->get();
+    $golongan = Golongan::all();
+    $staff = Staff::with('Prodi', 'jabatan', 'golongan')->where('id', $id)->get();
+    return view('admin.editstaff', ['staff' => $staff, 'prd' => $prd, 'jabatan' => $jabatan, 'golongan' => $golongan, "title" => "Edit Profil Staff"]);
 }
 
 public function updatestaff(Request $request, $id)
@@ -1325,8 +1374,8 @@ public function updatestaff(Request $request, $id)
     Staff::where('id', $request->id)->update([
         'nama_staff' => $request->nama_staff,
         'NIP' => $request->NIP,
-        'jabatan' => $request->jabatan,
-        'pangkat' => $request->pangkat,
+        'jabatan_id' => $request->jabatan,
+        'golongan_id' => $request->pangkat,
         'prodi_id' => $request->prodi_id,
         'email_staff' => $request->email_staff,
     ]);

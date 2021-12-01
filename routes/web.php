@@ -59,6 +59,8 @@ Route::group(['middleware' => ['auth:admin']], function()
 
     Route::post('/tambah_dosen', [AdminController::class, 'tambahdosen']);
 
+    Route::get('/list_nama_golongan/{jabatan_id}', [AdminController::class, 'listNamaGolongan'])->name('getJabatan');
+
     Route::get('/hapus_dosen/{id}/konfirmasi', [AdminController::class, 'konfirmasidosen']);
     
     Route::get('/hapus_dosenpermanen/{id}/konfirmasi', [AdminController::class, 'konfirmasidosenpermanen']);

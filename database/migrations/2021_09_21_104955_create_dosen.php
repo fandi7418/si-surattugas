@@ -19,8 +19,8 @@ class CreateDosen extends Migration
             $table->string('password');
             $table->string('nama_dosen');
             $table->bigInteger('NIP');
-            $table->string('pangkat');
-            $table->string('jabatan');
+            $table->bigInteger('jabatan_id');
+            $table->bigInteger('golongan_id');
             $table->bigInteger('prodi_id');
             $table->bigInteger('roles_id');
             $table->string('ttd_wd')->nullable();

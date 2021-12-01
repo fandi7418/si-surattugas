@@ -30,10 +30,29 @@
                     <th scope="col">Nama Staff</th>
                     <th scope="col">NIP</th>
                     <th scope="col">Status</th>
+                    <th scope="col">Prodi/Fakultas</th>
                     <th scope="col">Aksi</th>
                 </tr>
 
             </thead>
+            <tbody>
+                @foreach($staff as $stf)
+                <tr>
+                    <td>{{$stf->nama_staff}}</td>
+                    <td>{{$stf->NIP}}</td>
+                    <td>{{ $stf->roles->peran }}</td>
+                    @if(isset($stf->prodi_id))
+                    <td>{{ $stf->prodi->prodi }}</td>
+                    @else
+                    <td style="color:rgb(0, 64, 255)">Teknik</td>
+                    @endif
+                    <td>
+                    <a href="/edit_staff/{{ $stf->id }}" class="btn btn-info btn-sm">Edit</a>
+                    <a href="/hapus_staff/{{ $stf->id }}/konfirmasi" class="btn btn-danger btn-sm">Hapus</a>
+                    </td>
+                </tr>
+                @endforeach
+                </tbody>
         </table>
     </div>
 </div>
@@ -42,38 +61,41 @@
 @endsection
 @push('scripts')
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#datastaff').DataTable({
-            processing: true,
-            serverside: true,
-            ajax: {
-                url: "{{ route('data staff') }}",
-                type: 'GET'
-            },
-            columns: [{
-                    data: 'nama_staff',
-                    name: 'nama_staff'
-                },
-                {
-                    data: 'NIP',
-                    name: 'NIP'
-                },
-                {
-                    data:'roles.peran', 
-                    name:'roles.peran'
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                },
-            ],
-            order: [
-                [0, 'asc']
-            ]
-        });
+    $(document).ready(function() {
+      $('#datastaff').DataTable();
     });
+    // $(document).ready(function () {
+    //     $('#datastaff').DataTable({
+    //         processing: true,
+    //         serverside: true,
+    //         ajax: {
+    //             url: "{{ route('data staff') }}",
+    //             type: 'GET'
+    //         },
+    //         columns: [{
+    //                 data: 'nama_staff',
+    //                 name: 'nama_staff'
+    //             },
+    //             {
+    //                 data: 'NIP',
+    //                 name: 'NIP'
+    //             },
+    //             {
+    //                 data:'roles.peran', 
+    //                 name:'roles.peran'
+    //             },
+    //             {
+    //                 data: 'action',
+    //                 name: 'action',
+    //                 orderable: false,
+    //                 searchable: false
+    //             },
+    //         ],
+    //         order: [
+    //             [0, 'asc']
+    //         ]
+    //     });
+    // });
 
 </script>
 @endpush

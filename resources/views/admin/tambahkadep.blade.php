@@ -89,6 +89,10 @@
 @endsection
 @push('scripts')
 <script>
+    $(document).ready(function() {
+    $('#nama_kadep').select2();
+    $('#prodi').select2();
+    });
     function getKadep() {
         let prodi = $("#prodi").val()
         console.log(prodi);

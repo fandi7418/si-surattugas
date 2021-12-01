@@ -32,22 +32,16 @@
         </div>
     </div>
     <div class="form-group row mt-4">
-        <label for="colFormLabel" class="col-sm-2 col-form-label">Pangkat/Gol</label>
+        <label for="colFormLabel" class="col-sm-2 col-form-label">Jabatan</label>
         <div class="col-sm-8">
-            <select class="form-select @error('pangkat') is-invalid @enderror" name="pangkat" id="pangkat"
+            <select class="form-select @error('jabatan') is-invalid @enderror" onchange="getJabatan()" name="jabatan" id="jabatan"
                 aria-label="Default select example">
-                <option value="">Pilih Pangkat/Gol</option>
-                <option value="III/a" @if (old('pangkat') == "III/a") {{ 'selected' }} @endif>III/a</option>
-                <option value="III/b" @if (old('pangkat') == "III/b") {{ 'selected' }} @endif>III/b</option>
-                <option value="III/c" @if (old('pangkat') == "III/c") {{ 'selected' }} @endif>III/c</option>
-                <option value="III/d" @if (old('pangkat') == "III/d") {{ 'selected' }} @endif>III/d</option>
-                <option value="IV/a" @if (old('pangkat') == "IV/a") {{ 'selected' }} @endif>IV/a</option>
-                <option value="IV/b" @if (old('pangkat') == "IV/b") {{ 'selected' }} @endif>IV/b</option>
-                <option value="IV/c" @if (old('pangkat') == "IV/c") {{ 'selected' }} @endif>IV/c</option>
-                <option value="IV/d" @if (old('pangkat') == "IV/d") {{ 'selected' }} @endif>IV/d</option>
-                <option value="IV/e" @if (old('pangkat') == "IV/e") {{ 'selected' }} @endif>IV/e</option>
+                <option value="">Pilih Jabatan</option>
+                @foreach ($jabatan as $jbtn )
+                <option value="{{ $jbtn->id }}" {{ old('jabatan_id') == $jbtn->id ? 'selected' : null }}>{{ $jbtn->nama_jabatan }}</option>
+                @endforeach
             </select>
-            @error('pangkat')
+            @error('jabatan')
             <div class="invalid-feedback">
                 {{ $message }}
             </div>
@@ -55,17 +49,16 @@
         </div>
     </div>
     <div class="form-group row mt-4">
-        <label for="colFormLabel" class="col-sm-2 col-form-label">Jabatan</label>
+        <label for="colFormLabel" class="col-sm-2 col-form-label">Pangkat/Gol</label>
         <div class="col-sm-8">
-            <select class="form-select @error('jabatan') is-invalid @enderror" name="jabatan" id="jabatan"
-                aria-label="Default select example">
-                <option value="">Pilih Jabatan</option>
-                <option value="Asisten Ahli" @if (old('jabatan') == "Asisten Ahli") {{ 'selected' }} @endif>Asisten Ahli</option>
-                <option value="Lektor" @if (old('jabatan') == "Lektor") {{ 'selected' }} @endif>Lektor</option>
-                <option value="Lektor Kepala" @if (old('jabatan') == "Lektor Kepala") {{ 'selected' }} @endif>Lektor Kepala</option>
-                <option value="Profesor" @if (old('jabatan') == "Profesor") {{ 'selected' }} @endif>Profesor</option>
+            <select class="form-select @error('pangkat') is-invalid @enderror" name="pangkat" id="pangkat"
+                aria-label="Default select example" disabled>
+                <option value="">Pilih Pangkat/Gol</option>
+                @foreach ($golongan as $gol )
+                <option value="{{ $gol->id }}" {{ old('golongan_id') == $gol->id ? 'selected' : null }}>{{ $gol->nama_golongan }}</option>
+                @endforeach
             </select>
-            @error('jabatan')
+            @error('pangkat')
             <div class="invalid-feedback">
                 {{ $message }}
             </div>
@@ -124,6 +117,7 @@
     </div>
     </div>
 </form>
+@push('scripts')
 <script>
     function myFunction() {
         var x = document.getElementById("inputPassword");
@@ -134,6 +128,32 @@
         }
     }
 
+    function getJabatan() {
+        let jabatan = $("#jabatan").val()
+        console.log(jabatan);
+        $("#pangkat").children().remove()
+        $("#pangkat").val('');
+        $("#pangkat").append(`<option value="" name="pangkat">Pilih Golongan</option>`)
+        $("#pangkat").prop('disabled',true)
+        if(jabatan != '' && jabatan != null){
+            $.ajax({
+            url:"{{ url('') }}/list_nama_golongan/"+jabatan,
+            success:function(res){
+                console.log(res)
+                $("#pangkat").prop('disabled',false)
+                let tampilan_option = '';
+                $.each(res,function(index,data){
+                    for (var i=0; i < data.length; i++){
+                    tampilan_option+=`<option name="pangkat" value="${data[i].id}">${data[i].nama_golongan}</option>`
+                    }
+                })
+                $("#pangkat").append(tampilan_option)
+            }
+        });
+        }
+    }
+
 </script>
+@endpush
 
 @endsection

@@ -34,12 +34,16 @@
                     </div>
                 </div>
                 <div class="form-group row mt-4">
-                    <label for="colFormLabel" class="col-sm-2 col-form-label">Pangkat/Gol</label>
+                    <label for="colFormLabel" class="col-sm-2 col-form-label">Jabatan</label>
                     <div class="col-sm-8">
-                        <input type="text"
-                            value="{{ old('pangkat', $stf->pangkat) }}" name="pangkat"
-                            class="form-control @error('pangkat') is-invalid @enderror" id="colFormLabel" placeholder="Silahkan Masukkan Pangkat Anda">
-                                @error('pangkat')
+                        <select class="form-select @error('jabatan') is-invalid @enderror" onchange="getJabatan()" name="jabatan" id="jabatan"
+                        aria-label="Default select example">
+                            <option value="">Pilih Jabatan</option>
+                            @foreach ($jabatan as $jbtn )
+                            <option value="{{ $jbtn->id }}" {{ old('jabatan_id', $stf->jabatan_id) == $jbtn->id ? 'selected' : null }}>{{ $jbtn->nama_jabatan }}</option>
+                            @endforeach
+                        </select>
+                                @error('jabatan')
                                     <div class="invalid-feedback">
                                     {{ $message }}
                                     </div>
@@ -47,12 +51,16 @@
                     </div>
                 </div>
                 <div class="form-group row mt-4">
-                    <label for="colFormLabel" class="col-sm-2 col-form-label">Jabatan</label>
+                    <label for="colFormLabel" class="col-sm-2 col-form-label">Pangkat/Gol</label>
                     <div class="col-sm-8">
-                        <input type="text"
-                        value="{{ old('jabatan', $stf->jabatan) }}" name="jabatan"
-                            class="form-control @error('jabatan') is-invalid @enderror" id="colFormLabel" placeholder="Silahkan Masukkan Jabatan Anda">
-                                @error('jabatan')
+                        <select class="form-select @error('pangkat') is-invalid @enderror" name="pangkat" id="pangkat"
+                            aria-label="Default select example">
+                                <option value="">Pilih Pangkat/Gol</option>
+                                @foreach ($golongan as $gol )
+                                <option value="{{ $gol->id }}" {{ old('golongan_id', $stf->golongan_id) == $gol->id ? 'selected' : null }}>{{ $gol->nama_golongan }}</option>
+                                @endforeach
+                    </select>
+                                @error('pangkat')
                                     <div class="invalid-feedback">
                                     {{ $message }}
                                     </div>

@@ -34,12 +34,16 @@
                     </div>
                 </div>
                 <div class="form-group row mt-4">
-                    <label for="colFormLabel" class="col-sm-2 col-form-label">Pangkat/Gol</label>
+                    <label for="colFormLabel" class="col-sm-2 col-form-label">Jabatan</label>
                     <div class="col-sm-8">
-                        <input type="text"
-                            value="{{ old('pangkat', $dsn->pangkat) }}" name="pangkat"
-                            class="form-control @error('pangkat') is-invalid @enderror" id="colFormLabel" placeholder="Silahkan Masukkan Pangkat Anda">
-                                @error('pangkat')
+                        <select class="form-select @error('jabatan') is-invalid @enderror" onchange="getJabatan()" name="jabatan" id="jabatan"
+                        aria-label="Default select example">
+                            <option value="">Pilih Jabatan</option>
+                            @foreach ($jabatan as $jbtn )
+                            <option value="{{ $jbtn->id }}" {{ old('jabatan_id', $dsn->jabatan_id) == $jbtn->id ? 'selected' : null }}>{{ $jbtn->nama_jabatan }}</option>
+                            @endforeach
+                        </select>
+                                @error('jabatan')
                                     <div class="invalid-feedback">
                                     {{ $message }}
                                     </div>
@@ -47,12 +51,16 @@
                     </div>
                 </div>
                 <div class="form-group row mt-4">
-                    <label for="colFormLabel" class="col-sm-2 col-form-label">Jabatan</label>
+                    <label for="colFormLabel" class="col-sm-2 col-form-label">Pangkat/Gol</label>
                     <div class="col-sm-8">
-                        <input type="text"
-                        value="{{ old('jabatan', $dsn->jabatan) }}" name="jabatan"
-                            class="form-control @error('jabatan') is-invalid @enderror" id="colFormLabel" placeholder="Silahkan Masukkan Jabatan Anda">
-                                @error('jabatan')
+                        <select class="form-select @error('pangkat') is-invalid @enderror" name="pangkat" id="pangkat"
+                            aria-label="Default select example">
+                                <option value="">Pilih Pangkat/Gol</option>
+                                @foreach ($golongan as $gol )
+                                <option value="{{ $gol->id }}" {{ old('golongan_id', $dsn->golongan_id) == $gol->id ? 'selected' : null }}>{{ $gol->nama_golongan }}</option>
+                                @endforeach
+                    </select>
+                                @error('pangkat')
                                     <div class="invalid-feedback">
                                     {{ $message }}
                                     </div>
@@ -96,6 +104,11 @@
                
             </form>
             <a href="" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Reset Password</a>
+            @if ($dsn->roles_id == '2')
+            <a href="" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#ttdModal">Tanda Tangan</a>
+            @elseif ($dsn->roles_id == '3')
+            <a href="" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#ttdModal">Tanda Tangan</a>
+            @endif
             </div>
             </div>
             @endforeach
@@ -127,6 +140,48 @@
                 </div>
                 </form>
                 @endforeach
+
+<!-- Modal lihat tanda tangan-->
+<div class="modal fade" id="ttdModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload Tanda Tangan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @foreach($dosen as $isi)
+                @if ($isi->roles_id == '2')
+                    <form enctype="multipart/form-data" action="/update_ttdkadep/{{ $isi->id }}" method="post">
+                    @csrf
+                    @if (is_null($isi->ttd_kadep))
+                        <p style="color: red;">Anda Belum Menambahkan Tanda Tangan Kadep</p>
+                    @else
+                    <img src="/image/{{ $isi->ttd_kadep }}"  width="auto" height="200px" style="align:center">
+                    @endif
+                            <input class="form-control" type="file" id="formFile" name="ttd_kadep">
+                    </div>
+                @else
+                    <form enctype="multipart/form-data" action="/update_ttdwd/{{ $isi->id }}" method="post">
+                        @csrf
+                        @if (is_null($isi->ttd_wd))
+                            <p style="color: red;">Anda Belum Menambahkan Tanda Tangan Wakil Dekan</p>
+                        @else
+                        <img src="/image/{{ $isi->ttd_wd }}"  width="auto" height="200px" style="align:center">
+                        @endif
+                                <input class="form-control" type="file" id="formFile" name="ttd_wd">
+                        </div>
+                @endif
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+        @endforeach
+        @push('scripts')
                 <script>
                     function myFunction() {
                         var x = document.getElementById("recipient-name");
@@ -136,6 +191,31 @@
                             x.type = "password";
                         }
                     }
+                    function getJabatan() {
+        let jabatan = $("#jabatan").val()
+        console.log(jabatan);
+        $("#pangkat").children().remove()
+        $("#pangkat").val('');
+        $("#pangkat").append(`<option value="" name="pangkat">Pilih Golongan</option>`)
+        $("#pangkat").prop('disabled',true)
+        if(jabatan != '' && jabatan != null){
+            $.ajax({
+            url:"{{ url('') }}/list_nama_golongan/"+jabatan,
+            success:function(res){
+                console.log(res)
+                $("#pangkat").prop('disabled',false)
+                let tampilan_option = '';
+                $.each(res,function(index,data){
+                    for (var i=0; i < data.length; i++){
+                    tampilan_option+=`<option name="pangkat" value="${data[i].id}">${data[i].nama_golongan}</option>`
+                    }
+                })
+                $("#pangkat").append(tampilan_option)
+            }
+        });
+        }
+    }
                 </script>
+        @endpush
 
 @endsection
