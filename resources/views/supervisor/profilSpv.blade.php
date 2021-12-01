@@ -27,15 +27,37 @@
             </div>
         </div>
         <div class="form-group row mb-2">
-            <label class="col-sm-2 col-form-label">Pangkat/Gol</label>
+            <label class="col-sm-2 col-form-label">Jabatan</label>
             <div class="col-sm-5">
-                <input required type="text" class="form-control" placeholder=" " name="pangkat" value="{{ $isi->pangkat }}">
+                <select class="form-select @error('jabatan') is-invalid @enderror" name="jabatan" id="jabatan"
+                aria-label="Default select example">
+                    <option value="">Pilih Jabatan</option>
+                    @foreach ($jabatan as $jbtn )
+                    <option value="{{ $jbtn->id }}" {{ old('jabatan_id', $isi->jabatan_id) == $jbtn->id ? 'selected' : null }}>{{ $jbtn->nama_jabatan }}</option>
+                    @endforeach
+                </select>
+                @error('jabatan')
+                    <div class="invalid-feedback">
+                    {{ $message }}
+                    </div>
+                @enderror
             </div>
         </div>
         <div class="form-group row mb-2">
-            <label class="col-sm-2 col-form-label">Jabatan</label>
+            <label class="col-sm-2 col-form-label">Pangkat/Gol</label>
             <div class="col-sm-5">
-                <input required type="text" class="form-control" placeholder=" " name="jabatan" value="{{ $isi->jabatan }}">
+                <select class="form-select @error('pangkat') is-invalid @enderror" name="pangkat" id="pangkat"
+                    aria-label="Default select example">
+                        <option value="">Pilih Pangkat/Gol</option>
+                        @foreach ($golongan as $gol )
+                        <option value="{{ $gol->id }}" {{ old('golongan_id', $isi->golongan_id) == $gol->id ? 'selected' : null }}>{{ $gol->nama_golongan }}</option>
+                        @endforeach
+                </select>
+                @error('pangkat')
+                    <div class="invalid-feedback">
+                    {{ $message }}
+                    </div>
+                @enderror
             </div>
         </div>
         <div class="form-group row mb-2">

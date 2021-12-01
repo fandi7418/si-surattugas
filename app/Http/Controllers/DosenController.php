@@ -7,6 +7,8 @@ use App\Models\Dosen;
 use App\Models\Admin;
 use App\Models\Surat;
 use App\Models\Prodi;
+use App\Models\Jabatan;
+use App\Models\Golongan;
 use App\Models\StatusSurat;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -51,19 +53,10 @@ class DosenController extends Controller
         ])
         ->orderBy('updated_at', 'DESC')
         ->get();
-        // $surat = createFromFormat('Y-m-d H:i:s', 'updated_at')->isoFormat('D MMMM Y');
-        // if ($request->ajax()){
-        //     return ($surat)
-        //     ->editColumn('created_at', function ($data) {
-        //         return $data->created_at ? with(new Carbon($data->created_at))->isoFormat('D MMMM Y') : '';
-        //     });
-        // }
-        // $surat = Surat::where('surat.update_at' ? with(new Carbon('surat.update_at'))->isoFormat('D MMMM Y') : '');
         return response()->json([
             'surat' => $surat,
             'kadep' => $kadep,
             'wd' => $wd,
-            // 'surat' => $surat->updated_at ? with(new Carbon($surat->updated_at))->isoFormat('D MMMM Y') : ''
         ]);
     }
 
@@ -89,7 +82,26 @@ class DosenController extends Controller
         $dosen = Dosen::with('prodi')
         ->where('dosen.id', '=', Auth::user()->id)
         ->get();
-        return view('dosen.profildosen', ['prodi' => $prodi, 'dosen' => $dosen]);
+        $golongan = Golongan::all();
+        $jabatan = Jabatan::where([
+            'id' => '1',
+            ])
+        ->orWhere([
+            'id' => '2',
+            ])
+        ->orWhere([
+            'id' => '3',
+            ])
+        ->orWhere([
+            'id' => '4',
+            ])
+        ->get();
+        return view('dosen.profildosen', [
+            'prodi' => $prodi, 
+            'dosen' => $dosen,
+            'golongan' => $golongan,
+            'jabatan' => $jabatan
+        ]);
     }
 
     public function updateprofildosen(Request $request, $id)
@@ -115,8 +127,8 @@ class DosenController extends Controller
         Dosen::where('id', $request->id)->update([
             'nama_dosen' => $request->nama,
             'NIP' => $request->NIP,
-            'pangkat' => $request->pangkat,
-            'jabatan' => $request->jabatan,
+            'golongan_id' => $request->pangkat,
+            'jabatan_id' => $request->jabatan,
             'email_dosen' => $request->email_dosen,
         ]);
         toast('Berhasil', 'success')->autoClose(2000);

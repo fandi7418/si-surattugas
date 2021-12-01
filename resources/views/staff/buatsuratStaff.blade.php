@@ -29,28 +29,28 @@
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Pangkat/Gol</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="pangkat" value="{{ Auth::guard('staff')->user()->pangkat }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="pangkat" value="{{ Auth::guard('staff')->user()->golongan->nama_golongan }}">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Jabatan</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="jabatan" value="{{ Auth::guard('staff')->user()->jabatan }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="jabatan" value="{{ Auth::guard('staff')->user()->jabatan->nama_jabatan }}">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Judul</label>
         <div class="col-sm-5">
-            <input type="text" required class="form-control" placeholder=" " name="judul" value="{{ old('judul') }}">
+            <input type="text" required class="form-control" placeholder="Judul dari kegiatan yang dilaksanakan" name="judul" value="{{ old('judul') }}">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Jenis Kegiatan</label>
         <div class="col-sm-5">
-            <input type="text" required class="form-control" placeholder=" " name="jeniskegiatan" value="{{ old('jeniskegiatan') }}">
+            <input type="text" required class="form-control" placeholder="Jenis kegiatan, contoh: Seminar, Pelatihan, Workshop, dll" name="jeniskegiatan" value="{{ old('jeniskegiatan') }}">
         </div>
     </div>
 
@@ -116,28 +116,28 @@
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Pangkat/Gol</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="pangkat" value="{{ Auth::guard('staff')->user()->pangkat }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="pangkat" value="{{ Auth::guard('staff')->user()->golongan->nama_golongan }}">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Jabatan</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="jabatan" value="{{ Auth::guard('staff')->user()->jabatan }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="jabatan" value="{{ Auth::guard('staff')->user()->jabatan->nama_jabatan }}">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Judul</label>
         <div class="col-sm-5">
-            <input type="text" required class="form-control" placeholder=" " name="judul" value="{{ old('judul') }}">
+            <input type="text" required class="form-control" placeholder="Judul dari kegiatan yang dilaksanakan" name="judul" value="{{ old('judul') }}">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Jenis Kegiatan</label>
         <div class="col-sm-5">
-            <input type="text" required class="form-control" placeholder=" " name="jeniskegiatan" value="{{ old('jeniskegiatan') }}">
+            <input type="text" required class="form-control" placeholder="Jenis kegiatan, contoh: Seminar, Pelatihan, Workshop, dll" name="jeniskegiatan" value="{{ old('jeniskegiatan') }}">
         </div>
     </div>
 
@@ -203,28 +203,28 @@
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Pangkat/Gol</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="pangkat" value="{{ Auth::guard('staff')->user()->pangkat }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="pangkat" value="{{ Auth::guard('staff')->user()->golongan->nama_golongan }}">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Jabatan</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="jabatan" value="{{ Auth::guard('staff')->user()->jabatan }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="jabatan" value="{{ Auth::guard('staff')->user()->jabatan->nama_jabatan }}">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Judul</label>
         <div class="col-sm-5">
-            <input type="text" required class="form-control" placeholder=" " name="judul" value="{{ old('judul') }}">
+            <input type="text" required class="form-control" placeholder="Judul dari kegiatan yang dilaksanakan" name="judul" value="{{ old('judul') }}">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Jenis Kegiatan</label>
         <div class="col-sm-5">
-            <input type="text" required class="form-control" placeholder=" " name="jeniskegiatan" value="{{ old('jeniskegiatan') }}">
+            <input type="text" required class="form-control" placeholder="Jenis kegiatan, contoh: Seminar, Pelatihan, Workshop, dll" name="jeniskegiatan" value="{{ old('jeniskegiatan') }}">
         </div>
     </div>
 
@@ -290,28 +290,28 @@
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Pangkat/Gol</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="pangkat" value="{{ Auth::guard('staff')->user()->pangkat }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="pangkat" value="{{ Auth::guard('staff')->user()->golongan->nama_golongan }}">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Jabatan</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="jabatan" value="{{ Auth::guard('staff')->user()->jabatan }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="jabatan" value="{{ Auth::guard('staff')->user()->jabatan->nama_jabatan }}">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Judul</label>
         <div class="col-sm-5">
-            <input type="text" required class="form-control" placeholder=" " name="judul" value="{{ old('judul') }}">
+            <input type="text" required class="form-control" placeholder="Judul dari kegiatan yang dilaksanakan" name="judul" value="{{ old('judul') }}">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Jenis Kegiatan</label>
         <div class="col-sm-5">
-            <input type="text" required class="form-control" placeholder=" " name="jeniskegiatan" value="{{ old('jeniskegiatan') }}">
+            <input type="text" required class="form-control" placeholder="Jenis kegiatan, contoh: Seminar, Pelatihan, Workshop, dll" name="jeniskegiatan" value="{{ old('jeniskegiatan') }}">
         </div>
     </div>
 

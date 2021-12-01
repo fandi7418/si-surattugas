@@ -9,6 +9,8 @@ use App\Models\Surat;
 use App\Models\Prodi;
 use App\Models\Kadep;
 use App\Models\Dosen;
+use App\Models\Jabatan;
+use App\Models\Golongan;
 use App\Models\WakilDekan;
 use App\Models\StatusSurat;
 use Illuminate\Support\Facades\DB;

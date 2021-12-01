@@ -8,6 +8,8 @@ use App\Models\Admin;
 use App\Models\Surat;
 use App\Models\Prodi;
 use App\Models\Staff;
+use App\Models\Jabatan;
+use App\Models\Golongan;
 use App\Models\StatusSurat;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -82,10 +84,22 @@ class StaffController extends Controller
     public function profilStaff()
     {
         // $prodi = Prodi::all();
-        $staff = Staff::with('prodi')
+        $staff = Staff::with('prodi', 'jabatan', 'golongan')
         ->where('staff.id', '=', Auth::user()->id)
         ->get();
-    return view('staff.profilStaff', [/*'prodi' => $prodi,*/ 'staff' => $staff]);
+        $golongan = Golongan::all();
+        $jabatan = Jabatan::where([
+            'id' => '5',
+            ])
+        ->orWhere([
+            'id' => '6',
+            ])
+        ->get();
+        return view('staff.profilStaff', [
+            'staff' => $staff,
+            'golongan' => $golongan,
+            'jabatan' => $jabatan
+        ]);
     }
 
     public function buatsuratStaff()
@@ -236,13 +250,15 @@ class StaffController extends Controller
         $this->validate($request,[
             'nama' => 'required|max:255|string',
             'NIP' => "required|numeric|min:6|unique:staff,NIP,$id|unique:dosen,NIP|unique:ketua_departemen,NIP|unique:petugas_penomoran,NIP|unique:wakildekan,NIP|unique:admin,NIP",
-            'pangkat' => 'required|string',
-            'jabatan' => 'required|string',
+            'pangkat' => 'required',
+            'jabatan' => 'required',
             'email_staff' => "email|required|unique:staff,email_staff,$id|unique:ketua_departemen,email_kadep|unique:petugas_penomoran,email_petugas|unique:wakildekan,email_wd|unique:admin,email_admin",
         ], 
             [
             'email_staff.email' => 'E-mail tidak boleh kosong',
             'email_staff.unique' => 'E-mail sudah ada yang menggunakan',
+            'pangkat.required' => 'Golongan tidak boleh kosong',
+            'jabatan.required' => 'Jabatan tidak boleh kosong',
             'nama.required' => 'Nama tidak boleh kosong',
             'NIP.required' => 'NIP tidak boleh kosong',
             'NIP.unique' => 'NIP sudah ada yang menggunakan',
@@ -254,8 +270,8 @@ class StaffController extends Controller
         Staff::where('id', $request->id)->update([
             'nama_staff' => $request->nama,
             'NIP' => $request->NIP,
-            'pangkat' => $request->pangkat,
-            'jabatan' => $request->jabatan,
+            'golongan_id' => $request->pangkat,
+            'jabatan_id' => $request->jabatan,
             'email_staff' => $request->email_staff,
         ]);
         toast('Berhasil', 'success')->autoClose(2000);

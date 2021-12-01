@@ -59,7 +59,7 @@
                                 @foreach ($golongan as $gol )
                                 <option value="{{ $gol->id }}" {{ old('golongan_id', $dsn->golongan_id) == $gol->id ? 'selected' : null }}>{{ $gol->nama_golongan }}</option>
                                 @endforeach
-                    </select>
+                        </select>
                                 @error('pangkat')
                                     <div class="invalid-feedback">
                                     {{ $message }}
