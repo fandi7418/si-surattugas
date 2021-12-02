@@ -18,18 +18,6 @@
                 </div>
             </div>
             <div class="form-group row mt-4">
-                <label for="colFormLabel" class="col-sm-2 col-form-label">NIP</label>
-                <div class="col-sm-8">
-                    <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <=57" class="form-control @error('NIP') is-invalid @enderror"
-                        id="colFormLabel" name="NIP" value="{{ old('NIP', $adm->NIP) }}">
-                        @error('NIP')
-                        <div class="invalid-feedback">
-                        {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-            </div>
-            <div class="form-group row mt-4">
                 <label for="colFormLabel" class="col-sm-2 col-form-label">Email</label>
                 <div class="col-sm-8">
                     <input type="email" class="form-control @error('email') is-invalid @enderror" id="colFormLabel" name="email" value="{{ old('email', $adm->email_admin) }}">

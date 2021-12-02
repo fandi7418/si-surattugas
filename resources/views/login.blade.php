@@ -5,9 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.87.0">
-    <title>Sistem Informasi Surat Tugas</title>
+    <title>SIKEPO v2.0</title>
 
     <link rel="canonical" href="{{ asset('https://getbootstrap.com/docs/5.1/examples/sign-in/') }}">
 
@@ -47,13 +45,8 @@
       
         <form action="{{ route('postlogin') }}" method="post">
             @csrf
-            {{-- @if(session()->has('loginError')) --}}
-            {{-- <div class="alert alert-danger alert-dismissible fade show" role="alert"> --}}
-            {{-- {{ session('loginError') }} --}}
-            {{-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-lable="Close"></button>
-    </div> --}}
-            {{-- @endif --}}
-            <img class="mb-4" src="/undip.png" alt="" width="auto" height="150">
+            <!-- <img class="mb-4" src="/undip.png" alt="" width="auto" height="150"> -->
+            <img class="mb-4" src="/LogoSikepo.png" alt="" width="auto" height="250">
             <h1 class="h3 mb-3 fw-normal">Silahkan Login</h1>
 
             <div class="form-floating">

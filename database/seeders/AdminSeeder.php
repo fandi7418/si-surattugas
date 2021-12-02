@@ -20,7 +20,6 @@ class AdminSeeder extends Seeder
             'email_admin' => 'admin1@admin.com',
             'password' => bcrypt('123456'),
             'nama_admin' => 'admin 1',
-            'NIP' => '21120111989',
             'remember_token' => Str::random(60),
         ]);
     }

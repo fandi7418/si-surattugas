@@ -18,7 +18,6 @@ class CreateAdmin extends Migration
             $table->string('email_admin');
             $table->string('password');
             $table->string('nama_admin');
-            $table->bigInteger('NIP');
             $table->rememberToken();
             $table->timestamps();
         });

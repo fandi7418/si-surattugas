@@ -13,15 +13,29 @@
 		table tr .text2 {
 			text-align: right;
 			font-size: 13px;
+			z-index: 1;
 		}
 		table tr .text {
 			/* text-align: center; */
 			font-size: 13px;
+			/* z-index: 1; */
 		}
 		table tr td {
 			font-size: 13px;
 		}
 
+		.ttdWD {
+			position: relative;
+		}
+		.cap {
+			bottom: 210px;
+			right: 250px;
+			position: absolute;
+		}
+
+		/* table tr #cap{
+			z-index: 2;
+		} */
 	</style>
 </head>
 <body>
@@ -165,7 +179,10 @@
 				@else
 				<td class="text"><img src="/image/{{ $surat->ttd_spv }}" alt="" width="auto" height="100px"></td>
 				@endif
-				<td class="text"><img src="/image/{{ $surat->ttd_wd }}" alt="" width="auto" height="100px"></td>
+				<td class="ttdWD" id="ttdWD"><img src="/image/{{ $surat->ttd_wd }}" alt="" width="auto" height="100px"></td>
+				@if($surat->status_id == '4')
+				<td class="cap" id="cap"><img src="/CapUndip.png" alt="" width="auto" height="170px"></td>
+				@endif
 			</tr>
 			<tr>
 				@if(isset($surat->nama_kadep))

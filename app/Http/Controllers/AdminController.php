@@ -70,18 +70,14 @@ class AdminController extends Controller
     {
         $request->validate([
             'nama' => 'required|max:255|string',
-            'NIP' => "required|numeric|min:6|unique:admin,NIP,$id|unique:wakildekan,NIP|unique:ketua_departemen,NIP|unique:dosen,NIP|unique:petugas_penomoran,NIP",
             'email' => "email|required|unique:admin,email_admin,$id|unique:wakildekan,email_wd,$id|unique:ketua_departemen,email_kadep|unique:dosen,email_dosen|unique:petugas_penomoran,email_petugas"
         ], [
             'email.email' => 'Email tidak boleh kosong',
             'email.unique' => 'Email sudah ada yang menggunakan',
             'nama.required' => 'Nama tidak boleh kosong',
-            'NIP.required' => 'NIP tidak boleh kosong',
-            'NIP.unique' => 'NIP sudah ada yang menggunakan'
         ]);
         Admin::where('id', $request->id)->update([
             'nama_admin' => $request->nama,
-            'NIP' => $request->NIP,
             'email_admin' => $request->email,
             
         ]);
