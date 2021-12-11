@@ -185,11 +185,11 @@ class AdminController extends Controller
     {
         $request->validate([
             'nama_dosen' => 'required|max:255|string',
-            'NIP' => 'required|numeric|min:6|unique:dosen,NIP|unique:ketua_departemen,NIP|unique:admin,NIP|unique:petugas_penomoran,NIP|unique:wakildekan,NIP',
+            'NIP' => 'required|numeric|min:6|unique:dosen,NIP|unique:staff,NIP',
             'prodi_id' => 'required',
             'pangkat' => 'required|string',
             'jabatan' => 'required|string',
-            'email_dosen' => 'email|required|unique:dosen,email_dosen|unique:ketua_departemen,email_kadep|unique:admin,email_admin|unique:petugas_penomoran,email_petugas|unique:wakildekan,email_wd',
+            'email_dosen' => 'email|required|unique:dosen,email_dosen|unique:admin,email_admin|unique:staff,email_staff',
             'password' => 'required|min:6',
         ], [
             'email_dosen.unique' => 'Email sudah ada yang menggunakan',
@@ -251,11 +251,11 @@ class AdminController extends Controller
     {
         $this->validate($request,[
             'nama_dosen' => 'required|max:255|string',
-            'NIP' => "required|numeric|min:6|unique:dosen,NIP,$id|unique:ketua_departemen,NIP|unique:admin,NIP|unique:petugas_penomoran,NIP|unique:wakildekan,NIP",
+            'NIP' => "required|numeric|min:6|unique:dosen,NIP,$id|unique:staff,NIP",
             'prodi_id' => 'required',
             'pangkat' => 'required|string',
             'jabatan' => 'required|string',
-            'email_dosen' => "email|required|unique:dosen,email_dosen,$id|unique:ketua_departemen,email_kadep|unique:admin,email_admin|unique:petugas_penomoran,email_petugas|unique:wakildekan,email_wd"
+            'email_dosen' => "email|required|unique:dosen,email_dosen,$id|unique:admin,email_admin|unique:staff,email_staff"
         ], 
             [
             'email_dosen.email' => 'Email tidak boleh kosong',
@@ -1299,7 +1299,7 @@ public function tambahstaff(Request $request)
 {
     $request->validate([
         'nama_staff' => 'required|max:255|string',
-        'NIP' => 'required|numeric|min:6|unique:staff,NIP|unique:admin,NIP|unique:dosen,NIP',
+        'NIP' => 'required|numeric|min:6|unique:staff,NIP|unique:dosen,NIP',
         'pangkat' => 'required',
         'jabatan' => 'required',
         'roles_id' => 'required',
@@ -1348,25 +1348,25 @@ public function editstaff($id)
 
 public function updatestaff(Request $request, $id)
 {
-    // $this->validate($request,[
-    //     'nama_dosen' => 'required|max:255|string',
-    //     'NIP' => "required|numeric|min:6|unique:dosen,NIP,$id|unique:ketua_departemen,NIP|unique:admin,NIP|unique:petugas_penomoran,NIP|unique:wakildekan,NIP",
-    //     'prodi_id' => 'required',
-    //     'pangkat' => 'required|string',
-    //     'jabatan' => 'required|string',
-    //     'email_dosen' => "email|required|unique:dosen,email_dosen,$id|unique:ketua_departemen,email_kadep|unique:admin,email_admin|unique:petugas_penomoran,email_petugas|unique:wakildekan,email_wd"
-    // ], 
-    //     [
-    //     'email_dosen.email' => 'Email tidak boleh kosong',
-    //     'email_dosen.unique' => 'Email sudah ada yang menggunakan',
-    //     'nama_dosen.required' => 'Nama tidak boleh kosong',
-    //     'NIP.required' => 'NIP tidak boleh kosong',
-    //     'NIP.unique' => 'NIP sudah ada yang menggunakan',
-    //     'prodi_id.required' => 'Program Studi tidak boleh kosong',
-    //     'pangkat.required' => 'Pangkat tidak boleh kosong',
-    //     'jabatan.required' => 'Jabatan tidak boleh kosong',
+    $this->validate($request,[
+        'nama_staff' => 'required|max:255|string',
+        'NIP' => "required|numeric|min:6|unique:dosen,NIP|unique:staff,NIP,$id",
+        'prodi_id' => 'required',
+        'pangkat' => 'required|string',
+        'jabatan' => 'required|string',
+        'email_staff' => "email|required|unique:staff,email_staff,$id|unique:admin,email_admin|unique:dosen,email_dosen"
+    ], 
+        [
+        'email_staff.email' => 'Email tidak boleh kosong',
+        'email_staff.unique' => 'Email sudah ada yang menggunakan',
+        'nama_staff.required' => 'Nama tidak boleh kosong',
+        'NIP.required' => 'NIP tidak boleh kosong',
+        'NIP.unique' => 'NIP sudah ada yang menggunakan',
+        'prodi_id.required' => 'Program Studi tidak boleh kosong',
+        'pangkat.required' => 'Pangkat tidak boleh kosong',
+        'jabatan.required' => 'Jabatan tidak boleh kosong',
 
-    // ]);
+    ]);
     Staff::where('id', $request->id)->update([
         'nama_staff' => $request->nama_staff,
         'NIP' => $request->NIP,
