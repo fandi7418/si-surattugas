@@ -120,26 +120,28 @@ class AdminController extends Controller
     }   
     public function datadosen(Request $request)
     {
+        $dosen = Dosen::with('prodi','roles')
+        ->get();
         // $prodi = Prodi::all();
         // $dosen = Dosen::with('prodi')->orderBy('created_at', 'DESC')
         // ->paginate(10);
         // return view('admin.datadosen', ['dosen' => $dosen, 'prodi' => $prodi, "title" => "Data Dosen"]); 
-        if ($request->ajax()){
-            $dosen = Dosen::with('prodi','roles')
-            ->get();
-            return datatables()->of($dosen)->addColumn('action', function($data){
-                $url_edit = url('edit_dosen/'.$data->id);
-                $url_hapus = url('hapus_dosen/'.$data->id.'/konfirmasi');
-                $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Nonaktif</a>';     
-                return $button;
-            })
-            ->rawColumns(['action'])
-                        ->addIndexColumn()
-                        ->make(true);
-    }
-    return view('admin.datadosen', ["title" => "Data Dosen"]);
+    //     if ($request->ajax()){
+    //         $dosen = Dosen::with('prodi','roles')
+    //         ->get();
+    //         return datatables()->of($dosen)->addColumn('action', function($data){
+    //             $url_edit = url('edit_dosen/'.$data->id);
+    //             $url_hapus = url('hapus_dosen/'.$data->id.'/konfirmasi');
+    //             $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';
+    //             $button .= '&nbsp;&nbsp;';
+    //             $button .= '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Nonaktif</a>';     
+    //             return $button;
+    //         })
+    //         ->rawColumns(['action'])
+    //                     ->addIndexColumn()
+    //                     ->make(true);
+    // }
+    return view('admin.datadosen', ['dosen' => $dosen, "title" => "Data Dosen"]);
 }
     public function datadosensementara (Request $request)
     {
@@ -298,6 +300,14 @@ class AdminController extends Controller
 
         return redirect('/data_dosen');
     }
+    public function konfirmasidosen2($id)
+    {
+        alert()->question('Peringatan','Anda yakin akan Menonaktifkan Akun? ')
+        ->showConfirmButton('<a href="/hapus_dosen2/'.$id.'/hapusdosen2" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
+        ->showCancelButton('Batal', '#aaa')->reverseButtons();
+
+        return redirect('/data_dosen');
+    }
     public function konfirmasidosenpermanen($id)
     {
         alert()->question('Peringatan','Anda yakin akan Menghapus Akun? ')
@@ -306,17 +316,30 @@ class AdminController extends Controller
 
         return redirect()->back();
     }
-    public function konfirmasidosenpermanensemua()
-    {
-        alert()->question('Peringatan','Anda yakin akan Menghapus Semua Akun? ')
-        ->showConfirmButton('<a href="/hapusdosenpermanensemua" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
-        ->showCancelButton('Batal', '#aaa')->reverseButtons();
+    // public function konfirmasidosenpermanensemua()
+    // {
+    //     alert()->question('Peringatan','Anda yakin akan Menghapus Semua Akun? ')
+    //     ->showConfirmButton('<a href="/hapusdosenpermanensemua" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
+    //     ->showCancelButton('Batal', '#aaa')->reverseButtons();
 
-        return redirect('/data_dosen');
-    }
+    //     return redirect('/data_dosen');
+    // }
 
     public function hapusdosen($id)
     {
+        Dosen::where('id', $id)->delete();
+        Alert::success('Sukses', 'Data Berhasil Dinonaktifkan');
+        return redirect('/data_dosen');
+
+        // $dosen = dosen::select('sampul', 'id')->whereId($id)->firstOrfail();
+        // file::delete()
+    }
+    public function hapusdosen2($id)
+    {
+        $prodi_id = Dosen::where('id', $id)->first()->prodi_id;
+        Prodi::where('id', '=', $prodi_id)->update([
+            'status' => '1',
+        ]);
         Dosen::where('id', $id)->delete();
         Alert::success('Sukses', 'Data Berhasil Dinonaktifkan');
         return redirect('/data_dosen');
@@ -565,10 +588,15 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function hapusKadep($id)
+    public function hapusKadep(request $request, $id)
     {
-        Dosen::where('id', $id)->update([
+        $prodi_id = Dosen::where('id', $id)->first()->prodi_id;
+        Prodi::where('id', '=', $prodi_id)->update([
+            'status' => '1',
+        ]);
+        Dosen::with('prodi')->where('id', $id)->update([
             'roles_id' => '1',
+            // 'ttd_kadep' => null,
         ]);
         Alert::success('Sukses', 'Data Berhasil Dihapus');
         return redirect('/data_kadep');
@@ -754,7 +782,8 @@ class AdminController extends Controller
     public function hapusWD($id)
     {
         $wakildekan = Dosen::where('id',$id)->update([
-            'roles_id' => '1'
+            'roles_id' => '1',
+            // 'ttd_wd' => null,
         ]);
         Alert::success('Sukses', 'Data Berhasil Dihapus');
         return redirect()->back();
@@ -1013,7 +1042,8 @@ public function konfirmasispv($id)
 public function hapusspv($id)
 {
     $spv = Staff::where('id',$id)->update([
-        'roles_id' => '4'
+        'roles_id' => '4',
+        // 'ttd_spv' => null,
     ]);
     Alert::success('Sukses', 'Data Berhasil Dihapus');
     return redirect()->back();

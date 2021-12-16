@@ -63,11 +63,15 @@ Route::group(['middleware' => ['auth:admin']], function()
 
     Route::get('/hapus_dosen/{id}/konfirmasi', [AdminController::class, 'konfirmasidosen']);
     
+    Route::get('/hapus_dosen2/{id}/konfirmasi2', [AdminController::class, 'konfirmasidosen2']);
+    
     Route::get('/hapus_dosenpermanen/{id}/konfirmasi', [AdminController::class, 'konfirmasidosenpermanen']);
 
     Route::get('/hapus_dosenpermanen/konfirmasisemua', [AdminController::class, 'konfirmasidosenpermanensemua']);
     
     Route::get('/hapus_dosen/{id}/hapusdosen', [AdminController::class, 'hapusdosen']);
+    
+    Route::get('/hapus_dosen2/{id}/hapusdosen2', [AdminController::class, 'hapusdosen2']);
     
     Route::get('/hapus_dosen/{id}/hapusdosenpermanen', [AdminController::class, 'hapusdosenpermanen']);
 

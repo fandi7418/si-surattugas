@@ -33,8 +33,30 @@
                     <th scope="col">Status</th>
                     <th scope="col">Aksi</th>
                 </tr>
-
             </thead>
+                <tbody>
+                    @foreach($dosen as $dsn)
+                    <tr>
+                        <td>{{$dsn->nama_dosen}}</td>
+                        <td>{{$dsn->NIP}}</td>
+                        <td>{{ $dsn->prodi->prodi }}</td>
+                        <td>{{ $dsn->roles->peran }}</td>
+                        {{-- @if(isset($dsn->prodi_id))
+                        <td>{{ $dsn->prodi->prodi }}</td>
+                        @else
+                        <td style="color:rgb(0, 64, 255)">Teknik</td>
+                        @endif --}}
+                        <td>
+                        <a href="/edit_dosen/{{ $dsn->id }}" class="btn btn-info btn-sm">Edit</a>
+                        @if ($dsn->roles_id == '2')
+                        <a href="/hapus_dosen2/{{ $dsn->id }}/konfirmasi2" class="btn btn-danger btn-sm">Hapus</a>
+                        @else
+                        <a href="/hapus_dosen/{{ $dsn->id }}/konfirmasi" class="btn btn-danger btn-sm">Hapus</a>
+                        @endif
+                        </td>
+                    </tr>
+                    @endforeach
+                    </tbody>
         </table>
     </div>
 </div>
@@ -43,6 +65,11 @@
 @endsection
 @push('scripts')
 <script type="text/javascript">
+    $(document).ready(function() {
+    $('#datadosen').DataTable();
+    });
+</script>
+{{-- <script type="text/javascript">
     $(document).ready(function () {
         $('#datadosen').DataTable({
             processing: true,
@@ -78,56 +105,5 @@
             ]
         });
     });
-    $(".filter").on('change', function () {
-        prodis = $("#filter-prodis").val()
-        ajax.reload(null, false)
-
-    })
-    // $(document).ready(function () {
-    //     fetch_data();
-    //     function fetch_data(prodi = '')
-    //     {
-    //     $('#datadosen').DataTable({
-    //         "oLanguage" : {
-    //             "sProcessing": "<span>Memuat Data...</span>"  
-    //         },
-    //         serverside: true,
-    //         processing: true,
-    //         ajax: {
-    //             url: "{{ route('data dosen') }}",
-    //             data: {prodi:prodi}
-    //         },
-    //         columns: [{
-    //                 data: 'nama_dosen',
-    //                 name: 'nama_dosen'
-    //             },
-    //             {
-    //                 data: 'NIP',
-    //                 name: 'NIP'
-    //             },
-    //             {
-    //                 data: 'prodi',
-    //                 name: 'prodi',
-    //                 orderable: false
-    //             },
-    //             {
-    //                 data: 'action',
-    //                 name: 'action',
-    //             },
-    //         ],
-    //         order: [
-    //             [0, 'asc']
-    //         ]
-    //     });
-    //     }
-    //     $('#filter-prodis').change(function(){
-    //         var id = $('#filter-prodis').val();
-
-    //         $('#datadosen').DataTable().destroy();
-
-    //         fetch_data(id);
-    //     });
-    // });
-
-</script>
+</script> --}}
 @endpush
