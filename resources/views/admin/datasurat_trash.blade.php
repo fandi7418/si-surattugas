@@ -19,7 +19,6 @@
                     <th scope="col">Program Studi</th>
                     <th scope="col">Tanggal</th>
                     <th scope="col" style="display: none">id</th>
-                    <th scope="col">Status</th>
                     <th scope="col">Aksi</th>
                 </tr>
             </thead>
@@ -28,11 +27,10 @@
                 <tr>
                     <td>{{ $srt->no_surat }}</td>
                     <td>{{ $srt->judul }}</td>
-                    <td>{{ $srt->nama_dosen }}</td>
+                    <td>{{ $srt->nama }}</td>
                     <td>{{ $srt->prodi->prodi }}</td>
                     <td>{{ \Carbon\Carbon::parse($srt->created_at)->isoFormat('D MMMM Y')}}</td>
                     <td style="display: none">{{ $srt->id }}</td>
-                    <td>{{ $srt->status->status }}</td>
                     <td>
                         <a href="/data_surat/restore/{{ $srt->id }}" class="btn btn-success btn-sm">Restore</a>
                         <a href="/hapus_suratpermanen/{{ $srt->id }}/konfirmasi" class="btn btn-danger btn-sm">Hapus Permanen</a>

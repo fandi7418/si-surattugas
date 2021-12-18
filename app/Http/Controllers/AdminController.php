@@ -409,9 +409,17 @@ class AdminController extends Controller
         $kadep = Dosen::with('prodi') -> where('roles_id', '=', '2')->get();
         if ($request->ajax()){
             return datatables()->of($kadep)->addColumn('action', function($data){
+                $url_edit = url('edit_dosen/'.$data->id);
                 $url_hapus = url('hapus_kadep/'.$data->id.'/konfirmasi');
-                $button = '<a href="'.$url_hapus.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-danger btn-sm edit-post"><i class="far fa-danger"></i>Hapus</a>';  
+                $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';
+                $button .= '&nbsp;&nbsp;';
+                $button .= '<a href="'.$url_hapus.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-danger btn-sm edit-post"><i class="far fa-danger"></i>Hapus</a>';  
                 return $button;
+    //             $url_edit = url('edit_dosen/'.$data->id);
+    //             $url_hapus = url('hapus_dosen/'.$data->id.'/konfirmasi');
+    //             $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';
+    //             $button .= '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Nonaktif</a>';     
+    //             return $button;
             })
             ->rawColumns(['action'])
                         ->addIndexColumn()
@@ -982,7 +990,7 @@ public function dataspv(Request $request)
     $spv = Staff::where('roles_id', '=', '6')->get();
     if ($request->ajax()){
         return datatables()->of($spv)->addColumn('action', function($data){
-            $url_edit = url('edit_spv/'.$data->id);
+            $url_edit = url('edit_staff/'.$data->id);
             $url_hapus = url('hapus_spv/'.$data->id.'/konfirmasi');
             $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';
             $button .= '&nbsp;&nbsp;';
@@ -1381,7 +1389,7 @@ public function updatestaff(Request $request, $id)
     $this->validate($request,[
         'nama_staff' => 'required|max:255|string',
         'NIP' => "required|numeric|min:6|unique:dosen,NIP|unique:staff,NIP,$id",
-        'prodi_id' => 'required',
+        // 'prodi_id' => 'required',
         'pangkat' => 'required|string',
         'jabatan' => 'required|string',
         'email_staff' => "email|required|unique:staff,email_staff,$id|unique:admin,email_admin|unique:dosen,email_dosen"
@@ -1392,7 +1400,7 @@ public function updatestaff(Request $request, $id)
         'nama_staff.required' => 'Nama tidak boleh kosong',
         'NIP.required' => 'NIP tidak boleh kosong',
         'NIP.unique' => 'NIP sudah ada yang menggunakan',
-        'prodi_id.required' => 'Program Studi tidak boleh kosong',
+        // 'prodi_id.required' => 'Program Studi tidak boleh kosong',
         'pangkat.required' => 'Pangkat tidak boleh kosong',
         'jabatan.required' => 'Jabatan tidak boleh kosong',
 

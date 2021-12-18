@@ -105,7 +105,7 @@
                     
                
             </form>
-            <a href="" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Reset Password</a>
+            <a href="" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Ubah Password</a>
             </div>
             </div>
             @endforeach

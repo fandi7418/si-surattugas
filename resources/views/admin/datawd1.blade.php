@@ -28,6 +28,7 @@
                         <td>{{$wakil->NIP}}</td>
                         <td>{{ $wakil->email_dosen }}</td>
                         <td>
+                        <a href="/edit_dosen/{{ $wakil->id }}" class="btn btn-info btn-sm">Edit</a>
                         <a href="/hapus_wakildekan/{{ $wakil->id }}/konfirmasi" class="btn btn-danger btn-sm">Hapus</a>
                         </td>
                     </tr>

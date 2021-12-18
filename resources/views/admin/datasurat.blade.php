@@ -29,27 +29,27 @@
                 <tr>
                     <td>{{ $srt->no_surat }}</td>
                     <td>{{ $srt->judul }}</td>
-                    <td>{{ $srt->nama_dosen }}</td>
+                    <td>{{ $srt->nama }}</td>
                     <td>{{ $srt->prodi->prodi }}</td>
                     <td>{{ \Carbon\Carbon::parse($srt->created_at)->isoFormat('D MMMM Y')}}</td>
                     <td style="display: none">{{ $srt->id }}</td>
                     <td>{{ $srt->status->status }}</td>
                     <td>
                         <a href="/surat/{{ $srt->id }}" class="btn btn-secondary btn-sm" target="_blank">Lihat</a>
-                        @if ($srt->status_id == '1')
-                        <button type="button" class="btn btn-success btn-sm" onClick="konfirmasikadep({{ $srt->id }})">Izinkan</button>
+                        {{-- @if ($srt->status_id == '1')
+                        <button type="button" class="btn btn-success btn-sm" onClick="konfirmasikadep({{ $srt->id }})">Izinkan</button> --}}
                         {{-- <form enctype="multipart/form-data" style="float: left" method="post" action="{{ url('postizinkankadep/'. $srt->id) }}">
                             @csrf
                             <button type="submit" class="btn btn-success btn-sm">izin</button>
                             </form> --}}
                         {{-- <a  method="post" href="postizinkankadep/{{ $srt->id }}" class="btn btn-success btn-sm">izinkan</a> --}}
-                        @elseif ($srt->status_id == '2')
-                        <button type="button" class="btn btn-success btn-sm" onClick="konfirmasiwd({{ $srt->id }})">Izinkan</button>
+                        {{-- @elseif ($srt->status_id == '2')
+                        <button type="button" class="btn btn-success btn-sm" onClick="konfirmasiwd({{ $srt->id }})">Izinkan</button> --}}
                         {{-- <form enctype="multipart/form-data" method="post" action="{{ url('postizinkanwakildekan/'. $srt->id) }}">
                             @csrf
                             <button type="submit" class="btn btn-success btn-sm">izin</button>
                             </form> --}}
-                        @endif
+                        {{-- @endif --}}
                         <a href="/hapus_surat/{{ $srt->id }}/konfirmasiadmin" class="btn btn-danger btn-sm">Hapus</a>
                     </td>
                 </tr>
