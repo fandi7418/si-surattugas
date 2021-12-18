@@ -94,7 +94,7 @@ class SupervisorController extends Controller
     {
         $this->validate($request,[
             'nama' => 'required|max:255|string',
-            'NIP' => "required|numeric|min:6|unique:staff,NIP,$id|unique:dosen,NIP|unique:ketua_departemen,NIP|unique:petugas_penomoran,NIP|unique:wakildekan,NIP|unique:admin,NIP",
+            'NIP' => "required|numeric|min:6|unique:staff,NIP,$id|unique:dosen,NIP",
             'pangkat' => 'required',
             'jabatan' => 'required',
             'email_staff' => "email|required|unique:staff,email_staff,$id|unique:ketua_departemen,email_kadep|unique:petugas_penomoran,email_petugas|unique:wakildekan,email_wd|unique:admin,email_admin",

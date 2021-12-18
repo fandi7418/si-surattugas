@@ -37,7 +37,7 @@
           <td style="color:blue">Staff Dekanat FT</td>
           @endif
         <td style="display:none">{{$isi->id}}</td>
-        <td>{{ \Carbon\Carbon::parse($isi->created_at)->isoFormat('D MMMM Y')}}</td>
+        <td>{{ \Carbon\Carbon::parse($isi->tanggalawal)->isoFormat('D MMMM Y')}}</td>
         @if(is_null($isi->no_surat))
         <td style="color:red">{{$isi->status->status}}</td>
         @else

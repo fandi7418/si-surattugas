@@ -32,7 +32,7 @@
         <td>{{$isi->no_surat}}</td>
         @endif
         <td>{{$isi->judul}}</td>
-        <td>{{ \Carbon\Carbon::parse($isi->created_at)->isoFormat('D MMMM Y')}}</td>
+        <td>{{ \Carbon\Carbon::parse($isi->tanggalawal)->isoFormat('D MMMM Y')}}</td>
         @if($isi->status_id == '1')
         <td>
           <div class="container">

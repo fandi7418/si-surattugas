@@ -22,7 +22,7 @@
               <tr>
                 <td>{{$isi->judul}}</td>
                 <td>{{$isi->nama}}</td>
-                <td>{{ \Carbon\Carbon::parse($isi->created_at)->isoFormat('D MMMM Y')}}</td>
+                <td>{{ \Carbon\Carbon::parse($isi->tanggalawal)->isoFormat('D MMMM Y')}}</td>
                 <td style="display:none">{{$isi->id}}</td>
                 <td>
                 <a href="/surat/{{ $isi->id }}" target="_blank" class="btn btn-secondary btn-sm">Lihat</a>

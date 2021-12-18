@@ -48,21 +48,21 @@
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Judul</label>
         <div class="col-sm-5">
-            <input type="text" required class="form-control" placeholder=" " name="judul" value="{{ old('judul') }}">
+            <input type="text" required class="form-control" placeholder="Judul dari kegiatan yang dilaksanakan" name="judul" value="{{ old('judul') }}">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Jenis Kegiatan</label>
         <div class="col-sm-5">
-            <input type="text" required class="form-control" placeholder="Judul dari kegiatan yang dilaksanakan" name="jeniskegiatan" value="{{ old('jeniskegiatan') }}">
+            <input type="text" required class="form-control" placeholder="Jenis kegiatan, contoh: Seminar, Pelatihan, Workshop, dll" name="jeniskegiatan" value="{{ old('jeniskegiatan') }}">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Tempat Kegiatan</label>
         <div class="col-sm-5">
-            <input type="text" required class="form-control" placeholder="Jenis kegiatan, contoh: Seminar, Pelatihan, Workshop, dll" name="tempat" value="{{ old('tempat') }}">
+            <input type="text" required class="form-control" placeholder="" name="tempat" value="{{ old('tempat') }}">
         </div>
     </div>
 

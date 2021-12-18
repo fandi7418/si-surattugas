@@ -193,7 +193,7 @@ class KadepController extends Controller
             'nama_dosen' => 'required|max:255|string',
             'pangkat' => 'required',
             'jabatan' => 'required',
-            'NIP' => "required|numeric|min:6|unique:dosen,NIP,$id|unique:petugas_penomoran,NIP|unique:admin,NIP",
+            'NIP' => "required|numeric|min:6|unique:dosen,NIP,$id|unique:staff,NIP",
             'email_dosen' => "email|required|unique:dosen,email_dosen,$id|unique:petugas_penomoran,email_petugas|unique:admin,email_admin",
         ], 
             [
