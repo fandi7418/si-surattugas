@@ -67,10 +67,11 @@
                                 @enderror
                     </div>
                 </div>
+                @if ($dsn->roles_id == '2')
                 <div class="form-group row mt-4">
                     <label for="colFormLabel" class="col-sm-2 col-form-label">Program Studi</label>
                     <div class="col-sm-8">
-                        <select class="form-select @error('prodi_id') is-invalid @enderror" name="prodi_id" id="prodi_id" aria-label="Default select example">
+                        <select  class="form-select @error('prodi_id') is-invalid @enderror" name="prodi_id" id="prodi_id" aria-label="Default select example">
                             <option disabled value="">Pilih Program Studi</option>
                             @foreach ($prd as $prodis )
                             <option value="{{ $prodis->id }}" {{ old('prodi_id', $dsn->prodi_id) == $prodis->id ? 'selected' : null }}>{{ $prodis->prodi }}</option>
@@ -83,6 +84,41 @@
                     @enderror
                     </div>
                 </div>
+                @elseif ($dsn->roles_id == '3')
+                <div class="form-group row mt-4">
+                    <label for="colFormLabel" class="col-sm-2 col-form-label">Program Studi</label>
+                    <div class="col-sm-8">
+                        <select  class="form-select @error('prodi_id') is-invalid @enderror" name="prodi_id" id="prodi_id" aria-label="Default select example">
+                            <option disabled value="">Pilih Program Studi</option>
+                            @foreach ($prd as $prodis )
+                            <option value="{{ $prodis->id }}" {{ old('prodi_id', $dsn->prodi_id) == $prodis->id ? 'selected' : null }}>{{ $prodis->prodi }}</option>
+                            @endforeach
+                        </select>
+                        @error('prodi_id')
+                        <div class="invalid-feedback">
+                        {{ $message }}
+                        </div>
+                    @enderror
+                    </div>
+                </div>
+                @else
+                <div class="form-group row mt-4">
+                    <label for="colFormLabel" class="col-sm-2 col-form-label">Program Studi</label>
+                    <div class="col-sm-8">
+                        <select class="form-select @error('prodi_id') is-invalid @enderror" name="prodi_id" aria-label="Default select example">
+                            <option disabled value="">Pilih Program Studi</option>
+                            @foreach ($prd as $prodis )
+                            <option value="{{ $prodis->id }}" {{ old('prodi_id', $dsn->prodi_id) == $prodis->id ? 'selected' : null }}>{{ $prodis->prodi }}</option>
+                            @endforeach
+                        </select>
+                        @error('prodi_id')
+                        <div class="invalid-feedback">
+                        {{ $message }}
+                        </div>
+                    @enderror
+                    </div>
+                </div>
+                @endif
                 <div class="form-group row mt-4">
                     <label for="colFormLabel" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-8">
@@ -103,7 +139,7 @@
                     
                
             </form>
-            <a href="" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Reset Password</a>
+            <a href="" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Ubah Password</a>
             @if ($dsn->roles_id == '2')
             <a href="" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#ttdModal">Tanda Tangan</a>
             @elseif ($dsn->roles_id == '3')
@@ -183,6 +219,7 @@
         @endforeach
         @push('scripts')
                 <script>
+        $('#prodi_id option:not(:selected)').prop('disabled', true);
                     function myFunction() {
                         var x = document.getElementById("recipient-name");
                         if (x.type === "password") {
@@ -191,7 +228,7 @@
                             x.type = "password";
                         }
                     }
-                    function getJabatan() {
+        function getJabatan() {
         let jabatan = $("#jabatan").val()
         console.log(jabatan);
         $("#pangkat").children().remove()
