@@ -7,6 +7,24 @@
 <br>
 <form class="mb-8" method="post" action="/tambahsurat">
     @csrf
+        @error('nama_wd')
+        <div class="form-group row mb-2" style="margin-left: 1px">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 57%">
+                <i class="bi bi-exclamation-triangle-fill" style="margin-right: 5px"></i>
+                <strong>Gagal!</strong> &nbsp; {{ $message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        @enderror
+        @error('nama_kadep')
+        <div class="form-group row mb-2" style="margin-left: 1px">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 57%">
+                <i class="bi bi-exclamation-triangle-fill" style="margin-right: 5px"></i>
+                <strong>Gagal!</strong> &nbsp; {{ $message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        @enderror
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Nama Dosen</label>
         <div class="col-sm-5">

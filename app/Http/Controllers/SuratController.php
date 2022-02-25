@@ -50,10 +50,16 @@ class SuratController extends Controller
         $request->validate([
             'tanggalawal' => 'date_format:Y-m-d|after_or_equal:today',
             'tanggalakhir' => 'date_format:Y-m-d|after_or_equal:tanggalawal',
+            'nama_wd' => 'required',
+            'nama_kadep' => 'required',
+            // 'NIP_wd' => 'required',
+
         ], [
             // 'tanggalawal.required' => 'Nama tidak boleh kosong',
             'tanggalawal.after_or_equal' => 'Input tidak valid',
             'tanggalakhir.after_or_equal' => 'Input tidak valid',
+            'nama_wd.required' => 'Wakil Dekan tidak ditemukan, silahkan hubungi Admin',
+            'nama_kadep.required' => 'Kadep tidak ditemukan, silahkan hubungi Admin'
         ]);
         Surat::create([
             'nama' => $request->nama,

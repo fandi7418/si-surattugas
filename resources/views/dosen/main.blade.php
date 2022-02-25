@@ -291,7 +291,7 @@
                     }
               }
             });
-          setTimeout(notif, 2000);
+          setTimeout(notif, 3000);
       }
 
       // function clearNotif()
