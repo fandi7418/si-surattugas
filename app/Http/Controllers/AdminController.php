@@ -812,11 +812,11 @@ class AdminController extends Controller
         $petugas = Staff::where('roles_id', '=', '7')->get();
         if ($request->ajax()){
             return datatables()->of($petugas)->addColumn('action', function($data){
-                $url_edit = url('edit_petugas/'.$data->id);
+                $url_edit = url('edit_staff/'.$data->id);
                 $url_hapus = url('hapus_petugas/'.$data->id.'/konfirmasi');
                 $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';
                 $button .= '&nbsp;&nbsp;';
-                $button .= '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Delete</a>';     
+                $button .= '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Hapus</a>';     
                 return $button;
             })
             ->rawColumns(['action'])
@@ -994,7 +994,7 @@ public function dataspv(Request $request)
             $url_hapus = url('hapus_spv/'.$data->id.'/konfirmasi');
             $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';
             $button .= '&nbsp;&nbsp;';
-            $button .= '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Delete</a>';     
+            $button .= '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Hapus</a>';     
             return $button;
         })
         ->rawColumns(['action'])
