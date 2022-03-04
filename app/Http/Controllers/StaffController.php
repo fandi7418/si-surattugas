@@ -104,7 +104,24 @@ class StaffController extends Controller
 
     public function buatsuratStaff()
     {
-    return view('staff.buatsuratStaff');
+    $kadep = Dosen::where([
+        'prodi_id' => Auth::user()->prodi_id,
+        'roles_id' => '2',
+        ])
+    ->get();
+    $wd = Dosen::where([
+        'roles_id' => '3',
+        ])
+    ->get();
+    $supervisor = Staff::where([
+        'roles_id' => '6',
+        ])
+    ->get();
+    return view('staff.buatsuratStaff', [
+        'kadep' => $kadep,
+        'wd' => $wd,
+        'supervisor' => $supervisor,
+    ]);
     }
 
     public function tambahsuratStaff(Request $request)
@@ -112,10 +129,14 @@ class StaffController extends Controller
         $request->validate([
             'tanggalawal' => 'date_format:Y-m-d|after_or_equal:today',
             'tanggalakhir' => 'date_format:Y-m-d|after_or_equal:tanggalawal',
+            'nama_wd' => 'required',
+            'nama_kadep' => 'required',
         ], [
             // 'tanggalawal.required' => 'Nama tidak boleh kosong',
             'tanggalawal.after_or_equal' => 'Input tidak valid',
             'tanggalakhir.after_or_equal' => 'Input tidak valid',
+            'nama_wd.required' => 'Wakil Dekan tidak ditemukan, silahkan hubungi Admin',
+            'nama_kadep.required' => 'Kadep tidak ditemukan, silahkan hubungi Admin'
         ]);
         Surat::create([
             'nama' => $request->nama,
@@ -130,24 +151,10 @@ class StaffController extends Controller
             'tanggalawal' => $request->tanggalawal,
             'tanggalakhir' => $request->tanggalakhir,
             'status_id' => '1',
-            'nama_kadep' => Dosen::where([
-                'prodi_id' => Auth::user()->prodi_id,
-                'roles_id' => '2',
-                ])
-            ->first()->nama_dosen,
-            'NIP_kadep' => Dosen::where([
-                'prodi_id' => Auth::user()->prodi_id,
-                'roles_id' => '2',
-                ])
-            ->first()->NIP,
-            'nama_wd' => Dosen::where([
-                'roles_id' => '3',
-                ])
-            ->first()->nama_dosen,
-            'NIP_wd' => Dosen::where([
-                'roles_id' => '3',
-                ])
-            ->first()->NIP,
+            'nama_kadep' => $request->nama_kadep,
+            'NIP_kadep' => $request->NIP_kadep,
+            'nama_wd' => $request->nama_wd,
+            'NIP_wd' => $request->NIP_wd,
             'notif' => '1',
             'id_staff' => Auth::guard('staff')->user()->id,
             'roles_id' => Auth::guard('staff')->user()->roles_id,
@@ -162,10 +169,14 @@ class StaffController extends Controller
         $request->validate([
             'tanggalawal' => 'date_format:Y-m-d|after_or_equal:today',
             'tanggalakhir' => 'date_format:Y-m-d|after_or_equal:tanggalawal',
+            'nama_wd' => 'required',
+            'nama_spv' => 'required',
         ], [
             // 'tanggalawal.required' => 'Nama tidak boleh kosong',
             'tanggalawal.after_or_equal' => 'Input tidak valid',
             'tanggalakhir.after_or_equal' => 'Input tidak valid',
+            'nama_wd.required' => 'Wakil Dekan tidak ditemukan, silahkan hubungi Admin',
+            'nama_spv.required' => 'Supervisor tidak ditemukan, silahkan hubungi Admin'
         ]);
         Surat::create([
             'nama' => $request->nama,
@@ -179,22 +190,10 @@ class StaffController extends Controller
             'tanggalawal' => $request->tanggalawal,
             'tanggalakhir' => $request->tanggalakhir,
             'status_id' => '7',
-            'nama_supervisor' => Staff::where([
-                'roles_id' => '6',
-                ])
-            ->first()->nama_staff,
-            'NIP_supervisor' => Staff::where([
-                'roles_id' => '6',
-                ])
-            ->first()->NIP,
-            'nama_wd' => Dosen::where([
-                'roles_id' => '3',
-                ])
-            ->first()->nama_dosen,
-            'NIP_wd' => Dosen::where([
-                'roles_id' => '3',
-                ])
-            ->first()->NIP,
+            'nama_supervisor' => $request->nama_spv,
+            'NIP_supervisor' => $request->NIP_spv,
+            'nama_wd' => $request->nama_wd,
+            'NIP_wd' => $request->NIP_wd,
             'notif' => '1',
             'id_staff' => Auth::guard('staff')->user()->id,
             'roles_id' => Auth::guard('staff')->user()->roles_id,

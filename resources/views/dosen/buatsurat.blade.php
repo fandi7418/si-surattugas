@@ -25,6 +25,14 @@
             </div>
         </div>
         @enderror
+    @foreach($kadep as $kdp)
+        <input type="text" readonly class="form-control" style="display:none" name="nama_kadep" value="{{ $kdp->nama_dosen }}">
+        <input type="text" readonly class="form-control" style="display:none" name="NIP_kadep" value="{{ $kdp->NIP }}">
+    @endforeach
+    @foreach($wd as $wakil)
+        <input type="text" readonly class="form-control" style="display:none" name="nama_wd" value="{{ $wakil->nama_dosen }}">
+        <input type="text" readonly class="form-control" style="display:none" name="NIP_wd" value="{{ $wakil->NIP }}">
+    @endforeach
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Nama Dosen</label>
         <div class="col-sm-5">

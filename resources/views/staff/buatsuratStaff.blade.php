@@ -8,6 +8,32 @@
 @if(Auth::guard('staff')->user()->roles_id == '5')
 <form class="mb-8" method="post" action="/tambahsuratStaff">
     @csrf
+    @error('nama_wd')
+        <div class="form-group row mb-2" style="margin-left: 1px">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 57%">
+                <i class="bi bi-exclamation-triangle-fill" style="margin-right: 5px"></i>
+                <strong>Gagal!</strong> &nbsp; {{ $message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        @enderror
+        @error('nama_kadep')
+        <div class="form-group row mb-2" style="margin-left: 1px">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 57%">
+                <i class="bi bi-exclamation-triangle-fill" style="margin-right: 5px"></i>
+                <strong>Gagal!</strong> &nbsp; {{ $message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        @enderror
+    @foreach($kadep as $kdp)
+        <input type="text" readonly class="form-control" style="display:none" name="nama_kadep" value="{{ $kdp->nama_dosen }}">
+        <input type="text" readonly class="form-control" style="display:none" name="NIP_kadep" value="{{ $kdp->NIP }}">
+    @endforeach
+    @foreach($wd as $wakil)
+        <input type="text" readonly class="form-control" style="display:none" name="nama_wd" value="{{ $wakil->nama_dosen }}">
+        <input type="text" readonly class="form-control" style="display:none" name="NIP_wd" value="{{ $wakil->NIP }}">
+    @endforeach
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Nama</label>
         <div class="col-sm-5">
@@ -101,6 +127,32 @@
 @elseif(Auth::guard('staff')->user()->roles_id == '4')
 <form class="mb-8" method="post" action="/tambahsuratStaffFT">
     @csrf
+    @error('nama_wd')
+        <div class="form-group row mb-2" style="margin-left: 1px">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 57%">
+                <i class="bi bi-exclamation-triangle-fill" style="margin-right: 5px"></i>
+                <strong>Gagal!</strong> &nbsp; {{ $message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        @enderror
+        @error('nama_spv')
+        <div class="form-group row mb-2" style="margin-left: 1px">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 57%">
+                <i class="bi bi-exclamation-triangle-fill" style="margin-right: 5px"></i>
+                <strong>Gagal!</strong> &nbsp; {{ $message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        @enderror
+    @foreach($supervisor as $spv)
+        <input type="text" readonly class="form-control" style="display:none" name="nama_spv" value="{{ $spv->nama_staff }}">
+        <input type="text" readonly class="form-control" style="display:none" name="NIP_spv" value="{{ $spv->NIP }}">
+    @endforeach
+    @foreach($wd as $wakil)
+        <input type="text" readonly class="form-control" style="display:none" name="nama_wd" value="{{ $wakil->nama_dosen }}">
+        <input type="text" readonly class="form-control" style="display:none" name="NIP_wd" value="{{ $wakil->NIP }}">
+    @endforeach
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Nama</label>
         <div class="col-sm-5">
@@ -188,6 +240,32 @@
 @elseif(Auth::guard('staff')->user()->roles_id == '6')
 <form class="mb-8" method="post" action="/tambahsuratStaffFT">
     @csrf
+    @error('nama_wd')
+        <div class="form-group row mb-2" style="margin-left: 1px">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 57%">
+                <i class="bi bi-exclamation-triangle-fill" style="margin-right: 5px"></i>
+                <strong>Gagal!</strong> &nbsp; {{ $message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        @enderror
+        @error('nama_spv')
+        <div class="form-group row mb-2" style="margin-left: 1px">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 57%">
+                <i class="bi bi-exclamation-triangle-fill" style="margin-right: 5px"></i>
+                <strong>Gagal!</strong> &nbsp; {{ $message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        @enderror
+    @foreach($supervisor as $spv)
+        <input type="text" readonly class="form-control" style="display:none" name="nama_spv" value="{{ $spv->nama_staff }}">
+        <input type="text" readonly class="form-control" style="display:none" name="NIP_spv" value="{{ $spv->NIP }}">
+    @endforeach
+    @foreach($wd as $wakil)
+        <input type="text" readonly class="form-control" style="display:none" name="nama_wd" value="{{ $wakil->nama_dosen }}">
+        <input type="text" readonly class="form-control" style="display:none" name="NIP_wd" value="{{ $wakil->NIP }}">
+    @endforeach
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Nama</label>
         <div class="col-sm-5">
@@ -275,6 +353,32 @@
 @elseif(Auth::guard('staff')->user()->roles_id == '7')
 <form class="mb-8" method="post" action="/tambahsuratStaffFT">
     @csrf
+    @error('nama_wd')
+        <div class="form-group row mb-2" style="margin-left: 1px">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 57%">
+                <i class="bi bi-exclamation-triangle-fill" style="margin-right: 5px"></i>
+                <strong>Gagal!</strong> &nbsp; {{ $message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        @enderror
+        @error('nama_spv')
+        <div class="form-group row mb-2" style="margin-left: 1px">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 57%">
+                <i class="bi bi-exclamation-triangle-fill" style="margin-right: 5px"></i>
+                <strong>Gagal!</strong> &nbsp; {{ $message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        @enderror
+    @foreach($supervisor as $spv)
+        <input type="text" readonly class="form-control" style="display:none" name="nama_spv" value="{{ $spv->nama_staff }}">
+        <input type="text" readonly class="form-control" style="display:none" name="NIP_spv" value="{{ $spv->NIP }}">
+    @endforeach
+    @foreach($wd as $wakil)
+        <input type="text" readonly class="form-control" style="display:none" name="nama_wd" value="{{ $wakil->nama_dosen }}">
+        <input type="text" readonly class="form-control" style="display:none" name="NIP_wd" value="{{ $wakil->NIP }}">
+    @endforeach
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Nama</label>
         <div class="col-sm-5">

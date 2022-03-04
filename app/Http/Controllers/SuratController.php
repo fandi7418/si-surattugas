@@ -24,6 +24,15 @@ class SuratController extends Controller
 {
     public function index()
     {
+        $kadep = Dosen::where([
+            'prodi_id' => Auth::user()->prodi_id,
+            'roles_id' => '2',
+            ])
+        ->get();
+        $wd = Dosen::where([
+            'roles_id' => '3',
+            ])
+        ->get();
         $surat = Surat::with('status')
         ->where([
             'surat.prodi_id' => Auth::user()->prodi_id,
@@ -35,7 +44,12 @@ class SuratController extends Controller
             'surat.prodi_id' => Auth::user()->prodi_id,
             ])
         ->count();
-        return view('/dosen/buatsurat', ['surat' => $surat, 'count' => $count]);
+        return view('/dosen/buatsurat', [
+            'surat' => $surat,
+            'count' => $count,
+            'kadep' => $kadep,
+            'wd' => $wd,
+        ]);
     }
 
     public function show(Surat $surat)
@@ -61,6 +75,12 @@ class SuratController extends Controller
             'nama_wd.required' => 'Wakil Dekan tidak ditemukan, silahkan hubungi Admin',
             'nama_kadep.required' => 'Kadep tidak ditemukan, silahkan hubungi Admin'
         ]);
+        // dd($request);
+        //pengkondisian pencari kadep dan wd
+        // $kadep = { }
+        // $wd = {}
+        // $kadep = array()
+        // array_push( $kadep , ['prodi_id' =>2 , 'roles_id' => 2])
         Surat::create([
             'nama' => $request->nama,
             'NIP' => $request->nip,
@@ -74,24 +94,10 @@ class SuratController extends Controller
             'tanggalawal' => $request->tanggalawal,
             'tanggalakhir' => $request->tanggalakhir,
             'status_id' => '1',
-            'nama_kadep' => Dosen::where([
-                'prodi_id' => Auth::user()->prodi_id,
-                'roles_id' => '2',
-                ])
-            ->first()->nama_dosen,
-            'NIP_kadep' => Dosen::where([
-                'prodi_id' => Auth::user()->prodi_id,
-                'roles_id' => '2',
-                ])
-            ->first()->NIP,
-            'nama_wd' => Dosen::where([
-                'roles_id' => '3',
-                ])
-            ->first()->nama_dosen,
-            'NIP_wd' => Dosen::where([
-                'roles_id' => '3',
-                ])
-            ->first()->NIP,
+            'nama_kadep' => $request->nama_kadep,
+            'NIP_kadep' => $request->NIP_kadep,
+            'nama_wd' => $request->nama_wd,
+            'NIP_wd' => $request->NIP_wd,
             'notif' => '1',
             'id_dosen' => Auth::guard('dosen')->user()->id,
             'roles_id' => Auth::guard('dosen')->user()->roles_id,
