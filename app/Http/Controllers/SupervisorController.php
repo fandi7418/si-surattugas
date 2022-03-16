@@ -43,12 +43,7 @@ class SupervisorController extends Controller
     
     public function dashboardSpv(Request $request)
     {
-        if(Auth::guard('staff')->user()->roles_id == '6')
-        {
-            return view('supervisor.dashboardSpv');
-        } else {
-            return redirect()->back();
-        }
+        return view('supervisor.dashboardSpv');
     }
 
     public function daftarsuratSpv(Request $request)

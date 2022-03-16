@@ -10,20 +10,20 @@ class DosenMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        $roles = 'dosen';
-
-        foreach ($roles as $role) { 
-            $user = \Auth::user()->role;
-            if( $user == $role){
-                return $next($request);
-            }
+        if (\Auth::user()->roles_id == '1' || '2' || '3'){
+            return $next($request);
+          } else {
+            return redirect()->back();
         }
 
-    //     if ($guard == 'dosen') {
-    //         if (Auth::guard($guard)->check()) {
-    //                return redirect('/dashboarddosen');
-    //         }
-    //    }
-        return redirect('/');
+        // $roles = 'dosen';
+
+        // foreach ($roles as $role) { 
+        //     $user = \Auth::user()->role;
+        //     if( $user == $role){
+        //         return $next($request);
+        //     }
+        // }
+        // return redirect('/');
     }
 }

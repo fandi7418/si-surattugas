@@ -33,6 +33,15 @@ class AdminController extends Controller
         return view('admin.dashboardadmin', [
             "title" => "Dashboard Admin"
         ]); 
+        // if (Auth::guard('pengguna')->user()->roles_id == '8'){
+        //     return view('admin.dashboardadmin', [
+        //         "title" => "Dashboard Admin"
+        //     ]); 
+        // } else {
+        //     return redirect()->back();
+        // }
+        
+
     }
 
     public function indexeditadmin()

@@ -91,8 +91,8 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="bi bi-person-circle" style="margin-right:5px"></i>  
-                  @if ( Str::length(Auth::guard('staff')->user()) >0 )
-                    {{ Auth::guard('staff')->user()->nama_staff }}
+                  @if ( Str::length(Auth::guard('pengguna')->user()) >0 )
+                    {{ Auth::guard('pengguna')->user()->nama }}
                   @endif
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

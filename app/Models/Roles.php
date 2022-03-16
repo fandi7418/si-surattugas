@@ -15,10 +15,10 @@ class Roles extends Model
         'peran',
     ];
 
-    public function dosen()
+    public function pengguna()
     {
     //Setiap Roles memiliki banyak id dosen
-    return $this->hasMany(Dosen::class);
+    return $this->hasMany(Pengguna::class);
     }
     public function staff()
     {

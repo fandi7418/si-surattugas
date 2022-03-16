@@ -96,17 +96,17 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="bi bi-person-circle" style="margin-right:5px"></i>  
-                  @if ( Str::length(Auth::guard('dosen')->user()) >0 )
-                    {{ Auth::guard('dosen')->user()->nama_dosen }}
+                  @if ( Str::length(Auth::guard('pengguna')->user()) >0 )
+                    {{ Auth::guard('pengguna')->user()->nama }}
                   @endif
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    @if ( Auth::guard('dosen')->user()->roles_id == '2' )
+                    @if ( Auth::guard('pengguna')->user()->roles_id == '2' )
                     <a class="dropdown-item" href="/profilkadep" style="margin-bottom:5px">
                       <i class="bi bi-pencil-square" style="margin-right:10px"></i>
                       Edit Profil
                     </a>
-                    @elseif ( Auth::guard('dosen')->user()->roles_id == '3' )
+                    @elseif ( Auth::guard('pengguna')->user()->roles_id == '3' )
                     <a class="dropdown-item" href="/profilwd" style="margin-bottom:5px">
                       <i class="bi bi-pencil-square" style="margin-right:10px"></i>
                       Edit Profil
@@ -165,14 +165,14 @@
           </a>
         </li>
 
-        @if ( Auth::guard('dosen')->user()->roles_id == '2' )
+        @if ( Auth::guard('pengguna')->user()->roles_id == '2' )
         <hr>
         <li >
           <a href="/dashboardkadep" class="nav-link text-white" id="angkaNotifKadep" name="angkaNotifKadep">
             Menu Kadep
           </a>
         </li>
-        @elseif ( Auth::guard('dosen')->user()->roles_id == '3' )
+        @elseif ( Auth::guard('pengguna')->user()->roles_id == '3' )
         <hr>
         <li>
           <a href="/dashboardwd" class="nav-link text-white" id="angkaNotifWD" name="angkaNotifWD">

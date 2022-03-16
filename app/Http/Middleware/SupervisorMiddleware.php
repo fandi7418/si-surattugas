@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class KadepMiddleware
+class SupervisorMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class KadepMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (\Auth::user()->roles_id == '2'){
+        if (\Auth::user()->roles_id == '6'){
             return $next($request);
           } else {
             return redirect()->back();

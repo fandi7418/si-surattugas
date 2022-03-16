@@ -7,24 +7,23 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Dosen extends Authenticatable
+class Pengguna extends Authenticatable
 {
     use HasFactory;
     use softDeletes;
 
-    protected $table = "dosen";
+    protected $table = "pengguna";
     protected $primarykey = "id";
     protected $fillable = [
-        'email_dosen',
+        'email',
         'password',
-        'nama_dosen',
+        'nama',
         'NIP',
         'jabatan_id',
         'golongan_id',
         'prodi_id',
         'roles_id',
-        'ttd_kadep',
-        'ttd_wd',
+        'ttd',
     ];
 
     protected $hidden = [
@@ -59,6 +58,6 @@ class Dosen extends Authenticatable
     public function golongan()
     {
     //Setiap dosen hanya memiliki satu prodi
-    return $this->belongsTo(golongan::class);
+    return $this->belongsTo(Golongan::class);
     }
 }

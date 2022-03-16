@@ -51,10 +51,10 @@ class Surat extends Authenticatable
         'remember_token',
     ];
 
-    public function dosen()
+    public function pengguna()
     {
      //Setiap data hanya dimiliki oleh satu user
-    return $this->belongsTo('App\Models\Dosen', 'NIP');
+    return $this->belongsTo('App\Models\Pengguna', 'NIP');
     }
     // public function kadep()
     // {

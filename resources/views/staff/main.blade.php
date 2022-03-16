@@ -96,12 +96,12 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="bi bi-person-circle" style="margin-right:5px"></i>  
-                  @if ( Str::length(Auth::guard('staff')->user()) >0 )
-                    {{ Auth::guard('staff')->user()->nama_staff }}
+                  @if ( Str::length(Auth::guard('pengguna')->user()) >0 )
+                    {{ Auth::guard('pengguna')->user()->nama }}
                   @endif
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    @if ( Auth::guard('staff')->user()->roles_id == '6' )
+                    @if ( Auth::guard('pengguna')->user()->roles_id == '6' )
                     <a class="dropdown-item" href="/profilSpv" style="margin-bottom:5px">
                       <i class="bi bi-pencil-square" style="margin-right:10px"></i>
                       Edit Profil
@@ -159,14 +159,14 @@
             Daftar Surat
           </a>
         </li>
-        @if ( Auth::guard('staff')->user()->roles_id == '7' )
+        @if ( Auth::guard('pengguna')->user()->roles_id == '7' )
         <hr>
         <li >
           <a href="/dashboardpetugas" class="nav-link text-white" id="angkaNotifPetugas" name="angkaNotifPetugas">
             Menu Penomoran
           </a>
         </li>
-        @elseif( Auth::guard('staff')->user()->roles_id == '6' )
+        @elseif( Auth::guard('pengguna')->user()->roles_id == '6' )
         <hr>
         <li >
           <a href="/dashboardSpv" class="nav-link text-white" id="angkaNotifSpv" name="angkaNotifSpv">

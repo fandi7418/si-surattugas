@@ -36,12 +36,7 @@ class PetugasPenomoranController extends Controller
     
     public function dashboardpetugas(Surat $surat)
     {
-        if(Auth::guard('staff')->user()->roles_id == '7')
-        {
-            return view('petugas.dashboardpetugas');
-        } else {
-            return redirect()->back();
-        }
+        return view('petugas.dashboardpetugas');
         
     }
 

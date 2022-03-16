@@ -37,5 +37,8 @@ class RolesSeeder extends Seeder
         Roles::create([
             'peran' => 'Petugas Penomoran',
         ]);
+        Roles::create([
+            'peran' => 'Admin',
+        ]);
     }
 }

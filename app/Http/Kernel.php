@@ -63,6 +63,12 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'dosenMiddleware' => App\Http\Middleware\DosenMiddleware::class,
+        'dosen' => \App\Http\Middleware\DosenMiddleware::class,
+        'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        'staff' => \App\Http\Middleware\StaffMiddleware::class,
+        'kadep' => \App\Http\Middleware\KadepMiddleware::class,
+        'wakildekan' => \App\Http\Middleware\WakilDekanMiddleware::class,
+        'supervisor' => \App\Http\Middleware\SupervisorMiddleware::class,
+        'petugaspenomoran' => \App\Http\Middleware\PetugasPenomoranMiddleware::class,
     ];
 }

@@ -40,12 +40,7 @@ class WakilDekanController extends Controller
 
     public function dashboardwd(Request $request)
     {
-        if(Auth::guard('dosen')->user()->roles_id == '3')
-        {
-            return view('wd.dashboardwd');
-        } else {
-            return redirect()->back();
-        }
+        return view('wd.dashboardwd');
         
     }
 

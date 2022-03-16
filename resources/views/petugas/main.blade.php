@@ -94,8 +94,8 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="bi bi-person-circle" style="margin-right:5px"></i>  
-                @if ( Str::length(Auth::guard('staff')->user()) >0 )
-                    {{ Auth::guard('staff')->user()->nama_staff }}
+                @if ( Str::length(Auth::guard('pengguna')->user()) >0 )
+                    {{ Auth::guard('pengguna')->user()->nama }}
                 @endif
               </a>
               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -141,7 +141,7 @@
           Daftar Surat
         </a>
       </li>
-      @if ( Auth::guard('staff')->user()->roles_id == '7' )
+      @if ( Auth::guard('pengguna')->user()->roles_id == '7' )
         <hr>
         <li >
           <a href="/dashboardStaff" class="nav-link text-white" id="angkaNotifStaff" name="angkaNotifStaff">

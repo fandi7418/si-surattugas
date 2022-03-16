@@ -44,12 +44,13 @@ class KadepController extends Controller
     
     public function dashboardkadep(Request $request)
     {
-        if(Auth::guard('dosen')->user()->roles_id == '2')
-        {
-            return view('kadep.dashboardkadep');
-        } else {
-            return redirect()->back();
-        }
+        return view('kadep.dashboardkadep');
+        // if(Auth::guard('dosen')->user()->roles_id == '2')
+        // {
+        //     return view('kadep.dashboardkadep');
+        // } else {
+        //     return redirect()->back();
+        // }
         
     }
 

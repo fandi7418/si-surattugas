@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDeletedAtToKetuaDepartemen extends Migration
+class AddDeletedAtToPengguna extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddDeletedAtToKetuaDepartemen extends Migration
      */
     public function up()
     {
-        Schema::table('ketua_departemen', function (Blueprint $table) {
+        Schema::table('pengguna', function (Blueprint $table) {
             $table->softDeletes();
         });
     }
@@ -25,7 +25,7 @@ class AddDeletedAtToKetuaDepartemen extends Migration
      */
     public function down()
     {
-        Schema::table('ketua_departemen', function (Blueprint $table) {
+        Schema::table('pengguna', function (Blueprint $table) {
             $table->dropSoftDeletes();
         });
     }
