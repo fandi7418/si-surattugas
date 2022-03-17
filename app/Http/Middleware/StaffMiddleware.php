@@ -16,7 +16,7 @@ class StaffMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (\Auth::user()->roles_id == '4' || '5' || '6' || '7'){
+        if (\Auth::user()->roles_id == '4' || \Auth::user()->roles_id == '5' || \Auth::user()->roles_id == '6' || \Auth::user()->roles_id == '7'){
             return $next($request);
           } else {
             return redirect()->back();

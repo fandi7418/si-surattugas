@@ -10,7 +10,7 @@ class DosenMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        if (\Auth::user()->roles_id == '1' || '2' || '3'){
+        if (\Auth::user()->roles_id == '1' || \Auth::user()->roles_id == '2' || \Auth::user()->roles_id == '3'){
             return $next($request);
           } else {
             return redirect()->back();

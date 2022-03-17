@@ -263,27 +263,7 @@ Route::group(['middleware' => ['auth:pengguna', 'admin']], function()
     Route::get('data_staff/restore_semua', [AdminController::class, 'restorestaffsemua']);
 
     Route::post('/update_passwordstaff/{id}', [AdminController::class, 'updatepasswordstaff'])->name('aksi ubah password staff'); 
-    
-    
 
-
-    // test test
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-
-    
 });
 
 
