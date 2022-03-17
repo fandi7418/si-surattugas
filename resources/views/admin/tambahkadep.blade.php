@@ -109,7 +109,7 @@
                 let tampilan_option = '';
                 $.each(res,function(index,data){
                     for (var i=0; i < data.length; i++){
-                    tampilan_option+=`<option name="nama_kadep" value="${data[i].id}">${data[i].nama_dosen}</option>`
+                    tampilan_option+=`<option name="nama_kadep" value="${data[i].id}">${data[i].nama}</option>`
                     }
                 })
                 $("#nama_kadep").append(tampilan_option)

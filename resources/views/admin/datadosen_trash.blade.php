@@ -56,8 +56,8 @@
                 type: 'GET'
             },
             columns: [{
-                    data: 'nama_dosen',
-                    name: 'nama_dosen'
+                    data: 'nama',
+                    name: 'nama'
                 },
                 {
                     data: 'NIP',

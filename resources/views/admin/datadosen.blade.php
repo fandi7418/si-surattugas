@@ -37,7 +37,7 @@
                 <tbody>
                     @foreach($dosen as $dsn)
                     <tr>
-                        <td>{{$dsn->nama_dosen}}</td>
+                        <td>{{$dsn->nama}}</td>
                         <td>{{$dsn->NIP}}</td>
                         <td>{{ $dsn->prodi->prodi }}</td>
                         <td>{{ $dsn->roles->peran }}</td>

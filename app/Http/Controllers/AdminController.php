@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Pengguna;
 use App\Models\Dosen;
 use App\Models\Staff;
 use App\Models\Kadep;
@@ -54,7 +55,7 @@ class AdminController extends Controller
     public function dataadmin(Request $request)
     {
         
-        $admin = Admin::get();
+        $admin = Pengguna::where('roles_id', '=', '8')->get();
         if ($request->ajax()){
             return datatables()->of($admin)->addColumn('action', function($data){
                 $url_edit = url('edit_admin/'.$data->id);
@@ -70,7 +71,7 @@ class AdminController extends Controller
 
     public function editadmin($id)
     {
-        $admin = Admin::where('id', $id)->get();
+        $admin = Pengguna::where('id', $id)->get();
         
         return view('admin.editadmin', ['admin' => $admin, "title" => "Edit Profil Admin"]);
     }
@@ -79,15 +80,15 @@ class AdminController extends Controller
     {
         $request->validate([
             'nama' => 'required|max:255|string',
-            'email' => "email|required|unique:admin,email_admin,$id|unique:wakildekan,email_wd,$id|unique:ketua_departemen,email_kadep|unique:dosen,email_dosen|unique:petugas_penomoran,email_petugas"
+            'email' => "email|required|unique:pengguna,email,$id"
         ], [
             'email.email' => 'Email tidak boleh kosong',
             'email.unique' => 'Email sudah ada yang menggunakan',
             'nama.required' => 'Nama tidak boleh kosong',
         ]);
-        Admin::where('id', $request->id)->update([
-            'nama_admin' => $request->nama,
-            'email_admin' => $request->email,
+        Pengguna::where('id', $request->id)->update([
+            'nama' => $request->nama,
+            'email' => $request->email,
             
         ]);
         toast('Data Berhasil Diubah','success')->autoClose(5000);
@@ -96,7 +97,7 @@ class AdminController extends Controller
 
     public function updatepasswordadmin(Request $request)
     {
-        Admin::where('id', $request->id)->update([
+        Pengguna::where('id', $request->id)->update([
             'password' => Hash::make($request->password),
             
         ]);
@@ -129,7 +130,7 @@ class AdminController extends Controller
     }   
     public function datadosen(Request $request)
     {
-        $dosen = Dosen::with('prodi','roles')
+        $dosen = Pengguna::with('prodi','roles')->where('roles_id', '=', '1')->orwhere('roles_id', '=', '2')->orwhere('roles_id', '=', '3')
         ->get();
         // $prodi = Prodi::all();
         // $dosen = Dosen::with('prodi')->orderBy('created_at', 'DESC')
@@ -154,9 +155,9 @@ class AdminController extends Controller
 }
     public function datadosensementara (Request $request)
     {
-        $dosen = Dosen::onlyTrashed()->with('prodi');
+        $dosen = Pengguna::onlyTrashed()->where('roles_id', '=', '1')->with('prodi');
         if ($request->ajax()){
-            $dosen = Dosen::onlyTrashed()->with('prodi')
+            $dosen = Pengguna::onlyTrashed()->where('roles_id', '=', '1')->with('prodi')
             ->get();
             return datatables()->of($dosen)->addColumn('action', function($data){
                 $url_restore = url('data_dosen/restore/'.$data->id);
@@ -196,11 +197,11 @@ class AdminController extends Controller
     {
         $request->validate([
             'nama_dosen' => 'required|max:255|string',
-            'NIP' => 'required|numeric|min:6|unique:dosen,NIP|unique:staff,NIP',
+            'NIP' => 'required|numeric|min:6|unique:pengguna,NIP',
             'prodi_id' => 'required',
             'pangkat' => 'required|string',
             'jabatan' => 'required|string',
-            'email_dosen' => 'email|required|unique:dosen,email_dosen|unique:admin,email_admin|unique:staff,email_staff',
+            'email_dosen' => 'email|required|unique:pengguna,email',
             'password' => 'required|min:6',
         ], [
             'email_dosen.unique' => 'Email sudah ada yang menggunakan',
@@ -214,13 +215,13 @@ class AdminController extends Controller
             'password.min' => 'Password harus lebih dari 6 karakter',
             'password.required' => 'Password tidak boleh kosong'
         ]);
-        Dosen::create([
-            'nama_dosen' => $request->nama_dosen,
+        Pengguna::create([
+            'nama' => $request->nama_dosen,
             'NIP' => $request->NIP,
             'jabatan_id' => $request->jabatan,
             'golongan_id' => $request->pangkat,
             'prodi_id' => $request->prodi_id,
-            'email_dosen' => $request->email_dosen,
+            'email' => $request->email_dosen,
             'roles_id' => '1',
             'password' => Hash::make($request->password),
             
@@ -254,7 +255,7 @@ class AdminController extends Controller
         ])
         ->get();
         $golongan = Golongan::all();
-        $dosen = Dosen::with('prodi','jabatan','golongan')->where('id', $id)->get();
+        $dosen = Pengguna::with('prodi','jabatan','golongan')->where('id', $id)->get();
         return view('admin.editdosen', ['dosen' => $dosen, 'prd' => $prd, 'jabatan' => $jabatan, 'golongan' => $golongan, "title" => "Edit Profil Dosen"]);
     }
 
@@ -262,11 +263,11 @@ class AdminController extends Controller
     {
         $this->validate($request,[
             'nama_dosen' => 'required|max:255|string',
-            'NIP' => "required|numeric|min:6|unique:dosen,NIP,$id|unique:staff,NIP",
+            'NIP' => "required|numeric|min:6|unique:pengguna,NIP,$id",
             'prodi_id' => 'required',
             'pangkat' => 'required|string',
             'jabatan' => 'required|string',
-            'email_dosen' => "email|required|unique:dosen,email_dosen,$id|unique:admin,email_admin|unique:staff,email_staff"
+            'email_dosen' => "email|required|unique:pengguna,email,$id"
         ], 
             [
             'email_dosen.email' => 'Email tidak boleh kosong',
@@ -279,13 +280,13 @@ class AdminController extends Controller
             'jabatan.required' => 'Jabatan tidak boleh kosong',
 
         ]);
-        Dosen::where('id', $request->id)->update([
-            'nama_dosen' => $request->nama_dosen,
+        Pengguna::where('id', $request->id)->update([
+            'nama' => $request->nama_dosen,
             'NIP' => $request->NIP,
             'jabatan_id' => $request->jabatan,
             'golongan_id' => $request->pangkat,
             'prodi_id' => $request->prodi_id,
-            'email_dosen' => $request->email_dosen,
+            'email' => $request->email_dosen,
         ]);
         toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect()->back();
@@ -293,7 +294,7 @@ class AdminController extends Controller
 
     public function updatepassworddosen(Request $request)
     {
-        Dosen::where('id', $request->id)->update([
+        Pengguna::where('id', $request->id)->update([
             'password' => Hash::make($request->password),
             
         ]);
@@ -336,7 +337,7 @@ class AdminController extends Controller
 
     public function hapusdosen($id)
     {
-        Dosen::where('id', $id)->delete();
+        Pengguna::where('id', $id)->delete();
         Alert::success('Sukses', 'Data Berhasil Dinonaktifkan');
         return redirect('/data_dosen');
 
@@ -345,11 +346,11 @@ class AdminController extends Controller
     }
     public function hapusdosen2($id)
     {
-        $prodi_id = Dosen::where('id', $id)->first()->prodi_id;
+        $prodi_id = Pengguna::where('id', $id)->first()->prodi_id;
         Prodi::where('id', '=', $prodi_id)->update([
             'status' => '1',
         ]);
-        Dosen::where('id', $id)->delete();
+        Pengguna::where('id', $id)->delete();
         Alert::success('Sukses', 'Data Berhasil Dinonaktifkan');
         return redirect('/data_dosen');
 
@@ -358,7 +359,7 @@ class AdminController extends Controller
     }
     public function hapusdosenpermanen($id)
     {
-        $dosen = Dosen::onlyTrashed()->where('id',$id);
+        $dosen = Pengguna::onlyTrashed()->where('id',$id);
         $dosen->forceDelete();
         Alert::success('Sukses', 'Data Berhasil Dihapus');
         return redirect('/data_dosen/trash');
@@ -367,7 +368,7 @@ class AdminController extends Controller
         // file::delete()
     }
 
-    public function hapusdosenpermanensemua()
+    /*public function hapusdosenpermanensemua()
     {
         $dosen = Dosen::onlyTrashed();
         $dosen->forceDelete();
@@ -376,7 +377,7 @@ class AdminController extends Controller
 
         // $dosen = dosen::select('sampul', 'id')->whereId($id)->firstOrfail();
         // file::delete()
-    }
+    }*/
 
     public function restoredosen($id)
     {
@@ -384,7 +385,7 @@ class AdminController extends Controller
         // Alert::success('Sukses', 'Data Berhasil Dihapus');
         // return redirect('/data_dosen');
 
-        $dosen = Dosen::onlyTrashed()->where('id',$id);
+        $dosen = Pengguna::onlyTrashed()->where('id',$id);
         $dosen->restore();
         
         Alert::success('Sukses', 'Data Berhasil Dikembalikkan');
@@ -394,7 +395,7 @@ class AdminController extends Controller
         // $dosen = dosen::select('sampul', 'id')->whereId($id)->firstOrfail();
         // file::delete()
     }
-    public function restoredosensemua()
+    /*public function restoredosensemua()
     {
         // Dosen::where('id', $id)->delete();
         // Alert::success('Sukses', 'Data Berhasil Dihapus');
@@ -409,13 +410,13 @@ class AdminController extends Controller
 
         // $dosen = dosen::select('sampul', 'id')->whereId($id)->firstOrfail();
         // file::delete()
-    }
+    }*/
 
     // controller Kadep di Admin //
 
     public function datakadep(Request $request)
     {
-        $kadep = Dosen::with('prodi') -> where('roles_id', '=', '2')->get();
+        $kadep = Pengguna::with('prodi') -> where('roles_id', '=', '2')->get();
         if ($request->ajax()){
             return datatables()->of($kadep)->addColumn('action', function($data){
                 $url_edit = url('edit_dosen/'.$data->id);
@@ -437,10 +438,10 @@ class AdminController extends Controller
         return view('admin.datakadep', [ 'kadep' => $kadep, "title" => "Data Ketua Departemen"]);
     }
 
-    public function datakadepsementara (Request $request)
+   /* public function datakadepsementara (Request $request)
     {
         if ($request->ajax()){
-            $kadep = Kadep::onlyTrashed()->with('prodi')
+            $kadep = Pengguna::onlyTrashed()->with('prodi')
             ->get();
             return datatables()->of($kadep)->addColumn('action', function($data){
                 $url_restore = url('data_kadep/restore/'.$data->id);
@@ -455,7 +456,7 @@ class AdminController extends Controller
                         ->make(true);
     }
     return view('admin.datakadep_trash', ["title" => "Data Dosen Sementara"]);
-}
+}*/
     public function indexkadep()
     {
         // return view('admin.tambahkadep', [
@@ -468,7 +469,7 @@ class AdminController extends Controller
     }
     public function listNamaDosen($prodi_id)
     {
-        $dosen = Dosen::where([
+        $dosen = Pengguna::where([
             'prodi_id' => $prodi_id,
             'roles_id' => '1',
             ])
@@ -498,7 +499,7 @@ class AdminController extends Controller
             // 'password.required' => 'Password tidak boleh kosong'
         ]);
 
-        Dosen::with('prodi')->where('id', '=', $request->nama_kadep)->update([
+        Pengguna::with('prodi')->where('id', '=', $request->nama_kadep)->update([
             'roles_id' => '2',
             // 'NIP' => $request->NIP,
             // 'prodi_id' => $request->prodi_id,
@@ -519,7 +520,7 @@ class AdminController extends Controller
     public function editkadep($id)
     {
         $prd = Prodi::all();
-        $kadep = Kadep::with('prodi')->where('id', $id)->get();
+        $kadep = Pengguna::with('prodi')->where('id', $id)->get();
         return view('admin.editkadep', ['kadep' => $kadep, 'prd' => $prd, "title" => "Edit Profil Ketua Departemen"]);
     }
 
@@ -539,16 +540,16 @@ class AdminController extends Controller
             'prodi_id.required' => 'Pilih salah satu program studi',
         ]);
         Kadep::where('id', $request->id)->update([
-            'nama_kadep' => $request->nama_kadep,
+            'nama' => $request->nama_kadep,
             'NIP' => $request->NIP,
-            'email_kadep' => $request->email_kadep,
+            'email' => $request->email_kadep,
             'prodi_id' => $request->prodi_id,
         ]);
         toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect()->back();
     }
 
-    public function konfirmasiKadep($id)
+/*    public function konfirmasiKadep($id)
     {
         alert()->question('Peringatan','Anda yakin akan menghapus? ')
         ->showConfirmButton('<a href="/hapus_kadep/'.$id.'/hapuskadep" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
@@ -627,7 +628,7 @@ class AdminController extends Controller
         ]);
         toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect()->back();
-    }
+    }*/
 
     public function updatettdkadep(Request $request)
     {
@@ -638,8 +639,8 @@ class AdminController extends Controller
         $imgName = $request->ttd_kadep->getClientOriginalName() . '-' . time() . '.' . $request->ttd_kadep->extension();
         $request->ttd_kadep->move(public_path('image'), $imgName);
 
-        Dosen::where('id', $request->id)->update([
-            'ttd_kadep' => $imgName,
+        Pengguna::where('id', $request->id)->update([
+            'ttd' => $imgName,
             
         ]);
         toast('Data Berhasil Diubah','success')->autoClose(5000);
@@ -650,14 +651,14 @@ class AdminController extends Controller
 
         public function datawd1(Request $request)
     {
-        $wd = Dosen::where('roles_id', '=', '3')->get();
+        $wd = Pengguna::where('roles_id', '=', '3')->get();
         return view('admin.datawd1', ['wd' => $wd, "title" => "Data Wakil Dekan"]);
     }
-        public function datawd1sementara(Request $request)
+        /*public function datawd1sementara(Request $request)
     {
         $wd = WakilDekan::onlyTrashed()->get();
         return view('admin.datawd1_trash', ['wd' => $wd, "title" => "Data Wakil Dekan Sementara"]);
-    }
+    }*/
 
     public function tambahwd1(Request $request)
     {
@@ -684,7 +685,7 @@ class AdminController extends Controller
 
         // Alert::success('Sukses', 'Data Berhasil Ditambah');
         // return redirect('data_wakildekan');
-        $wd = Dosen::with('prodi') -> where('roles_id', '=', '1')->get();
+        $wd = Pengguna::with('prodi') -> where('roles_id', '=', '1')->get();
         if ($request->ajax()){
             return datatables()->of($wd)->addColumn('action', function($data){
                 $url_edit = url('pilihWD/'.$data->id.'/konfirmasi');
@@ -705,13 +706,13 @@ class AdminController extends Controller
         ]); 
     }
 
-    public function editwd1($id)
+    /*public function editwd1($id)
     {
         $wakildekan = WakilDekan::where('id', $id)->get();
         return view('admin.editwd1', ['wakildekan' => $wakildekan, "title" => "Edit Profil Wakil Dekan"]);
-    }
+    }*/
 
-    public function updatewd1(Request $request, $id)
+    /*public function updatewd1(Request $request, $id)
     {
         $request->validate([
             'nama' => 'required|max:255|string',
@@ -732,7 +733,7 @@ class AdminController extends Controller
         ]);
         toast('Data Berhasil Diubah', 'success')->autoClose(5000);
         return redirect('/data_wakildekan');
-    }
+    }*/
 
     public function konfirmasiwd1($id)
     {
@@ -745,14 +746,14 @@ class AdminController extends Controller
 
     public function pilihWD($id)
     {
-        Dosen::where('id', $id)->update([
+        Pengguna::where('id', $id)->update([
             'roles_id' => '3'
         ]);
         Alert::success('Sukses', 'Data Berhasil Ditambahkan');
         return redirect('/data_wakildekan');
     }
 
-    public function updatepasswordwd1(Request $request)
+    /*public function updatepasswordwd1(Request $request)
     {
         WakilDekan::where('id', $request->id)->update([
             'password' => Hash::make($request->password),
@@ -760,7 +761,7 @@ class AdminController extends Controller
         ]);
         toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect('/data_wakildekan');
-    }
+    }*/
 
     public function updatettdwd1(Request $request)
     {
@@ -771,21 +772,21 @@ class AdminController extends Controller
         $imgName = $request->ttd_wd->getClientOriginalName() . '-' . time() . '.' . $request->ttd_wd->extension();
         $request->ttd_wd->move(public_path('image'), $imgName);
 
-        Dosen::where('id', $request->id)->update([
-            'ttd_wd' => $imgName,
+        Pengguna::where('id', $request->id)->update([
+            'ttd' => $imgName,
             
         ]);
         toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect()->back();
     }
 
-    public function restorewd1($id)
+    /*public function restorewd1($id)
     {
         $wakildekan = WakilDekan::onlyTrashed()->where('id',$id);
         $wakildekan->restore();
         Alert::success('Sukses', 'Data Berhasil Dikembalikkan');
         return redirect()->back();
-    }
+    }*/
 
     public function konfirmasiWD($id)
     {
@@ -798,7 +799,7 @@ class AdminController extends Controller
 
     public function hapusWD($id)
     {
-        $wakildekan = Dosen::where('id',$id)->update([
+        $wakildekan = Pengguna::where('id',$id)->update([
             'roles_id' => '1',
             // 'ttd_wd' => null,
         ]);
@@ -818,7 +819,7 @@ class AdminController extends Controller
 
     public function datapetugas(Request $request)
     {
-        $petugas = Staff::where('roles_id', '=', '7')->get();
+        $petugas = Pengguna::where('roles_id', '=', '7')->get();
         if ($request->ajax()){
             return datatables()->of($petugas)->addColumn('action', function($data){
                 $url_edit = url('edit_staff/'.$data->id);
@@ -834,7 +835,7 @@ class AdminController extends Controller
         }
         return view('admin.datapetugas', ['petugas' => $petugas, "title" => "Data Petugas Penomoran"]);
     }
-    public function datapetugassementara(Request $request)
+    /*public function datapetugassementara(Request $request)
     {
         if ($request->ajax()){
             $petugas = Petugas::onlyTrashed()->get();
@@ -851,7 +852,7 @@ class AdminController extends Controller
                         ->make(true);
         }
         return view('admin.datapetugas_trash', ["title" => "Data Petugas Penomoran"]);
-    }
+    }*/
 
     public function tambahpetugas(Request $request)
     {
@@ -879,7 +880,7 @@ class AdminController extends Controller
         // ]);
         // Alert::success('Sukses', 'Data Berhasil Ditambah');
         // return redirect('data_petugas');
-        $petugas = Staff::where('roles_id', '=', '4')->get();
+        $petugas = Pengguna::where('roles_id', '=', '4')->get();
         if ($request->ajax()){
             return datatables()->of($petugas)->addColumn('action', function($data){
                 $url_edit = url('pilihPetugas/'.$data->id.'/konfirmasi');
@@ -904,20 +905,20 @@ class AdminController extends Controller
 
     public function pilihPetugas($id)
     {
-        Staff::where('id', $id)->update([
+        Pengguna::where('id', $id)->update([
             'roles_id' => '7'
         ]);
         Alert::success('Sukses', 'Data Berhasil Ditambahkan');
         return redirect('/data_petugas');
     }
 
-    public function editpetugas($id)
+    /*public function editpetugas($id)
     {
         $petugas = Petugas::where('id', $id)->get();
         return view('admin.editpetugas', ['petugas' => $petugas, "title" => "Edit Profil Petugas Penomoran"]);
-    }
+    }*/
 
-    public function updatepetugas(Request $request, $id)
+    /*public function updatepetugas(Request $request, $id)
     {
         $request->validate([
             'nama' => 'required|max:255|string',
@@ -937,7 +938,7 @@ class AdminController extends Controller
         ]);
         toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect('data_petugas');
-    }
+    }*/
 
     public function konfirmasipetugas($id)
     {
@@ -950,39 +951,39 @@ class AdminController extends Controller
 
     public function hapuspetugas($id)
     {
-        $petugas = Staff::where('id',$id)->update([
+        $petugas = Pengguna::where('id',$id)->update([
             'roles_id' => '4'
         ]);
         Alert::success('Sukses', 'Data Berhasil Dihapus');
         return redirect()->back();
     }
 
-    public function restorepetugas($id)
+    /*public function restorepetugas($id)
     {
         $petugas = Petugas::onlyTrashed()->where('id',$id);
         $petugas->restore();
         Alert::success('Sukses', 'Data Berhasil Dikembalikkan');
         return redirect()->back();
-    }
+    }*/
 
-    public function konfirmasipetugaspermanen($id)
+    /*public function konfirmasipetugaspermanen($id)
     {
         alert()->question('Peringatan','Anda yakin akan Menghapus Akun? ')
         ->showConfirmButton('<a href="/hapus_petugas/'.$id.'/hapuspetugaspermanen" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
         ->showCancelButton('Batal', '#aaa')->reverseButtons();
 
         return redirect()->back();
-    }
+    }*/
 
-    public function hapuspetugaspermanen($id)
+    /*public function hapuspetugaspermanen($id)
     {
         $petugas = Petugas::onlyTrashed()->where('id',$id);
         $petugas->forceDelete();
         Alert::success('Sukses', 'Data Berhasil Dihapus');
         return redirect()->back();
-    }
+    }*/
 
-    public function updatepasswordpetugas(Request $request)
+    /*public function updatepasswordpetugas(Request $request)
     {
         Petugas::where('id', $request->id)->update([
             'password' => Hash::make($request->password),
@@ -990,13 +991,13 @@ class AdminController extends Controller
         ]);
         toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect('/data_petugas');
-    }
+    }*/
 
 // Route Data Supervisor
 
 public function dataspv(Request $request)
 {
-    $spv = Staff::where('roles_id', '=', '6')->get();
+    $spv = Pengguna::where('roles_id', '=', '6')->get();
     if ($request->ajax()){
         return datatables()->of($spv)->addColumn('action', function($data){
             $url_edit = url('edit_staff/'.$data->id);
@@ -1015,7 +1016,7 @@ public function dataspv(Request $request)
 
 public function tambahspv(Request $request)
 {
-    $spv = Staff::where('roles_id', '=', '4')->get();
+    $spv = Pengguna::where('roles_id', '=', '4')->get();
     if ($request->ajax()){
         return datatables()->of($spv)->addColumn('action', function($data){
             $url_edit = url('pilihSpv/'.$data->id.'/konfirmasi');
@@ -1040,7 +1041,7 @@ public function konfirmasiPilihSpv($id)
 
 public function pilihSpv($id)
 {
-    Staff::where('id', $id)->update([
+    Pengguna::where('id', $id)->update([
         'roles_id' => '6'
     ]);
     Alert::success('Sukses', 'Data Berhasil Ditambahkan');
@@ -1058,7 +1059,7 @@ public function konfirmasispv($id)
 
 public function hapusspv($id)
 {
-    $spv = Staff::where('id',$id)->update([
+    $spv = Pengguna::where('id',$id)->update([
         'roles_id' => '4',
         // 'ttd_spv' => null,
     ]);
@@ -1304,7 +1305,7 @@ public function datastaff(Request $request)
     // $dosen = Dosen::with('prodi')->orderBy('created_at', 'DESC')
     // ->paginate(10);
     // return view('admin.datadosen', ['dosen' => $dosen, 'prodi' => $prodi, "title" => "Data Dosen"]); 
-    $staff = Staff::with('prodi','roles')->get();
+    $staff = Pengguna::with('prodi','roles')->where('roles_id', '=', '4')->orwhere('roles_id', '=', '5')->orwhere('roles_id', '=', '6')->orwhere('roles_id', '=', '7')->get();
 //     if ($request->ajax()){
 //         $staff = Staff::with('prodi','roles')->get();
 //         return datatables()->of($staff)->addColumn('action', function($data){
@@ -1323,9 +1324,9 @@ return view('admin.datastaff', ['staff' => $staff, "title" => "Data Staff"]);
 }
 public function datastaffsementara (Request $request)
 {
-    $staff = Staff::onlyTrashed()->with('prodi','roles');
+    // $staff = Pengguna::onlyTrashed()->with('prodi','roles')->where('roles_id', '=', '4')->orwhere('roles_id', '=', '5');
     if ($request->ajax()){
-        $staff = Staff::onlyTrashed()->with('prodi','roles')
+        $staff = Pengguna::onlyTrashed()->with('prodi','roles')->where('roles_id', '=', '4')->orwhere('roles_id', '=', '5')->orwhere('roles_id', '=', '6')->orwhere('roles_id', '=', '7')
         ->get();
         return datatables()->of($staff)->addColumn('action', function($data){
             $url_restore = url('data_staff/restore/'.$data->id);
@@ -1346,11 +1347,11 @@ public function tambahstaff(Request $request)
 {
     $request->validate([
         'nama_staff' => 'required|max:255|string',
-        'NIP' => 'required|numeric|min:6|unique:staff,NIP|unique:dosen,NIP',
+        'NIP' => 'required|numeric|min:6|unique:pengguna,NIP',
         'pangkat' => 'required',
         'jabatan' => 'required',
         'roles_id' => 'required',
-        'email_staff' => 'email|required|unique:staff,email_staff|unique:admin,email_admin|unique:dosen,email_dosen',
+        'email_staff' => 'email|required|unique:pengguna,email',
         'password' => 'required|min:6',
     ], [
         'email_staff.unique' => 'Email sudah ada yang menggunakan',
@@ -1364,13 +1365,13 @@ public function tambahstaff(Request $request)
         'password.min' => 'Password harus lebih dari 6 karakter',
         'password.required' => 'Password tidak boleh kosong'
     ]);
-    Staff::create([
-        'nama_staff' => $request->nama_staff,
+    Pengguna::create([
+        'nama' => $request->nama_staff,
         'NIP' => $request->NIP,
         'golongan_id' => $request->pangkat,
         'jabatan_id' => $request->jabatan,
         'prodi_id' => $request->prodi_id,
-        'email_staff' => $request->email_staff,
+        'email' => $request->email_staff,
         'roles_id' => $request->roles_id,
         'password' => Hash::make($request->password),
         
@@ -1389,7 +1390,7 @@ public function editstaff($id)
     ])
     ->get();
     $golongan = Golongan::all();
-    $staff = Staff::with('Prodi', 'jabatan', 'golongan')->where('id', $id)->get();
+    $staff = Pengguna::with('Prodi', 'jabatan', 'golongan')->where('id', $id)->get();
     return view('admin.editstaff', ['staff' => $staff, 'prd' => $prd, 'jabatan' => $jabatan, 'golongan' => $golongan, "title" => "Edit Profil Staff"]);
 }
 
@@ -1397,11 +1398,11 @@ public function updatestaff(Request $request, $id)
 {
     $this->validate($request,[
         'nama_staff' => 'required|max:255|string',
-        'NIP' => "required|numeric|min:6|unique:dosen,NIP|unique:staff,NIP,$id",
+        'NIP' => "required|numeric|min:6|unique:pengguna,NIP,$id",
         // 'prodi_id' => 'required',
         'pangkat' => 'required|string',
         'jabatan' => 'required|string',
-        'email_staff' => "email|required|unique:staff,email_staff,$id|unique:admin,email_admin|unique:dosen,email_dosen"
+        'email_staff' => "email|required|unique:pengguna,email,$id"
     ], 
         [
         'email_staff.email' => 'Email tidak boleh kosong',
@@ -1414,13 +1415,13 @@ public function updatestaff(Request $request, $id)
         'jabatan.required' => 'Jabatan tidak boleh kosong',
 
     ]);
-    Staff::where('id', $request->id)->update([
-        'nama_staff' => $request->nama_staff,
+    Pengguna::where('id', $request->id)->update([
+        'nama' => $request->nama_staff,
         'NIP' => $request->NIP,
         'jabatan_id' => $request->jabatan,
         'golongan_id' => $request->pangkat,
         'prodi_id' => $request->prodi_id,
-        'email_staff' => $request->email_staff,
+        'email' => $request->email_staff,
     ]);
     toast('Data Berhasil Diubah','success')->autoClose(5000);
     return redirect()->back();
@@ -1428,7 +1429,7 @@ public function updatestaff(Request $request, $id)
 
 public function updatepasswordstaff(Request $request)
 {
-    Staff::where('id', $request->id)->update([
+    Pengguna::where('id', $request->id)->update([
         'password' => Hash::make($request->password),
         
     ]);
@@ -1447,7 +1448,7 @@ public function konfirmasistaff($id)
 
 public function hapusstaff($id)
 {
-    Staff::where('id', $id)->delete();
+    Pengguna::where('id', $id)->delete();
     Alert::success('Sukses', 'Data Berhasil Dinonaktifkan');
     return redirect('/data_staff');
 
@@ -1464,7 +1465,7 @@ public function konfirmasistaffpermanen($id)
 }
 public function hapusstaffpermanen($id)
 {
-    $staff = Staff::onlyTrashed()->where('id',$id);
+    $staff = Pengguna::onlyTrashed()->where('id',$id);
     $staff->forceDelete();
     Alert::success('Sukses', 'Data Berhasil Dihapus');
     return redirect('/data_staff/trash');
@@ -1479,7 +1480,7 @@ public function restorestaff($id)
     // Alert::success('Sukses', 'Data Berhasil Dihapus');
     // return redirect('/data_staff');
 
-    $staff = Staff::onlyTrashed()->where('id',$id);
+    $staff = Pengguna::onlyTrashed()->where('id',$id);
     $staff->restore();
     
     Alert::success('Sukses', 'Data Berhasil Dikembalikkan');

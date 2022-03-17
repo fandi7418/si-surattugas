@@ -49,9 +49,9 @@
                         type: 'GET'
                       },
                       columns:[
-                        {data:'nama_staff', name:'nama_staff'},
+                        {data:'nama', name:'nama'},
                         {data:'NIP', name:'NIP'},
-                        {data:'email_staff', name:'email_staff'},
+                        {data:'email', name:'email'},
                         {
                             data: 'action', 
                             name: 'action', 

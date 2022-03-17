@@ -34,16 +34,16 @@
                 type: 'GET'
             },
             columns: [{
-                    data: 'nama_petugas',
-                    name: 'nama_petugas'
+                    data: 'nama',
+                    name: 'nama'
                 },
                 {
                     data: 'NIP',
                     name: 'NIP'
                 },
                 {
-                    data: 'email_petugas',
-                    name: 'email_petugas'
+                    data: 'email',
+                    name: 'email'
                 },
                 {
                     data: 'action',

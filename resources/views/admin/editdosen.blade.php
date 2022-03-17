@@ -11,7 +11,7 @@
                     <label for="colFormLabel" class="col-sm-2 col-form-label">Nama</label>
                     <div class="col-sm-8">
                         <input type="text"
-                            value="{{ old('nama_dosen', $dsn->nama_dosen) }}" name="nama_dosen"
+                            value="{{ old('nama_dosen', $dsn->nama) }}" name="nama_dosen"
                             class="form-control @error('nama_dosen') is-invalid @enderror" id="colFormLabel" placeholder="Silahkan Masukkan nama Anda">
                                 @error('nama_dosen')
                                     <div class="invalid-feedback">
@@ -122,7 +122,7 @@
                 <div class="form-group row mt-4">
                     <label for="colFormLabel" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-8">
-                        <input type="email" name="email_dosen" value="{{ old('email_dosen', $dsn->email_dosen) }}" class="form-control @error('email_dosen') is-invalid @enderror" id="colFormLabel"
+                        <input type="email" name="email_dosen" value="{{ old('email_dosen', $dsn->email) }}" class="form-control @error('email_dosen') is-invalid @enderror" id="colFormLabel"
                             placeholder="Silahkan Masukkan E-mail Anda">
                                 @error('email_dosen')
                                     <div class="invalid-feedback">

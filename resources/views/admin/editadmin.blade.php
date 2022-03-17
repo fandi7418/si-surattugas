@@ -9,7 +9,7 @@
             <div class="form-group row mt-4">
                 <label for="colFormLabel" class="col-sm-2 col-form-label">Nama</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control @error('nama') is-invalid @enderror" id="colFormLabel" name="nama" value="{{ old('nama', $adm->nama_admin) }}">
+                    <input type="text" class="form-control @error('nama') is-invalid @enderror" id="colFormLabel" name="nama" value="{{ old('nama', $adm->nama) }}">
                     @error('nama')
                     <div class="invalid-feedback">
                     {{ $message }}
@@ -20,7 +20,7 @@
             <div class="form-group row mt-4">
                 <label for="colFormLabel" class="col-sm-2 col-form-label">Email</label>
                 <div class="col-sm-8">
-                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="colFormLabel" name="email" value="{{ old('email', $adm->email_admin) }}">
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="colFormLabel" name="email" value="{{ old('email', $adm->email) }}">
                     @error('email')
                     <div class="invalid-feedback">
                     {{ $message }}

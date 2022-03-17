@@ -38,7 +38,7 @@
             <tbody>
                 @foreach($staff as $stf)
                 <tr>
-                    <td>{{$stf->nama_staff}}</td>
+                    <td>{{$stf->nama}}</td>
                     <td>{{$stf->NIP}}</td>
                     <td>{{ $stf->roles->peran }}</td>
                     @if(isset($stf->prodi_id))

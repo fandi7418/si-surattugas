@@ -85,12 +85,12 @@
                 type: 'GET'
             },
             columns: [{
-                    data: 'nama_admin',
-                    name: 'nama_admin'
+                    data: 'nama',
+                    name: 'nama'
                 },
                 {
-                    data: 'email_admin',
-                    name: 'email_admin'
+                    data: 'email',
+                    name: 'email'
                 },
                 {
                     data: 'action',

@@ -56,8 +56,8 @@
                 type: 'GET'
             },
             columns: [{
-                    data: 'nama_staff',
-                    name: 'nama_staff'
+                    data: 'nama',
+                    name: 'nama'
                 },
                 {
                     data: 'NIP',
@@ -99,8 +99,8 @@
     //             data: {prodi:prodi}
     //         },
     //         columns: [{
-    //                 data: 'nama_staff',
-    //                 name: 'nama_staff'
+    //                 data: 'nama',
+    //                 name: 'nama'
     //             },
     //             {
     //                 data: 'NIP',
