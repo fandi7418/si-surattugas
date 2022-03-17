@@ -20,7 +20,7 @@ class PenggunaSeeder extends Seeder
         [
             'email' => 'dosen1@gmail.com',
             'password' => bcrypt('123456'),
-            'nama' => 'Dosen11',
+            'nama' => 'Dosen1',
             'NIP' => '123123',
             'jabatan_id' => '1',
             'golongan_id' => '1',
@@ -48,7 +48,7 @@ class PenggunaSeeder extends Seeder
             'NIP' => '123123111111231',
             'jabatan_id' => '1',
             'golongan_id' => '1',
-            'prodi_id' => null,
+            'prodi_id' => '1',
             'roles_id' => '2',
             'remember_token' => Str::random(60),
         ]);
@@ -60,7 +60,7 @@ class PenggunaSeeder extends Seeder
             'NIP' => '12332131',
             'jabatan_id' => '1',
             'golongan_id' => '1',
-            'prodi_id' => null,
+            'prodi_id' => '1',
             'roles_id' => '3',
             'remember_token' => Str::random(60),
         ]);
@@ -80,11 +80,11 @@ class PenggunaSeeder extends Seeder
         [
             'email' => 'staff2@gmail.com',
             'password' => bcrypt('123456'),
-            'nama' => 'staff tekkom',
+            'nama' => 'staff arsi',
             'NIP' => '123123665231',
             'jabatan_id' => '1',
             'golongan_id' => '1',
-            'prodi_id' => null,
+            'prodi_id' => '1',
             'roles_id' => '5',
             'remember_token' => Str::random(60),
         ]);
