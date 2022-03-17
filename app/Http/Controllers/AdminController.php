@@ -549,7 +549,7 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-/*    public function konfirmasiKadep($id)
+   public function konfirmasiKadep($id)
     {
         alert()->question('Peringatan','Anda yakin akan menghapus? ')
         ->showConfirmButton('<a href="/hapus_kadep/'.$id.'/hapuskadep" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
@@ -557,7 +557,7 @@ class AdminController extends Controller
         return redirect('/data_kadep');
     }
 
-    public function konfirmasikadeppermanen($id)
+    /*public function konfirmasikadeppermanen($id)
     {
         alert()->question('Peringatan','Anda yakin akan Menghapus Akun? ')
         ->showConfirmButton('<a href="/hapus_kadep/'.$id.'/hapuskadeppermanen" class="text-white" style="text-decoration: none">Hapus</a>', '#3085d6')->toHtml()
@@ -604,15 +604,15 @@ class AdminController extends Controller
         $kadep->restore();
         Alert::success('Sukses', 'Data Berhasil Dikembalikkan semua');
         return redirect()->back();
-    }
+    }*/
 
     public function hapusKadep(request $request, $id)
     {
-        $prodi_id = Dosen::where('id', $id)->first()->prodi_id;
+        $prodi_id = Pengguna::where('id', $id)->first()->prodi_id;
         Prodi::where('id', '=', $prodi_id)->update([
             'status' => '1',
         ]);
-        Dosen::with('prodi')->where('id', $id)->update([
+        Pengguna::with('prodi')->where('id', $id)->update([
             'roles_id' => '1',
             // 'ttd_kadep' => null,
         ]);
@@ -620,7 +620,7 @@ class AdminController extends Controller
         return redirect('/data_kadep');
     }
 
-    public function updatepasswordkadep(Request $request)
+    /*public function updatepasswordkadep(Request $request)
     {
         Kadep::where('id', $request->id)->update([
             'password' => Hash::make($request->password),
@@ -628,7 +628,7 @@ class AdminController extends Controller
         ]);
         toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect()->back();
-    }*/
+    }
 
     public function updatettdkadep(Request $request)
     {
@@ -645,7 +645,7 @@ class AdminController extends Controller
         ]);
         toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect()->back();
-    }
+    }*/
 
         // controller WakilDekan di Admin //
 
