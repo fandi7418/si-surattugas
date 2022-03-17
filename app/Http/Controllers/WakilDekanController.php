@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use PDF;
-use App\Models\WakilDekan;
 use App\Models\Surat;
-use App\Models\Dosen;
 use App\Models\Golongan;
 use App\Models\Jabatan;
+use App\Models\Pengguna;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -46,52 +45,42 @@ class WakilDekanController extends Controller
 
     public function daftarsurat(Request $request)
     {
-        if(Auth::guard('dosen')->user()->roles_id == '3')
-        {
-            $surat = Surat::with('status')
-            ->where([
-                'surat.status_id' => '2',
-                ])
-            ->orderBy('updated_at', 'DESC')
-            ->get();
-            return view('wd.daftarsuratwd', ['surat' => $surat]);
-        } else {
-            return redirect()->back();
-        }
+        $surat = Surat::with('status')
+        ->where([
+            'surat.status_id' => '2',
+            ])
+        ->orderBy('updated_at', 'DESC')
+        ->get();
+        return view('wd.daftarsuratwd', ['surat' => $surat]);
         
     }
 
     public function profilwd(Request $request)
     {
-        if(Auth::guard('dosen')->user()->roles_id == '3')
-        {
-            $wd = Dosen::with('prodi', 'jabatan', 'golongan')
-            ->where([
-                'dosen.id' => Auth::user()->id,
-                ])
-            ->get();
-            $golongan = Golongan::all();
-            $jabatan = Jabatan::where([
-                'id' => '1',
-                ])
-            ->orWhere([
-                'id' => '2',
-                ])
-            ->orWhere([
-                'id' => '3',
-                ])
-            ->orWhere([
-                'id' => '4',
-                ])
-            ->get();
-            return view('wd.profilwd', [
-                'wd' => $wd,
-                'golongan' => $golongan,
-                'jabatan' => $jabatan
-            ]);
-        } else {
-            return redirect()->back();
-        }
+        $wd = Pengguna::with('prodi', 'jabatan', 'golongan')
+        ->where([
+            'pengguna.id' => Auth::user()->id,
+            ])
+        ->get();
+        $golongan = Golongan::all();
+        $jabatan = Jabatan::where([
+            'id' => '1',
+            ])
+        ->orWhere([
+            'id' => '2',
+            ])
+        ->orWhere([
+            'id' => '3',
+            ])
+        ->orWhere([
+            'id' => '4',
+            ])
+        ->get();
+        return view('wd.profilwd', [
+            'wd' => $wd,
+            'golongan' => $golongan,
+            'jabatan' => $jabatan
+        ]);
         
     }
 
@@ -120,13 +109,11 @@ class WakilDekanController extends Controller
             $this->validasi($request),
             'status_id' => '3',
             'notif' => '1',
-            // 'surat.ttd_wd' => Auth::user()->ttd_wd,
         ]);
         return response()->json([
             'success' => 'Sukses diizinkan',
             'surat' => $surat,
         ]);
-        
     }
 
     public function confirmTolak(Request $request, $id)
@@ -156,8 +143,8 @@ class WakilDekanController extends Controller
         $imgName = $request->ttd->getClientOriginalName() . '-' . time() . '.' . $request->ttd->extension();
         $request->ttd->move(public_path('image'), $imgName);
 
-        Dosen::where(['dosen.id' => Auth::user()->id])->update([
-            'ttd_wd' => $imgName,
+        Pengguna::where(['dosen.id' => Auth::user()->id])->update([
+            'ttd' => $imgName,
         ]);
         toast('Berhasil', 'success')->autoClose(2000);
         return redirect('/profilwd');
@@ -183,10 +170,10 @@ class WakilDekanController extends Controller
 
         ]);
 
-        Dosen::where('id', $request->id)->update([
-            'nama_dosen' => $request->nama_dosen,
+        Pengguna::where('id', $request->id)->update([
+            'nama' => $request->nama_dosen,
             'NIP' => $request->NIP,
-            'email_dosen' => $request->email_dosen,
+            'email' => $request->email_dosen,
             'golongan_id' => $request->pangkat,
             'jabatan_id' => $request->jabatan,
         ]);
@@ -196,7 +183,7 @@ class WakilDekanController extends Controller
 
     public function editpasswordwd(Request $request)
     {
-        Dosen::where('id', '=', Auth::user()->id)->update([
+        Pengguna::where('id', '=', Auth::user()->id)->update([
             'password' => Hash::make($request->password),
             
         ]);

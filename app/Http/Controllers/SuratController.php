@@ -7,11 +7,9 @@ use PDF;
 use Illuminate\Http\Request;
 use App\Models\Surat;
 use App\Models\Prodi;
-use App\Models\Kadep;
-use App\Models\Dosen;
 use App\Models\Jabatan;
 use App\Models\Golongan;
-use App\Models\WakilDekan;
+use App\Models\Pengguna;
 use App\Models\StatusSurat;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -24,24 +22,24 @@ class SuratController extends Controller
 {
     public function index()
     {
-        $kadep = Dosen::where([
+        $kadep = Pengguna::where([
             'prodi_id' => Auth::user()->prodi_id,
             'roles_id' => '2',
             ])
         ->get();
-        $wd = Dosen::where([
+        $wd = Pengguna::where([
             'roles_id' => '3',
             ])
         ->get();
         $surat = Surat::with('status')
         ->where([
-            'surat.prodi_id' => Auth::user()->prodi_id,
+            'surat.id_dosen' => Auth::user()->id,
             ])
         ->orderBy('updated_at', 'DESC')
         ->get();
         $count = Surat::with('status')
         ->where([
-            'surat.prodi_id' => Auth::user()->prodi_id,
+            'surat.id_dosen' => Auth::user()->id,
             ])
         ->count();
         return view('/dosen/buatsurat', [
@@ -66,25 +64,17 @@ class SuratController extends Controller
             'tanggalakhir' => 'date_format:Y-m-d|after_or_equal:tanggalawal',
             'nama_wd' => 'required',
             'nama_kadep' => 'required',
-            // 'NIP_wd' => 'required',
 
         ], [
-            // 'tanggalawal.required' => 'Nama tidak boleh kosong',
             'tanggalawal.after_or_equal' => 'Input tidak valid',
             'tanggalakhir.after_or_equal' => 'Input tidak valid',
             'nama_wd.required' => 'Wakil Dekan tidak ditemukan, silahkan hubungi Admin',
             'nama_kadep.required' => 'Kadep tidak ditemukan, silahkan hubungi Admin'
         ]);
-        // dd($request);
-        //pengkondisian pencari kadep dan wd
-        // $kadep = { }
-        // $wd = {}
-        // $kadep = array()
-        // array_push( $kadep , ['prodi_id' =>2 , 'roles_id' => 2])
         Surat::create([
             'nama' => $request->nama,
             'NIP' => $request->nip,
-            'prodi_id' => Auth::guard('dosen')->user()->prodi->id,
+            'prodi_id' => Auth::guard('pengguna')->user()->prodi->id,
             'pangkat' => $request->pangkat,
             'jabatan' => $request->jabatan,
             'judul' => $request->judul,
@@ -99,8 +89,8 @@ class SuratController extends Controller
             'nama_wd' => $request->nama_wd,
             'NIP_wd' => $request->NIP_wd,
             'notif' => '1',
-            'id_dosen' => Auth::guard('dosen')->user()->id,
-            'roles_id' => Auth::guard('dosen')->user()->roles_id,
+            'id_dosen' => Auth::guard('pengguna')->user()->id,
+            'roles_id' => Auth::guard('pengguna')->user()->roles_id,
             'remember_token' => Str::random(60),
         ]);
         Alert::success('Sukses', 'Data Berhasil Ditambah');
@@ -155,20 +145,5 @@ class SuratController extends Controller
             'success' => true,
             'surat' => $surat
         ]);
-        
-        // Surat::where('id', $request->id)->update([
-        //     'nama_dosen' => $request->nama,
-        //     'NIP' => $request->nip,
-        //     'prodi' => $request->prodi,
-        //     'pangkat' => $request->pangkat,
-        //     'judul' => $request->judul,
-        //     'jenis' => $request->jeniskegiatan,
-        //     'tempat' => $request->tempat,
-        //     'kota' => $request->kota,
-        //     'tanggalawal' => $request->tanggalawal,
-        //     'tanggalakhir' => $request->tanggalakhir,
-        // ]);
-        // toast('Data Berhasil Diubah', 'success')->autoClose(5000);
-        // return redirect('/daftarsuratdosen');
     }
 }

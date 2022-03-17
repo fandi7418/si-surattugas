@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Dosen;
-use App\Models\Admin;
 use App\Models\Surat;
 use App\Models\Prodi;
 use App\Models\Jabatan;
 use App\Models\Golongan;
 use App\Models\StatusSurat;
+use App\Models\Pengguna;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -79,8 +78,8 @@ class DosenController extends Controller
     public function profildosen()
     {
         $prodi = Prodi::all();
-        $dosen = Dosen::with('prodi')
-        ->where('dosen.id', '=', Auth::user()->id)
+        $dosen = Pengguna::with('prodi')
+        ->where('pengguna.id', '=', Auth::user()->id)
         ->get();
         $golongan = Golongan::all();
         $jabatan = Jabatan::where([
@@ -124,12 +123,12 @@ class DosenController extends Controller
 
         ]);
         
-        Dosen::where('id', $request->id)->update([
-            'nama_dosen' => $request->nama,
+        Pengguna::where('id', $request->id)->update([
+            'nama' => $request->nama,
             'NIP' => $request->NIP,
             'golongan_id' => $request->pangkat,
             'jabatan_id' => $request->jabatan,
-            'email_dosen' => $request->email_dosen,
+            'email' => $request->email_dosen,
         ]);
         toast('Berhasil', 'success')->autoClose(2000);
         return redirect()->back();
@@ -137,7 +136,7 @@ class DosenController extends Controller
 
     public function editpassworddosen(Request $request)
     {
-        Dosen::where('id', '=', Auth::user()->id)->update([
+        Pengguna::where('id', '=', Auth::user()->id)->update([
             'password' => Hash::make($request->password),
             
         ]);

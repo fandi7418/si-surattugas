@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Dosen;
-use App\Models\Admin;
 use App\Models\Surat;
 use App\Models\Prodi;
 use App\Models\Staff;
 use App\Models\Jabatan;
 use App\Models\Golongan;
+use App\Models\Pengguna;
 use App\Models\StatusSurat;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -48,41 +47,31 @@ class SupervisorController extends Controller
 
     public function daftarsuratSpv(Request $request)
     {
-        if(Auth::guard('staff')->user()->roles_id == '6')
-        {
-            $surat = Surat::with('status')
-            ->where([
-                'surat.status_id' => '7',
-            ])->orderBy('updated_at', 'DESC')->get();
-            return view('supervisor.daftarsuratSpv', ['surat' => $surat]);
-        } else {
-            return redirect()->back();
-        }
+        $surat = Surat::with('status')
+        ->where([
+            'surat.status_id' => '7',
+        ])->orderBy('updated_at', 'DESC')->get();
+        return view('supervisor.daftarsuratSpv', ['surat' => $surat]);
     }
 
     public function profilSpv()
     {
-        if(Auth::guard('staff')->user()->roles_id == '6')
-        {
-            $staff = Staff::with('prodi', 'jabatan', 'golongan')
-            ->where('staff.id', '=', Auth::user()->id)
-            ->get();
-            $golongan = Golongan::all();
-            $jabatan = Jabatan::where([
-                'id' => '5',
-                ])
-            ->orWhere([
-                'id' => '6',
-                ])
-            ->get();
-            return view('supervisor.profilSpv', [
-                'staff' => $staff,
-                'golongan' => $golongan,
-                'jabatan' => $jabatan
-            ]);
-        } else {
-            return redirect()->back();
-        }
+        $staff = Pengguna::with('prodi', 'jabatan', 'golongan')
+        ->where('pengguna.id', '=', Auth::user()->id)
+        ->get();
+        $golongan = Golongan::all();
+        $jabatan = Jabatan::where([
+            'id' => '5',
+            ])
+        ->orWhere([
+            'id' => '6',
+            ])
+        ->get();
+        return view('supervisor.profilSpv', [
+            'staff' => $staff,
+            'golongan' => $golongan,
+            'jabatan' => $jabatan
+        ]);
     }
 
     public function updateprofilSpv(Request $request, $id)
@@ -105,12 +94,12 @@ class SupervisorController extends Controller
 
         ]);
         
-        Staff::where('id', $request->id)->update([
-            'nama_staff' => $request->nama,
+        Pengguna::where('id', $request->id)->update([
+            'nama' => $request->nama,
             'NIP' => $request->NIP,
             'golongan_id' => $request->pangkat,
             'jabatan_id' => $request->jabatan,
-            'email_staff' => $request->email_staff,
+            'email' => $request->email_staff,
         ]);
         toast('Berhasil', 'success')->autoClose(2000);
         return redirect()->back();
@@ -125,8 +114,8 @@ class SupervisorController extends Controller
         $imgName = $request->ttd->getClientOriginalName() . '-' . time() . '.' . $request->ttd->extension();
         $request->ttd->move(public_path('image'), $imgName);
 
-        Staff::where(['staff.id' => Auth::user()->id])->update([
-            'ttd_spv' => $imgName,
+        Pengguna::where(['pengguna.id' => Auth::user()->id])->update([
+            'ttd' => $imgName,
         ]);
         toast('Berhasil', 'success')->autoClose(2000);
         return redirect('/profilSpv');
@@ -134,7 +123,7 @@ class SupervisorController extends Controller
 
     public function editpasswordSpv(Request $request)
     {
-        Staff::where('id', '=', Auth::user()->id)->update([
+        Pengguna::where('id', '=', Auth::user()->id)->update([
             'password' => Hash::make($request->password),
             
         ]);

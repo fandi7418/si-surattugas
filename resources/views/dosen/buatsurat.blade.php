@@ -36,38 +36,38 @@
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Nama Dosen</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="nama" value="{{ Auth::guard('dosen')->user()->nama_dosen }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="nama" value="{{ Auth::user()->nama }}">
         </div>
     </div>
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">NIP</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="nip" value="{{ Auth::guard('dosen')->user()->NIP }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="nip" value="{{ Auth::user()->NIP }}">
         </div>
     </div>
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Departemen/Prodi</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="prodi" value="{{ Auth::guard('dosen')->user()->prodi->prodi }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="prodi" value="{{ Auth::user()->prodi->prodi }}">
         </div>
     </div>
     <div class="form-group row mb-2" style="display:none">
         <label class="col-sm-2 col-form-label">Departemen/Prodi</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="prodi_id" value="{{ Auth::guard('dosen')->user()->prodi->id }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="prodi_id" value="{{ Auth::user()->prodi->id }}">
         </div>
     </div>
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Pangkat/Gol</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="pangkat" value="{{ Auth::guard('dosen')->user()->golongan->nama_golongan }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="pangkat" value="{{ Auth::user()->golongan->nama_golongan }}">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Jabatan</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="jabatan" value="{{ Auth::guard('dosen')->user()->jabatan->nama_jabatan }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="jabatan" value="{{ Auth::user()->jabatan->nama_jabatan }}">
         </div>
     </div>
 

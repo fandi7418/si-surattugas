@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Dosen;
-use App\Models\Admin;
 use App\Models\Surat;
 use App\Models\Prodi;
-use App\Models\Staff;
 use App\Models\Jabatan;
 use App\Models\Golongan;
+use App\Models\Pengguna;
 use App\Models\StatusSurat;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -71,21 +69,13 @@ class StaffController extends Controller
         ->where([
             'surat.id_staff' => Auth::user()->id,
         ])->orderBy('updated_at', 'DESC')->get();
-        // ->where([
-        //     'surat.NIP' => Auth::user()->NIP,
-        //     'surat.prodi_id' => Auth::user()->prodi_id,
-        //     'surat.notif' => '1',
-        // ])
-        // ->orderBy('updated_at', 'DESC')
-        // ->paginate(10);
         return view('staff.daftarsuratStaff', ['surat' => $surat]);
     }
 
     public function profilStaff()
     {
-        // $prodi = Prodi::all();
-        $staff = Staff::with('prodi', 'jabatan', 'golongan')
-        ->where('staff.id', '=', Auth::user()->id)
+        $staff = Pengguna::with('prodi', 'jabatan', 'golongan')
+        ->where('pengguna.id', '=', Auth::user()->id)
         ->get();
         $golongan = Golongan::all();
         $jabatan = Jabatan::where([
@@ -104,16 +94,16 @@ class StaffController extends Controller
 
     public function buatsuratStaff()
     {
-    $kadep = Dosen::where([
+    $kadep = Pengguna::where([
         'prodi_id' => Auth::user()->prodi_id,
         'roles_id' => '2',
         ])
     ->get();
-    $wd = Dosen::where([
+    $wd = Pengguna::where([
         'roles_id' => '3',
         ])
     ->get();
-    $supervisor = Staff::where([
+    $supervisor = Pengguna::where([
         'roles_id' => '6',
         ])
     ->get();
@@ -132,7 +122,6 @@ class StaffController extends Controller
             'nama_wd' => 'required',
             'nama_kadep' => 'required',
         ], [
-            // 'tanggalawal.required' => 'Nama tidak boleh kosong',
             'tanggalawal.after_or_equal' => 'Input tidak valid',
             'tanggalakhir.after_or_equal' => 'Input tidak valid',
             'nama_wd.required' => 'Wakil Dekan tidak ditemukan, silahkan hubungi Admin',
@@ -141,7 +130,7 @@ class StaffController extends Controller
         Surat::create([
             'nama' => $request->nama,
             'NIP' => $request->nip,
-            'prodi_id' => Auth::guard('staff')->user()->prodi->id,
+            'prodi_id' => Auth::guard('pengguna')->user()->prodi->id,
             'pangkat' => $request->pangkat,
             'jabatan' => $request->jabatan,
             'judul' => $request->judul,
@@ -156,8 +145,8 @@ class StaffController extends Controller
             'nama_wd' => $request->nama_wd,
             'NIP_wd' => $request->NIP_wd,
             'notif' => '1',
-            'id_staff' => Auth::guard('staff')->user()->id,
-            'roles_id' => Auth::guard('staff')->user()->roles_id,
+            'id_staff' => Auth::guard('pengguna')->user()->id,
+            'roles_id' => Auth::guard('pengguna')->user()->roles_id,
             'remember_token' => Str::random(60),
         ]);
         Alert::success('Sukses', 'Data Berhasil Ditambah');
@@ -172,7 +161,6 @@ class StaffController extends Controller
             'nama_wd' => 'required',
             'nama_spv' => 'required',
         ], [
-            // 'tanggalawal.required' => 'Nama tidak boleh kosong',
             'tanggalawal.after_or_equal' => 'Input tidak valid',
             'tanggalakhir.after_or_equal' => 'Input tidak valid',
             'nama_wd.required' => 'Wakil Dekan tidak ditemukan, silahkan hubungi Admin',
@@ -195,8 +183,8 @@ class StaffController extends Controller
             'nama_wd' => $request->nama_wd,
             'NIP_wd' => $request->NIP_wd,
             'notif' => '1',
-            'id_staff' => Auth::guard('staff')->user()->id,
-            'roles_id' => Auth::guard('staff')->user()->roles_id,
+            'id_staff' => Auth::guard('pengguna')->user()->id,
+            'roles_id' => Auth::guard('pengguna')->user()->roles_id,
             'remember_token' => Str::random(60),
         ]);
         Alert::success('Sukses', 'Data Berhasil Ditambah');
@@ -266,12 +254,12 @@ class StaffController extends Controller
 
         ]);
         
-        Staff::where('id', $request->id)->update([
-            'nama_staff' => $request->nama,
+        Pengguna::where('id', $request->id)->update([
+            'nama' => $request->nama,
             'NIP' => $request->NIP,
             'golongan_id' => $request->pangkat,
             'jabatan_id' => $request->jabatan,
-            'email_staff' => $request->email_staff,
+            'email' => $request->email_staff,
         ]);
         toast('Berhasil', 'success')->autoClose(2000);
         return redirect()->back();
@@ -279,7 +267,7 @@ class StaffController extends Controller
 
     public function editpasswordStaff(Request $request)
     {
-        Staff::where('id', '=', Auth::user()->id)->update([
+        Pengguna::where('id', '=', Auth::user()->id)->update([
             'password' => Hash::make($request->password),
             
         ]);

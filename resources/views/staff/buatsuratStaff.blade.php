@@ -5,7 +5,7 @@
 
 <h1 class="h2">Buat Surat</h1>
 <br>
-@if(Auth::guard('staff')->user()->roles_id == '5')
+@if(Auth::guard('pengguna')->user()->roles_id == '5')
 <form class="mb-8" method="post" action="/tambahsuratStaff">
     @csrf
     @error('nama_wd')
@@ -27,42 +27,42 @@
         </div>
         @enderror
     @foreach($kadep as $kdp)
-        <input type="text" readonly class="form-control" style="display:none" name="nama_kadep" value="{{ $kdp->nama_dosen }}">
+        <input type="text" readonly class="form-control" style="display:none" name="nama_kadep" value="{{ $kdp->nama }}">
         <input type="text" readonly class="form-control" style="display:none" name="NIP_kadep" value="{{ $kdp->NIP }}">
     @endforeach
     @foreach($wd as $wakil)
-        <input type="text" readonly class="form-control" style="display:none" name="nama_wd" value="{{ $wakil->nama_dosen }}">
+        <input type="text" readonly class="form-control" style="display:none" name="nama_wd" value="{{ $wakil->nama }}">
         <input type="text" readonly class="form-control" style="display:none" name="NIP_wd" value="{{ $wakil->NIP }}">
     @endforeach
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Nama</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="nama" value="{{ Auth::guard('staff')->user()->nama_staff }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="nama" value="{{ Auth::user()->nama }}">
         </div>
     </div>
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">NIP</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="nip" value="{{ Auth::guard('staff')->user()->NIP }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="nip" value="{{ Auth::user()->NIP }}">
         </div>
     </div>
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Departemen/Prodi</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="prodi" value="{{ Auth::guard('staff')->user()->prodi->prodi }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="prodi" value="{{ Auth::user()->prodi->prodi }}">
         </div>
     </div>
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Pangkat/Gol</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="pangkat" value="{{ Auth::guard('staff')->user()->golongan->nama_golongan }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="pangkat" value="{{ Auth::user()->golongan->nama_golongan }}">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Jabatan</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="jabatan" value="{{ Auth::guard('staff')->user()->jabatan->nama_jabatan }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="jabatan" value="{{ Auth::user()->jabatan->nama_jabatan }}">
         </div>
     </div>
 
@@ -124,7 +124,7 @@
     </div>
     
 </form>
-@elseif(Auth::guard('staff')->user()->roles_id == '4')
+@elseif(Auth::guard('pengguna')->user()->roles_id == '4')
 <form class="mb-8" method="post" action="/tambahsuratStaffFT">
     @csrf
     @error('nama_wd')
@@ -146,36 +146,36 @@
         </div>
         @enderror
     @foreach($supervisor as $spv)
-        <input type="text" readonly class="form-control" style="display:none" name="nama_spv" value="{{ $spv->nama_staff }}">
+        <input type="text" readonly class="form-control" style="display:none" name="nama_spv" value="{{ $spv->nama }}">
         <input type="text" readonly class="form-control" style="display:none" name="NIP_spv" value="{{ $spv->NIP }}">
     @endforeach
     @foreach($wd as $wakil)
-        <input type="text" readonly class="form-control" style="display:none" name="nama_wd" value="{{ $wakil->nama_dosen }}">
+        <input type="text" readonly class="form-control" style="display:none" name="nama_wd" value="{{ $wakil->nama }}">
         <input type="text" readonly class="form-control" style="display:none" name="NIP_wd" value="{{ $wakil->NIP }}">
     @endforeach
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Nama</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="nama" value="{{ Auth::guard('staff')->user()->nama_staff }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="nama" value="{{ Auth::user()->nama }}">
         </div>
     </div>
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">NIP</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="nip" value="{{ Auth::guard('staff')->user()->NIP }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="nip" value="{{ Auth::user()->NIP }}">
         </div>
     </div>
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Pangkat/Gol</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="pangkat" value="{{ Auth::guard('staff')->user()->golongan->nama_golongan }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="pangkat" value="{{ Auth::user()->golongan->nama_golongan }}">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Jabatan</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="jabatan" value="{{ Auth::guard('staff')->user()->jabatan->nama_jabatan }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="jabatan" value="{{ Auth::user()->jabatan->nama_jabatan }}">
         </div>
     </div>
 
@@ -237,7 +237,7 @@
     </div>
     
 </form>
-@elseif(Auth::guard('staff')->user()->roles_id == '6')
+@elseif(Auth::guard('pengguna')->user()->roles_id == '6')
 <form class="mb-8" method="post" action="/tambahsuratStaffFT">
     @csrf
     @error('nama_wd')
@@ -259,36 +259,36 @@
         </div>
         @enderror
     @foreach($supervisor as $spv)
-        <input type="text" readonly class="form-control" style="display:none" name="nama_spv" value="{{ $spv->nama_staff }}">
+        <input type="text" readonly class="form-control" style="display:none" name="nama_spv" value="{{ $spv->nama }}">
         <input type="text" readonly class="form-control" style="display:none" name="NIP_spv" value="{{ $spv->NIP }}">
     @endforeach
     @foreach($wd as $wakil)
-        <input type="text" readonly class="form-control" style="display:none" name="nama_wd" value="{{ $wakil->nama_dosen }}">
+        <input type="text" readonly class="form-control" style="display:none" name="nama_wd" value="{{ $wakil->nama }}">
         <input type="text" readonly class="form-control" style="display:none" name="NIP_wd" value="{{ $wakil->NIP }}">
     @endforeach
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Nama</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="nama" value="{{ Auth::guard('staff')->user()->nama_staff }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="nama" value="{{ Auth::user()->nama }}">
         </div>
     </div>
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">NIP</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="nip" value="{{ Auth::guard('staff')->user()->NIP }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="nip" value="{{ Auth::user()->NIP }}">
         </div>
     </div>
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Pangkat/Gol</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="pangkat" value="{{ Auth::guard('staff')->user()->golongan->nama_golongan }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="pangkat" value="{{ Auth::user()->golongan->nama_golongan }}">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Jabatan</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="jabatan" value="{{ Auth::guard('staff')->user()->jabatan->nama_jabatan }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="jabatan" value="{{ Auth::user()->jabatan->nama_jabatan }}">
         </div>
     </div>
 
@@ -350,7 +350,7 @@
     </div>
     
 </form>
-@elseif(Auth::guard('staff')->user()->roles_id == '7')
+@elseif(Auth::guard('pengguna')->user()->roles_id == '7')
 <form class="mb-8" method="post" action="/tambahsuratStaffFT">
     @csrf
     @error('nama_wd')
@@ -372,36 +372,36 @@
         </div>
         @enderror
     @foreach($supervisor as $spv)
-        <input type="text" readonly class="form-control" style="display:none" name="nama_spv" value="{{ $spv->nama_staff }}">
+        <input type="text" readonly class="form-control" style="display:none" name="nama_spv" value="{{ $spv->nama }}">
         <input type="text" readonly class="form-control" style="display:none" name="NIP_spv" value="{{ $spv->NIP }}">
     @endforeach
     @foreach($wd as $wakil)
-        <input type="text" readonly class="form-control" style="display:none" name="nama_wd" value="{{ $wakil->nama_dosen }}">
+        <input type="text" readonly class="form-control" style="display:none" name="nama_wd" value="{{ $wakil->nama }}">
         <input type="text" readonly class="form-control" style="display:none" name="NIP_wd" value="{{ $wakil->NIP }}">
     @endforeach
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Nama</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="nama" value="{{ Auth::guard('staff')->user()->nama_staff }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="nama" value="{{ Auth::user()->nama }}">
         </div>
     </div>
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">NIP</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="nip" value="{{ Auth::guard('staff')->user()->NIP }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="nip" value="{{ Auth::user()->NIP }}">
         </div>
     </div>
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Pangkat/Gol</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="pangkat" value="{{ Auth::guard('staff')->user()->golongan->nama_golongan }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="pangkat" value="{{ Auth::user()->golongan->nama_golongan }}">
         </div>
     </div>
 
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Jabatan</label>
         <div class="col-sm-5">
-            <input type="text" readonly class="form-control" placeholder=" " name="jabatan" value="{{ Auth::guard('staff')->user()->jabatan->nama_jabatan }}">
+            <input type="text" readonly class="form-control" placeholder=" " name="jabatan" value="{{ Auth::user()->jabatan->nama_jabatan }}">
         </div>
     </div>
 

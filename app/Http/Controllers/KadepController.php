@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Kadep;
 use App\Models\Surat;
 use App\Models\Prodi;
-use App\Models\Dosen;
 use App\Models\Jabatan;
 use App\Models\Golongan;
+use App\Models\Pengguna;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -45,66 +44,50 @@ class KadepController extends Controller
     public function dashboardkadep(Request $request)
     {
         return view('kadep.dashboardkadep');
-        // if(Auth::guard('dosen')->user()->roles_id == '2')
-        // {
-        //     return view('kadep.dashboardkadep');
-        // } else {
-        //     return redirect()->back();
-        // }
         
     }
 
     public function profilKadep(Request $request)
     {
-        if(Auth::guard('dosen')->user()->roles_id == '2')
-        {
-            $prodi = Prodi::all();
-            $golongan = Golongan::all();
-            $kadep = Dosen::with('prodi', 'jabatan', 'golongan')
-            ->where([
-                'dosen.id' => Auth::user()->id,
-                ])
-            ->get();
-            $jabatan = Jabatan::where([
-                'id' => '1',
-                ])
-            ->orWhere([
-                'id' => '2',
-                ])
-            ->orWhere([
-                'id' => '3',
-                ])
-            ->orWhere([
-                'id' => '4',
-                ])
-            ->get();
-            return view('kadep.profilkadep', [
-                'prodi' => $prodi,
-                'golongan' => $golongan,
-                'kadep' => $kadep,
-                'jabatan' => $jabatan
-            ]);
-        } else {
-            return redirect()->back();
-        }
+        $prodi = Prodi::all();
+        $golongan = Golongan::all();
+        $kadep = Pengguna::with('prodi', 'jabatan', 'golongan')
+        ->where([
+            'pengguna.id' => Auth::user()->id,
+            ])
+        ->get();
+        $jabatan = Jabatan::where([
+            'id' => '1',
+            ])
+        ->orWhere([
+            'id' => '2',
+            ])
+        ->orWhere([
+            'id' => '3',
+            ])
+        ->orWhere([
+            'id' => '4',
+            ])
+        ->get();
+        return view('kadep.profilkadep', [
+            'prodi' => $prodi,
+            'golongan' => $golongan,
+            'kadep' => $kadep,
+            'jabatan' => $jabatan
+        ]);
         
     }
 
     public function daftarsurat(Request $request)
     {
-        if(Auth::guard('dosen')->user()->roles_id == '2')
-        {
-            $surat = Surat::with('status')
-            ->where([
-                'surat.prodi_id' => Auth::user()->prodi_id,
-                'surat.status_id' => '1',
-                ])
-            ->orderBy('updated_at', 'DESC')
-            ->get();
-            return view('kadep.daftarsuratkadep', ['surat' => $surat]);
-        } else {
-            return redirect()->back();
-        }
+        $surat = Surat::with('status')
+        ->where([
+            'surat.prodi_id' => Auth::user()->prodi_id,
+            'surat.status_id' => '1',
+            ])
+        ->orderBy('updated_at', 'DESC')
+        ->get();
+        return view('kadep.daftarsuratkadep', ['surat' => $surat]);
         
     }
 
@@ -141,16 +124,6 @@ class KadepController extends Controller
         
     }
 
-    // public function validasi(Request $request)
-    // {
-    //     $validation = $request->validate([
-    //         'ttd_kadep' => 'required',
-    //     ], [
-    //         'ttd_kadep.required' => 'Anda tidak bisa menyetujui surat. Tanda tangan belum ditambahkan',
-    //     ]);
-    // }
-
-
     public function confirmTolak(Request $request, $id)
     {
         $surat = Surat::findOrFail($id);
@@ -181,8 +154,8 @@ class KadepController extends Controller
         $imgName = $request->ttd->getClientOriginalName() . '-' . time() . '.' . $request->ttd->extension();
         $request->ttd->move(public_path('image'), $imgName);
 
-        Dosen::where(['dosen.id' => Auth::user()->id])->update([
-            'ttd_kadep' => $imgName,
+        Pengguna::where(['pengguna.id' => Auth::user()->id])->update([
+            'ttd' => $imgName,
         ]);
         toast('Berhasil', 'success')->autoClose(2000);
         return redirect('/profilkadep');
@@ -208,10 +181,10 @@ class KadepController extends Controller
 
         ]);
         
-        Dosen::with('prodi')->where('id', $request->id)->update([
-            'nama_dosen' => $request->nama_dosen,
+        Pengguna::with('prodi')->where('id', $request->id)->update([
+            'nama' => $request->nama_dosen,
             'NIP' => $request->NIP,
-            'email_dosen' => $request->email_dosen,
+            'email' => $request->email_dosen,
             'golongan_id' => $request->pangkat,
             'jabatan_id' => $request->jabatan,
         ]);
@@ -221,7 +194,7 @@ class KadepController extends Controller
 
     public function editpasswordkadep(Request $request)
     {
-        Dosen::where('id', '=', Auth::user()->id)->update([
+        Pengguna::where('id', '=', Auth::user()->id)->update([
             'password' => Hash::make($request->password),
             
         ]);
