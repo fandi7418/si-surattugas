@@ -143,7 +143,7 @@ class WakilDekanController extends Controller
         $imgName = $request->ttd->getClientOriginalName() . '-' . time() . '.' . $request->ttd->extension();
         $request->ttd->move(public_path('image'), $imgName);
 
-        Pengguna::where(['dosen.id' => Auth::user()->id])->update([
+        Pengguna::where(['pengguna.id' => Auth::user()->id])->update([
             'ttd' => $imgName,
         ]);
         toast('Berhasil', 'success')->autoClose(2000);
@@ -156,8 +156,8 @@ class WakilDekanController extends Controller
             'nama_dosen' => 'required|max:255|string',
             'pangkat' => 'required',
             'jabatan' => 'required',
-            'NIP' => "required|numeric|min:6|unique:dosen,NIP,$id|unique:staff,NIP",
-            'email_dosen' => "email|required|unique:dosen,email_dosen,$id|unique:petugas_penomoran,email_petugas|unique:admin,email_admin",
+            'NIP' => "required|numeric|min:6|unique:pengguna,NIP,$id",
+            'email_dosen' => "email|required|unique:pengguna,email,$id",
         ], 
             [
             'email_dosen.email' => 'E-mail tidak boleh kosong',

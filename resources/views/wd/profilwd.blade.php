@@ -11,7 +11,7 @@
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Nama</label>
         <div class="col-sm-5">
-            <input type="text" class="form-control" placeholder=" " name="nama_dosen" value="{{ $isi->nama_dosen }}">
+            <input type="text" class="form-control" placeholder=" " name="nama_dosen" value="{{ $isi->nama }}">
         </div>
     </div>
     <div class="form-group row mb-2">
@@ -68,7 +68,7 @@
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">E-mail</label>
         <div class="col-sm-5">
-            <input type="text" class="form-control @error('email_dosen') is-invalid @enderror" placeholder=" " name="email_dosen" value="{{ $isi->email_dosen }}">
+            <input type="text" class="form-control @error('email_dosen') is-invalid @enderror" placeholder=" " name="email_dosen" value="{{ $isi->email }}">
             @error('email_dosen')
                 <div id="validationServer03Feedback" class="invalid-feedback">
                     {{ $message }}
@@ -128,11 +128,11 @@
             </button>
         </div>
         <div class="modal-body">
-            @if(is_null(Auth::user()->ttd_wd))
+            @if(is_null(Auth::user()->ttd))
                 <p style="color:red; text-align: center">Anda belum upload tanda tangan</p>
                 <br>
             @else
-                <img src="/image/{{ Auth::user()->ttd_wd }}" alt="" width="auto" height="200px" style="align:center">
+                <img src="/image/{{ Auth::user()->ttd }}" alt="" width="auto" height="200px" style="align:center">
             @endif
             <form enctype="multipart/form-data" method="post" action="/uploadTTD">
                 @csrf

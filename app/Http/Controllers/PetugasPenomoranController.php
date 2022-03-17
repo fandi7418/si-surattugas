@@ -104,8 +104,8 @@ class PetugasPenomoranController extends Controller
     {
         $this->validate($request,[
             'nama' => 'required|max:255|string',
-            'NIP' => "required|numeric|min:6|unique:staff,NIP,$id|unique:dosen,NIP",
-            'email_petugas' => "email|required|unique:petugas_penomoran,email_petugas,$id|unique:dosen,email_dosen|unique:ketua_departemen,email_kadep|unique:wakildekan,email_wd|unique:admin,email_admin",
+            'NIP' => "required|numeric|min:6|unique:pengguna,NIP,$id",
+            'email_petugas' => "email|required|unique:pengguna,email,$id",
         ], 
             [
             'email_petugas.email' => 'E-mail tidak boleh kosong',

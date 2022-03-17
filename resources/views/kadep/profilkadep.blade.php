@@ -11,7 +11,7 @@
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Nama</label>
             <div class="col-sm-5">
-                <input required type="text" class="form-control" placeholder=" " name="nama_dosen" value="{{ $isi->nama_dosen }}">
+                <input required type="text" class="form-control" placeholder=" " name="nama_dosen" value="{{ $isi->nama }}">
             </div>
         </div>
         <div class="form-group row mb-2">
@@ -68,7 +68,7 @@
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">E-mail</label>
             <div class="col-sm-5">
-                <input required type="text" class="form-control @error('email_dosen') is-invalid @enderror" placeholder=" " name="email_dosen" value="{{ $isi->email_dosen }}">
+                <input required type="text" class="form-control @error('email_dosen') is-invalid @enderror" placeholder=" " name="email_dosen" value="{{ $isi->email }}">
                 @error('email_dosen')
                     <div id="validationServer03Feedback" class="invalid-feedback">
                         {{ $message }}
@@ -127,12 +127,12 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    @if(is_null(Auth::user()->ttd_kadep))
+                    @if(is_null(Auth::user()->ttd))
                         <p style="color:red; text-align: center">Anda belum upload tanda tangan</p>
                         <br>
                     @else
                         @foreach($kadep as $isi)
-                            <img src="/image/{{ $isi->ttd_kadep }}" alt="" width="auto" height="200px" style="align:center">
+                            <img src="/image/{{ $isi->ttd }}" alt="" width="auto" height="200px" style="align:center">
                         @endforeach
                     @endif
                     <form enctype="multipart/form-data" method="post" action="/uploadTTDkadep">

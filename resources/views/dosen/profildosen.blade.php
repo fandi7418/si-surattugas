@@ -11,7 +11,7 @@
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Nama</label>
             <div class="col-sm-5">
-                <input required type="text" class="form-control" placeholder=" " name="nama" value="{{ $isi->nama_dosen }}">
+                <input required type="text" class="form-control" placeholder=" " name="nama" value="{{ $isi->nama }}">
             </div>
         </div>
         <div class="form-group row mb-2">
@@ -68,7 +68,7 @@
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">E-mail</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control @error('email_dosen') is-invalid @enderror" placeholder=" " name="email_dosen" value="{{ $isi->email_dosen }}">
+                <input type="text" class="form-control @error('email_dosen') is-invalid @enderror" placeholder=" " name="email_dosen" value="{{ $isi->email }}">
                     @error('email_dosen')
                         <div class="alert alert-danger alert-dismissible fade show mt-3">
                             {{ $message }}

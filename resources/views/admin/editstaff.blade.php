@@ -11,7 +11,7 @@
                     <label for="colFormLabel" class="col-sm-2 col-form-label">Nama</label>
                     <div class="col-sm-8">
                         <input type="text"
-                            value="{{ old('nama_staff', $stf->nama_staff) }}" name="nama_staff"
+                            value="{{ old('nama', $stf->nama) }}" name="nama_staff"
                             class="form-control @error('nama_staff') is-invalid @enderror" id="colFormLabel" placeholder="Silahkan Masukkan nama Anda">
                                 @error('nama_staff')
                                     <div class="invalid-feedback">
@@ -88,7 +88,7 @@
                 <div class="form-group row mt-4">
                     <label for="colFormLabel" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-8">
-                        <input type="email" name="email_staff" value="{{ old('email_staff', $stf->email_staff) }}" class="form-control @error('email_staff') is-invalid @enderror" id="colFormLabel"
+                        <input type="email" name="email_staff" value="{{ old('email', $stf->email) }}" class="form-control @error('email_staff') is-invalid @enderror" id="colFormLabel"
                             placeholder="Silahkan Masukkan E-mail Anda">
                                 @error('email_staff')
                                     <div class="invalid-feedback">

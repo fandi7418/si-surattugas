@@ -107,10 +107,10 @@ class DosenController extends Controller
     {
         $this->validate($request,[
             'nama' => 'required|max:255|string',
-            'NIP' => "required|numeric|min:6|unique:dosen,NIP,$id|unique:staff,NIP",
+            'NIP' => "required|numeric|min:6|unique:pengguna,NIP,$id",
             'pangkat' => 'required|string',
             'jabatan' => 'required|string',
-            'email_dosen' => "email|required|unique:dosen,email_dosen,$id|unique:ketua_departemen,email_kadep|unique:petugas_penomoran,email_petugas|unique:wakildekan,email_wd|unique:admin,email_admin",
+            'email_dosen' => "email|required|unique:pengguna,email,$id",
         ], 
             [
             'email_dosen.email' => 'E-mail tidak boleh kosong',

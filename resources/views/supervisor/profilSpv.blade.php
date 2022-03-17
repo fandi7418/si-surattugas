@@ -11,7 +11,7 @@
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Nama</label>
             <div class="col-sm-5">
-                <input required type="text" class="form-control" placeholder=" " name="nama" value="{{ $isi->nama_staff }}">
+                <input required type="text" class="form-control" placeholder=" " name="nama" value="{{ $isi->nama }}">
             </div>
         </div>
         <div class="form-group row mb-2">
@@ -63,7 +63,7 @@
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">E-mail</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control @error('email_staff') is-invalid @enderror" placeholder=" " name="email_staff" value="{{ $isi->email_staff }}">
+                <input type="text" class="form-control @error('email_staff') is-invalid @enderror" placeholder=" " name="email_staff" value="{{ $isi->email }}">
                     @error('email_staff')
                         <div class="alert alert-danger alert-dismissible fade show mt-3">
                             {{ $message }}
@@ -97,12 +97,12 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    @if(is_null(Auth::user()->ttd_spv))
+                    @if(is_null(Auth::user()->ttd))
                         <p style="color:red; text-align: center">Anda belum upload tanda tangan</p>
                         <br>
                     @else
                         @foreach($staff as $isi)
-                            <img src="/image/{{ $isi->ttd_spv }}" alt="" width="auto" height="200px" style="align:center">
+                            <img src="/image/{{ $isi->ttd }}" alt="" width="auto" height="200px" style="align:center">
                         @endforeach
                     @endif
                     <form enctype="multipart/form-data" method="post" action="/uploadTTDSpv">

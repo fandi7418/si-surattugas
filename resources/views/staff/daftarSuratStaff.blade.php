@@ -37,7 +37,7 @@
         @endif
         <td>{{$isi->judul}}</td>
         <td>{{ \Carbon\Carbon::parse($isi->tanggalawal)->isoFormat('D MMMM Y')}}</td>
-        @if(Auth::guard('staff')->user()->roles_id == '5')
+        @if(Auth::guard('pengguna')->user()->roles_id == '5')
           @if($isi->status_id == '1')
           <td>
             <div class="container">
@@ -203,7 +203,7 @@
             <button type="button" class="btn btn-danger btn-sm" onClick="konfirmasiHapus({{ $isi->id }})">Hapus</button>
           </td>
           @endif
-        @elseif(Auth::guard('staff')->user()->roles_id == '4')
+        @elseif(Auth::guard('pengguna')->user()->roles_id == '4')
           @if($isi->status_id == '7')
           <td>
             <div class="container">
@@ -369,7 +369,7 @@
             <button type="button" class="btn btn-danger btn-sm" onClick="konfirmasiHapus({{ $isi->id }})">Hapus</button>
           </td>
           @endif
-        @elseif(Auth::guard('staff')->user()->roles_id == '6')
+        @elseif(Auth::guard('pengguna')->user()->roles_id == '6')
           @if($isi->status_id == '7')
             <td>
               <div class="container">
@@ -535,7 +535,7 @@
               <button type="button" class="btn btn-danger btn-sm" onClick="konfirmasiHapus({{ $isi->id }})">Hapus</button>
             </td>
             @endif
-        @elseif(Auth::guard('staff')->user()->roles_id == '7')
+        @elseif(Auth::guard('pengguna')->user()->roles_id == '7')
           @if($isi->status_id == '7')
           <td>
             <div class="container">
