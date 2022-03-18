@@ -15,6 +15,7 @@ class CreateSuratTable extends Migration
     {
         Schema::create('surat', function (Blueprint $table) {
             $table->id();
+            $table->string('approve')->nullable();
             $table->string('no_surat')->nullable();
             $table->string('nama')->nullable();
             $table->bigInteger('NIP');
@@ -39,9 +40,8 @@ class CreateSuratTable extends Migration
             $table->string('nama_supervisor')->nullable();
             $table->string('NIP_supervisor')->nullable();
             $table->bigInteger('notif')->nullable();
-            $table->bigInteger('id_dosen')->nullable();
+            $table->bigInteger('id_pengguna')->nullable();
             $table->bigInteger('roles_id');
-            $table->bigInteger('id_staff')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

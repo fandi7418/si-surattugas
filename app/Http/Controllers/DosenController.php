@@ -21,7 +21,7 @@ class DosenController extends Controller
     public function clearNotif()
     {
         $surat = Surat::with('status')
-        ->where(['surat.id_dosen' => Auth::user()->id,])
+        ->where(['surat.id_pengguna' => Auth::user()->id,])
         ->update([
             'notif' => '2',
         ]);
@@ -34,7 +34,7 @@ class DosenController extends Controller
     {
         $surat = Surat::with('status')
         ->where([
-            'surat.id_dosen' => Auth::user()->id,
+            'surat.id_pengguna' => Auth::user()->id,
             'surat.notif' => '1',
         ])
         ->orderBy('updated_at', 'DESC')
@@ -68,7 +68,7 @@ class DosenController extends Controller
     {
         $surat = Surat::with('status')
         ->where([
-            'surat.id_dosen' => Auth::user()->id,
+            'surat.id_pengguna' => Auth::user()->id,
         ])
         ->orderBy('updated_at', 'DESC')
         ->paginate(10);
@@ -129,6 +129,15 @@ class DosenController extends Controller
             'golongan_id' => $request->pangkat,
             'jabatan_id' => $request->jabatan,
             'email' => $request->email_dosen,
+        ]);
+        Surat::where([
+            'id_pengguna' => Auth::user()->id,
+            'approve' => '0',
+            ])->update([
+            'nama' => $request->nama,
+            'NIP' => $request->NIP,
+            'pangkat' => $request->pangkat,
+            'jabatan' => $request->jabatan,
         ]);
         toast('Berhasil', 'success')->autoClose(2000);
         return redirect()->back();

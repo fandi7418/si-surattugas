@@ -33,13 +33,13 @@ class SuratController extends Controller
         ->get();
         $surat = Surat::with('status')
         ->where([
-            'surat.id_dosen' => Auth::user()->id,
+            'surat.id_pengguna' => Auth::user()->id,
             ])
         ->orderBy('updated_at', 'DESC')
         ->get();
         $count = Surat::with('status')
         ->where([
-            'surat.id_dosen' => Auth::user()->id,
+            'surat.id_pengguna' => Auth::user()->id,
             ])
         ->count();
         return view('/dosen/buatsurat', [
@@ -50,12 +50,37 @@ class SuratController extends Controller
         ]);
     }
 
-    public function show(Surat $surat)
+    public function show(Request $request, $id)
     {
-        return view('suratpdf', compact('surat'));
+        $surat=Surat::with('pengguna')
+        ->where('id', $id)
+        ->get();
+        $kadep=Pengguna::where([
+            'pengguna.id' => $surat->first()->nama_kadep
+        ])->get();
+        $wd=Pengguna::where([
+            'pengguna.id' => $surat->first()->nama_wd
+        ])->get();
+        $supervisor=Pengguna::where([
+            'pengguna.id' => $surat->first()->nama_supervisor
+        ])->get();
+        return view('suratpdf', [
+            'surat' => $surat,
+            'kadep' => $kadep,
+            'wd' => $wd,
+            'supervisor' => $supervisor,
+        ]);
         // $pdf = PDF::loadView('suratpdf', compact('surat'));
         // return $pdf->stream();
     }
+
+    // public function show(Surat $surat)
+    // {
+        
+    //     return view('suratpdf', compact('surat'));
+    //     // $pdf = PDF::loadView('suratpdf', compact('surat'));
+    //     // return $pdf->stream();
+    // }
 
     public function tambahsurat(Request $request)
     {
@@ -84,12 +109,13 @@ class SuratController extends Controller
             'tanggalawal' => $request->tanggalawal,
             'tanggalakhir' => $request->tanggalakhir,
             'status_id' => '1',
-            'nama_kadep' => $request->nama_kadep,
-            'NIP_kadep' => $request->NIP_kadep,
-            'nama_wd' => $request->nama_wd,
-            'NIP_wd' => $request->NIP_wd,
+            'nama_kadep' => $request->id_kadep,
+            'NIP_kadep' => $request->id_kadep,
+            'nama_wd' => $request->id_wd,
+            'NIP_wd' => $request->id_wd,
             'notif' => '1',
-            'id_dosen' => Auth::guard('pengguna')->user()->id,
+            'approve' => '0',
+            'id_pengguna' => Auth::user()->id,
             'roles_id' => Auth::guard('pengguna')->user()->roles_id,
             'remember_token' => Str::random(60),
         ]);

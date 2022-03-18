@@ -18,6 +18,7 @@ class Surat extends Authenticatable
     protected $primarykey = "id";
     protected $fillable = [
         'no_surat',
+        'approve',
         'nama',
         'NIP',
         'prodi_id',
@@ -41,8 +42,7 @@ class Surat extends Authenticatable
         'nama_wd',
         'NIP_wd',
         'notif',
-        'id_dosen',
-        'id_staff',
+        'id_pengguna',
         'roles_id',
     ];
 
@@ -54,7 +54,8 @@ class Surat extends Authenticatable
     public function pengguna()
     {
      //Setiap data hanya dimiliki oleh satu user
-    return $this->belongsTo('App\Models\Pengguna', 'NIP');
+    //return $this->belongsTo('App\Models\Pengguna', 'NIP');
+    return $this->belongsTo(Pengguna::class);
     }
     // public function kadep()
     // {

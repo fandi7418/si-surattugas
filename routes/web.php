@@ -30,7 +30,8 @@ Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 /* Route Surat PDF */
-Route::get('/surat/{surat}', [SuratController::class, 'show']);
+// Route::get('/surat/{surat}', [SuratController::class, 'show']);
+Route::get('/surat/{id}', [SuratController::class, 'show']);
 
 // Route::get('/suratpdf', [SuratController::class, 'show']);
 // Route::get('/suratpdf', [SuratController::class, 'tampilpdf']);

@@ -28,10 +28,12 @@
     @foreach($kadep as $kdp)
         <input type="text" readonly class="form-control" style="display:none" name="nama_kadep" value="{{ $kdp->nama }}">
         <input type="text" readonly class="form-control" style="display:none" name="NIP_kadep" value="{{ $kdp->NIP }}">
+        <input type="text" readonly class="form-control" style="display:none" name="id_kadep" value="{{ $kdp->id }}">
     @endforeach
     @foreach($wd as $wakil)
         <input type="text" readonly class="form-control" style="display:none" name="nama_wd" value="{{ $wakil->nama }}">
         <input type="text" readonly class="form-control" style="display:none" name="NIP_wd" value="{{ $wakil->NIP }}">
+        <input type="text" readonly class="form-control" style="display:none" name="id_wd" value="{{ $wakil->id }}">
     @endforeach
     <div class="form-group row mb-2">
         <label class="col-sm-2 col-form-label">Nama Dosen</label>

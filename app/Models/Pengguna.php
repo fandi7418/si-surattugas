@@ -38,7 +38,8 @@ class Pengguna extends Authenticatable
     public function surat()
     {
     //Setiap user akan memiliki banyak data
-    return $this->hasMany('App\Models\Surat', 'NIP');
+    //return $this->hasMany('App\Models\Surat', 'NIP');
+    return $this->hasMany(Surat::class);
     }
     public function prodi()
     {
