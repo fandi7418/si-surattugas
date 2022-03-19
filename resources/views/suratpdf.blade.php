@@ -44,6 +44,9 @@
 			<tr>
 				<td><img src="/undip.png" width="90" height="90"></td>
 				<td>
+					
+				@foreach($surat as $srt)
+
 				<center>
 					<font size="4">KEMENTRIAN RISET, TEKNOLOGI, DAN PENDIDIKAN TINGGI</font><br>
 					<font size="4">UNIVERSITAS DIPONEGORO</font><br>
@@ -69,7 +72,7 @@
 				<td>
 				<center>
 					<font size="4"><b>SURAT TUGAS</b></font><br>
-					<font size="4"><b>No. {{ $surat->no_surat }}</b></font><br>
+					<font size="4"><b>No. {{ $srt->no_surat }}</b></font><br>
 				</center>
 				</td>
 			</tr>
@@ -85,25 +88,25 @@
 		<table width="625">
 			<tr class="text2">
 				<td width="150">Nama</td>
-				<td width="500">: {{ $surat->nama }}</td>
+				<td width="500">: {{ $srt->nama }}</td>
 			</tr>
 			<tr>
 				<td>NIP</td>
-				<td width="525">: {{ $surat->NIP }}</td>
+				<td width="525">: {{ $srt->NIP }}</td>
 			</tr>
-			@if(isset($surat->prodi_id))
+			@if(isset($srt->prodi_id))
 			<tr>
 				<td>Departemen/Prodi</td>
-				<td width="525">: {{ $surat->prodi->prodi }}</td>
+				<td width="525">: {{ $srt->prodi->prodi }}</td>
 			</tr>
 			@endif
 			<tr>
 				<td>Pangkat/Golongan</td>
-				<td width="525">: {{ $surat->pangkat }}</td>
+				<td width="525">: {{ $srt->pangkat }}</td>
 			</tr>
 			<tr>
 				<td>Jabatan</td>
-				<td width="525">: {{ $surat->jabatan }}</td>
+				<td width="525">: {{ $srt->jabatan }}</td>
 			</tr>
 		</table>
 		<br>
@@ -118,26 +121,26 @@
 		<table width="625">
 			<tr class="text2">
 				<td>Nama Kegiatan</td>
-				<td width="541">: {{ $surat->jenis }}</td>
+				<td width="541">: {{ $srt->jenis }}</td>
 			</tr>
 			<tr>
 				<td width="150">Tempat Instansi Kegiatan</td>
-				<td width="525">: {{ $surat->tempat }}</td>
+				<td width="525">: {{ $srt->tempat }}</td>
 			</tr>
 			<tr>
 				<td>Judul Kegiatan</td>
-				<td width="525">: {{ $surat->judul }}</td>
+				<td width="525">: {{ $srt->judul }}</td>
 			</tr>
 			<tr>
 				<td>Kota/Kabupaten</td>
-				<td width="525">: {{ $surat->kota }}</td>
+				<td width="525">: {{ $srt->kota }}</td>
 			</tr>
 			<tr>
 				<td>Tanggal</td>
-				@if($surat->tanggalawal == $surat->tanggalakhir)
-				<td width="525">: {{ \Carbon\Carbon::parse($surat->tanggalawal)->isoFormat('dddd, D MMMM Y')}}</td>
+				@if($srt->tanggalawal == $srt->tanggalakhir)
+				<td width="525">: {{ \Carbon\Carbon::parse($srt->tanggalawal)->isoFormat('dddd, D MMMM Y')}}</td>
 				@else
-				<td width="525">: {{ \Carbon\Carbon::parse($surat->tanggalawal)->isoFormat('dddd, D MMMM Y')}} s/d {{ \Carbon\Carbon::parse($surat->tanggalakhir)->isoFormat('dddd, D MMMM Y')}}</td>
+				<td width="525">: {{ \Carbon\Carbon::parse($srt->tanggalawal)->isoFormat('dddd, D MMMM Y')}} s/d {{ \Carbon\Carbon::parse($srt->tanggalakhir)->isoFormat('dddd, D MMMM Y')}}</td>
 				@endif
 			</tr>
 		</table>
@@ -157,7 +160,7 @@
 		<table width="625">
 			<tr>
 				<td width="350"></td>
-				<td class="text" >Semarang, {{ \Carbon\Carbon::parse($surat->created_at)->isoFormat('D MMMM Y')}}</td>
+				<td class="text" >Semarang, {{ \Carbon\Carbon::parse($srt->created_at)->isoFormat('D MMMM Y')}}</td>
 			</tr>
 	     </table>
 		<table width="625">
@@ -166,7 +169,7 @@
 				<td class="text" >a.n Dekan</td>
 			</tr>
 			<tr>
-				@if(isset($surat->nama_kadep))
+				@if(isset($srt->nama_kadep))
 				<td width="350">Ketua Departemen/Prodi</td>
 				@else
 				<td width="350">Supervisor</td>
@@ -174,33 +177,46 @@
 				<td class="text" >Wakil Dekan Akademik dan Kemahasiswaan</td>
 			</tr>
 			<tr>
-				@if(isset($surat->ttd_kadep))
-				<td class="text"><img src="/image/{{ $surat->ttd_kadep }}" alt="" width="auto" height="100px"></td>
+				@if(isset($srt->ttd_kadep))
+				<td class="text"><img src="/image/{{ $srt->ttd_kadep }}" alt="" width="auto" height="100px"></td>
 				@else
-				<td class="text"><img src="/image/{{ $surat->ttd_spv }}" alt="" width="auto" height="100px"></td>
+				<td class="text"><img src="/image/{{ $srt->ttd_spv }}" alt="" width="auto" height="100px"></td>
 				@endif
-				<td class="ttdWD" id="ttdWD"><img src="/image/{{ $surat->ttd_wd }}" alt="" width="auto" height="100px"></td>
-				@if($surat->status_id == '4')
+				<td class="ttdWD" id="ttdWD"><img src="/image/{{ $srt->ttd_wd }}" alt="" width="auto" height="100px"></td>
+				@if($srt->status_id == '4')
 				<td class="cap" id="cap"><img src="/CapUndip.png" alt="" width="auto" height="170px"></td>
 				@endif
 			</tr>
 			<tr>
-				@if(isset($surat->nama_kadep))
-				<td class="text">{{ $surat->nama_kadep }}</td>
+				@if(isset($srt->nama_kadep))
+					@foreach($kadep as $kdp)
+						<td class="text">{{ $kdp->nama }}</td>
+					@endforeach
 				@else
-				<td class="text">{{ $surat->nama_supervisor }}</td>
+					@foreach($supervisor as $spv)
+						<td class="text">{{ $spv->nama }}</td>
+					@endforeach
 				@endif
-				<td class="text">{{ $surat->nama_wd }}</td>
+				@foreach($wd as $wd1)
+					<td class="text">{{ $wd1->nama }}</td>
+				@endforeach
 			</tr>
 			<tr>
-				@if(isset($surat->NIP_kadep))
-				<td class="text">NIP. {{ $surat->NIP_kadep }}</td>
+				@if(isset($srt->NIP_kadep))
+					@foreach($kadep as $kdp)
+						<td class="text">NIP. {{ $kdp->NIP }}</td>
+					@endforeach
 				@else
-				<td class="text">NIP. {{ $surat->NIP_supervisor }}</td>
+					@foreach($supervisor as $spv)
+						<td class="text">NIP. {{ $spv->NIP }}</td>
+					@endforeach
 				@endif
-				<td class="text">NIP. {{ $surat->NIP_wd }}</td>
+				@foreach($wd as $wd1)
+					<td class="text">NIP. {{ $wd1->NIP }}</td>
+				@endforeach
 			</tr>
 	     </table>
+		 @endforeach
 	</center>
 
         <script>

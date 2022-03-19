@@ -24,7 +24,7 @@ class PenggunaSeeder extends Seeder
             'NIP' => '123123',
             'jabatan_id' => '1',
             'golongan_id' => '1',
-            'prodi_id' => '12',
+            'prodi_id' => '1',
             'roles_id' => '1',
             'remember_token' => Str::random(60),
         ]);

@@ -21,7 +21,7 @@ class StaffController extends Controller
     public function clearNotifStaff()
     {
         $surat = Surat::with('status')
-        ->where(['surat.id_staff' => Auth::user()->id,])
+        ->where(['surat.id_pengguna' => Auth::user()->id,])
         ->update([
             'notif' => '2',
         ]);
@@ -34,7 +34,7 @@ class StaffController extends Controller
     {
         $surat = Surat::with('status')
         ->where([
-            'surat.id_staff' => Auth::user()->id,
+            'surat.id_pengguna' => Auth::user()->id,
             'surat.notif' => '1',
         ])
         ->orderBy('updated_at', 'DESC')
@@ -67,7 +67,7 @@ class StaffController extends Controller
     {
         $surat = Surat::with('status')
         ->where([
-            'surat.id_staff' => Auth::user()->id,
+            'surat.id_pengguna' => Auth::user()->id,
         ])->orderBy('updated_at', 'DESC')->get();
         return view('staff.daftarsuratStaff', ['surat' => $surat]);
     }
@@ -140,12 +140,13 @@ class StaffController extends Controller
             'tanggalawal' => $request->tanggalawal,
             'tanggalakhir' => $request->tanggalakhir,
             'status_id' => '1',
-            'nama_kadep' => $request->nama_kadep,
-            'NIP_kadep' => $request->NIP_kadep,
-            'nama_wd' => $request->nama_wd,
-            'NIP_wd' => $request->NIP_wd,
+            'nama_kadep' => $request->id_kadep,
+            'NIP_kadep' => $request->id_kadep,
+            'nama_wd' => $request->id_wd,
+            'NIP_wd' => $request->id_wd,
             'notif' => '1',
-            'id_staff' => Auth::guard('pengguna')->user()->id,
+            'approve' => '0',
+            'id_pengguna' => Auth::guard('pengguna')->user()->id,
             'roles_id' => Auth::guard('pengguna')->user()->roles_id,
             'remember_token' => Str::random(60),
         ]);
@@ -178,12 +179,13 @@ class StaffController extends Controller
             'tanggalawal' => $request->tanggalawal,
             'tanggalakhir' => $request->tanggalakhir,
             'status_id' => '7',
-            'nama_supervisor' => $request->nama_spv,
-            'NIP_supervisor' => $request->NIP_spv,
-            'nama_wd' => $request->nama_wd,
-            'NIP_wd' => $request->NIP_wd,
+            'nama_supervisor' => $request->id_spv,
+            'NIP_supervisor' => $request->id_spv,
+            'nama_wd' => $request->id_wd,
+            'NIP_wd' => $request->id_wd,
             'notif' => '1',
-            'id_staff' => Auth::guard('pengguna')->user()->id,
+            'approve' => '0',
+            'id_pengguna' => Auth::guard('pengguna')->user()->id,
             'roles_id' => Auth::guard('pengguna')->user()->roles_id,
             'remember_token' => Str::random(60),
         ]);
@@ -261,13 +263,22 @@ class StaffController extends Controller
             'jabatan_id' => $request->jabatan,
             'email' => $request->email_staff,
         ]);
+        Surat::where([
+            'id_pengguna' => Auth::user()->id,
+            'approve' => '0',
+            ])->update([
+            'nama' => $request->nama,
+            'NIP' => $request->NIP,
+            'pangkat' => $request->pangkat,
+            'jabatan' => $request->jabatan,
+        ]);
         toast('Berhasil', 'success')->autoClose(2000);
         return redirect()->back();
     }
 
     public function editpasswordStaff(Request $request)
     {
-        Pengguna::where('id', '=', Auth::user()->id)->update([
+        Pengguna::where(a)->update([
             'password' => Hash::make($request->password),
             
         ]);
