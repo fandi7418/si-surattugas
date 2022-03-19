@@ -102,11 +102,11 @@
 			@endif
 			<tr>
 				<td>Pangkat/Golongan</td>
-				<td width="525">: {{ $srt->pangkat }}</td>
+				<td width="525">: {{ $srt->golongan->nama_golongan }}</td>
 			</tr>
 			<tr>
 				<td>Jabatan</td>
-				<td width="525">: {{ $srt->jabatan }}</td>
+				<td width="525">: {{ $srt->jabatan->nama_jabatan }}</td>
 			</tr>
 		</table>
 		<br>

@@ -288,6 +288,16 @@ class AdminController extends Controller
             'prodi_id' => $request->prodi_id,
             'email' => $request->email_dosen,
         ]);
+        Surat::where([
+            'id_pengguna' => $id,
+            'approve' => '0',
+            ])->update([
+            'nama' => $request->nama_dosen,
+            'NIP' => $request->NIP,
+            'golongan_id' => $request->pangkat,
+            'jabatan_id' => $request->jabatan,
+            'prodi_id' => $request->prodi_id,
+        ]);
         toast('Data Berhasil Diubah','success')->autoClose(3000);
         return redirect()->back();
     }
@@ -509,6 +519,16 @@ class AdminController extends Controller
         ]);
         Prodi::where('id', '=', $request->prodi)->update([
             'status' => '2',
+        ]);
+        $id_kadep = Pengguna::where(
+            'id', '=', $request->nama_kadep
+        )->first()->id;
+        Surat::where([
+            'prodi_id' => $request->prodi,
+            'ttd_kadep' => null, 
+        ])->update([
+            'nama_kadep' => $id_kadep,
+            'nip_kadep' => $id_kadep,
         ]);
         // Dosen::where('prodi_id', '=', $request->prodi)->update([
         //     'statusKadep' => ''
@@ -748,6 +768,13 @@ class AdminController extends Controller
     {
         Pengguna::where('id', $id)->update([
             'roles_id' => '3'
+        ]);
+        $id_wd = Pengguna::where('id', $id)->first()->id;
+        Surat::where([
+            'ttd_wd' => null, 
+        ])->update([
+            'nama_wd' => $id_wd,
+            'nip_wd' => $id_wd,
         ]);
         Alert::success('Sukses', 'Data Berhasil Ditambahkan');
         return redirect('/data_wakildekan');
@@ -1043,6 +1070,13 @@ public function pilihSpv($id)
 {
     Pengguna::where('id', $id)->update([
         'roles_id' => '6'
+    ]);
+    $id_spv = Pengguna::where('id', $id)->first()->id;
+    Surat::where([
+        'ttd_spv' => null, 
+    ])->update([
+        'nama_supervisor' => $id_spv,
+        'nip_supervisor' => $id_spv,
     ]);
     Alert::success('Sukses', 'Data Berhasil Ditambahkan');
     return redirect('data_supervisor');
@@ -1422,6 +1456,16 @@ public function updatestaff(Request $request, $id)
         'golongan_id' => $request->pangkat,
         'prodi_id' => $request->prodi_id,
         'email' => $request->email_staff,
+    ]);
+    Surat::where([
+        'id_pengguna' => $id,
+        'approve' => '0',
+        ])->update([
+        'nama' => $request->nama_staff,
+        'NIP' => $request->NIP,
+        'golongan_id' => $request->pangkat,
+        'jabatan_id' => $request->jabatan,
+        'prodi_id' => $request->prodi_id,
     ]);
     toast('Data Berhasil Diubah','success')->autoClose(5000);
     return redirect()->back();

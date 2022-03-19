@@ -136,8 +136,8 @@ class DosenController extends Controller
             ])->update([
             'nama' => $request->nama,
             'NIP' => $request->NIP,
-            'pangkat' => $request->pangkat,
-            'jabatan' => $request->jabatan,
+            'golongan_id' => $request->pangkat,
+            'jabatan_id' => $request->jabatan,
         ]);
         toast('Berhasil', 'success')->autoClose(2000);
         return redirect()->back();

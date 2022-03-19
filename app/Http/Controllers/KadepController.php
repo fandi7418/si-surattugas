@@ -27,7 +27,7 @@ class KadepController extends Controller
         ->get();
         $dosen = Surat::with('status')
         ->where([
-            'surat.id_dosen' => Auth::user()->id,
+            'surat.id_pengguna' => Auth::user()->id,
             'surat.notif' => '1',
         ])
         // ->where([

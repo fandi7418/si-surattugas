@@ -131,8 +131,8 @@ class StaffController extends Controller
             'nama' => $request->nama,
             'NIP' => $request->nip,
             'prodi_id' => Auth::guard('pengguna')->user()->prodi->id,
-            'pangkat' => $request->pangkat,
-            'jabatan' => $request->jabatan,
+            'golongan_id' => Auth::guard('pengguna')->user()->golongan->id,
+            'jabatan_id' => Auth::guard('pengguna')->user()->jabatan->id,
             'judul' => $request->judul,
             'jenis' => $request->jeniskegiatan,
             'tempat' => $request->tempat,
@@ -170,8 +170,8 @@ class StaffController extends Controller
         Surat::create([
             'nama' => $request->nama,
             'NIP' => $request->nip,
-            'pangkat' => $request->pangkat,
-            'jabatan' => $request->jabatan,
+            'golongan_id' => Auth::guard('pengguna')->user()->golongan->id,
+            'jabatan_id' => Auth::guard('pengguna')->user()->jabatan->id,
             'judul' => $request->judul,
             'jenis' => $request->jeniskegiatan,
             'tempat' => $request->tempat,
@@ -269,8 +269,8 @@ class StaffController extends Controller
             ])->update([
             'nama' => $request->nama,
             'NIP' => $request->NIP,
-            'pangkat' => $request->pangkat,
-            'jabatan' => $request->jabatan,
+            'golongan_id' => $request->pangkat,
+            'jabatan_id' => $request->jabatan,
         ]);
         toast('Berhasil', 'success')->autoClose(2000);
         return redirect()->back();

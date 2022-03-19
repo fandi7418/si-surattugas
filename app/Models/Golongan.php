@@ -21,9 +21,9 @@ class Golongan extends Model
     //Setiap Prodi memiliki banyak id dosen
     return $this->hasMany(Pengguna::class);
     }
-    public function staff()
+    public function surat()
     {
     //Setiap Prodi memiliki banyak id dosen
-    return $this->hasMany(Staff::class);
+    return $this->hasMany(surat::class);
     }
 }

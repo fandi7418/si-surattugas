@@ -52,8 +52,7 @@ class SuratController extends Controller
 
     public function show(Request $request, $id)
     {
-        $surat=Surat::with('pengguna')
-        ->where('id', $id)
+        $surat=Surat::where('id', $id)
         ->get();
         $kadep=Pengguna::where([
             'pengguna.id' => $surat->first()->nama_kadep
@@ -100,8 +99,8 @@ class SuratController extends Controller
             'nama' => $request->nama,
             'NIP' => $request->nip,
             'prodi_id' => Auth::guard('pengguna')->user()->prodi->id,
-            'pangkat' => $request->pangkat,
-            'jabatan' => $request->jabatan,
+            'golongan_id' => Auth::guard('pengguna')->user()->golongan->id,
+            'jabatan_id' => Auth::guard('pengguna')->user()->jabatan->id,
             'judul' => $request->judul,
             'jenis' => $request->jeniskegiatan,
             'tempat' => $request->tempat,

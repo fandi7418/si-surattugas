@@ -26,7 +26,7 @@ class WakilDekanController extends Controller
         ->get();
         $dosen = Surat::with('status')
         ->where([
-            'surat.id_dosen' => Auth::user()->id,
+            'surat.id_pengguna' => Auth::user()->id,
             'surat.status_id' => '1',
         ])
         ->orderBy('updated_at', 'DESC')

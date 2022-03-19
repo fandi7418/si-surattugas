@@ -24,7 +24,7 @@ class PetugasPenomoranController extends Controller
         ->get();
         $staff = Surat::with('status')
         ->where([
-            'surat.id_staff' => Auth::user()->id,
+            'surat.id_pengguna' => Auth::user()->id,
             'surat.notif' => '1',
         ])
         ->orderBy('updated_at', 'DESC')
@@ -93,6 +93,7 @@ class PetugasPenomoranController extends Controller
             'no_surat' => $request->no_surat,
             'status_id' => '4',
             'notif' => '1',
+            'approve' => '1',
         ]);
         return response()->json([
             'success' => 'sukses',

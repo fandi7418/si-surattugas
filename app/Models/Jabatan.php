@@ -15,14 +15,14 @@ class Jabatan extends Model
         'nama_jabatan',
     ];
 
-    public function dosen()
+    public function pengguna()
     {
     //Setiap Prodi memiliki banyak id dosen
-    return $this->hasMany(Dosen::class);
+    return $this->hasMany(Pengguna::class);
     }
-    public function staff()
+    public function surat()
     {
     //Setiap Prodi memiliki banyak id dosen
-    return $this->hasMany(Staff::class);
+    return $this->hasMany(Surat::class);
     }
 }
