@@ -288,7 +288,7 @@ class AdminController extends Controller
             'prodi_id' => $request->prodi_id,
             'email' => $request->email_dosen,
         ]);
-        toast('Data Berhasil Diubah','success')->autoClose(5000);
+        toast('Data Berhasil Diubah','success')->autoClose(3000);
         return redirect()->back();
     }
 

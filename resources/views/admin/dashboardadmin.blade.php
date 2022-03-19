@@ -8,3 +8,7 @@
 
 
 @endsection
+@push('scripts')
+<script>
+    swal("Hello world!");
+</script>
