@@ -97,16 +97,28 @@
 			@if(isset($srt->prodi_id))
 			<tr>
 				<td>Departemen/Prodi</td>
-				<td width="525">: {{ $srt->prodi->prodi }}</td>
+				@if($srt->status_id == '4')
+					<td width="525">: {{ $srt->prodi_id }}</td>
+				@else
+					<td width="525">: {{ $srt->prodi->prodi }}</td>
+				@endif
 			</tr>
 			@endif
 			<tr>
 				<td>Pangkat/Golongan</td>
-				<td width="525">: {{ $srt->golongan->nama_golongan }}</td>
+				@if($srt->status_id == '4')
+					<td width="525">: {{ $srt->golongan_id }}</td>
+				@else
+					<td width="525">: {{ $srt->golongan->nama_golongan }}</td>
+				@endif
 			</tr>
 			<tr>
 				<td>Jabatan</td>
-				<td width="525">: {{ $srt->jabatan->nama_jabatan }}</td>
+				@if($srt->status_id == '4')
+					<td width="525">: {{ $srt->jabatan_id }}</td>
+				@else
+					<td width="525">: {{ $srt->jabatan->nama_jabatan }}</td>
+				@endif
 			</tr>
 		</table>
 		<br>
@@ -188,6 +200,14 @@
 				@endif
 			</tr>
 			<tr>
+			@if($srt->status_id == '4')
+				@if(isset($srt->nama_kadep))
+					<td class="text">{{ $srt->nama_kadep }}</td>
+				@else
+					<td class="text">{{ $srt->nama_supervisor }}</td>
+				@endif
+					<td class="text">{{ $srt->nama_wd }}</td>
+			@else
 				@if(isset($srt->nama_kadep))
 					@foreach($kadep as $kdp)
 						<td class="text">{{ $kdp->nama }}</td>
@@ -200,8 +220,17 @@
 				@foreach($wd as $wd1)
 					<td class="text">{{ $wd1->nama }}</td>
 				@endforeach
+			@endif
 			</tr>
 			<tr>
+			@if($srt->status_id == '4')
+				@if(isset($srt->NIP_kadep))
+					<td class="text">NIP. {{ $srt->NIP_kadep }}</td>
+				@else
+					<td class="text">NIP. {{ $srt->NIP_supervisor }}</td>
+				@endif
+					<td class="text">NIP. {{ $srt->NIP_wd }}</td>
+			@else
 				@if(isset($srt->NIP_kadep))
 					@foreach($kadep as $kdp)
 						<td class="text">NIP. {{ $kdp->NIP }}</td>
@@ -214,6 +243,7 @@
 				@foreach($wd as $wd1)
 					<td class="text">NIP. {{ $wd1->NIP }}</td>
 				@endforeach
+			@endif
 			</tr>
 	     </table>
 		 @endforeach

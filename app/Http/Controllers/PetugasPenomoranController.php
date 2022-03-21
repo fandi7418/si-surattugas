@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Petugas;
 use App\Models\Surat;
 use App\Models\Prodi;
+use App\Models\Golongan;
+use App\Models\Jabatan;
 use App\Models\Pengguna;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -89,6 +90,61 @@ class PetugasPenomoranController extends Controller
     public function updatenomorsurat(Request $request, $id)
     {
         $this->validasi($request);
+        $cek=Surat::where([
+            'id' => $id,
+        ])->get();
+        if($cek->first()->approve == 0){
+            if($cek->first()->roles_id == '1' || $cek->first()->roles_id == '2' || $cek->first()->roles_id == '3' || $cek->first()->roles_id == '5')
+            {
+                $surat = Surat::find($id)->update([
+                    'nama_kadep' => Pengguna::where([
+                        'pengguna.id' => $cek->first()->nama_kadep,
+                    ])->first()->nama,
+                    'NIP_kadep' => Pengguna::where([
+                        'pengguna.id' => $cek->first()->nama_kadep,
+                    ])->first()->NIP,
+                    'nama_wd' => Pengguna::where([
+                        'pengguna.id' => $cek->first()->nama_wd,
+                    ])->first()->nama,
+                    'NIP_wd' => Pengguna::where([
+                        'pengguna.id' => $cek->first()->nama_wd,
+                    ])->first()->NIP,
+                    'prodi_id' => Prodi::where([
+                        'id' => $cek->first()->prodi_id,
+                    ])->first()->prodi,
+                    'golongan_id' => Golongan::where([
+                        'id' => $cek->first()->golongan_id,
+                    ])->first()->nama_golongan,
+                    'jabatan_id' => Jabatan::where([
+                        'id' => $cek->first()->jabatan_id,
+                    ])->first()->nama_jabatan,
+                ]);
+            } 
+            elseif($cek->first()->roles_id == '4' || $cek->first()->roles_id == '6' || $cek->first()->roles_id == '7')
+            {
+                $surat = Surat::find($id)->update([
+                    'nama_supervisor' => Pengguna::where([
+                        'id' => $cek->first()->nama_supervisor,
+                    ])->first()->nama,
+                    'NIP_supervisor' => Pengguna::where([
+                        'id' => $cek->first()->nama_supervisor,
+                    ])->first()->NIP,
+                    'nama_wd' => Pengguna::where([
+                        'id' => $cek->first()->NIP_wd,
+                    ])->first()->nama,
+                    'NIP_wd' => Pengguna::where([
+                        'id' => $cek->first()->NIP_wd,
+                    ])->first()->NIP,
+                    'golongan_id' => Golongan::where([
+                        'id' => $cek->first()->golongan_id,
+                    ])->first()->nama_golongan,
+                    'jabatan_id' => Jabatan::where([
+                        'id' => $cek->first()->jabatan_id,
+                    ])->first()->nama_jabatan,
+                ]);
+            }
+        }
+
         $surat = Surat::find($id)->update([
             'no_surat' => $request->no_surat,
             'status_id' => '4',
@@ -99,6 +155,54 @@ class PetugasPenomoranController extends Controller
             'success' => 'sukses',
             'surat' => $surat,
         ]);
+        
+        // $cek=Surat::find($id)->first()->no_surat;
+
+        // if($cek == null){
+        //     $this->validasi($request);
+        //     $kadep=Pengguna::where([
+        //         'pengguna.id' => Surat::find($id)->first()->nama_kadep,
+        //     ])->get();
+        //     $wd=Pengguna::where([
+        //         'pengguna.id' => Surat::find($id)->first()->nama_wd,
+        //     ])->get();
+        //     $spv=Pengguna::where([
+        //         'pengguna.id' => Surat::find($id)->first()->nama_supervisor,
+        //     ])->get();
+        //     $pengguna=Pengguna::where([
+        //         'pengguna.id' => Surat::find($id)->first()->id_pengguna,
+        //     ])->get();
+        //     $surat = Surat::find($id)->update([
+        //         'no_surat' => $request->no_surat,
+        //         'status_id' => '4',
+        //         'notif' => '1',
+        //         'approve' => '1',
+        //         'nama_kadep' => $kadep->first()->nama,
+        //         'nip_kadep' => $kadep->first()->NIP,
+        //         'nama_wd' => $kadep->first()->nama,
+        //         'nip_wd' => $kadep->first()->NIP,
+        //         'nama_supervisor' => $kadep->first()->nama,
+        //         'nip_supervisor' => $kadep->first()->NIP,
+        //         'prodi_id' => Prodi::where([
+        //             'prodi.id' => Surat::find($id)->first()->prodi_id,
+        //         ])->first()->prodi,
+        //         'jabatan_id' => Jabatan::where([
+        //             'jabatan.id' => Surat::find($id)->first()->jabatan_id,
+        //         ])->first()->nama_jabatan,
+        //         'golongan_id' => Golongan::where([
+        //             'golongan.id' => Surat::find($id)->first()->golongan_id,
+        //         ])->first()->nama_golongan,
+        //     ]);
+        // }else{
+        //     $surat = Surat::find($id)->update([
+        //         'no_surat' => $request->no_surat,
+        //         'status_id' => '4',
+        //     ]);
+        // }
+        // return response()->json([
+        //     'success' => 'sukses',
+        //     'surat' => $surat,
+        // ]);
     }
 
     public function updateprofilpetugas(Request $request, $id)

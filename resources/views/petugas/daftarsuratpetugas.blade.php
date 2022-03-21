@@ -31,11 +31,15 @@
         @endif
         <td>{{$isi->judul}}</td>
         <td>{{$isi->nama}}</td>
-          @if(isset($isi->prodi_id))
-          <td>{{$isi->prodi->prodi}}</td>
-          @else
-          <td style="color:blue">Staff Dekanat FT</td>
-          @endif
+        @if($isi->status_id == '4')
+            <td>{{$isi->prodi_id}}</td>
+        @else
+            @if(isset($isi->prodi_id))
+              <td>{{$isi->prodi->prodi}}</td>
+            @else
+              <td style="color:blue">Staff Dekanat FT</td>
+            @endif
+        @endif
         <td style="display:none">{{$isi->id}}</td>
         <td>{{ \Carbon\Carbon::parse($isi->tanggalawal)->isoFormat('D MMMM Y')}}</td>
         @if(is_null($isi->no_surat))
@@ -88,26 +92,6 @@
 <script>
 $(document).ready(function() {
   $('#daftarSurat').DataTable({order: [[4,'desc']]});
-
-  // $('#dropdown1').on('change', function () {
-  //       $.ajaxSetup({
-  //         headers: {
-  //           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  //         }
-  //       });
-  //       $.ajax({
-  //           url: '{{ route('daftarsuratpetugas') }}',
-  //           // method: 'POST',
-  //           data: {id: $(this).val()},
-  //           success: function (response) {
-  //               $('#tabelsurat').empty();
-
-  //               $.each(response, function (id) {
-  //                   $('#tabelsurat').append(new Option(id))
-  //               })
-  //           }
-  //       })
-  //   });
 });
 
 function editNomor(id)
