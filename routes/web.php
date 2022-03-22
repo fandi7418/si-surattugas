@@ -199,6 +199,8 @@ Route::group(['middleware' => ['auth:pengguna', 'admin']], function()
     
     Route::get('/hapus_spv/{id}/hapusspv', [AdminController::class, 'hapusspv']);
 
+    Route::post('/update_ttdspv/{id}', [AdminController::class, 'updatettdspv'])->name('aksi ubah ttd supervisor'); 
+
     // route untuk data surat
     
     Route::get('/data_surat', [AdminController::class, 'datasurat'])->name('data surat');

@@ -190,22 +190,22 @@
                 @if ($isi->roles_id == '2')
                     <form enctype="multipart/form-data" action="/update_ttdkadep/{{ $isi->id }}" method="post">
                     @csrf
-                    @if (is_null($isi->ttd_kadep))
+                    @if (is_null($isi->ttd))
                         <p style="color: red;">Anda Belum Menambahkan Tanda Tangan Kadep</p>
                     @else
-                    <img src="/image/{{ $isi->ttd_kadep }}"  width="auto" height="200px" style="align:center">
+                    <img src="/image/{{ $isi->ttd }}"  width="auto" height="200px" style="align:center">
                     @endif
-                            <input class="form-control" type="file" id="formFile" name="ttd_kadep">
+                            <input class="form-control" type="file" id="formFile" name="ttd">
                     </div>
                 @else
                     <form enctype="multipart/form-data" action="/update_ttdwd/{{ $isi->id }}" method="post">
                         @csrf
-                        @if (is_null($isi->ttd_wd))
+                        @if (is_null($isi->ttd))
                             <p style="color: red;">Anda Belum Menambahkan Tanda Tangan Wakil Dekan</p>
                         @else
-                        <img src="/image/{{ $isi->ttd_wd }}"  width="auto" height="200px" style="align:center">
+                        <img src="/image/{{ $isi->ttd }}"  width="auto" height="200px" style="align:center">
                         @endif
-                                <input class="form-control" type="file" id="formFile" name="ttd_wd">
+                                <input class="form-control" type="file" id="formFile" name="ttd">
                         </div>
                 @endif
                     <div class="modal-footer">
@@ -214,7 +214,6 @@
                     </div>
                 </div>
             </div>
-        </div>
         </form>
         @endforeach
         @push('scripts')

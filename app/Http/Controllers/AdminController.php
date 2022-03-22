@@ -416,7 +416,7 @@ class AdminController extends Controller
         // file::delete()
     }*/
 
-    // controller Kadep di Admin //
+    // controller Kadep di Admin //v
 
     public function datakadep(Request $request)
     {
@@ -633,22 +633,22 @@ class AdminController extends Controller
 
     /*public function updatepasswordkadep(Request $request)
     {
-        Kadep::where('id', $request->id)->update([
+        Pengguna::where('id', $request->id)->update([
             'password' => Hash::make($request->password),
             
         ]);
         toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect()->back();
-    }
+    }*/
 
     public function updatettdkadep(Request $request)
     {
         $request->validate([
-            'ttd_kadep'=>'mimes:jpg,png,jpeg,svg',
+            'ttd'=>'mimes:jpg,png,jpeg,svg',
         ]);
 
-        $imgName = $request->ttd_kadep->getClientOriginalName() . '-' . time() . '.' . $request->ttd_kadep->extension();
-        $request->ttd_kadep->move(public_path('image'), $imgName);
+        $imgName = $request->ttd->getClientOriginalName() . '-' . time() . '.' . $request->ttd->extension();
+        $request->ttd->move(public_path('image'), $imgName);
 
         Pengguna::where('id', $request->id)->update([
             'ttd' => $imgName,
@@ -656,7 +656,7 @@ class AdminController extends Controller
         ]);
         toast('Data Berhasil Diubah','success')->autoClose(5000);
         return redirect()->back();
-    }*/
+    }
 
         // controller WakilDekan di Admin //
 
@@ -784,11 +784,11 @@ class AdminController extends Controller
     public function updatettdwd1(Request $request)
     {
         $request->validate([
-            'ttd_wd'=>'mimes:jpg,png,jpeg,svg',
+            'ttd'=>'mimes:jpg,png,jpeg,svg',
         ]);
 
-        $imgName = $request->ttd_wd->getClientOriginalName() . '-' . time() . '.' . $request->ttd_wd->extension();
-        $request->ttd_wd->move(public_path('image'), $imgName);
+        $imgName = $request->ttd->getClientOriginalName() . '-' . time() . '.' . $request->ttd->extension();
+        $request->ttd->move(public_path('image'), $imgName);
 
         Pengguna::where('id', $request->id)->update([
             'ttd' => $imgName,
@@ -1086,6 +1086,22 @@ public function hapusspv($id)
     return redirect()->back();
 }
 
+public function updatettdspv(Request $request)
+{
+    $request->validate([
+        'ttd'=>'mimes:jpg,png,jpeg,svg',
+    ]);
+
+    $imgName = $request->ttd->getClientOriginalName() . '-' . time() . '.' . $request->ttd->extension();
+    $request->ttd->move(public_path('image'), $imgName);
+
+    Pengguna::where('id', $request->id)->update([
+        'ttd' => $imgName,
+        
+    ]);
+    toast('Data Berhasil Diubah','success')->autoClose(5000);
+    return redirect()->back();
+}
 // Route Data Surat
 
 

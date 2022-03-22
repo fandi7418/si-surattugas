@@ -106,6 +106,9 @@
                
             </form>
             <a href="" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Ubah Password</a>
+            @if ($stf->roles_id == '6')
+            <a href="" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#ttdModal">Tanda Tangan</a>
+            @endif
             </div>
             </div>
             @endforeach
@@ -137,6 +140,34 @@
                 </div>
                 </form>
                 @endforeach
+
+                <!-- Modal lihat tanda tangan-->
+<div class="modal fade" id="ttdModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload Tanda Tangan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @foreach($staff as $isi)
+                    <form enctype="multipart/form-data" action="/update_ttdspv/{{ $isi->id }}" method="post">
+                    @csrf
+                    @if (is_null($isi->ttd))
+                        <p style="color: red;">Anda Belum Menambahkan Tanda Tangan Kadep</p>
+                    @else
+                    <img src="/image/{{ $isi->ttd }}"  width="auto" height="200px" style="align:center">
+                    @endif
+                            <input class="form-control" type="file" id="formFile" name="ttd">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        @endforeach
                 <script>
                     function myFunction() {
                         var x = document.getElementById("recipient-name");
