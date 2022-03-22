@@ -30,7 +30,6 @@ class Surat extends Authenticatable
         'kota',
         'tanggalawal',
         'tanggalakhir',
-        'tanggalsurat',
         'status_id',
         'ttd_spv',
         'ttd_kadep',

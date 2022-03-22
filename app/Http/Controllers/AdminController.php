@@ -2,16 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
 use App\Models\Pengguna;
-use App\Models\Dosen;
-use App\Models\Staff;
-use App\Models\Kadep;
-use App\Models\Petugas;
 use App\Models\Prodi;
 use App\Models\Surat;
 use App\Models\StatusSurat;
-use App\Models\WakilDekan;
 use App\Models\Roles;
 use App\Models\Jabatan;
 use App\Models\Golongan;
@@ -197,7 +191,7 @@ class AdminController extends Controller
     {
         $request->validate([
             'nama_dosen' => 'required|max:255|string',
-            'NIP' => 'required|numeric|min:6|unique:pengguna,NIP',
+            'NIP' => 'required|string|min:6|unique:pengguna,NIP',
             'prodi_id' => 'required',
             'pangkat' => 'required|string',
             'jabatan' => 'required|string',
@@ -263,7 +257,7 @@ class AdminController extends Controller
     {
         $this->validate($request,[
             'nama_dosen' => 'required|max:255|string',
-            'NIP' => "required|numeric|min:6|unique:pengguna,NIP,$id",
+            'NIP' => "required|string|min:6|unique:pengguna,NIP,$id",
             'prodi_id' => 'required',
             'pangkat' => 'required|string',
             'jabatan' => 'required|string',
@@ -429,11 +423,8 @@ class AdminController extends Controller
         $kadep = Pengguna::with('prodi') -> where('roles_id', '=', '2')->get();
         if ($request->ajax()){
             return datatables()->of($kadep)->addColumn('action', function($data){
-                $url_edit = url('edit_dosen/'.$data->id);
                 $url_hapus = url('hapus_kadep/'.$data->id.'/konfirmasi');
-                $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<a href="'.$url_hapus.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-danger btn-sm edit-post"><i class="far fa-danger"></i>Hapus</a>';  
+                $button = '<a href="'.$url_hapus.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-danger btn-sm edit-post"><i class="far fa-danger"></i>Hapus</a>';  
                 return $button;
     //             $url_edit = url('edit_dosen/'.$data->id);
     //             $url_hapus = url('hapus_dosen/'.$data->id.'/konfirmasi');
@@ -708,7 +699,7 @@ class AdminController extends Controller
         $wd = Pengguna::with('prodi') -> where('roles_id', '=', '1')->get();
         if ($request->ajax()){
             return datatables()->of($wd)->addColumn('action', function($data){
-                $url_edit = url('pilihWD/'.$data->id.'/konfirmasi');
+                $url_edit = url('pilih_wakildekan/'.$data->id.'/pilihWD');
                 $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i>Pilih</a>';  
                 return $button;
             })
@@ -849,11 +840,8 @@ class AdminController extends Controller
         $petugas = Pengguna::where('roles_id', '=', '7')->get();
         if ($request->ajax()){
             return datatables()->of($petugas)->addColumn('action', function($data){
-                $url_edit = url('edit_staff/'.$data->id);
                 $url_hapus = url('hapus_petugas/'.$data->id.'/konfirmasi');
-                $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Hapus</a>';     
+                $button = '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Hapus</a>';     
                 return $button;
             })
             ->rawColumns(['action'])
@@ -910,7 +898,7 @@ class AdminController extends Controller
         $petugas = Pengguna::where('roles_id', '=', '4')->get();
         if ($request->ajax()){
             return datatables()->of($petugas)->addColumn('action', function($data){
-                $url_edit = url('pilihPetugas/'.$data->id.'/konfirmasi');
+                $url_edit = url('pilih_PetugasPenomoran/'.$data->id.'/pilihPetugas');
                 $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i>Pilih</a>';  
                 return $button;
             })
@@ -1027,11 +1015,8 @@ public function dataspv(Request $request)
     $spv = Pengguna::where('roles_id', '=', '6')->get();
     if ($request->ajax()){
         return datatables()->of($spv)->addColumn('action', function($data){
-            $url_edit = url('edit_staff/'.$data->id);
             $url_hapus = url('hapus_spv/'.$data->id.'/konfirmasi');
-            $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';
-            $button .= '&nbsp;&nbsp;';
-            $button .= '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Hapus</a>';     
+            $button = '<a href="'.$url_hapus.'" name="delete" id="" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Hapus</a>';     
             return $button;
         })
         ->rawColumns(['action'])
@@ -1046,7 +1031,7 @@ public function tambahspv(Request $request)
     $spv = Pengguna::where('roles_id', '=', '4')->get();
     if ($request->ajax()){
         return datatables()->of($spv)->addColumn('action', function($data){
-            $url_edit = url('pilihSpv/'.$data->id.'/konfirmasi');
+            $url_edit = url('pilih_supervisor/'.$data->id.'/pilih');
             $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i>Pilih</a>';  
             return $button;
         })
@@ -1381,7 +1366,7 @@ public function tambahstaff(Request $request)
 {
     $request->validate([
         'nama_staff' => 'required|max:255|string',
-        'NIP' => 'required|numeric|min:6|unique:pengguna,NIP',
+        'NIP' => 'required|string|min:6|unique:pengguna,NIP',
         'pangkat' => 'required',
         'jabatan' => 'required',
         'roles_id' => 'required',
@@ -1432,7 +1417,7 @@ public function updatestaff(Request $request, $id)
 {
     $this->validate($request,[
         'nama_staff' => 'required|max:255|string',
-        'NIP' => "required|numeric|min:6|unique:pengguna,NIP,$id",
+        'NIP' => "required|string|min:6|unique:pengguna,NIP,$id",
         // 'prodi_id' => 'required',
         'pangkat' => 'required|string',
         'jabatan' => 'required|string',

@@ -18,7 +18,7 @@ class CreatePengguna extends Migration
             $table->string('email');
             $table->string('password');
             $table->string('nama');
-            $table->bigInteger('NIP');
+            $table->string('NIP');
             $table->bigInteger('jabatan_id');
             $table->bigInteger('golongan_id');
             $table->bigInteger('prodi_id')->nullable();

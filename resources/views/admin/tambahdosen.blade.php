@@ -19,9 +19,9 @@
         </div>
     </div>
     <div class="form-group row mt-4">
-        <label for="colFormLabel" class="col-sm-2 col-form-label">NIP</label>
+        <label for="colFormLabel" class="col-sm-2 col-form-label">NIP/NPPU</label>
         <div class="col-sm-8">
-            <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <=57" value="{{ old('NIP') }}"
+            <input type="text" value="{{ old('NIP') }}"
                 name="NIP" class="form-control @error('NIP') is-invalid @enderror" id="colFormLabel"
                 placeholder="Silahkan Masukkan NIP Anda">
             @error('NIP')
