@@ -22,6 +22,7 @@ class KadepController extends Controller
         $surat = Surat::with('status')
         ->where([
             'surat.status_id' => '1',
+            'surat.prodi_id' => Auth::user()->prodi_id,
         ])
         ->orderBy('updated_at', 'DESC')
         ->get();
@@ -134,12 +135,35 @@ class KadepController extends Controller
 
     public function tolak($id)
     {
+        $cek=Surat::where(['id' => $id,])->get();
         $surat = Surat::where('id', $id)->update([
             'status_id' => '5',
             'notif' => '1',
+            'approve' => '2',
+            'nama_kadep' => Pengguna::where([
+                'pengguna.id' => $cek->first()->nama_kadep,
+            ])->first()->nama,
+            'NIP_kadep' => Pengguna::where([
+                'pengguna.id' => $cek->first()->nama_kadep,
+            ])->first()->NIP,
+            'nama_wd' => Pengguna::where([
+                'pengguna.id' => $cek->first()->nama_wd,
+            ])->first()->nama,
+            'NIP_wd' => Pengguna::where([
+                'pengguna.id' => $cek->first()->nama_wd,
+            ])->first()->NIP,
+            'prodi_id' => Prodi::where([
+                'id' => $cek->first()->prodi_id,
+            ])->first()->prodi,
+            'golongan_id' => Golongan::where([
+                'id' => $cek->first()->golongan_id,
+            ])->first()->nama_golongan,
+            'jabatan_id' => Jabatan::where([
+                'id' => $cek->first()->jabatan_id,
+            ])->first()->nama_jabatan,
         ]);
         return response()->json([
-            'success' => 'Sukses diizinkan',
+            'success' => 'Sukses ditolak',
             'surat' => $surat,
         ]);
         
@@ -185,6 +209,15 @@ class KadepController extends Controller
             'nama' => $request->nama_dosen,
             'NIP' => $request->NIP,
             'email' => $request->email_dosen,
+            'golongan_id' => $request->pangkat,
+            'jabatan_id' => $request->jabatan,
+        ]);
+        Surat::where([
+            'id_pengguna' => Auth::user()->id,
+            'approve' => '0',
+            ])->update([
+            'nama' => $request->nama_dosen,
+            'NIP' => $request->NIP,
             'golongan_id' => $request->pangkat,
             'jabatan_id' => $request->jabatan,
         ]);

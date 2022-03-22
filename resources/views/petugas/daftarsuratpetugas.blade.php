@@ -31,8 +31,12 @@
         @endif
         <td>{{$isi->judul}}</td>
         <td>{{$isi->nama}}</td>
-        @if($isi->status_id == '4')
-            <td>{{$isi->prodi_id}}</td>
+        @if($isi->approve == '1')
+            @if(isset($isi->prodi_id))
+              <td>{{$isi->prodi_id}}</td>
+            @else
+              <td style="color:blue">Staff Dekanat FT</td>
+            @endif
         @else
             @if(isset($isi->prodi_id))
               <td>{{$isi->prodi->prodi}}</td>
