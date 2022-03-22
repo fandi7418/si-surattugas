@@ -97,7 +97,7 @@
 			@if(isset($srt->prodi_id))
 			<tr>
 				<td>Departemen/Prodi</td>
-				@if($srt->status_id == '4')
+				@if($srt->approve == '1' || $srt->approve == '2')
 					<td width="525">: {{ $srt->prodi_id }}</td>
 				@else
 					<td width="525">: {{ $srt->prodi->prodi }}</td>
@@ -106,7 +106,7 @@
 			@endif
 			<tr>
 				<td>Pangkat/Golongan</td>
-				@if($srt->status_id == '4')
+				@if($srt->approve == '1' || $srt->approve == '2')
 					<td width="525">: {{ $srt->golongan_id }}</td>
 				@else
 					<td width="525">: {{ $srt->golongan->nama_golongan }}</td>
@@ -114,7 +114,7 @@
 			</tr>
 			<tr>
 				<td>Jabatan</td>
-				@if($srt->status_id == '4')
+				@if($srt->approve == '1' || $srt->approve == '2')
 					<td width="525">: {{ $srt->jabatan_id }}</td>
 				@else
 					<td width="525">: {{ $srt->jabatan->nama_jabatan }}</td>
@@ -200,7 +200,7 @@
 				@endif
 			</tr>
 			<tr>
-			@if($srt->status_id == '4')
+			@if($srt->approve == '1' || $srt->approve == '2')
 				@if(isset($srt->nama_kadep))
 					<td class="text">{{ $srt->nama_kadep }}</td>
 				@else
@@ -223,7 +223,7 @@
 			@endif
 			</tr>
 			<tr>
-			@if($srt->status_id == '4')
+			@if($srt->approve == '1' || $srt->approve == '2')
 				@if(isset($srt->NIP_kadep))
 					<td class="text">NIP. {{ $srt->NIP_kadep }}</td>
 				@else

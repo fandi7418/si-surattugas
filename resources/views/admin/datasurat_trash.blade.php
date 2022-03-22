@@ -28,10 +28,18 @@
                     <td>{{ $srt->no_surat }}</td>
                     <td>{{ $srt->judul }}</td>
                     <td>{{ $srt->nama }}</td>
-                    @if(isset($srt->prodi_id))
-                    <td>{{ $srt->prodi->prodi }}</td>
+                    @if ($srt->approve == 0)
+                        @if(isset($srt->prodi_id))
+                            <td>{{ $srt->prodi->prodi }}</td>
+                        @else
+                            <td style="color:rgb(0, 64, 255)">Teknik</td>
+                        @endif
                     @else
-                    <td style="color:rgb(0, 64, 255)">Teknik</td>
+                        @if(isset($srt->prodi_id))
+                            <td>{{ $srt->prodi_id }}</td>
+                        @else
+                            <td style="color:rgb(0, 64, 255)">Teknik</td>
+                        @endif
                     @endif
                     <td>{{ \Carbon\Carbon::parse($srt->created_at)->isoFormat('D MMMM Y')}}</td>
                     <td style="display: none">{{ $srt->id }}</td>

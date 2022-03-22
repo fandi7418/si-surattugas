@@ -516,6 +516,7 @@ class AdminController extends Controller
         )->first()->id;
         Surat::where([
             'prodi_id' => $request->prodi,
+            'approve' => '0',
             'ttd_kadep' => null, 
         ])->update([
             'nama_kadep' => $id_kadep,
@@ -762,6 +763,7 @@ class AdminController extends Controller
         ]);
         $id_wd = Pengguna::where('id', $id)->first()->id;
         Surat::where([
+            'approve' => '0', 
             'ttd_wd' => null, 
         ])->update([
             'nama_wd' => $id_wd,

@@ -101,6 +101,15 @@ class SupervisorController extends Controller
             'jabatan_id' => $request->jabatan,
             'email' => $request->email_staff,
         ]);
+        Surat::where([
+            'id_pengguna' => Auth::user()->id,
+            'approve' => '0',
+            ])->update([
+            'nama' => $request->nama,
+            'NIP' => $request->NIP,
+            'golongan_id' => $request->pangkat,
+            'jabatan_id' => $request->jabatan,
+        ]);
         toast('Berhasil', 'success')->autoClose(2000);
         return redirect()->back();
     }
@@ -174,9 +183,29 @@ class SupervisorController extends Controller
 
     public function tolakSpv($id)
     {
+        $cek=Surat::where(['id' => $id,])->get();
         $surat = Surat::where('id', $id)->update([
             'status_id' => '8',
             'notif' => '1',
+            'approve' => '2',
+            'nama_supervisor' => Pengguna::where([
+                'id' => $cek->first()->nama_supervisor,
+            ])->first()->nama,
+            'NIP_supervisor' => Pengguna::where([
+                'id' => $cek->first()->nama_supervisor,
+            ])->first()->NIP,
+            'nama_wd' => Pengguna::where([
+                'id' => $cek->first()->NIP_wd,
+            ])->first()->nama,
+            'NIP_wd' => Pengguna::where([
+                'id' => $cek->first()->NIP_wd,
+            ])->first()->NIP,
+            'golongan_id' => Golongan::where([
+                'id' => $cek->first()->golongan_id,
+            ])->first()->nama_golongan,
+            'jabatan_id' => Jabatan::where([
+                'id' => $cek->first()->jabatan_id,
+            ])->first()->nama_jabatan,
         ]);
         return response()->json([
             'success' => 'Sukses diizinkan',

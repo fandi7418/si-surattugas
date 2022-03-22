@@ -7,6 +7,7 @@ use App\Models\Surat;
 use App\Models\Golongan;
 use App\Models\Jabatan;
 use App\Models\Pengguna;
+use App\Models\Prodi;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -126,10 +127,81 @@ class WakilDekanController extends Controller
 
     public function tolak($id)
     {
-        Surat::where('id', $id)->update([
-            'status_id' => '6',
-            'notif' => '1',
-        ]);
+        $cek=Surat::where(['id' => $id,])->get();
+        if($cek->first()->roles_id == '1' || $cek->first()->roles_id == '2' || $cek->first()->roles_id == '3' || $cek->first()->roles_id == '5')
+        {
+            $surat = Surat::where('id', $id)->update([
+                'status_id' => '6',
+                'notif' => '1',
+                'approve' => '2',
+                'nama_wd' => Pengguna::where([
+                    'pengguna.id' => $cek->first()->nama_wd,
+                ])->first()->nama,
+                'NIP_wd' => Pengguna::where([
+                    'pengguna.id' => $cek->first()->nama_wd,
+                ])->first()->NIP,
+                'golongan_id' => Golongan::where([
+                    'id' => $cek->first()->golongan_id,
+                ])->first()->nama_golongan,
+                'jabatan_id' => Jabatan::where([
+                    'id' => $cek->first()->jabatan_id,
+                ])->first()->nama_jabatan,
+                'nama_kadep' => Pengguna::where([
+                    'pengguna.id' => $cek->first()->nama_kadep,
+                ])->first()->nama,
+                'NIP_kadep' => Pengguna::where([
+                    'pengguna.id' => $cek->first()->nama_kadep,
+                ])->first()->NIP,
+                'prodi_id' => Prodi::where([
+                    'id' => $cek->first()->prodi_id,
+                ])->first()->prodi,
+            ]);
+
+        }
+        elseif($cek->first()->roles_id == '4' || $cek->first()->roles_id == '6' || $cek->first()->roles_id == '7')
+        {
+            $surat = Surat::where('id', $id)->update([
+                'status_id' => '6',
+                'notif' => '1',
+                'approve' => '2',
+                'nama_wd' => Pengguna::where([
+                    'pengguna.id' => $cek->first()->nama_wd,
+                ])->first()->nama,
+                'NIP_wd' => Pengguna::where([
+                    'pengguna.id' => $cek->first()->nama_wd,
+                ])->first()->NIP,
+                'golongan_id' => Golongan::where([
+                    'id' => $cek->first()->golongan_id,
+                ])->first()->nama_golongan,
+                'jabatan_id' => Jabatan::where([
+                    'id' => $cek->first()->jabatan_id,
+                ])->first()->nama_jabatan,
+                'nama_supervisor' => Pengguna::where([
+                    'pengguna.id' => $cek->first()->nama_supervisor,
+                ])->first()->nama,
+                'NIP_supervisor' => Pengguna::where([
+                    'pengguna.id' => $cek->first()->nama_supervisor,
+                ])->first()->NIP,
+            ]);
+        }
+        // $surat = Surat::where('id', $id)->update([
+        //     'status_id' => '6',
+        //     'notif' => '1',
+        //     'approve' => '2',
+        //     'nama_wd' => Pengguna::where([
+        //         'pengguna.id' => $cek->first()->nama_wd,
+        //     ])->first()->nama,
+        //     'NIP_wd' => Pengguna::where([
+        //         'pengguna.id' => $cek->first()->nama_wd,
+        //     ])->first()->NIP,
+        //     'golongan_id' => Golongan::where([
+        //         'id' => $cek->first()->golongan_id,
+        //     ])->first()->nama_golongan,
+        //     'jabatan_id' => Jabatan::where([
+        //         'id' => $cek->first()->jabatan_id,
+        //     ])->first()->nama_jabatan,
+        // ]);
+        
         return redirect('/daftarsuratwd');
         
     }
@@ -174,6 +246,15 @@ class WakilDekanController extends Controller
             'nama' => $request->nama_dosen,
             'NIP' => $request->NIP,
             'email' => $request->email_dosen,
+            'golongan_id' => $request->pangkat,
+            'jabatan_id' => $request->jabatan,
+        ]);
+        Surat::where([
+            'id_pengguna' => Auth::user()->id,
+            'approve' => '0',
+            ])->update([
+            'nama' => $request->nama_dosen,
+            'NIP' => $request->NIP,
             'golongan_id' => $request->pangkat,
             'jabatan_id' => $request->jabatan,
         ]);
