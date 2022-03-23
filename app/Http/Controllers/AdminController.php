@@ -1138,6 +1138,10 @@ public function konfirmasispv($id)
 
 public function hapusspv($id)
 {
+    $bagianstaff_id = Pengguna::where('id', $id)->first()->bagianstaff_id;
+    BagianStaff::where('id', '=', $bagianstaff_id)->update([
+        'status' => '1',
+    ]);
     $spv = Pengguna::where('id',$id)->update([
         'roles_id' => '4',
         // 'ttd_spv' => null,
