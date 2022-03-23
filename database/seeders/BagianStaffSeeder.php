@@ -18,9 +18,11 @@ class BagianStaffSeeder extends Seeder
         BagianStaff::truncate();
         BagianStaff::create([
             'bagian' => 'Akademik',
+            'status' => '1',
         ]);
         BagianStaff::create([
             'bagian' => 'SDM',
+            'status' => '1',
         ]);
     }
 }

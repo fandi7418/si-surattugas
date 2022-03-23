@@ -7,12 +7,12 @@
         <h2 class="card-title">Data Supervisor</h2>
     </div>
     <div class="card-body">
-        @if (count($spv)==0)
+
         <a href="/tambah_supervisor" class="btn btn-success btn-sm">Tambah Supervisor
         </a>
         <br>
         <br>
-        @endif
+
         {{-- <a href="/data_petugas/trash" class="btn btn-danger btn-sm">Sampah</a> --}}
         <table class="table table-striped table-bordered table-sm" id="dataspv" style="width: 100%">
             <thead>

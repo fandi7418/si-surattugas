@@ -188,12 +188,16 @@ Route::group(['middleware' => ['auth:pengguna', 'admin']], function()
     // route untuk supervisor
 
     Route::get('/data_supervisor', [AdminController::class, 'dataspv'])->name('data spv');
+
+    Route::get('/list_nama_staff/{bagianstaff_id}', [AdminController::class, 'listNamaStaff'])->name('getSpv');  
     
-    Route::get('/tambah_supervisor', [AdminController::class, 'tambahspv'])->name('tambah spv');
+    Route::get('/tambah_supervisor', [AdminController::class, 'indexspv'])->name('tambah spv');
 
-    Route::get('/pilihSpv/{id}/konfirmasi', [AdminController::class, 'konfirmasiPilihSpv']);
+    Route::post('/tambah_supervisor', [AdminController::class, 'tambahspv'])->name('tambah spv');
 
-    Route::get('/pilih_supervisor/{id}/pilih', [AdminController::class, 'pilihSpv']);
+    // Route::get('/pilihSpv/{id}/konfirmasi', [AdminController::class, 'konfirmasiPilihSpv']);
+
+    // Route::get('/pilih_supervisor/{id}/pilih', [AdminController::class, 'pilihSpv']);
 
     Route::get('/hapus_spv/{id}/konfirmasi', [AdminController::class, 'konfirmasispv']);
     

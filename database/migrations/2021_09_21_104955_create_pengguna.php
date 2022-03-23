@@ -23,6 +23,7 @@ class CreatePengguna extends Migration
             $table->bigInteger('golongan_id');
             $table->bigInteger('prodi_id')->nullable();
             $table->bigInteger('roles_id');
+            $table->bigInteger('bagianstaff_id')->nullable();
             $table->string('ttd')->nullable();
             $table->rememberToken();
             $table->timestamps();

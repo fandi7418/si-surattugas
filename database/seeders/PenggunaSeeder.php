@@ -73,6 +73,7 @@ class PenggunaSeeder extends Seeder
             'jabatan_id' => '5',
             'golongan_id' => '1',
             'prodi_id' => null,
+            'bagianstaff_id' => '1',
             'roles_id' => '4',
             'remember_token' => Str::random(60),
         ]);
@@ -85,6 +86,7 @@ class PenggunaSeeder extends Seeder
             'jabatan_id' => '5',
             'golongan_id' => '1',
             'prodi_id' => '1',
+            'bagianstaff_id' => '2',
             'roles_id' => '5',
             'remember_token' => Str::random(60),
         ]);
@@ -97,6 +99,7 @@ class PenggunaSeeder extends Seeder
             'jabatan_id' => '5',
             'golongan_id' => '1',
             'prodi_id' => null,
+            'bagianstaff_id' => '2',
             'roles_id' => '7',
             'remember_token' => Str::random(60),
         ]);
@@ -104,11 +107,25 @@ class PenggunaSeeder extends Seeder
         [
             'email' => 'staff3@gmail.com',
             'password' => bcrypt('123456'),
-            'nama' => 'supervisor',
+            'nama' => 'supervisor SDM',
             'NIP' => '12312399889231',
             'jabatan_id' => '5',
             'golongan_id' => '1',
             'prodi_id' => null,
+            'bagianstaff_id' => '1',
+            'roles_id' => '6',
+            'remember_token' => Str::random(60),
+        ]);
+        Pengguna::create(
+        [
+            'email' => 'staff4@gmail.com',
+            'password' => bcrypt('123456'),
+            'nama' => 'supervisor Akademik',
+            'NIP' => '123123998892317',
+            'jabatan_id' => '5',
+            'golongan_id' => '1',
+            'prodi_id' => null,
+            'bagianstaff_id' => '1',
             'roles_id' => '6',
             'remember_token' => Str::random(60),
         ]);

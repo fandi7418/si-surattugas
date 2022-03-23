@@ -16,6 +16,7 @@ class CreateBagianStaffTable extends Migration
         Schema::create('bagian_staff', function (Blueprint $table) {
             $table->id();
             $table->string('bagian');
+            $table->string('status');
             $table->timestamps();
         });
     }

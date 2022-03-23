@@ -31,6 +31,7 @@
                     <th scope="col">NIP</th>
                     <th scope="col">Status</th>
                     <th scope="col">Prodi/Fakultas</th>
+                    <th scope="col">Bagian</th>
                     <th scope="col">Aksi</th>
                 </tr>
 
@@ -46,6 +47,7 @@
                     @else
                     <td style="color:rgb(0, 64, 255)">Teknik</td>
                     @endif
+                    <td>{{ $stf->bagianstaff->bagian }}</td>
                     <td>
                     <a href="/edit_staff/{{ $stf->id }}" class="btn btn-info btn-sm">Edit</a>
                     <a href="/hapus_staff/{{ $stf->id }}/konfirmasi" class="btn btn-danger btn-sm">Hapus</a>

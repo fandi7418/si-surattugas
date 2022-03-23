@@ -22,6 +22,7 @@ class Pengguna extends Authenticatable
         'jabatan_id',
         'golongan_id',
         'prodi_id',
+        'bagianstaff_id',
         'roles_id',
         'ttd',
     ];
@@ -60,5 +61,10 @@ class Pengguna extends Authenticatable
     {
     //Setiap dosen hanya memiliki satu prodi
     return $this->belongsTo(Golongan::class);
+    }
+    public function bagianstaff()
+    {
+    //Setiap dosen hanya memiliki satu prodi
+    return $this->belongsTo(BagianStaff::class);
     }
 }

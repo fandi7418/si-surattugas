@@ -100,6 +100,23 @@
         </div>
     </div>
     <div class="form-group row mt-4">
+        <label for="colFormLabel" class="col-sm-2 col-form-label">Bagian</label>
+        <div class="col-sm-8">
+            <select class="form-select @error('bagianstaff_id') is-invalid @enderror" name="bagianstaff_id" id="bagianstaff_id"
+                aria-label="Default select example">
+                <option value="">Pilih Bagian Staff</option>
+                @foreach ($bagian as $bagianstf )
+                <option value="{{ $bagianstf->id }}" {{ old('bagianstaff_id') == $bagianstf->id ? 'selected' : null }}>{{ $bagianstf->bagian }}</option>
+                @endforeach
+            </select>
+            @error('bagianstaff_id')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+            @enderror
+        </div>
+    </div>
+    <div class="form-group row mt-4">
         <label for="colFormLabel" class="col-sm-2 col-form-label">Email</label>
         <div class="col-sm-8">
             <input type="email" name="email_staff" value="{{ old('email_staff') }}"
