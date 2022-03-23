@@ -31,13 +31,13 @@ class Surat extends Authenticatable
         'tanggalawal',
         'tanggalakhir',
         'status_id',
-        'ttd_spv',
-        'ttd_kadep',
+        // 'ttd_spv',
+        // 'ttd_kadep',
         'ttd_wd',
-        'nama_supervisor',
-        'NIP_supervisor',
-        'nama_kadep',
-        'NIP_kadep',
+        // 'nama_supervisor',
+        // 'NIP_supervisor',
+        // 'nama_kadep',
+        // 'NIP_kadep',
         'nama_wd',
         'NIP_wd',
         'notif',
@@ -80,6 +80,11 @@ class Surat extends Authenticatable
     {
     //Setiap dosen hanya memiliki satu prodi
     return $this->belongsTo(Golongan::class);
+    }
+    public function bagian_staff()
+    {
+    //Setiap dosen hanya memiliki satu prodi
+    return $this->belongsTo(BagianStaff::class);
     }
 }
 

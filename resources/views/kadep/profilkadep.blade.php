@@ -87,9 +87,9 @@
     <a class="btn btn-secondary" style="float: right; margin-right: 10px" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Ubah Password?
     </a>
-    <a class="btn btn-secondary" style="float: right; margin-right: 10px" data-toggle="modal" data-target="#ttdModal">
+    <!-- <a class="btn btn-secondary" style="float: right; margin-right: 10px" data-toggle="modal" data-target="#ttdModal">
         Tanda Tangan
-    </a>
+    </a> -->
     <!-- Form Pop Up Reset Password -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
        <div class="modal-dialog">
@@ -99,7 +99,7 @@
            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
            </div>
            <div class="modal-body">
-            <form action="/editpasswordkadep" method="post">
+            <form action="/editpassworddosen" method="post">
                     @csrf
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Masukkan Password Baru :</label>

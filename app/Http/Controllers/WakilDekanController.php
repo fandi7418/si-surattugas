@@ -184,23 +184,6 @@ class WakilDekanController extends Controller
                 ])->first()->NIP,
             ]);
         }
-        // $surat = Surat::where('id', $id)->update([
-        //     'status_id' => '6',
-        //     'notif' => '1',
-        //     'approve' => '2',
-        //     'nama_wd' => Pengguna::where([
-        //         'pengguna.id' => $cek->first()->nama_wd,
-        //     ])->first()->nama,
-        //     'NIP_wd' => Pengguna::where([
-        //         'pengguna.id' => $cek->first()->nama_wd,
-        //     ])->first()->NIP,
-        //     'golongan_id' => Golongan::where([
-        //         'id' => $cek->first()->golongan_id,
-        //     ])->first()->nama_golongan,
-        //     'jabatan_id' => Jabatan::where([
-        //         'id' => $cek->first()->jabatan_id,
-        //     ])->first()->nama_jabatan,
-        // ]);
         
         return redirect('/daftarsuratwd');
         
@@ -228,7 +211,7 @@ class WakilDekanController extends Controller
             'nama_dosen' => 'required|max:255|string',
             'pangkat' => 'required',
             'jabatan' => 'required',
-            'NIP' => "required|numeric|min:6|unique:pengguna,NIP,$id",
+            'NIP' => "required|string|min:6|unique:pengguna,NIP,$id",
             'email_dosen' => "email|required|unique:pengguna,email,$id",
         ], 
             [

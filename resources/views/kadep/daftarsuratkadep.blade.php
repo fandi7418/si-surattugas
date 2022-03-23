@@ -48,7 +48,7 @@
       </div>
       <div class="modal-body" name="modal-body">
       Anda akan menyetujui surat?
-            <input type="text" readonly class="form-control" style="display:none" id="ttdKadep" name="ttdKadep" value="{{Auth::user()->ttd}}">
+            <!-- <input type="text" readonly class="form-control" style="display:none" id="ttdKadep" name="ttdKadep" value="{{Auth::user()->ttd}}"> -->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success" id="confirmBtn" onclick="izinSurat()">OK</button>

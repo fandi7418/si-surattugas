@@ -181,19 +181,21 @@
 				<td class="text" >a.n Dekan</td>
 			</tr>
 			<tr>
-				@if(isset($srt->nama_kadep))
+				<!-- @if(isset($srt->nama_kadep))
 				<td width="350">Ketua Departemen/Prodi</td>
 				@else
 				<td width="350">Supervisor</td>
-				@endif
+				@endif -->
+				<td width="350"></td>
 				<td class="text" >Wakil Dekan Akademik dan Kemahasiswaan</td>
 			</tr>
 			<tr>
-				@if(isset($srt->ttd_kadep))
+				<!-- @if(isset($srt->ttd_kadep))
 				<td class="text"><img src="/image/{{ $srt->ttd_kadep }}" alt="" width="auto" height="100px"></td>
 				@else
 				<td class="text"><img src="/image/{{ $srt->ttd_spv }}" alt="" width="auto" height="100px"></td>
-				@endif
+				@endif -->
+				<td width="350"></td>
 				<td class="ttdWD" id="ttdWD"><img src="/image/{{ $srt->ttd_wd }}" alt="" width="auto" height="100px"></td>
 				@if($srt->status_id == '4')
 				<td class="cap" id="cap"><img src="/CapUndip.png" alt="" width="auto" height="170px"></td>
@@ -201,14 +203,15 @@
 			</tr>
 			<tr>
 			@if($srt->approve == '1' || $srt->approve == '2')
-				@if(isset($srt->nama_kadep))
+				<!-- @if(isset($srt->nama_kadep))
 					<td class="text">{{ $srt->nama_kadep }}</td>
 				@else
 					<td class="text">{{ $srt->nama_supervisor }}</td>
-				@endif
+				@endif -->
+					<td width="350"></td>	
 					<td class="text">{{ $srt->nama_wd }}</td>
 			@else
-				@if(isset($srt->nama_kadep))
+				<!-- @if(isset($srt->nama_kadep))
 					@foreach($kadep as $kdp)
 						<td class="text">{{ $kdp->nama }}</td>
 					@endforeach
@@ -216,22 +219,24 @@
 					@foreach($supervisor as $spv)
 						<td class="text">{{ $spv->nama }}</td>
 					@endforeach
-				@endif
+				@endif -->
 				@foreach($wd as $wd1)
+					<td width="350"></td>	
 					<td class="text">{{ $wd1->nama }}</td>
 				@endforeach
 			@endif
 			</tr>
 			<tr>
 			@if($srt->approve == '1' || $srt->approve == '2')
-				@if(isset($srt->NIP_kadep))
+				<!-- @if(isset($srt->NIP_kadep))
 					<td class="text">NIP. {{ $srt->NIP_kadep }}</td>
 				@else
 					<td class="text">NIP. {{ $srt->NIP_supervisor }}</td>
-				@endif
+				@endif -->
+					<td width="350"></td>
 					<td class="text">NIP. {{ $srt->NIP_wd }}</td>
 			@else
-				@if(isset($srt->NIP_kadep))
+				<!-- @if(isset($srt->NIP_kadep))
 					@foreach($kadep as $kdp)
 						<td class="text">NIP. {{ $kdp->NIP }}</td>
 					@endforeach
@@ -239,8 +244,9 @@
 					@foreach($supervisor as $spv)
 						<td class="text">NIP. {{ $spv->NIP }}</td>
 					@endforeach
-				@endif
+				@endif -->
 				@foreach($wd as $wd1)
+					<td width="350"></td>
 					<td class="text">NIP. {{ $wd1->NIP }}</td>
 				@endforeach
 			@endif

@@ -113,8 +113,8 @@ class KadepController extends Controller
     public function izinkan(Request $request, $id)
     {
         $surat = Surat::find($id)->update([
-            'ttd_kadep' => $request->ttd_kadep,
-            $this->validasi($request),
+            // 'ttd_kadep' => $request->ttd_kadep,
+            // $this->validasi($request),
             'status_id' => '2',
             'notif' => '1',
         ]);
@@ -191,7 +191,7 @@ class KadepController extends Controller
             'nama_dosen' => 'required|max:255|string',
             'pangkat' => 'required',
             'jabatan' => 'required',
-            'NIP' => "required|numeric|min:6|unique:pengguna,NIP,$id",
+            'NIP' => "required|string|min:6|unique:pengguna,NIP,$id",
             'email_dosen' => "email|required|unique:pengguna,email,$id",
         ], 
             [

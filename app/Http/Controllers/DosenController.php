@@ -107,7 +107,7 @@ class DosenController extends Controller
     {
         $this->validate($request,[
             'nama' => 'required|max:255|string',
-            'NIP' => "required|numeric|min:6|unique:pengguna,NIP,$id",
+            'NIP' => "required|string|min:6|unique:pengguna,NIP,$id",
             'pangkat' => 'required|string',
             'jabatan' => 'required|string',
             'email_dosen' => "email|required|unique:pengguna,email,$id",

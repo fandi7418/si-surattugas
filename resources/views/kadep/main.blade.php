@@ -100,7 +100,7 @@
                   @endif
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/profilkadep" style="margin-bottom:5px">
+                    <a class="dropdown-item" href="/profildosen" style="margin-bottom:5px">
                       <i class="bi bi-pencil-square" style="margin-right:10px"></i>
                       Edit Profil
                     </a>

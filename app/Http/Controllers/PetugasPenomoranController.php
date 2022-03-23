@@ -159,7 +159,7 @@ class PetugasPenomoranController extends Controller
     {
         $this->validate($request,[
             'nama' => 'required|max:255|string',
-            'NIP' => "required|numeric|min:6|unique:pengguna,NIP,$id",
+            'NIP' => "required|string|min:6|unique:pengguna,NIP,$id",
             'email_petugas' => "email|required|unique:pengguna,email,$id",
         ], 
             [
