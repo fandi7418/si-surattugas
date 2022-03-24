@@ -140,12 +140,12 @@ class KadepController extends Controller
             'status_id' => '5',
             'notif' => '1',
             'approve' => '2',
-            'nama_kadep' => Pengguna::where([
-                'pengguna.id' => $cek->first()->nama_kadep,
-            ])->first()->nama,
-            'NIP_kadep' => Pengguna::where([
-                'pengguna.id' => $cek->first()->nama_kadep,
-            ])->first()->NIP,
+            // 'nama_kadep' => Pengguna::where([
+            //     'pengguna.id' => $cek->first()->nama_kadep,
+            // ])->first()->nama,
+            // 'NIP_kadep' => Pengguna::where([
+            //     'pengguna.id' => $cek->first()->nama_kadep,
+            // ])->first()->NIP,
             'nama_wd' => Pengguna::where([
                 'pengguna.id' => $cek->first()->nama_wd,
             ])->first()->nama,

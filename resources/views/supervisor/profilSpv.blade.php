@@ -27,6 +27,12 @@
             </div>
         </div>
         <div class="form-group row mb-2">
+            <label class="col-sm-2 col-form-label">Bagian</label>
+            <div class="col-sm-5">
+                <input readonly type="text" class="form-control" placeholder=" " name="NIP" value="{{ $isi->bagianstaff->bagian }}">
+            </div>
+        </div>
+        <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Jabatan</label>
             <div class="col-sm-5">
                 <select class="form-select @error('jabatan') is-invalid @enderror" name="jabatan" id="jabatan"
@@ -82,9 +88,9 @@
     <a class="btn btn-secondary" style="float: right; margin-right: 10px" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Ubah Password?
     </a>
-    <a class="btn btn-secondary" style="float: right; margin-right: 10px" data-toggle="modal" data-target="#ttdModal">
+    <!-- <a class="btn btn-secondary" style="float: right; margin-right: 10px" data-toggle="modal" data-target="#ttdModal">
         Tanda Tangan
-    </a>
+    </a> -->
 
     <!-- Modal tanda tangan -->
    <div class="modal fade" id="ttdModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

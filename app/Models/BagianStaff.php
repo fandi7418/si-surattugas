@@ -13,6 +13,7 @@ class BagianStaff extends Model
     protected $fillable = [
         'id',
         'bagian',
+        'status',
     ];
 
     public function pengguna()

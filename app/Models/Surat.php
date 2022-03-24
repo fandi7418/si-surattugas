@@ -22,6 +22,7 @@ class Surat extends Authenticatable
         'nama',
         'NIP',
         'prodi_id',
+        'bagianstaff_id',
         'golongan_id',
         'jabatan_id',
         'judul',
@@ -81,7 +82,7 @@ class Surat extends Authenticatable
     //Setiap dosen hanya memiliki satu prodi
     return $this->belongsTo(Golongan::class);
     }
-    public function bagian_staff()
+    public function bagianstaff()
     {
     //Setiap dosen hanya memiliki satu prodi
     return $this->belongsTo(BagianStaff::class);

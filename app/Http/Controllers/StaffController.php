@@ -9,6 +9,7 @@ use App\Models\Jabatan;
 use App\Models\Golongan;
 use App\Models\Pengguna;
 use App\Models\StatusSurat;
+use App\Models\BagianStaff;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -104,6 +105,7 @@ class StaffController extends Controller
         ])
     ->get();
     $supervisor = Pengguna::where([
+        'bagianstaff_id' => Auth::user()->bagianstaff_id,
         'roles_id' => '6',
         ])
     ->get();
@@ -120,26 +122,27 @@ class StaffController extends Controller
             'tanggalawal' => 'date_format:Y-m-d|after_or_equal:today',
             'tanggalakhir' => 'date_format:Y-m-d|after_or_equal:tanggalawal',
             'nama_wd' => 'required',
-            'nama_kadep' => 'required',
+            'nama_spv' => 'required',
         ], [
             'tanggalawal.after_or_equal' => 'Input tidak valid',
             'tanggalakhir.after_or_equal' => 'Input tidak valid',
             'nama_wd.required' => 'Wakil Dekan tidak ditemukan, silahkan hubungi Admin',
-            'nama_kadep.required' => 'Kadep tidak ditemukan, silahkan hubungi Admin'
+            'nama_spv.required' => 'Supervisor tidak ditemukan, silahkan hubungi Admin'
         ]);
-        Surat::create([
+        $surat = Surat::create([
             'nama' => $request->nama,
             'NIP' => $request->nip,
-            'prodi_id' => Auth::guard('pengguna')->user()->prodi->id,
-            'golongan_id' => Auth::guard('pengguna')->user()->golongan->id,
-            'jabatan_id' => Auth::guard('pengguna')->user()->jabatan->id,
+            // 'prodi_id' => Auth::guard('pengguna')->user()->prodi->id,
+            'bagianstaff_id' => Auth::user()->bagianstaff_id,
+            'golongan_id' => Auth::user()->golongan_id,
+            'jabatan_id' => Auth::user()->jabatan_id,
             'judul' => $request->judul,
             'jenis' => $request->jeniskegiatan,
             'tempat' => $request->tempat,
             'kota' => $request->kota,
             'tanggalawal' => $request->tanggalawal,
             'tanggalakhir' => $request->tanggalakhir,
-            'status_id' => '1',
+            'status_id' => '7',
             // 'nama_kadep' => $request->id_kadep,
             // 'NIP_kadep' => $request->id_kadep,
             'nama_wd' => $request->id_wd,
@@ -150,48 +153,54 @@ class StaffController extends Controller
             'roles_id' => Auth::guard('pengguna')->user()->roles_id,
             'remember_token' => Str::random(60),
         ]);
+        if(isset(Auth::user()->prodi_id))
+        {
+            $surat->update([
+                'prodi_id' => Auth::user()->prodi_id,
+            ]);
+        }
         Alert::success('Sukses', 'Data Berhasil Ditambah');
         return redirect('/daftarsuratStaff');
     }
 
-    public function tambahsuratStaffFT(Request $request)
-    {
-        $request->validate([
-            'tanggalawal' => 'date_format:Y-m-d|after_or_equal:today',
-            'tanggalakhir' => 'date_format:Y-m-d|after_or_equal:tanggalawal',
-            'nama_wd' => 'required',
-            'nama_spv' => 'required',
-        ], [
-            'tanggalawal.after_or_equal' => 'Input tidak valid',
-            'tanggalakhir.after_or_equal' => 'Input tidak valid',
-            'nama_wd.required' => 'Wakil Dekan tidak ditemukan, silahkan hubungi Admin',
-            'nama_spv.required' => 'Supervisor tidak ditemukan, silahkan hubungi Admin'
-        ]);
-        Surat::create([
-            'nama' => $request->nama,
-            'NIP' => $request->nip,
-            'golongan_id' => Auth::guard('pengguna')->user()->golongan->id,
-            'jabatan_id' => Auth::guard('pengguna')->user()->jabatan->id,
-            'judul' => $request->judul,
-            'jenis' => $request->jeniskegiatan,
-            'tempat' => $request->tempat,
-            'kota' => $request->kota,
-            'tanggalawal' => $request->tanggalawal,
-            'tanggalakhir' => $request->tanggalakhir,
-            'status_id' => '7',
-            // 'nama_supervisor' => $request->id_spv,
-            // 'NIP_supervisor' => $request->id_spv,
-            'nama_wd' => $request->id_wd,
-            'NIP_wd' => $request->id_wd,
-            'notif' => '1',
-            'approve' => '0',
-            'id_pengguna' => Auth::guard('pengguna')->user()->id,
-            'roles_id' => Auth::guard('pengguna')->user()->roles_id,
-            'remember_token' => Str::random(60),
-        ]);
-        Alert::success('Sukses', 'Data Berhasil Ditambah');
-        return redirect('/daftarsuratStaff');
-    }
+    // public function tambahsuratStaffFT(Request $request)
+    // {
+    //     $request->validate([
+    //         'tanggalawal' => 'date_format:Y-m-d|after_or_equal:today',
+    //         'tanggalakhir' => 'date_format:Y-m-d|after_or_equal:tanggalawal',
+    //         'nama_wd' => 'required',
+    //         'nama_spv' => 'required',
+    //     ], [
+    //         'tanggalawal.after_or_equal' => 'Input tidak valid',
+    //         'tanggalakhir.after_or_equal' => 'Input tidak valid',
+    //         'nama_wd.required' => 'Wakil Dekan tidak ditemukan, silahkan hubungi Admin',
+    //         'nama_spv.required' => 'Supervisor tidak ditemukan, silahkan hubungi Admin'
+    //     ]);
+    //     Surat::create([
+    //         'nama' => $request->nama,
+    //         'NIP' => $request->nip,
+    //         'golongan_id' => Auth::guard('pengguna')->user()->golongan->id,
+    //         'jabatan_id' => Auth::guard('pengguna')->user()->jabatan->id,
+    //         'judul' => $request->judul,
+    //         'jenis' => $request->jeniskegiatan,
+    //         'tempat' => $request->tempat,
+    //         'kota' => $request->kota,
+    //         'tanggalawal' => $request->tanggalawal,
+    //         'tanggalakhir' => $request->tanggalakhir,
+    //         'status_id' => '7',
+    //         // 'nama_supervisor' => $request->id_spv,
+    //         // 'NIP_supervisor' => $request->id_spv,
+    //         'nama_wd' => $request->id_wd,
+    //         'NIP_wd' => $request->id_wd,
+    //         'notif' => '1',
+    //         'approve' => '0',
+    //         'id_pengguna' => Auth::guard('pengguna')->user()->id,
+    //         'roles_id' => Auth::guard('pengguna')->user()->roles_id,
+    //         'remember_token' => Str::random(60),
+    //     ]);
+    //     Alert::success('Sukses', 'Data Berhasil Ditambah');
+    //     return redirect('/daftarsuratStaff');
+    // }
 
     public function editsuratStaff($id)
     {

@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Surat;
 use App\Models\Prodi;
-use App\Models\Staff;
 use App\Models\Jabatan;
 use App\Models\Golongan;
 use App\Models\Pengguna;
 use App\Models\StatusSurat;
+use App\Models\BagianStaff;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -23,6 +23,7 @@ class SupervisorController extends Controller
     {
         $surat = Surat::with('status')
         ->where([
+            'surat.bagianstaff_id' => Auth::user()->bagianstaff_id,
             'surat.status_id' => '7',
         ])
         ->orderBy('updated_at', 'DESC')
@@ -47,8 +48,9 @@ class SupervisorController extends Controller
 
     public function daftarsuratSpv(Request $request)
     {
-        $surat = Surat::with('status')
+        $surat = Surat::with('status', 'bagianstaff')
         ->where([
+            'surat.bagianstaff_id' => Auth::user()->bagianstaff_id,
             'surat.status_id' => '7',
         ])->orderBy('updated_at', 'DESC')->get();
         return view('supervisor.daftarsuratSpv', ['surat' => $surat]);
@@ -161,8 +163,6 @@ class SupervisorController extends Controller
     public function izinkanSpv(Request $request, $id)
     {
         $surat = Surat::find($id)->update([
-            'ttd_spv' => $request->ttd_spv,
-            $this->validasi($request),
             'status_id' => '2',
             'notif' => '1',
         ]);
@@ -181,32 +181,56 @@ class SupervisorController extends Controller
         ]);
     }
 
-    public function tolakSpv($id)
+    public function tolakSpv(Request $request, $id)
     {
         $cek=Surat::where(['id' => $id,])->get();
-        $surat = Surat::where('id', $id)->update([
-            'status_id' => '8',
-            'notif' => '1',
-            'approve' => '2',
-            'nama_supervisor' => Pengguna::where([
-                'id' => $cek->first()->nama_supervisor,
-            ])->first()->nama,
-            'NIP_supervisor' => Pengguna::where([
-                'id' => $cek->first()->nama_supervisor,
-            ])->first()->NIP,
-            'nama_wd' => Pengguna::where([
-                'id' => $cek->first()->NIP_wd,
-            ])->first()->nama,
-            'NIP_wd' => Pengguna::where([
-                'id' => $cek->first()->NIP_wd,
-            ])->first()->NIP,
-            'golongan_id' => Golongan::where([
-                'id' => $cek->first()->golongan_id,
-            ])->first()->nama_golongan,
-            'jabatan_id' => Jabatan::where([
-                'id' => $cek->first()->jabatan_id,
-            ])->first()->nama_jabatan,
-        ]);
+        if($cek->first()->prodi_id == null)
+        {
+            $surat = Surat::where('id', $id)->update([
+                'status_id' => '8',
+                'notif' => '1',
+                'approve' => '2',
+                'bagianstaff_id' => BagianStaff::where([
+                    'id' => $cek->first()->bagianstaff_id,
+                ])->first()->bagian,
+                'nama_wd' => Pengguna::where([
+                    'id' => $cek->first()->NIP_wd,
+                ])->first()->nama,
+                'NIP_wd' => Pengguna::where([
+                    'id' => $cek->first()->NIP_wd,
+                ])->first()->NIP,
+                'golongan_id' => Golongan::where([
+                    'id' => $cek->first()->golongan_id,
+                ])->first()->nama_golongan,
+                'jabatan_id' => Jabatan::where([
+                    'id' => $cek->first()->jabatan_id,
+                ])->first()->nama_jabatan,
+            ]);
+        }else{
+            $surat = Surat::where('id', $id)->update([
+                'prodi_id' => Prodi::where([
+                    'id' => $cek->first()->prodi_id,
+                ])->first()->prodi,
+                'status_id' => '8',
+                'notif' => '1',
+                'approve' => '2',
+                'bagianstaff_id' => BagianStaff::where([
+                    'id' => $cek->first()->bagianstaff_id,
+                ])->first()->bagian,
+                'nama_wd' => Pengguna::where([
+                    'id' => $cek->first()->NIP_wd,
+                ])->first()->nama,
+                'NIP_wd' => Pengguna::where([
+                    'id' => $cek->first()->NIP_wd,
+                ])->first()->NIP,
+                'golongan_id' => Golongan::where([
+                    'id' => $cek->first()->golongan_id,
+                ])->first()->nama_golongan,
+                'jabatan_id' => Jabatan::where([
+                    'id' => $cek->first()->jabatan_id,
+                ])->first()->nama_jabatan,
+            ]);
+        }
         return response()->json([
             'success' => 'Sukses diizinkan',
             'surat' => $surat,

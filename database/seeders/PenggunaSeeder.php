@@ -81,7 +81,7 @@ class PenggunaSeeder extends Seeder
         [
             'email' => 'staff2@gmail.com',
             'password' => bcrypt('123456'),
-            'nama' => 'staff arsi',
+            'nama' => 'staff sipil',
             'NIP' => '123123665231',
             'jabatan_id' => '5',
             'golongan_id' => '1',
@@ -112,7 +112,7 @@ class PenggunaSeeder extends Seeder
             'jabatan_id' => '5',
             'golongan_id' => '1',
             'prodi_id' => null,
-            'bagianstaff_id' => '1',
+            'bagianstaff_id' => '2',
             'roles_id' => '6',
             'remember_token' => Str::random(60),
         ]);
