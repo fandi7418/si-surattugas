@@ -125,7 +125,9 @@ class AdminController extends Controller
     }   
     public function datadosen(Request $request)
     {
-        $dosen = Pengguna::with('prodi','roles')->where('roles_id', '=', '1')->orwhere('roles_id', '=', '2')->orwhere('roles_id', '=', '3')
+        $dosen = Pengguna::with('prodi','roles')
+        ->where('roles_id', '=', '1')->orwhere('roles_id', '=', '2')
+        ->orwhere('roles_id', '=', '3')
         ->get();
         // $prodi = Prodi::all();
         // $dosen = Dosen::with('prodi')->orderBy('created_at', 'DESC')
@@ -150,10 +152,10 @@ class AdminController extends Controller
 }
     public function datadosensementara (Request $request)
     {
-        $dosen = Pengguna::onlyTrashed()->where('roles_id', '=', '1')->with('prodi');
+        $dosen = Pengguna::onlyTrashed()->where('bagianstaff_id', '=', null)
+        ->with('prodi')
+        ->get();
         if ($request->ajax()){
-            $dosen = Pengguna::onlyTrashed()->where('roles_id', '=', '1')->with('prodi')
-            ->get();
             return datatables()->of($dosen)->addColumn('action', function($data){
                 $url_restore = url('data_dosen/restore/'.$data->id);
                 $url_hapus = url('hapus_dosenpermanen/'.$data->id.'/konfirmasi');
@@ -390,8 +392,12 @@ class AdminController extends Controller
         // Alert::success('Sukses', 'Data Berhasil Dihapus');
         // return redirect('/data_dosen');
 
-        $dosen = Pengguna::onlyTrashed()->where('id',$id);
+        $dosen = Pengguna::onlyTrashed()
+        ->where('id',$id);
         $dosen->restore();
+        $dosen->update([
+            'roles_id' => '1',
+        ]);
         
         Alert::success('Sukses', 'Data Berhasil Dikembalikkan');
         
@@ -1072,7 +1078,7 @@ public function tambahspv(Request $request)
 }
 public function dataspv(Request $request)
 {
-    $spv = Pengguna::where('roles_id', '=', '6')->get();
+    $spv = Pengguna::with('bagianstaff')->where('roles_id', '=', '6')->get();
     if ($request->ajax()){
         return datatables()->of($spv)->addColumn('action', function($data){
             $url_hapus = url('hapus_spv/'.$data->id.'/konfirmasi');
@@ -1115,13 +1121,6 @@ public function pilihSpv($id)
 {
     Pengguna::where('id', $id)->update([
         'roles_id' => '6'
-    ]);
-    $id_spv = Pengguna::where('id', $id)->first()->id;
-    Surat::where([
-        'ttd_spv' => null, 
-    ])->update([
-        'nama_supervisor' => $id_spv,
-        'nip_supervisor' => $id_spv,
     ]);
     Alert::success('Sukses', 'Data Berhasil Ditambahkan');
     return redirect('data_supervisor');
@@ -1425,9 +1424,10 @@ return view('admin.datastaff', ['staff' => $staff, "title" => "Data Staff"]);
 public function datastaffsementara (Request $request)
 {
     // $staff = Pengguna::onlyTrashed()->with('prodi','roles')->where('roles_id', '=', '4')->orwhere('roles_id', '=', '5');
+    $staff = Pengguna::onlyTrashed()->with('prodi','roles')
+    ->whereNotNull('bagianstaff_id')
+    ->get();
     if ($request->ajax()){
-        $staff = Pengguna::onlyTrashed()->with('prodi','roles')->where('roles_id', '=', '4')->orwhere('roles_id', '=', '5')->orwhere('roles_id', '=', '6')->orwhere('roles_id', '=', '7')
-        ->get();
         return datatables()->of($staff)->addColumn('action', function($data){
             $url_restore = url('data_staff/restore/'.$data->id);
             $url_hapus = url('hapus_staffpermanen/'.$data->id.'/konfirmasi');
@@ -1565,7 +1565,15 @@ public function konfirmasistaff($id)
 
 public function hapusstaff($id)
 {
-    Pengguna::where('id', $id)->delete();
+    $staff = Pengguna::where('id', $id);
+    if($staff->first()->roles_id == '6'){
+        BagianStaff::where([
+            'id' => $staff->first()->bagianstaff_id,
+            ])->update([
+                'status' => '1'
+            ]);
+    }
+    $staff->delete();
     Alert::success('Sukses', 'Data Berhasil Dinonaktifkan');
     return redirect('/data_staff');
 
@@ -1598,8 +1606,16 @@ public function restorestaff($id)
     // return redirect('/data_staff');
 
     $staff = Pengguna::onlyTrashed()->where('id',$id);
+    if(isset($staff->first()->prodi_id)){
+        $staff->update(['roles_id' => '5']);
+    }
+    else{
+        $staff->update(['roles_id' => '4']);
+    }
     $staff->restore();
     
+    
+
     Alert::success('Sukses', 'Data Berhasil Dikembalikkan');
     
     return redirect('/data_staff/trash');

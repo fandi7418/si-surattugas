@@ -30,8 +30,8 @@
                     <th scope="col">Nama Staff</th>
                     <th scope="col">NIP</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Prodi/Fakultas</th>
                     <th scope="col">Bagian</th>
+                    <th scope="col">Prodi/Fakultas</th>
                     <th scope="col">Aksi</th>
                 </tr>
 
@@ -42,12 +42,12 @@
                     <td>{{$stf->nama}}</td>
                     <td>{{$stf->NIP}}</td>
                     <td>{{ $stf->roles->peran }}</td>
+                    <td>{{ $stf->bagianstaff->bagian }}</td>
                     @if(isset($stf->prodi_id))
                     <td>{{ $stf->prodi->prodi }}</td>
                     @else
                     <td style="color:rgb(0, 64, 255)">Teknik</td>
                     @endif
-                    <td>{{ $stf->bagianstaff->bagian }}</td>
                     <td>
                     <a href="/edit_staff/{{ $stf->id }}" class="btn btn-info btn-sm">Edit</a>
                     <a href="/hapus_staff/{{ $stf->id }}/konfirmasi" class="btn btn-danger btn-sm">Hapus</a>

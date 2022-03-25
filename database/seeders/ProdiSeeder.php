@@ -18,7 +18,7 @@ class ProdiSeeder extends Seeder
         Prodi::truncate();
         Prodi::create([
             'prodi' => 'Teknik Sipil',
-            'status' => '1',
+            'status' => '2',
         ]);
         Prodi::create([
             'prodi' => 'Teknik Arsitektur',
