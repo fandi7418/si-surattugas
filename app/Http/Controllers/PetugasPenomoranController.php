@@ -95,12 +95,6 @@ class PetugasPenomoranController extends Controller
             if($cek->first()->roles_id == '1' || $cek->first()->roles_id == '2' || $cek->first()->roles_id == '3' || $cek->first()->roles_id == '5')
             {
                 $surat = Surat::find($id)->update([
-                    'nama_kadep' => Pengguna::where([
-                        'pengguna.id' => $cek->first()->nama_kadep,
-                    ])->first()->nama,
-                    'NIP_kadep' => Pengguna::where([
-                        'pengguna.id' => $cek->first()->nama_kadep,
-                    ])->first()->NIP,
                     'nama_wd' => Pengguna::where([
                         'pengguna.id' => $cek->first()->nama_wd,
                     ])->first()->nama,
@@ -121,12 +115,6 @@ class PetugasPenomoranController extends Controller
             elseif($cek->first()->roles_id == '4' || $cek->first()->roles_id == '6' || $cek->first()->roles_id == '7')
             {
                 $surat = Surat::find($id)->update([
-                    'nama_supervisor' => Pengguna::where([
-                        'id' => $cek->first()->nama_supervisor,
-                    ])->first()->nama,
-                    'NIP_supervisor' => Pengguna::where([
-                        'id' => $cek->first()->nama_supervisor,
-                    ])->first()->NIP,
                     'nama_wd' => Pengguna::where([
                         'id' => $cek->first()->NIP_wd,
                     ])->first()->nama,
