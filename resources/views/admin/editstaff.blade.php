@@ -24,7 +24,7 @@
                     <label for="colFormLabel" class="col-sm-2 col-form-label">NIP</label>
                     <div class="col-sm-8">
                         <input type="text"
-                            onkeypress="return event.charCode >= 48 && event.charCode <=57" value="{{ old('NIP', $stf->NIP) }}" name="NIP"
+                            value="{{ old('NIP', $stf->NIP) }}" name="NIP"
                             class="form-control @error('NIP') is-invalid @enderror" id="colFormLabel" placeholder="Silahkan Masukkan NIP Anda">
                                 @error('NIP')
                                     <div class="invalid-feedback">
