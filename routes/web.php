@@ -133,15 +133,19 @@ Route::group(['middleware' => ['auth:pengguna', 'admin']], function()
 
     // Route::get('/tambah_wakildekan', [AdminController::class, 'indexwd1']);
 
-    Route::get('/tambah_wakildekan', [AdminController::class, 'tambahwd1'])->name('tambah wd');
+    // Route::get('/list_nama_dosen/{prodi_id}', [AdminController::class, 'listNamaDosen'])->name('getWd');
 
-    Route::get('/edit_wakildekan/{id}', [AdminController::class, 'editwd1']);
+    Route::get('/tambah_wakildekan', [AdminController::class, 'indexwd']);
 
-    Route::post('/update_wakildekan/{id}', [AdminController::class, 'updatewd1']);
+    Route::post('/tambah_wakildekan', [AdminController::class, 'tambahwd']);
+
+    // Route::get('/edit_wakildekan/{id}', [AdminController::class, 'editwd1']);
+
+    // Route::post('/update_wakildekan/{id}', [AdminController::class, 'updatewd1']);
     
-    Route::get('/pilihWD/{id}/konfirmasi', [AdminController::class, 'konfirmasiwd1']);
+    // Route::get('/pilihWD/{id}/konfirmasi', [AdminController::class, 'konfirmasiwd1']);
     
-    Route::get('/pilih_wakildekan/{id}/pilihWD', [AdminController::class, 'pilihWD']);
+    // Route::get('/pilih_wakildekan/{id}/pilihWD', [AdminController::class, 'pilihWD']);
 
     Route::get('data_wakildekan/restore/{id}', [AdminController::class, 'restorewd1']);
 

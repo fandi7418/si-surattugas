@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pengguna;
 use App\Models\Prodi;
-use App\Models\BagianStaff;
+use App\Models\Bagian;
 use App\Models\Surat;
 use App\Models\StatusSurat;
 use App\Models\Roles;
@@ -152,7 +152,7 @@ class AdminController extends Controller
 }
     public function datadosensementara (Request $request)
     {
-        $dosen = Pengguna::onlyTrashed()->where('bagianstaff_id', '=', null)
+        $dosen = Pengguna::onlyTrashed()->where('bagian_id', '=', null)
         ->with('prodi')
         ->get();
         if ($request->ajax()){
@@ -679,50 +679,51 @@ class AdminController extends Controller
         return view('admin.datawd1_trash', ['wd' => $wd, "title" => "Data Wakil Dekan Sementara"]);
     }*/
 
-    public function tambahwd1(Request $request)
+    public function tambahwd(Request $request)
     {
-        // $request->validate([
-        //     'nama_wd' => 'required|max:255|string',
-        //     'NIP' => 'required|numeric|min:6|unique:wakildekan,NIP|unique:ketua_departemen,NIP|unique:dosen,NIP|unique:admin,NIP|unique:petugas_penomoran,NIP',
-        //     'email_wd' => 'email|required|unique:wakildekan,email_wd|unique:ketua_departemen,email_kadep|unique:admin,email_admin|unique:dosen,email_dosen|unique:petugas_penomoran,email_petugas',
-        //     'password' => 'required|min:6',
-        // ], [
-        //     'email_wd.unique' => 'Email sudah ada yang menggunakan',
-        //     'email_wd.email' => 'Email tidak boleh kosong',
-        //     'nama_wd.required' => 'Nama tidak boleh kosong',
-        //     'NIP.required' => 'NIP tidak boleh kosong',
-        //     'NIP.unique' => 'NIP sudah ada yang menggunakan',
-        //     'password.min' => 'Password harus lebih dari 6 karakter',
-        //     'password.required' => 'Password tidak boleh kosong'
-        // ]);
-        // WakilDekan::create([
-        //     'nama_wd' => $request->nama_wd,
-        //     'NIP' => $request->NIP,
-        //     'email_wd' => $request->email_wd,
-        //     'password' => Hash::make($request->password),
-        // ]);
-
-        // Alert::success('Sukses', 'Data Berhasil Ditambah');
-        // return redirect('data_wakildekan');
-        $wd = Pengguna::with('prodi') -> where('roles_id', '=', '1')->get();
-        if ($request->ajax()){
-            return datatables()->of($wd)->addColumn('action', function($data){
-                $url_edit = url('pilih_wakildekan/'.$data->id.'/pilihWD');
-                $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i>Pilih</a>';  
-                return $button;
-            })
-            ->rawColumns(['action'])
-                        ->addIndexColumn()
-                        ->make(true);
-        }
-        return view('admin.tambahwd1', [ 'wd' => $wd, "title" => "Tambah Wakil Dekan"]);
+        $request->validate([
+            'nama' => 'required',
+            'bagian' => 'required',
+        ], [
+            'nama.required' => 'Nama tidak boleh kosong',
+            'bagian.required' => 'Pilih salah satu Bagian',
+        ]);
+        Pengguna::where('id','=', $request->nama)->update([
+            'bagian_id' => $request->bagian,
+            'roles_id' => '3',
+        ]);
+        Bagian::where('id', '=', $request->bagian)->update([
+            'status' => '2',
+    ]);
+        // if ($request->ajax()){
+        //     return datatables()->of($wd)->addColumn('action', function($data){
+        //         $url_edit = url('pilih_wakildekan/'.$data->id.'/pilihWD');
+        //         $button = '<a href="'.$url_edit.'" data-toggle="tooltip"  data-id="" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i>Pilih</a>';  
+        //         return $button;
+        //     })
+        //     ->rawColumns(['action'])
+        //                 ->addIndexColumn()
+        //                 ->make(true);
+        // }
+        return redirect('/data_wakildekan');
     }
 
-    public function indexwd1()
+    public function indexwd()
     {
-        return view('admin.tambahwd1', [
-            "title" => "Tambah Wakil Dekan"
-        ]); 
+            $wd = Pengguna::where('roles_id', '=', '1')->get();
+            $bagian = Bagian::where([
+                ['id', '=', '3'],
+                ['status', '=', '1'],
+            ])
+            ->orwhere([
+                ['id', '=', '4'],
+                ['status', '=', '1'],
+            ])
+            ->get();
+        return view('admin.tambahwd1', [ 
+            'bagian' => $bagian,
+            'wd' => $wd,
+            "title" => "Tambah Wakil Dekan"]); 
     }
 
     /*public function editwd1($id)
@@ -826,8 +827,14 @@ class AdminController extends Controller
 
     public function hapusWD($id)
     {
-        $wakildekan = Pengguna::where('id',$id)->update([
+        $bagian_id = Pengguna::where('id', $id)->first()->bagian_id;
+
+        Bagian::where(['id' => $bagian_id])->update([
+            'status' => '1'
+        ]);
+        Pengguna::where('id',$id)->update([
             'roles_id' => '1',
+            'bagian_id' => null,
             // 'ttd_wd' => null,
         ]);
         Alert::success('Sukses', 'Data Berhasil Dihapus');
@@ -1024,15 +1031,21 @@ public function indexspv()
     // return view('admin.tambahkadep', [
     //     "title" => "Tambah Ketua Departemen"
     // // ]);
-    $bagian = BagianStaff::where([
-        'bagian_staff.status' => '1',
-    ])->get();
+    $bagian = Bagian::where([
+        ['id', '=', '1'],
+        ['status', '=', '1'],
+    ])
+    ->orwhere([
+        ['id', '=', '2'],
+        ['status', '=', '1'],
+    ])
+    ->get();
     return view('admin.tambahsupervisor', ['bagian' => $bagian, "title" => "Tambah Supervisor"]);
 }
-public function listNamaStaff($bagianstaff_id)
+public function listNamaStaff($bagian_id)
 {
     $staff = Pengguna::where([
-        'bagianstaff_id' => $bagianstaff_id,
+        'bagian_id' => $bagian_id,
         'roles_id' => '4',
         ])
         ->get();
@@ -1052,11 +1065,11 @@ public function tambahspv(Request $request)
         'spv.required' => 'Pilih salah satu program studi',
     ]);
 
-    Pengguna::with('bagianstaff')->where('id', '=', $request->nama_spv)->update([
+    Pengguna::with('bagian')->where('id', '=', $request->nama_spv)->update([
         'roles_id' => '6',
         
     ]);
-    BagianStaff::where('id', '=', $request->bagian)->update([
+    Bagian::where('id', '=', $request->bagian)->update([
         'status' => '2',
     ]);
     // $id_kadep = Pengguna::where(
@@ -1078,7 +1091,7 @@ public function tambahspv(Request $request)
 }
 public function dataspv(Request $request)
 {
-    $spv = Pengguna::with('bagianstaff')->where('roles_id', '=', '6')->get();
+    $spv = Pengguna::with('bagian')->where('roles_id', '=', '6')->get();
     if ($request->ajax()){
         return datatables()->of($spv)->addColumn('action', function($data){
             $url_hapus = url('hapus_spv/'.$data->id.'/konfirmasi');
@@ -1137,8 +1150,8 @@ public function konfirmasispv($id)
 
 public function hapusspv($id)
 {
-    $bagianstaff_id = Pengguna::where('id', $id)->first()->bagianstaff_id;
-    BagianStaff::where('id', '=', $bagianstaff_id)->update([
+    $bagian_id = Pengguna::where('id', $id)->first()->bagian_id;
+    Bagian::where('id', '=', $bagian_id)->update([
         'status' => '1',
     ]);
     $spv = Pengguna::where('id',$id)->update([
@@ -1388,7 +1401,13 @@ public function restoresurat($id)
 public function indexstaff()
 {
     $prd = Prodi::all();
-    $bagian = BagianStaff::all();
+    $bagian = Bagian::where([
+        ['id', '=', '1']
+    ])
+    ->orwhere([
+        ['id', '=', '2']
+    ])
+    ->get();
     $jabatan = Jabatan::where([
         'id' => '5',
     ])->orWhere([
@@ -1404,7 +1423,7 @@ public function datastaff(Request $request)
     // $dosen = Dosen::with('prodi')->orderBy('created_at', 'DESC')
     // ->paginate(10);
     // return view('admin.datadosen', ['dosen' => $dosen, 'prodi' => $prodi, "title" => "Data Dosen"]); 
-    $staff = Pengguna::with('prodi','roles','bagianstaff')->where('roles_id', '=', '4')->orwhere('roles_id', '=', '5')->orwhere('roles_id', '=', '6')->orwhere('roles_id', '=', '7')->get();
+    $staff = Pengguna::with('prodi','roles','bagian')->where('roles_id', '=', '4')->orwhere('roles_id', '=', '5')->orwhere('roles_id', '=', '6')->orwhere('roles_id', '=', '7')->get();
 //     if ($request->ajax()){
 //         $staff = Staff::with('prodi','roles')->get();
 //         return datatables()->of($staff)->addColumn('action', function($data){
@@ -1425,7 +1444,7 @@ public function datastaffsementara (Request $request)
 {
     // $staff = Pengguna::onlyTrashed()->with('prodi','roles')->where('roles_id', '=', '4')->orwhere('roles_id', '=', '5');
     $staff = Pengguna::onlyTrashed()->with('prodi','roles')
-    ->whereNotNull('bagianstaff_id')
+    ->whereNotNull('bagian_id')
     ->get();
     if ($request->ajax()){
         return datatables()->of($staff)->addColumn('action', function($data){
@@ -1451,7 +1470,7 @@ public function tambahstaff(Request $request)
         'pangkat' => 'required',
         'jabatan' => 'required',
         'roles_id' => 'required',
-        'bagianstaff_id' => 'required',
+        'bagian_id' => 'required',
         'email_staff' => 'email|required|unique:pengguna,email',
         'password' => 'required|min:6',
     ], [
@@ -1459,7 +1478,7 @@ public function tambahstaff(Request $request)
         'email_staff.email' => 'Email tidak boleh kosong',
         'nama_staff.required' => 'Nama tidak boleh kosong',
         'roles_id.required' => 'status tidak boleh kosong',
-        'bagianstaff_id.required' => 'bagian staff tidak boleh kosong',
+        'bagian_id.required' => 'bagian staff tidak boleh kosong',
         'NIP.required' => 'NIP tidak boleh kosong',
         'NIP.unique' => 'NIP sudah ada yang menggunakan',
         'pangkat.required' => 'Pangkat tidak boleh kosong',
@@ -1473,7 +1492,7 @@ public function tambahstaff(Request $request)
         'golongan_id' => $request->pangkat,
         'jabatan_id' => $request->jabatan,
         'prodi_id' => $request->prodi_id,
-        'bagianstaff_id' => $request->bagianstaff_id,
+        'bagian_id' => $request->bagian_id,
         'email' => $request->email_staff,
         'roles_id' => $request->roles_id,
         'password' => Hash::make($request->password),
@@ -1493,8 +1512,14 @@ public function editstaff($id)
     ])
     ->get();
     $golongan = Golongan::all();
-    $bagian = BagianStaff::all();
-    $staff = Pengguna::with('Prodi', 'jabatan', 'golongan', 'bagianstaff')->where('id', $id)->get();
+    $bagian = Bagian::where([
+        ['id', '=', '1']
+    ])
+    ->orwhere([
+        ['id', '=', '2']
+    ])
+    ->get();
+    $staff = Pengguna::with('Prodi', 'jabatan', 'golongan', 'bagian')->where('id', $id)->get();
     return view('admin.editstaff', ['staff' => $staff, 'prd' => $prd, 'bagian' => $bagian, 'jabatan' => $jabatan, 'golongan' => $golongan, "title" => "Edit Profil Staff"]);
 }
 
@@ -1506,7 +1531,7 @@ public function updatestaff(Request $request, $id)
         // 'prodi_id' => 'required',
         'pangkat' => 'required|string',
         'jabatan' => 'required|string',
-        'bagianstaff_id' => 'required',
+        'bagian_id' => 'required',
         'email_staff' => "email|required|unique:pengguna,email,$id"
     ], 
         [
@@ -1514,7 +1539,7 @@ public function updatestaff(Request $request, $id)
         'email_staff.unique' => 'Email sudah ada yang menggunakan',
         'nama_staff.required' => 'Nama tidak boleh kosong',
         'NIP.required' => 'NIP tidak boleh kosong',
-        'bagianstaff_id.required' => 'Bagian tidak boleh kosong',
+        'bagian_id.required' => 'Bagian tidak boleh kosong',
         'NIP.unique' => 'NIP sudah ada yang menggunakan',
         // 'prodi_id.required' => 'Program Studi tidak boleh kosong',
         'pangkat.required' => 'Pangkat tidak boleh kosong',
@@ -1527,7 +1552,7 @@ public function updatestaff(Request $request, $id)
         'jabatan_id' => $request->jabatan,
         'golongan_id' => $request->pangkat,
         'prodi_id' => $request->prodi_id,
-        'bagianstaff_id' => $request->bagianstaff_id,
+        'bagian_id' => $request->bagian_id,
         'email' => $request->email_staff,
     ]);
     Surat::where([
@@ -1567,8 +1592,8 @@ public function hapusstaff($id)
 {
     $staff = Pengguna::where('id', $id);
     if($staff->first()->roles_id == '6'){
-        BagianStaff::where([
-            'id' => $staff->first()->bagianstaff_id,
+        Bagian::where([
+            'id' => $staff->first()->bagian_id,
             ])->update([
                 'status' => '1'
             ]);

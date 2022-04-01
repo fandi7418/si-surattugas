@@ -88,14 +88,14 @@
                 <div class="form-group row mt-4">
                     <label for="colFormLabel" class="col-sm-2 col-form-label">Bagian</label>
                     <div class="col-sm-8">
-                        <select class="form-select @error('bagianstaff_id') is-invalid @enderror" name="bagianstaff_id" id="bagianstaff_id"
+                        <select class="form-select @error('bagian_id') is-invalid @enderror" name="bagian_id" id="bagian_id"
                             aria-label="Default select example">
                                 <option value="">Pilih Pangkat/Gol</option>
                                 @foreach ($bagian as $bagianstf )
-                                <option value="{{ $bagianstf->id }}" {{ old('bagianstaff_id', $stf->bagianstaff_id) == $bagianstf->id ? 'selected' : null }}>{{ $bagianstf->bagian }}</option>
+                                <option value="{{ $bagianstf->id }}" {{ old('bagian_id', $stf->bagian_id) == $bagianstf->id ? 'selected' : null }}>{{ $bagianstf->bagian }}</option>
                                 @endforeach
                     </select>
-                                @error('bagianstaff_id')
+                                @error('bagian_id')
                                     <div class="invalid-feedback">
                                     {{ $message }}
                                     </div>

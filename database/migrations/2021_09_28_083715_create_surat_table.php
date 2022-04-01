@@ -20,7 +20,7 @@ class CreateSuratTable extends Migration
             $table->string('nama')->nullable();
             $table->string('NIP');
             $table->string('prodi_id')->nullable();
-            $table->string('bagianstaff_id')->nullable();
+            $table->string('bagian_id')->nullable();
             $table->string('golongan_id')->nullable();
             $table->string('jabatan_id')->nullable();
             $table->string('judul');

@@ -13,7 +13,7 @@
             <select class="form-select  @error('bagian') is-invalid @enderror" onchange="getSpv()" name="bagian" id="bagian" aria-label="Default select example">
                 <option value>Pilih Bagian Staff</option>
                 @foreach ($bagian as $bagianstf )
-                <option value="{{ $bagianstf->id }}" {{ old('bagianstaff_id') == $bagianstf->id ? 'selected' : null }}>{{ $bagianstf->bagian }}</option>
+                <option value="{{ $bagianstf->id }}" {{ old('bagian_id') == $bagianstf->id ? 'selected' : null }}>{{ $bagianstf->bagian }}</option>
                 @endforeach
             </select>
             @error('bagian')

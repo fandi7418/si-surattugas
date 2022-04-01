@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBagianStaffTable extends Migration
+class CreateBagianTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateBagianStaffTable extends Migration
      */
     public function up()
     {
-        Schema::create('bagian_staff', function (Blueprint $table) {
+        Schema::create('bagian', function (Blueprint $table) {
             $table->id();
             $table->string('bagian');
             $table->string('status');
@@ -28,6 +28,6 @@ class CreateBagianStaffTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bagian_staff');
+        Schema::dropIfExists('bagian');
     }
 }

@@ -61,6 +61,20 @@ class PenggunaSeeder extends Seeder
             'jabatan_id' => '1',
             'golongan_id' => '1',
             'prodi_id' => '1',
+            'bagian_id' => '3',
+            'roles_id' => '3',
+            'remember_token' => Str::random(60),
+        ]);
+        Pengguna::create(
+        [
+            'email' => 'wd2@gmail.com',
+            'password' => bcrypt('123456'),
+            'nama' => 'wd2',
+            'NIP' => '123321310099',
+            'jabatan_id' => '1',
+            'golongan_id' => '1',
+            'prodi_id' => '1',
+            'bagian_id' => '4',
             'roles_id' => '3',
             'remember_token' => Str::random(60),
         ]);
@@ -73,7 +87,7 @@ class PenggunaSeeder extends Seeder
             'jabatan_id' => '5',
             'golongan_id' => '1',
             'prodi_id' => null,
-            'bagianstaff_id' => '1',
+            'bagian_id' => '1',
             'roles_id' => '4',
             'remember_token' => Str::random(60),
         ]);
@@ -86,7 +100,7 @@ class PenggunaSeeder extends Seeder
             'jabatan_id' => '5',
             'golongan_id' => '1',
             'prodi_id' => '1',
-            'bagianstaff_id' => '2',
+            'bagian_id' => '2',
             'roles_id' => '5',
             'remember_token' => Str::random(60),
         ]);
@@ -99,7 +113,7 @@ class PenggunaSeeder extends Seeder
             'jabatan_id' => '5',
             'golongan_id' => '1',
             'prodi_id' => null,
-            'bagianstaff_id' => '2',
+            'bagian_id' => '2',
             'roles_id' => '7',
             'remember_token' => Str::random(60),
         ]);
@@ -112,7 +126,7 @@ class PenggunaSeeder extends Seeder
             'jabatan_id' => '5',
             'golongan_id' => '1',
             'prodi_id' => null,
-            'bagianstaff_id' => '2',
+            'bagian_id' => '2',
             'roles_id' => '6',
             'remember_token' => Str::random(60),
         ]);
@@ -125,7 +139,7 @@ class PenggunaSeeder extends Seeder
             'jabatan_id' => '5',
             'golongan_id' => '1',
             'prodi_id' => null,
-            'bagianstaff_id' => '1',
+            'bagian_id' => '1',
             'roles_id' => '6',
             'remember_token' => Str::random(60),
         ]);

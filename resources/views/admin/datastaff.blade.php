@@ -42,7 +42,7 @@
                     <td>{{$stf->nama}}</td>
                     <td>{{$stf->NIP}}</td>
                     <td>{{ $stf->roles->peran }}</td>
-                    <td>{{ $stf->bagianstaff->bagian }}</td>
+                    <td>{{ $stf->bagian->bagian }}</td>
                     @if(isset($stf->prodi_id))
                     <td>{{ $stf->prodi->prodi }}</td>
                     @else

@@ -41,8 +41,8 @@
                     name: 'nama'
                 },
                 {
-                    data: 'bagianstaff.bagian',
-                    name: 'bagianstaff.bagian'
+                    data: 'bagian.bagian',
+                    name: 'bagian.bagian'
                 },
                 {
                     data: 'NIP',

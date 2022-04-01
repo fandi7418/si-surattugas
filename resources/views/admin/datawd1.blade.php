@@ -7,11 +7,9 @@
         <h3 class="card-title">Data Wakil Dekan</h3>
     </div>
     <div class="card-body">
-        @if (count($wd)==0)
         <a href="/tambah_wakildekan" class="btn btn-success btn-sm">Tambah Wakil Dekan</a>
         <br>
         <br>
-        @endif
         <table class="table table-striped table-bordered table-sm" style="width:100%" id="datawd">
             <thead>
                     <tr>
