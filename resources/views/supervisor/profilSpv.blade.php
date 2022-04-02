@@ -29,7 +29,7 @@
         <div class="form-group row mb-2">
             <label class="col-sm-2 col-form-label">Bagian</label>
             <div class="col-sm-5">
-                <input readonly type="text" class="form-control" placeholder=" " name="NIP" value="{{ $isi->bagianstaff->bagian }}">
+                <input readonly type="text" class="form-control" placeholder=" " name="bagian" value="{{ $isi->bagian->bagian }}">
             </div>
         </div>
         <div class="form-group row mb-2">

@@ -28,7 +28,7 @@ class SuratController extends Controller
             ])
         ->get();
         $wd = Pengguna::where([
-            'roles_id' => '3',
+            'bagian_id' => '3',
             ])
         ->get();
         $surat = Surat::with('status')

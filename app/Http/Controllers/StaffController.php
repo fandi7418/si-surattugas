@@ -9,7 +9,7 @@ use App\Models\Jabatan;
 use App\Models\Golongan;
 use App\Models\Pengguna;
 use App\Models\StatusSurat;
-use App\Models\BagianStaff;
+use App\Models\Bagian;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -101,11 +101,11 @@ class StaffController extends Controller
         ])
     ->get();
     $wd = Pengguna::where([
-        'roles_id' => '3',
+        'bagian_id' => '4',
         ])
     ->get();
     $supervisor = Pengguna::where([
-        'bagianstaff_id' => Auth::user()->bagianstaff_id,
+        'bagian_id' => Auth::user()->bagian_id,
         'roles_id' => '6',
         ])
     ->get();
@@ -133,7 +133,7 @@ class StaffController extends Controller
             'nama' => $request->nama,
             'NIP' => $request->nip,
             // 'prodi_id' => Auth::guard('pengguna')->user()->prodi->id,
-            'bagianstaff_id' => Auth::user()->bagianstaff_id,
+            'bagian_id' => Auth::user()->bagian_id,
             'golongan_id' => Auth::user()->golongan_id,
             'jabatan_id' => Auth::user()->jabatan_id,
             'judul' => $request->judul,

@@ -9,7 +9,7 @@ use App\Models\Jabatan;
 use App\Models\Golongan;
 use App\Models\Pengguna;
 use App\Models\StatusSurat;
-use App\Models\BagianStaff;
+use App\Models\Bagian;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -23,7 +23,7 @@ class SupervisorController extends Controller
     {
         $surat = Surat::with('status')
         ->where([
-            'surat.bagianstaff_id' => Auth::user()->bagianstaff_id,
+            'surat.bagian_id' => Auth::user()->bagian_id,
             'surat.status_id' => '7',
         ])
         ->orderBy('updated_at', 'DESC')
@@ -48,9 +48,9 @@ class SupervisorController extends Controller
 
     public function daftarsuratSpv(Request $request)
     {
-        $surat = Surat::with('status', 'bagianstaff')
+        $surat = Surat::with('status', 'bagian')
         ->where([
-            'surat.bagianstaff_id' => Auth::user()->bagianstaff_id,
+            'surat.bagian_id' => Auth::user()->bagian_id,
             'surat.status_id' => '7',
         ])->orderBy('updated_at', 'DESC')->get();
         return view('supervisor.daftarsuratSpv', ['surat' => $surat]);
@@ -190,8 +190,8 @@ class SupervisorController extends Controller
                 'status_id' => '8',
                 'notif' => '1',
                 'approve' => '2',
-                'bagianstaff_id' => BagianStaff::where([
-                    'id' => $cek->first()->bagianstaff_id,
+                'bagian_id' => Bagian::where([
+                    'id' => $cek->first()->bagian_id,
                 ])->first()->bagian,
                 'nama_wd' => Pengguna::where([
                     'id' => $cek->first()->NIP_wd,
@@ -214,8 +214,8 @@ class SupervisorController extends Controller
                 'status_id' => '8',
                 'notif' => '1',
                 'approve' => '2',
-                'bagianstaff_id' => BagianStaff::where([
-                    'id' => $cek->first()->bagianstaff_id,
+                'bagian_id' => Bagian::where([
+                    'id' => $cek->first()->bagian_id,
                 ])->first()->bagian,
                 'nama_wd' => Pengguna::where([
                     'id' => $cek->first()->NIP_wd,
