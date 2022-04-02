@@ -695,6 +695,15 @@ class AdminController extends Controller
         Bagian::where('id', '=', $request->bagian)->update([
             'status' => '2',
     ]);
+        $id_wd = Pengguna::where('id', $request->id)->first()->id;
+        Surat::where([
+            'approve' => '0', 
+            'ttd_wd' => null, 
+        ])->update([
+            'nama_wd' => $id_wd,
+            'nip_wd' => $id_wd,
+        ]);
+        Alert::success('Sukses', 'Data Berhasil Ditambahkan');
         // if ($request->ajax()){
         //     return datatables()->of($wd)->addColumn('action', function($data){
         //         $url_edit = url('pilih_wakildekan/'.$data->id.'/pilihWD');
