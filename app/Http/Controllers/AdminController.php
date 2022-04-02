@@ -695,7 +695,7 @@ class AdminController extends Controller
         Bagian::where('id', '=', $request->bagian)->update([
             'status' => '2',
     ]);
-        $id_wd = Pengguna::where('id', $request->id)->first()->id;
+        $id_wd = Pengguna::where('id', $request->nama)->first()->id;
         Surat::where([
             'approve' => '0', 
             'ttd_wd' => null, 
