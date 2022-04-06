@@ -518,17 +518,16 @@ class AdminController extends Controller
         Prodi::where('id', '=', $request->prodi)->update([
             'status' => '2',
         ]);
-        $id_kadep = Pengguna::where(
-            'id', '=', $request->nama_kadep
-        )->first()->id;
-        Surat::where([
-            'prodi_id' => $request->prodi,
-            'approve' => '0',
-            'ttd_kadep' => null, 
-        ])->update([
-            'nama_kadep' => $id_kadep,
-            'nip_kadep' => $id_kadep,
-        ]);
+        // $id_kadep = Pengguna::where(
+        //     'id', '=', $request->nama_kadep
+        // )->first()->id;
+        // Surat::where([
+        //     'prodi_id' => $request->prodi,
+        //     'approve' => '0',
+        // ])->update([
+        //     'nama_kadep' => $id_kadep,
+        //     'nip_kadep' => $id_kadep,
+        // ]);
         // Dosen::where('prodi_id', '=', $request->prodi)->update([
         //     'statusKadep' => ''
         // ])

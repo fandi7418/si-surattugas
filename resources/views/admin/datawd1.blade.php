@@ -14,6 +14,7 @@
             <thead>
                     <tr>
                         <th scope="col">Nama Wakil Dekan</th>
+                        <th scope="col">Bagian</th>
                         <th scope="col">NIP</th>
                         <th scope="col">Email</th>
                         <th scope="col">Aksi</th>
@@ -23,6 +24,7 @@
                     @foreach($wd as $wakil)
                     <tr>
                         <td>{{$wakil->nama}}</td>
+                        <td>{{$wakil->bagian->bagian}}</td>
                         <td>{{$wakil->NIP}}</td>
                         <td>{{ $wakil->email }}</td>
                         <td>

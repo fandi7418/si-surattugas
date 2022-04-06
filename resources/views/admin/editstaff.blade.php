@@ -120,7 +120,6 @@
                     <div class="col-sm-5">
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     
-               
             </form>
             <a href="" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Ubah Password</a>
             @if ($stf->roles_id == '6')
