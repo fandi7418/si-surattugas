@@ -56,7 +56,7 @@
                 <div></div>
                 <div class="col"  style="color:green"><small>Pengajuan</small></div>
                 <div class="col"><small>Supervisor</small></div>
-                <div class="col"><small>WD 1</small></div>
+                <div class="col"><small>WD 2</small></div>
                 <div class="col"><small>Penomoran</small></div>
               </div>
             </div>
@@ -80,7 +80,7 @@
                 <div></div>
                 <div class="col" style="color:green"><small>Pengajuan</small></div>
                 <div class="col" style="color:green"><small>Supervisor</small></div>
-                <div class="col"><small>WD 1</small></div>
+                <div class="col"><small>WD 2</small></div>
                 <div class="col"><small>Penomoran</small></div>
               </div>
             </div>
@@ -104,7 +104,7 @@
                 <div></div>
                 <div class="col" style="color:green"><small>Pengajuan</small></div>
                 <div class="col" style="color:green"><small>Supervisor</small></div>
-                <div class="col" style="color:green"><small>WD 1</small></div>
+                <div class="col" style="color:green"><small>WD 2</small></div>
                 <div class="col"><small>Penomoran</small></div>
               </div>
             </div>
@@ -128,7 +128,7 @@
                 <div></div>
                 <div class="col" style="color:green"><small>Pengajuan</small></div>
                 <div class="col" style="color:green"><small>Supervisor</small></div>
-                <div class="col" style="color:green"><small>WD 1</small></div>
+                <div class="col" style="color:green"><small>WD 2</small></div>
                 <div class="col" style="color:green"><small>Penomoran</small></div>
               </div>
             </div>
@@ -152,7 +152,7 @@
                 <div></div>
                 <div class="col" style="color:green"><small>Pengajuan</small></div>
                 <div class="col" style="color:red"><small>Supervisor</small></div>
-                <div class="col"><small>WD 1</small></div>
+                <div class="col"><small>WD 2</small></div>
                 <div class="col"><small>Penomoran</small></div>
               </div>
             </div>
@@ -176,7 +176,7 @@
                 <div></div>
                 <div class="col" style="color:green"><small>Pengajuan</small></div>
                 <div class="col" style="color:green"><small>Supervisor</small></div>
-                <div class="col" style="color:red"><small>WD 1</small></div>
+                <div class="col" style="color:red"><small>WD 2</small></div>
                 <div class="col"><small>Penomoran</small></div>
               </div>
             </div>
