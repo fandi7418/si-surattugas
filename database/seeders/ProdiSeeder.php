@@ -18,7 +18,7 @@ class ProdiSeeder extends Seeder
         Prodi::truncate();
         Prodi::create([
             'prodi' => 'Teknik Sipil',
-            'status' => '2',
+            'status' => '1',
         ]);
         Prodi::create([
             'prodi' => 'Teknik Arsitektur',
@@ -62,7 +62,7 @@ class ProdiSeeder extends Seeder
         ]);
         Prodi::create([
             'prodi' => 'Teknik Komputer',
-            'status' => '1'
+            'status' => '2'
         ]);
     }
 }
