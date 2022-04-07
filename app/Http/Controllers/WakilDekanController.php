@@ -147,12 +147,12 @@ class WakilDekanController extends Controller
                 'jabatan_id' => Jabatan::where([
                     'id' => $cek->first()->jabatan_id,
                 ])->first()->nama_jabatan,
-                'nama_kadep' => Pengguna::where([
-                    'pengguna.id' => $cek->first()->nama_kadep,
-                ])->first()->nama,
-                'NIP_kadep' => Pengguna::where([
-                    'pengguna.id' => $cek->first()->nama_kadep,
-                ])->first()->NIP,
+                // 'nama_kadep' => Pengguna::where([
+                //     'pengguna.id' => $cek->first()->nama_kadep,
+                // ])->first()->nama,
+                // 'NIP_kadep' => Pengguna::where([
+                //     'pengguna.id' => $cek->first()->nama_kadep,
+                // ])->first()->NIP,
                 'prodi_id' => Prodi::where([
                     'id' => $cek->first()->prodi_id,
                 ])->first()->prodi,
@@ -177,12 +177,12 @@ class WakilDekanController extends Controller
                 'jabatan_id' => Jabatan::where([
                     'id' => $cek->first()->jabatan_id,
                 ])->first()->nama_jabatan,
-                'nama_supervisor' => Pengguna::where([
-                    'pengguna.id' => $cek->first()->nama_supervisor,
-                ])->first()->nama,
-                'NIP_supervisor' => Pengguna::where([
-                    'pengguna.id' => $cek->first()->nama_supervisor,
-                ])->first()->NIP,
+                // 'nama_supervisor' => Pengguna::where([
+                //     'pengguna.id' => $cek->first()->nama_supervisor,
+                // ])->first()->nama,
+                // 'NIP_supervisor' => Pengguna::where([
+                //     'pengguna.id' => $cek->first()->nama_supervisor,
+                // ])->first()->NIP,
             ]);
         }
         
