@@ -142,7 +142,7 @@ class PenggunaSeeder extends Seeder
         ]);
         Pengguna::create(
         [
-            'email' => 'erwan@gmail.com',
+            'email' => 'ratna@gmail.com',
             'password' => bcrypt('123456'),
             'nama' => 'Ratna Rissanti',
             'NIP' => '198510262014092004',
