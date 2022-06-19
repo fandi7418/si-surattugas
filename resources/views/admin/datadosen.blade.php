@@ -48,11 +48,7 @@
                         @endif --}}
                         <td>
                         <a href="/edit_dosen/{{ $dsn->id }}" class="btn btn-info btn-sm">Edit</a>
-                        @if ($dsn->roles_id == '2')
                         <a href="/hapus_dosen2/{{ $dsn->id }}/konfirmasi2" class="btn btn-danger btn-sm">Hapus</a>
-                        @else
-                        <a href="/hapus_dosen/{{ $dsn->id }}/konfirmasi" class="btn btn-danger btn-sm">Hapus</a>
-                        @endif
                         </td>
                     </tr>
                     @endforeach

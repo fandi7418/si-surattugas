@@ -152,7 +152,7 @@ class AdminController extends Controller
 }
     public function datadosensementara (Request $request)
     {
-        $dosen = Pengguna::onlyTrashed()->where('bagian_id', '=', null)
+        $dosen = Pengguna::onlyTrashed()->where('roles_id', '=', '1')
         ->with('prodi')
         ->get();
         if ($request->ajax()){
@@ -356,6 +356,13 @@ class AdminController extends Controller
         $prodi_id = Pengguna::where('id', $id)->first()->prodi_id;
         Prodi::where('id', '=', $prodi_id)->update([
             'status' => '1',
+        ]);
+        $bagian_id = Pengguna::where('id', $id)->first()->bagian_id;
+        Bagian::where('id', '=', $bagian_id)->update([
+            'status' => '1',
+        ]);
+        Pengguna::where('id', $id)->update([
+            'roles_id' => '1',
         ]);
         Pengguna::where('id', $id)->delete();
         Alert::success('Sukses', 'Data Berhasil Dinonaktifkan');
@@ -1070,7 +1077,7 @@ public function tambahspv(Request $request)
 
     ], [
         'nama_spv.required' => 'Nama tidak boleh kosong',
-        'spv.required' => 'Pilih salah satu program studi',
+        'bagian.required' => 'Bagian tidak boleh kosong',
     ]);
 
     Pengguna::with('bagian')->where('id', '=', $request->nama_spv)->update([
@@ -1605,6 +1612,18 @@ public function hapusstaff($id)
             ])->update([
                 'status' => '1'
             ]);
+        Pengguna::where([
+            'id' => $id,
+            ])->update([
+                'roles_id' => '4'
+            ]);
+    }
+    elseif($staff->first()->roles_id == '5')
+    {
+        $staff->update(['roles_id' => '5']);
+    }
+    else{
+        $staff->update(['roles_id' => '4']);
     }
     $staff->delete();
     Alert::success('Sukses', 'Data Berhasil Dinonaktifkan');
